@@ -39,6 +39,13 @@ const statsMapping = {
   experienceGainIncrease: "경험치획득증가",
 };
 
+const specialStatClasses = {
+  피해저항: "stat-damage-resistance",
+  피해저항관통: "stat-damage-resistance-penetration",
+  "대인방어%": "stat-pvp-defense-percent",
+  "대인피해%": "stat-pvp-damage-percent",
+};
+
 let currentStats = [];
 let currentLevel = 0;
 let currentName = "";
@@ -210,6 +217,12 @@ function showInfoInModal(category, imagePath) {
   const title = document.createElement("h3");
   title.textContent = currentName;
 
+  const influenceIcon = document.createElement("span");
+  influenceIcon.className = "influence-icon";
+  influenceIcon.innerHTML = "★";
+  influenceIcon.title = "인플루언스";
+  title.appendChild(influenceIcon);
+
   const levelControls = document.createElement("div");
   levelControls.classList.add("level-controls");
 
@@ -239,9 +252,21 @@ function showInfoInModal(category, imagePath) {
   levelPlusButton.innerText = "+";
   levelPlusButton.onclick = () => changeLevel(1);
 
+  const maxButton = document.createElement("button");
+  maxButton.innerText = "MAX";
+  maxButton.classList.add("level-controls", "max-button");
+  maxButton.onclick = () => {
+    currentLevel = 25;
+    levelInput.value = currentLevel;
+    updateStatsInModal(
+      currentStats.find((s) => s.level === currentLevel) || null
+    );
+  };
+
   levelControls.appendChild(levelMinusButton);
   levelControls.appendChild(levelInput);
   levelControls.appendChild(levelPlusButton);
+  levelControls.appendChild(maxButton);
 
   titleArea.appendChild(title);
   titleArea.appendChild(levelControls);
@@ -305,22 +330,64 @@ function updateStatsInModal(stat) {
   bindList.innerHTML = "";
 
   if (!stat) {
-    registrationList.innerHTML = `<li>레벨 ${currentLevel} 정보 없음</li>`;
-    bindList.innerHTML = `<li>레벨 ${currentLevel} 정보 없음</li>`;
+    const level25Stat = currentStats.find((s) => s.level === 25);
+
+    if (currentLevel !== 25 && level25Stat) {
+      if (
+        level25Stat.registrationStat &&
+        Object.keys(level25Stat.registrationStat).length > 0
+      ) {
+        registrationList.innerHTML = `<li>현재 레벨에는 등록 효과가 없습니다</li>`;
+        const regNoticeDiv = document.createElement("div");
+        regNoticeDiv.className = "level25-notice";
+        regNoticeDiv.textContent = "※ 등록 효과는 25레벨에 있습니다";
+        registrationList.parentNode.appendChild(regNoticeDiv);
+      } else {
+        registrationList.innerHTML = `<li>등록 효과 정보 없음</li>`;
+      }
+
+      if (
+        level25Stat.bindStat &&
+        Object.keys(level25Stat.bindStat).length > 0
+      ) {
+        bindList.innerHTML = `<li>현재 레벨에는 결속 효과가 없습니다</li>`;
+        const bindNoticeDiv = document.createElement("div");
+        bindNoticeDiv.className = "level25-notice";
+        bindNoticeDiv.textContent = "※ 결속 효과는 25레벨에 있습니다";
+        bindList.parentNode.appendChild(bindNoticeDiv);
+      } else {
+        bindList.innerHTML = `<li>결속 효과 정보 없음</li>`;
+      }
+    } else {
+      registrationList.innerHTML = `<li>레벨 ${currentLevel} 정보 없음</li>`;
+      bindList.innerHTML = `<li>레벨 ${currentLevel} 정보 없음</li>`;
+    }
     return;
   }
 
   Object.entries(stat.registrationStat || {}).forEach(([key, val]) => {
     const statName = statsMapping[key] || key;
     const li = document.createElement("li");
-    li.textContent = `${statName}: ${val}`;
+
+    if (specialStatClasses[statName]) {
+      li.innerHTML = `<span class="${specialStatClasses[statName]}">${statName}: ${val}</span>`;
+    } else {
+      li.textContent = `${statName}: ${val}`;
+    }
+
     registrationList.appendChild(li);
   });
 
   Object.entries(stat.bindStat || {}).forEach(([key, val]) => {
     const statName = statsMapping[key] || key;
     const li = document.createElement("li");
-    li.textContent = `${statName}: ${val}`;
+
+    if (specialStatClasses[statName]) {
+      li.innerHTML = `<span class="${specialStatClasses[statName]}">${statName}: ${val}</span>`;
+    } else {
+      li.textContent = `${statName}: ${val}`;
+    }
+
     bindList.appendChild(li);
   });
 
@@ -329,6 +396,23 @@ function updateStatsInModal(stat) {
   }
 
   if (!bindList.children.length) {
-    bindList.innerHTML = `<li>결속 효과 정보 없음</li>`;
+    if (currentLevel < 25) {
+      const level25Stat = currentStats.find((s) => s.level === 25);
+      if (
+        level25Stat &&
+        level25Stat.bindStat &&
+        Object.keys(level25Stat.bindStat).length > 0
+      ) {
+        const noticeDiv = document.createElement("div");
+        noticeDiv.className = "level25-notice";
+        noticeDiv.textContent = "※ 결속 효과는 25레벨에 있습니다";
+        bindList.innerHTML = `<li>현재 레벨에는 결속 효과가 없습니다</li>`;
+        bindList.parentNode.appendChild(noticeDiv);
+      } else {
+        bindList.innerHTML = `<li>결속 효과 정보 없음</li>`;
+      }
+    } else {
+      bindList.innerHTML = `<li>결속 효과 정보 없음</li>`;
+    }
   }
 }
