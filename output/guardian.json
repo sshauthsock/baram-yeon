@@ -27649,650 +27649,648 @@
     "type": "수호",
     "grade": "전설"
   },
-  [
-    {
-      "name": "폭풍의 바람 공작",
-      "image": "images/guardian/guardian_68.jpg",
-      "stats": [
-        {
-          "level": 0,
-          "registrationStat": {
-            "experienceGainIncrease": "90",
-            "damageResistance": "150",
-            "damageResistancePenetration": "30",
-            "statusResistance": "70",
-            "magicPotionEnhancement": "1000",
-            "magicRecoveryImprovement": "70"
-          },
-          "bindStat": {}
+  {
+    "name": "폭풍의 바람 공작",
+    "image": "images/guardian/guardian_68.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "90",
+          "damageResistance": "150",
+          "damageResistancePenetration": "30",
+          "statusEffectResistance": "70",
+          "magicPotionEnhancement": "1000",
+          "magicRecoveryImprovement": "70"
         },
-        {
-          "level": 1,
-          "registrationStat": {
-            "experienceGainIncrease": "91",
-            "damageResistance": "152",
-            "damageResistancePenetration": "30",
-            "statusResistance": "73",
-            "magicPotionEnhancement": "1050",
-            "magicRecoveryImprovement": "71"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "91",
+          "damageResistance": "152",
+          "damageResistancePenetration": "30",
+          "statusEffectResistance": "73",
+          "magicPotionEnhancement": "1050",
+          "magicRecoveryImprovement": "71"
         },
-        {
-          "level": 2,
-          "registrationStat": {
-            "experienceGainIncrease": "91",
-            "damageResistance": "154",
-            "damageResistancePenetration": "30",
-            "statusResistance": "74",
-            "magicPotionEnhancement": "1070",
-            "magicRecoveryImprovement": "72"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "91",
+          "damageResistance": "154",
+          "damageResistancePenetration": "30",
+          "statusEffectResistance": "74",
+          "magicPotionEnhancement": "1070",
+          "magicRecoveryImprovement": "72"
         },
-        {
-          "level": 3,
-          "registrationStat": {
-            "experienceGainIncrease": "97",
-            "damageResistance": "156",
-            "damageResistancePenetration": "30",
-            "statusResistance": "77",
-            "magicPotionEnhancement": "1120",
-            "magicRecoveryImprovement": "80"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "97",
+          "damageResistance": "156",
+          "damageResistancePenetration": "30",
+          "statusEffectResistance": "77",
+          "magicPotionEnhancement": "1120",
+          "magicRecoveryImprovement": "80"
         },
-        {
-          "level": 4,
-          "registrationStat": {
-            "experienceGainIncrease": "97",
-            "damageResistance": "158",
-            "damageResistancePenetration": "30",
-            "statusResistance": "78",
-            "magicPotionEnhancement": "1140",
-            "magicRecoveryImprovement": "81"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "97",
+          "damageResistance": "158",
+          "damageResistancePenetration": "30",
+          "statusEffectResistance": "78",
+          "magicPotionEnhancement": "1140",
+          "magicRecoveryImprovement": "81"
         },
-        {
-          "level": 5,
-          "registrationStat": {
-            "experienceGainIncrease": "98",
-            "damageResistance": "160",
-            "damageResistancePenetration": "30",
-            "statusResistance": "81",
-            "magicPotionEnhancement": "1190",
-            "magicRecoveryImprovement": "82"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "98",
+          "damageResistance": "160",
+          "damageResistancePenetration": "30",
+          "statusEffectResistance": "81",
+          "magicPotionEnhancement": "1190",
+          "magicRecoveryImprovement": "82"
         },
-        {
-          "level": 6,
-          "registrationStat": {
-            "experienceGainIncrease": "99",
-            "damageResistance": "162",
-            "damageResistancePenetration": "30",
-            "statusResistance": "82",
-            "magicPotionEnhancement": "1210",
-            "magicRecoveryImprovement": "83"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "99",
+          "damageResistance": "162",
+          "damageResistancePenetration": "30",
+          "statusEffectResistance": "82",
+          "magicPotionEnhancement": "1210",
+          "magicRecoveryImprovement": "83"
         },
-        {
-          "level": 7,
-          "registrationStat": {
-            "experienceGainIncrease": "99",
-            "damageResistance": "164",
-            "damageResistancePenetration": "30",
-            "statusResistance": "85",
-            "magicPotionEnhancement": "1260",
-            "magicRecoveryImprovement": "84"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "99",
+          "damageResistance": "164",
+          "damageResistancePenetration": "30",
+          "statusEffectResistance": "85",
+          "magicPotionEnhancement": "1260",
+          "magicRecoveryImprovement": "84"
         },
-        {
-          "level": 8,
-          "registrationStat": {
-            "experienceGainIncrease": "105",
-            "damageResistance": "167",
-            "damageResistancePenetration": "30",
-            "statusResistance": "90",
-            "magicPotionEnhancement": "1280",
-            "magicRecoveryImprovement": "91"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "105",
+          "damageResistance": "167",
+          "damageResistancePenetration": "30",
+          "statusEffectResistance": "90",
+          "magicPotionEnhancement": "1280",
+          "magicRecoveryImprovement": "91"
         },
-        {
-          "level": 9,
-          "registrationStat": {
-            "experienceGainIncrease": "105",
-            "damageResistance": "170",
-            "damageResistancePenetration": "30",
-            "statusResistance": "92",
-            "magicPotionEnhancement": "1330",
-            "magicRecoveryImprovement": "92"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "105",
+          "damageResistance": "170",
+          "damageResistancePenetration": "30",
+          "statusEffectResistance": "92",
+          "magicPotionEnhancement": "1330",
+          "magicRecoveryImprovement": "92"
         },
-        {
-          "level": 10,
-          "registrationStat": {
-            "experienceGainIncrease": "106",
-            "damageResistance": "170",
-            "damageResistancePenetration": "32",
-            "statusResistance": "97",
-            "magicPotionEnhancement": "1350",
-            "magicRecoveryImprovement": "93"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "106",
+          "damageResistance": "170",
+          "damageResistancePenetration": "32",
+          "statusEffectResistance": "97",
+          "magicPotionEnhancement": "1350",
+          "magicRecoveryImprovement": "93"
         },
-        {
-          "level": 11,
-          "registrationStat": {
-            "experienceGainIncrease": "107",
-            "damageResistance": "173",
-            "damageResistancePenetration": "32",
-            "statusResistance": "99",
-            "magicPotionEnhancement": "1400",
-            "magicRecoveryImprovement": "94"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "107",
+          "damageResistance": "173",
+          "damageResistancePenetration": "32",
+          "statusEffectResistance": "99",
+          "magicPotionEnhancement": "1400",
+          "magicRecoveryImprovement": "94"
         },
-        {
-          "level": 12,
-          "registrationStat": {
-            "experienceGainIncrease": "108",
-            "damageResistance": "176",
-            "damageResistancePenetration": "32",
-            "statusResistance": "104",
-            "magicPotionEnhancement": "1420",
-            "magicRecoveryImprovement": "95"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "108",
+          "damageResistance": "176",
+          "damageResistancePenetration": "32",
+          "statusEffectResistance": "104",
+          "magicPotionEnhancement": "1420",
+          "magicRecoveryImprovement": "95"
         },
-        {
-          "level": 13,
-          "registrationStat": {
-            "experienceGainIncrease": "113",
-            "damageResistance": "179",
-            "damageResistancePenetration": "34",
-            "statusResistance": "106",
-            "magicPotionEnhancement": "1470",
-            "magicRecoveryImprovement": "103"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "113",
+          "damageResistance": "179",
+          "damageResistancePenetration": "34",
+          "statusEffectResistance": "106",
+          "magicPotionEnhancement": "1470",
+          "magicRecoveryImprovement": "103"
         },
-        {
-          "level": 14,
-          "registrationStat": {
-            "experienceGainIncrease": "113",
-            "damageResistance": "182",
-            "damageResistancePenetration": "34",
-            "statusResistance": "111",
-            "magicPotionEnhancement": "1490",
-            "magicRecoveryImprovement": "104"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "113",
+          "damageResistance": "182",
+          "damageResistancePenetration": "34",
+          "statusEffectResistance": "111",
+          "magicPotionEnhancement": "1490",
+          "magicRecoveryImprovement": "104"
         },
-        {
-          "level": 15,
-          "registrationStat": {
-            "experienceGainIncrease": "114",
-            "damageResistance": "186",
-            "damageResistancePenetration": "34",
-            "statusResistance": "116",
-            "magicPotionEnhancement": "1540",
-            "magicRecoveryImprovement": "105"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "114",
+          "damageResistance": "186",
+          "damageResistancePenetration": "34",
+          "statusEffectResistance": "116",
+          "magicPotionEnhancement": "1540",
+          "magicRecoveryImprovement": "105"
         },
-        {
-          "level": 16,
-          "registrationStat": {
-            "experienceGainIncrease": "118",
-            "damageResistance": "190",
-            "damageResistancePenetration": "34",
-            "statusResistance": "121",
-            "magicPotionEnhancement": "1590",
-            "magicRecoveryImprovement": "111"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "118",
+          "damageResistance": "190",
+          "damageResistancePenetration": "34",
+          "statusEffectResistance": "121",
+          "magicPotionEnhancement": "1590",
+          "magicRecoveryImprovement": "111"
         },
-        {
-          "level": 17,
-          "registrationStat": {
-            "experienceGainIncrease": "122",
-            "damageResistance": "194",
-            "damageResistancePenetration": "34",
-            "statusResistance": "124",
-            "magicPotionEnhancement": "1640",
-            "magicRecoveryImprovement": "117"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "122",
+          "damageResistance": "194",
+          "damageResistancePenetration": "34",
+          "statusEffectResistance": "124",
+          "magicPotionEnhancement": "1640",
+          "magicRecoveryImprovement": "117"
         },
-        {
-          "level": 18,
-          "registrationStat": {
-            "experienceGainIncrease": "129",
-            "damageResistance": "200",
-            "damageResistancePenetration": "34",
-            "statusResistance": "129",
-            "magicPotionEnhancement": "1690",
-            "magicRecoveryImprovement": "128"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "129",
+          "damageResistance": "200",
+          "damageResistancePenetration": "34",
+          "statusEffectResistance": "129",
+          "magicPotionEnhancement": "1690",
+          "magicRecoveryImprovement": "128"
         },
-        {
-          "level": 19,
-          "registrationStat": {
-            "experienceGainIncrease": "134",
-            "damageResistance": "206",
-            "damageResistancePenetration": "34",
-            "statusResistance": "132",
-            "magicPotionEnhancement": "1740",
-            "magicRecoveryImprovement": "135"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "134",
+          "damageResistance": "206",
+          "damageResistancePenetration": "34",
+          "statusEffectResistance": "132",
+          "magicPotionEnhancement": "1740",
+          "magicRecoveryImprovement": "135"
         },
-        {
-          "level": 20,
-          "registrationStat": {
-            "experienceGainIncrease": "141",
-            "damageResistance": "226",
-            "damageResistancePenetration": "34",
-            "statusResistance": "137",
-            "magicPotionEnhancement": "1790",
-            "magicRecoveryImprovement": "146"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "141",
+          "damageResistance": "226",
+          "damageResistancePenetration": "34",
+          "statusEffectResistance": "137",
+          "magicPotionEnhancement": "1790",
+          "magicRecoveryImprovement": "146"
         },
-        {
-          "level": 21,
-          "registrationStat": {
-            "experienceGainIncrease": "149",
-            "damageResistance": "246",
-            "damageResistancePenetration": "41",
-            "statusResistance": "147",
-            "magicPotionEnhancement": "1890",
-            "magicRecoveryImprovement": "158"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "149",
+          "damageResistance": "246",
+          "damageResistancePenetration": "41",
+          "statusEffectResistance": "147",
+          "magicPotionEnhancement": "1890",
+          "magicRecoveryImprovement": "158"
         },
-        {
-          "level": 22,
-          "registrationStat": {
-            "experienceGainIncrease": "154",
-            "damageResistance": "256",
-            "damageResistancePenetration": "46",
-            "statusResistance": "152",
-            "magicPotionEnhancement": "1940",
-            "magicRecoveryImprovement": "166"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "154",
+          "damageResistance": "256",
+          "damageResistancePenetration": "46",
+          "statusEffectResistance": "152",
+          "magicPotionEnhancement": "1940",
+          "magicRecoveryImprovement": "166"
         },
-        {
-          "level": 23,
-          "registrationStat": {
-            "experienceGainIncrease": "162",
-            "damageResistance": "276",
-            "damageResistancePenetration": "53",
-            "statusResistance": "162",
-            "magicPotionEnhancement": "2040",
-            "magicRecoveryImprovement": "178"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "162",
+          "damageResistance": "276",
+          "damageResistancePenetration": "53",
+          "statusEffectResistance": "162",
+          "magicPotionEnhancement": "2040",
+          "magicRecoveryImprovement": "178"
         },
-        {
-          "level": 24,
-          "registrationStat": {
-            "experienceGainIncrease": "168",
-            "damageResistance": "286",
-            "damageResistancePenetration": "58",
-            "statusResistance": "167",
-            "magicPotionEnhancement": "2090",
-            "magicRecoveryImprovement": "188"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "168",
+          "damageResistance": "286",
+          "damageResistancePenetration": "58",
+          "statusEffectResistance": "167",
+          "magicPotionEnhancement": "2090",
+          "magicRecoveryImprovement": "188"
         },
-        {
-          "level": 25,
-          "registrationStat": {
-            "experienceGainIncrease": "179",
-            "damageResistance": "316",
-            "damageResistancePenetration": "73",
-            "statusResistance": "177",
-            "magicPotionEnhancement": "2240",
-            "magicRecoveryImprovement": "204"
-          },
-          "bindStat": {}
-        }
-      ],
-      "influence": "침착",
-      "type": "수호",
-      "grade": "전설"
-    },
-    {
-      "name": "전령사관 천신나방",
-      "image": "images/guardian/guardian_69.jpg",
-      "stats": [
-        {
-          "level": 0,
-          "registrationStat": {
-            "experienceGainIncrease": "90",
-            "damageResistancePenetration": "150",
-            "damageResistance": "30",
-            "statusResistance": "70",
-            "healthPotionEnhancement": "1000",
-            "healthRecoveryImprovement": "70"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "179",
+          "damageResistance": "316",
+          "damageResistancePenetration": "73",
+          "statusEffectResistance": "177",
+          "magicPotionEnhancement": "2240",
+          "magicRecoveryImprovement": "204"
         },
-        {
-          "level": 1,
-          "registrationStat": {
-            "experienceGainIncrease": "91",
-            "damageResistancePenetration": "152",
-            "damageResistance": "30",
-            "statusResistance": "73",
-            "healthPotionEnhancement": "1050",
-            "healthRecoveryImprovement": "71"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      }
+    ],
+    "influence": "침착",
+    "type": "수호",
+    "grade": "전설"
+  },
+  {
+    "name": "전령사관 천신나방",
+    "image": "images/guardian/guardian_69.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "90",
+          "damageResistancePenetration": "150",
+          "damageResistance": "30",
+          "statusEffectResistance": "70",
+          "healthPotionEnhancement": "1000",
+          "healthRecoveryImprovement": "70"
         },
-        {
-          "level": 2,
-          "registrationStat": {
-            "experienceGainIncrease": "91",
-            "damageResistancePenetration": "154",
-            "damageResistance": "30",
-            "statusResistance": "74",
-            "healthPotionEnhancement": "1070",
-            "healthRecoveryImprovement": "72"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "91",
+          "damageResistancePenetration": "152",
+          "damageResistance": "30",
+          "statusEffectResistance": "73",
+          "healthPotionEnhancement": "1050",
+          "healthRecoveryImprovement": "71"
         },
-        {
-          "level": 3,
-          "registrationStat": {
-            "experienceGainIncrease": "97",
-            "damageResistancePenetration": "156",
-            "damageResistance": "30",
-            "statusResistance": "77",
-            "healthPotionEnhancement": "1120",
-            "healthRecoveryImprovement": "80"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "91",
+          "damageResistancePenetration": "154",
+          "damageResistance": "30",
+          "statusEffectResistance": "74",
+          "healthPotionEnhancement": "1070",
+          "healthRecoveryImprovement": "72"
         },
-        {
-          "level": 4,
-          "registrationStat": {
-            "experienceGainIncrease": "97",
-            "damageResistancePenetration": "158",
-            "damageResistance": "30",
-            "statusResistance": "78",
-            "healthPotionEnhancement": "1140",
-            "healthRecoveryImprovement": "81"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "97",
+          "damageResistancePenetration": "156",
+          "damageResistance": "30",
+          "statusEffectResistance": "77",
+          "healthPotionEnhancement": "1120",
+          "healthRecoveryImprovement": "80"
         },
-        {
-          "level": 5,
-          "registrationStat": {
-            "experienceGainIncrease": "98",
-            "damageResistancePenetration": "160",
-            "damageResistance": "30",
-            "statusResistance": "81",
-            "healthPotionEnhancement": "1190",
-            "healthRecoveryImprovement": "82"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "97",
+          "damageResistancePenetration": "158",
+          "damageResistance": "30",
+          "statusEffectResistance": "78",
+          "healthPotionEnhancement": "1140",
+          "healthRecoveryImprovement": "81"
         },
-        {
-          "level": 6,
-          "registrationStat": {
-            "experienceGainIncrease": "99",
-            "damageResistancePenetration": "162",
-            "damageResistance": "30",
-            "statusResistance": "82",
-            "healthPotionEnhancement": "1210",
-            "healthRecoveryImprovement": "83"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "98",
+          "damageResistancePenetration": "160",
+          "damageResistance": "30",
+          "statusEffectResistance": "81",
+          "healthPotionEnhancement": "1190",
+          "healthRecoveryImprovement": "82"
         },
-        {
-          "level": 7,
-          "registrationStat": {
-            "experienceGainIncrease": "99",
-            "damageResistancePenetration": "164",
-            "damageResistance": "30",
-            "statusResistance": "85",
-            "healthPotionEnhancement": "1260",
-            "healthRecoveryImprovement": "84"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "99",
+          "damageResistancePenetration": "162",
+          "damageResistance": "30",
+          "statusEffectResistance": "82",
+          "healthPotionEnhancement": "1210",
+          "healthRecoveryImprovement": "83"
         },
-        {
-          "level": 8,
-          "registrationStat": {
-            "experienceGainIncrease": "105",
-            "damageResistancePenetration": "167",
-            "damageResistance": "30",
-            "statusResistance": "90",
-            "healthPotionEnhancement": "1280",
-            "healthRecoveryImprovement": "91"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "99",
+          "damageResistancePenetration": "164",
+          "damageResistance": "30",
+          "statusEffectResistance": "85",
+          "healthPotionEnhancement": "1260",
+          "healthRecoveryImprovement": "84"
         },
-        {
-          "level": 9,
-          "registrationStat": {
-            "experienceGainIncrease": "105",
-            "damageResistancePenetration": "170",
-            "damageResistance": "30",
-            "statusResistance": "92",
-            "healthPotionEnhancement": "1330",
-            "healthRecoveryImprovement": "92"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "105",
+          "damageResistancePenetration": "167",
+          "damageResistance": "30",
+          "statusEffectResistance": "90",
+          "healthPotionEnhancement": "1280",
+          "healthRecoveryImprovement": "91"
         },
-        {
-          "level": 10,
-          "registrationStat": {
-            "experienceGainIncrease": "106",
-            "damageResistancePenetration": "170",
-            "damageResistance": "32",
-            "statusResistance": "97",
-            "healthPotionEnhancement": "1350",
-            "healthRecoveryImprovement": "93"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "105",
+          "damageResistancePenetration": "170",
+          "damageResistance": "30",
+          "statusEffectResistance": "92",
+          "healthPotionEnhancement": "1330",
+          "healthRecoveryImprovement": "92"
         },
-        {
-          "level": 11,
-          "registrationStat": {
-            "experienceGainIncrease": "107",
-            "damageResistancePenetration": "173",
-            "damageResistance": "32",
-            "statusResistance": "99",
-            "healthPotionEnhancement": "1400",
-            "healthRecoveryImprovement": "94"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "106",
+          "damageResistancePenetration": "170",
+          "damageResistance": "32",
+          "statusEffectResistance": "97",
+          "healthPotionEnhancement": "1350",
+          "healthRecoveryImprovement": "93"
         },
-        {
-          "level": 12,
-          "registrationStat": {
-            "experienceGainIncrease": "108",
-            "damageResistancePenetration": "176",
-            "damageResistance": "32",
-            "statusResistance": "104",
-            "healthPotionEnhancement": "1420",
-            "healthRecoveryImprovement": "95"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "107",
+          "damageResistancePenetration": "173",
+          "damageResistance": "32",
+          "statusEffectResistance": "99",
+          "healthPotionEnhancement": "1400",
+          "healthRecoveryImprovement": "94"
         },
-        {
-          "level": 13,
-          "registrationStat": {
-            "experienceGainIncrease": "113",
-            "damageResistancePenetration": "179",
-            "damageResistance": "34",
-            "statusResistance": "106",
-            "healthPotionEnhancement": "1470",
-            "healthRecoveryImprovement": "103"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "108",
+          "damageResistancePenetration": "176",
+          "damageResistance": "32",
+          "statusEffectResistance": "104",
+          "healthPotionEnhancement": "1420",
+          "healthRecoveryImprovement": "95"
         },
-        {
-          "level": 14,
-          "registrationStat": {
-            "experienceGainIncrease": "113",
-            "damageResistancePenetration": "182",
-            "damageResistance": "34",
-            "statusResistance": "111",
-            "healthPotionEnhancement": "1490",
-            "healthRecoveryImprovement": "104"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "113",
+          "damageResistancePenetration": "179",
+          "damageResistance": "34",
+          "statusEffectResistance": "106",
+          "healthPotionEnhancement": "1470",
+          "healthRecoveryImprovement": "103"
         },
-        {
-          "level": 15,
-          "registrationStat": {
-            "experienceGainIncrease": "114",
-            "damageResistancePenetration": "186",
-            "damageResistance": "34",
-            "statusResistance": "116",
-            "healthPotionEnhancement": "1540",
-            "healthRecoveryImprovement": "105"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "113",
+          "damageResistancePenetration": "182",
+          "damageResistance": "34",
+          "statusEffectResistance": "111",
+          "healthPotionEnhancement": "1490",
+          "healthRecoveryImprovement": "104"
         },
-        {
-          "level": 16,
-          "registrationStat": {
-            "experienceGainIncrease": "118",
-            "damageResistancePenetration": "190",
-            "damageResistance": "34",
-            "statusResistance": "121",
-            "healthPotionEnhancement": "1590",
-            "healthRecoveryImprovement": "111"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "114",
+          "damageResistancePenetration": "186",
+          "damageResistance": "34",
+          "statusEffectResistance": "116",
+          "healthPotionEnhancement": "1540",
+          "healthRecoveryImprovement": "105"
         },
-        {
-          "level": 17,
-          "registrationStat": {
-            "experienceGainIncrease": "122",
-            "damageResistancePenetration": "194",
-            "damageResistance": "34",
-            "statusResistance": "124",
-            "healthPotionEnhancement": "1640",
-            "healthRecoveryImprovement": "117"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "118",
+          "damageResistancePenetration": "190",
+          "damageResistance": "34",
+          "statusEffectResistance": "121",
+          "healthPotionEnhancement": "1590",
+          "healthRecoveryImprovement": "111"
         },
-        {
-          "level": 18,
-          "registrationStat": {
-            "experienceGainIncrease": "129",
-            "damageResistancePenetration": "200",
-            "damageResistance": "34",
-            "statusResistance": "129",
-            "healthPotionEnhancement": "1690",
-            "healthRecoveryImprovement": "128"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "122",
+          "damageResistancePenetration": "194",
+          "damageResistance": "34",
+          "statusEffectResistance": "124",
+          "healthPotionEnhancement": "1640",
+          "healthRecoveryImprovement": "117"
         },
-        {
-          "level": 19,
-          "registrationStat": {
-            "experienceGainIncrease": "134",
-            "damageResistancePenetration": "206",
-            "damageResistance": "34",
-            "statusResistance": "132",
-            "healthPotionEnhancement": "1740",
-            "healthRecoveryImprovement": "135"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "129",
+          "damageResistancePenetration": "200",
+          "damageResistance": "34",
+          "statusEffectResistance": "129",
+          "healthPotionEnhancement": "1690",
+          "healthRecoveryImprovement": "128"
         },
-        {
-          "level": 20,
-          "registrationStat": {
-            "experienceGainIncrease": "141",
-            "damageResistancePenetration": "226",
-            "damageResistance": "34",
-            "statusResistance": "137",
-            "healthPotionEnhancement": "1790",
-            "healthRecoveryImprovement": "146"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "134",
+          "damageResistancePenetration": "206",
+          "damageResistance": "34",
+          "statusEffectResistance": "132",
+          "healthPotionEnhancement": "1740",
+          "healthRecoveryImprovement": "135"
         },
-        {
-          "level": 21,
-          "registrationStat": {
-            "experienceGainIncrease": "149",
-            "damageResistancePenetration": "246",
-            "damageResistance": "41",
-            "statusResistance": "147",
-            "healthPotionEnhancement": "1890",
-            "healthRecoveryImprovement": "158"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "141",
+          "damageResistancePenetration": "226",
+          "damageResistance": "34",
+          "statusEffectResistance": "137",
+          "healthPotionEnhancement": "1790",
+          "healthRecoveryImprovement": "146"
         },
-        {
-          "level": 22,
-          "registrationStat": {
-            "experienceGainIncrease": "154",
-            "damageResistancePenetration": "256",
-            "damageResistance": "46",
-            "statusResistance": "152",
-            "healthPotionEnhancement": "1940",
-            "healthRecoveryImprovement": "166"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "149",
+          "damageResistancePenetration": "246",
+          "damageResistance": "41",
+          "statusEffectResistance": "147",
+          "healthPotionEnhancement": "1890",
+          "healthRecoveryImprovement": "158"
         },
-        {
-          "level": 23,
-          "registrationStat": {
-            "experienceGainIncrease": "162",
-            "damageResistancePenetration": "276",
-            "damageResistance": "53",
-            "statusResistance": "162",
-            "healthPotionEnhancement": "2040",
-            "healthRecoveryImprovement": "178"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "154",
+          "damageResistancePenetration": "256",
+          "damageResistance": "46",
+          "statusEffectResistance": "152",
+          "healthPotionEnhancement": "1940",
+          "healthRecoveryImprovement": "166"
         },
-        {
-          "level": 24,
-          "registrationStat": {
-            "experienceGainIncrease": "168",
-            "damageResistancePenetration": "286",
-            "damageResistance": "58",
-            "statusResistance": "167",
-            "healthPotionEnhancement": "2090",
-            "healthRecoveryImprovement": "188"
-          },
-          "bindStat": {}
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "162",
+          "damageResistancePenetration": "276",
+          "damageResistance": "53",
+          "statusEffectResistance": "162",
+          "healthPotionEnhancement": "2040",
+          "healthRecoveryImprovement": "178"
         },
-        {
-          "level": 25,
-          "registrationStat": {
-            "experienceGainIncrease": "179",
-            "damageResistancePenetration": "316",
-            "damageResistance": "73",
-            "statusResistance": "177",
-            "healthPotionEnhancement": "2240",
-            "healthRecoveryImprovement": "204"
-          },
-          "bindStat": {}
-        }
-      ],
-      "influence": "침착",
-      "type": "수호",
-      "grade": "전설"
-    }
-  ],
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "168",
+          "damageResistancePenetration": "286",
+          "damageResistance": "58",
+          "statusEffectResistance": "167",
+          "healthPotionEnhancement": "2090",
+          "healthRecoveryImprovement": "188"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "179",
+          "damageResistancePenetration": "316",
+          "damageResistance": "73",
+          "statusEffectResistance": "177",
+          "healthPotionEnhancement": "2240",
+          "healthRecoveryImprovement": "204"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "침착",
+    "type": "수호",
+    "grade": "전설"
+  },
   {
     "name": "고요의 수호",
     "image": "images/guardian/guardian_73.jpg",
