@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>착 계산기</title>
     <link href="assets/css/global.css" rel="stylesheet">
     <link href="assets/css/chak.css" rel="stylesheet">
@@ -44,11 +44,9 @@
                     <div class="search-wrapper">
                         <input id="search-input" placeholder="능력치 검색..." class="search-input">
                         <button onclick="searchStats()" class="search-btn">검색</button>
-                        <div id="stat-options" class="stat-options">
-                        </div>
+                        <div id="stat-options" class="stat-options"></div>
                     </div>
-                    <div class="selected-stats" id="selected-stats">
-                    </div>
+                    <div class="selected-stats" id="selected-stats"></div>
                 </div>
 
                 <h3>능력치 합계</h3>
@@ -107,30 +105,31 @@
                 </div>
             </div>
             <div class="optimize-buttons">
-                <button onclick="applyOptimization()" class="apply-btn">적용하기</button>
-                <button onclick="closeOptimizeResults()" class="cancel-btn">취소</button>
+                <button onclick="closeOptimizeResults()" class="apply-btn">창 닫기</button>
             </div>
         </div>
     </div>
 
     <script src="assets/js/chak.js"></script>
     <script>
-
         document.addEventListener('DOMContentLoaded', function () {
-
             if (!sessionStorage.getItem('authenticated')) {
                 window.location.href = 'login.html';
                 return;
             }
 
             const username = sessionStorage.getItem('username');
-            document.getElementById('userWelcome').textContent = `환영합니다, ${username}님!`;
+            if (document.getElementById('userWelcome')) {
+                document.getElementById('userWelcome').textContent = `환영합니다, ${username}님!`;
+            }
 
-            document.getElementById('logoutBtn').addEventListener('click', function () {
-                sessionStorage.removeItem('authenticated');
-                sessionStorage.removeItem('username');
-                window.location.href = 'login.html';
-            });
+            if (document.getElementById('logoutBtn')) {
+                document.getElementById('logoutBtn').addEventListener('click', function () {
+                    sessionStorage.removeItem('authenticated');
+                    sessionStorage.removeItem('username');
+                    window.location.href = 'login.html';
+                });
+            }
         });
     </script>
 </body>

@@ -7,44 +7,6 @@ body {
     line-height: 1.6;
 }
 
-.sub-tabs {
-    display: flex;
-    justify-content: center;
-    margin: 20px auto;
-    background-color: #ffffff;
-    padding: 10px 0;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 600px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-}
-
-.sub-tabs .tab {
-    color: #2c3e50;
-    background-color: #f8f9fa;
-    border: none;
-    padding: 10px 20px;
-    margin: 0 8px;
-    border-radius: 30px;
-    font-size: 15px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    min-width: 80px;
-    text-align: center;
-}
-
-.sub-tabs .tab:hover {
-    background-color: #e3f2fd;
-    color: #1565c0;
-    transform: translateY(-2px);
-}
-
-.sub-tabs .tab.active {
-    background-color: #1976d2;
-    color: #fff;
-    box-shadow: 0 4px 10px rgba(25, 118, 210, 0.25);
-}
-
 .image-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));

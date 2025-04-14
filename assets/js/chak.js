@@ -75,15 +75,6 @@ function updateResourceSummary() {
 
   const resources = calculateResources();
 
-  const additionalGoldNeeded = Math.max(
-    0,
-    resources.goldButtons - userGoldButtons
-  );
-  const additionalOrbsNeeded = Math.max(
-    0,
-    resources.colorBalls - userColorBalls
-  );
-
   const goldButtonClass =
     userGoldButtons < 0 ? "resource-negative" : "resource-value";
   const colorBallClass =
@@ -106,12 +97,7 @@ function updateResourceSummary() {
     </div>
   `;
 
-  if (
-    userGoldButtons < 0 ||
-    userColorBalls < 0 ||
-    additionalGoldNeeded > 0 ||
-    additionalOrbsNeeded > 0
-  ) {
+  if (userGoldButtons < 0 || userColorBalls < 0) {
     html += `<div class="resource-needed">`;
 
     if (userGoldButtons < 0) {
@@ -122,12 +108,6 @@ function updateResourceSummary() {
         )}</span> 추가 필요
       </div>`;
     }
-    // else if (additionalGoldNeeded > 0) {
-    //   html += `<div class="needed-item">
-    //     <img src="assets/img/gold-button.jpg" alt="황금단추" class="resource-icon-img">
-    //     <span class="resource-negative">${additionalGoldNeeded}</span> 추가 필요
-    //   </div>`;
-    // }
 
     if (userColorBalls < 0) {
       html += `<div class="needed-item">
@@ -137,12 +117,6 @@ function updateResourceSummary() {
         )}</span> 추가 필요
       </div>`;
     }
-    // else if (additionalOrbsNeeded > 0) {
-    //   html += `<div class="needed-item">
-    //     <img src="assets/img/fivecolored-beads.jpg" alt="오색구슬" class="resource-icon-img">
-    //     <span class="resource-negative">${additionalOrbsNeeded}</span> 추가 필요
-    //   </div>`;
-    // }
 
     html += `</div>`;
   }
@@ -621,7 +595,6 @@ function showSearchResults() {
 
   const totalResources = calculateTotalResourcesForSearch(results);
 
-  // 1. 왼쪽 패널: 검색된 능력치 요약 정보
   let summaryStatsHtml = "";
   selectedStats.forEach((stat) => {
     const totalMaxValue = statTotalMaxValues[stat] || 0;
@@ -629,7 +602,6 @@ function showSearchResults() {
   });
   summaryStatsContainer.innerHTML = summaryStatsHtml;
 
-  // 2. 왼쪽 패널: 필요 자원 정보
   resourceRequirementContainer.innerHTML = `
     <div class="resource-req-item">
       <img src="assets/img/gold-button.jpg" alt="황금단추" class="resource-icon-img-small">
@@ -641,7 +613,6 @@ function showSearchResults() {
     </div>
   `;
 
-  // 3. 왼쪽 패널: 검색된 능력치 항목 목록
   let searchedStatsHtml = "";
   selectedStats.forEach((stat) => {
     const statResults = results.filter((result) => result.statName === stat);
@@ -655,7 +626,6 @@ function showSearchResults() {
   });
   searchedStatsContainer.innerHTML = searchedStatsHtml;
 
-  // 4. 오른쪽 패널: 능력치 위치 정보
   const groupedResults = {};
   results.forEach((result) => {
     if (!groupedResults[result.statName]) {
@@ -792,6 +762,15 @@ function closeOptimizeResults() {
   optimizationPlan = null;
 }
 
+function highlightStatInResults(statName) {
+  const allGroups = document.querySelectorAll(".compact-group");
+  allGroups.forEach((group) => {
+    if (group.dataset.stat === statName) {
+      group.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+}
+
 function selectStatFromSearch(part, level) {
   const partButtons = document.querySelectorAll(".equip-btn");
   let partButton = null;
@@ -835,12 +814,14 @@ function initUI() {
 
   if (goldButtonInput) {
     goldButtonInput.addEventListener("change", updateUserResources);
+    goldButtonInput.addEventListener("input", updateUserResources);
     userInputGoldButtons = parseInt(goldButtonInput.value) || 10000;
     userGoldButtons = userInputGoldButtons;
   }
 
   if (colorBallInput) {
     colorBallInput.addEventListener("change", updateUserResources);
+    colorBallInput.addEventListener("input", updateUserResources);
     userInputColorBalls = parseInt(colorBallInput.value) || 10000;
     userColorBalls = userInputColorBalls;
   }
@@ -1578,7 +1559,6 @@ function showPresetSearchResults(presetName, targetStats) {
             <span class="loc-level">${loc.level}</span>
           </div>
           <div class="loc-details">
-            <!-- <span class="loc-progress">${statusText}</span> -->
             <span class="loc-max-value">+${loc.maxValue}</span>
           </div>
         </div>`;
@@ -1725,12 +1705,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (goldButtonInput) {
     goldButtonInput.addEventListener("change", updateUserResources);
+    goldButtonInput.addEventListener("input", updateUserResources);
     userInputGoldButtons = parseInt(goldButtonInput.value) || 10000;
     userGoldButtons = userInputGoldButtons;
   }
 
   if (colorBallInput) {
     colorBallInput.addEventListener("change", updateUserResources);
+    colorBallInput.addEventListener("input", updateUserResources);
     userInputColorBalls = parseInt(colorBallInput.value) || 10000;
     userColorBalls = userInputColorBalls;
   }
@@ -1740,10 +1722,12 @@ document.addEventListener("click", function (event) {
   const searchInput = document.getElementById("search-input");
   const statOptions = document.getElementById("stat-options");
 
-  if (!event.target.closest(".search-wrapper") && statOptions) {
+  if (statOptions && !event.target.closest(".search-wrapper")) {
     statOptions.style.display = "none";
   }
 });
+
+document.addEventListener("touchstart", function () {}, { passive: true });
 
 fetch("output/chak.json")
   .then((response) => {
@@ -1752,36 +1736,14 @@ fetch("output/chak.json")
   })
   .then((data) => {
     equipmentData = data;
-
     allAvailableStats = collectAllStatNames();
-
     initUI();
-
     populateStatOptions();
-
-    const searchInput = document.getElementById("search-input");
-    if (searchInput) {
-      searchInput.addEventListener("click", function () {
-        const statOptions = document.getElementById("stat-options");
-        if (statOptions) {
-          statOptions.style.display = "block";
-        }
-      });
-
-      searchInput.addEventListener("input", filterStatOptions);
-
-      searchInput.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          searchStats();
-        }
-      });
-    }
-
     renderStats();
-
     updateResourceSummary();
   })
   .catch((error) => {
-    statsContainer.innerHTML = `<p class="text-red-500">${error.message}</p>`;
+    if (statsContainer) {
+      statsContainer.innerHTML = `<p class="text-red-500">${error.message}</p>`;
+    }
   });

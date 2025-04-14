@@ -22,39 +22,94 @@ const SOUL_VALUE = {
   low: 10,
 };
 
+const TYPE_NAME = {
+  legend: "전설",
+  immortal: "불멸",
+  dosak: "도색",
+};
+
+const TYPE_COLORS = {
+  legend: {
+    bg: "#e74c3c",
+    border: "#c0392b",
+    text: "white",
+  },
+  immortal: {
+    bg: "#f1c40f",
+    border: "#d4ac0d",
+    text: "white",
+  },
+};
+
 document.addEventListener("DOMContentLoaded", function () {
-  const tabs = document.querySelectorAll(".tab");
-  const contents = document.querySelectorAll(".tab-content");
+  initializeApp();
+});
 
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", function () {
-      const target = this.getAttribute("data-target");
+function initializeApp() {
+  setupEventListeners();
+  setupExpTypeTabs();
 
-      tabs.forEach((t) => t.classList.remove("active"));
-      this.classList.add("active");
-
-      contents.forEach((content) => {
-        content.classList.remove("active");
-        if (content.id === target) {
-          content.classList.add("active");
-        }
-      });
+  const inputs = document.querySelectorAll('input[type="number"]');
+  inputs.forEach((input) => {
+    input.addEventListener("input", function () {
+      if (this.value < 0) this.value = 0;
     });
   });
 
+  highlightCurrentTables();
+}
+
+function setupEventListeners() {
   document
     .getElementById("currentLevel")
     .addEventListener("change", validateInputs);
   document
     .getElementById("targetLevel")
     .addEventListener("change", validateInputs);
+  document
+    .getElementById("calculateBtn")
+    .addEventListener("click", handleCalculateClick);
+  document
+    .getElementById("expType")
+    .addEventListener("change", handleExpTypeChange);
+}
 
-  document.getElementById("expType").addEventListener("change", function () {
-    calculate();
+function handleExpTypeChange() {
+  const type = document.getElementById("expType").value;
+
+  // 탭 상태 업데이트
+  const expTabs = document.querySelectorAll(".exp-tab");
+  expTabs.forEach((tab) => {
+    tab.classList.remove("active");
+    if (tab.getAttribute("data-type") === type) {
+      tab.classList.add("active");
+    }
   });
 
-  setupExpTypeTabs();
-});
+  updateExpTables(type);
+  highlightCurrentTables();
+}
+
+function handleCalculateClick() {
+  const btn = document.getElementById("calculateBtn");
+
+  btn.classList.add("clicked");
+  setTimeout(() => {
+    btn.classList.remove("clicked");
+  }, 700);
+
+  const resultBoxes = document.querySelectorAll(".result-box");
+  resultBoxes.forEach((box) => {
+    box.classList.remove("flash");
+    void box.offsetWidth; // 리플로우 강제 발생 (애니메이션 재시작 위함)
+    box.classList.add("flash");
+  });
+
+  calculate();
+
+  const resultsPanel = document.getElementById("resultsPanel");
+  resultsPanel.classList.remove("hidden");
+}
 
 function setupExpTypeTabs() {
   const expTabs = document.querySelectorAll(".exp-tab");
@@ -66,7 +121,9 @@ function setupExpTypeTabs() {
       expTabs.forEach((t) => t.classList.remove("active"));
       this.classList.add("active");
 
+      updateSelectedExpType(type);
       updateExpTables(type);
+      highlightCurrentTables();
     });
   });
 
@@ -100,7 +157,6 @@ function updateExpTables(type) {
     rightTable.appendChild(row);
   }
 
-  updateSelectedExpType(type);
   highlightCurrentTables();
 }
 
@@ -124,12 +180,21 @@ function validateInputs() {
     targetLevel.value = parseInt(currentLevel.value) + 1;
     if (parseInt(targetLevel.value) > 25) targetLevel.value = 25;
   }
+
+  highlightCurrentTables();
 }
 
 function calculate() {
   const type = document.getElementById("expType").value;
-  const current = parseInt(document.getElementById("currentLevel").value);
-  const target = parseInt(document.getElementById("targetLevel").value);
+  const typeName = TYPE_NAME[type] || type;
+  const typeColor = TYPE_COLORS[type] || {
+    bg: "#f5f5f5",
+    border: "#e0e0e0",
+    text: "#333",
+  };
+
+  const current = parseInt(document.getElementById("currentLevel").value) || 0;
+  const target = parseInt(document.getElementById("targetLevel").value) || 1;
   const requiredDiv = document.getElementById("required");
   const maxLevelDiv = document.getElementById("maxLevel");
 
@@ -173,8 +238,10 @@ function calculate() {
   );
   const lowNeeded = Math.ceil((remainingExp % SOUL_VALUE.mid) / SOUL_VALUE.low);
 
+  const typeBadgeStyle = `background-color: ${typeColor.bg}; border-color: ${typeColor.border}; color: ${typeColor.text};`;
+
   requiredDiv.innerHTML = `
-    <div class="result-title required-title">필요 환수혼</div>
+    <div class="result-title required-title">필요 환수혼 <span class="type-badge" style="${typeBadgeStyle}">${typeName}</span></div>
     <div class="result-section">
       <div class="data-row">
         <span>레벨 ${current} → ${target}</span>
@@ -250,7 +317,7 @@ function calculate() {
   }
 
   maxLevelDiv.innerHTML = `
-    <div class="result-title max-title">도달 가능 레벨</div>
+    <div class="result-title max-title">도달 가능 레벨 <span class="type-badge" style="${typeBadgeStyle}">${typeName}</span></div>
     <div class="result-section">
       <div class="data-row">
         <span>보유 환수혼</span>
@@ -322,6 +389,10 @@ function highlightCurrentTables() {
     rightRows[target - 14].classList.add("target-level");
   }
 
+  if (document.getElementById("resultsPanel").classList.contains("hidden")) {
+    return;
+  }
+
   const highSoul = parseInt(document.getElementById("highSoul").value) || 0;
   const midSoul = parseInt(document.getElementById("midSoul").value) || 0;
   const lowSoul = parseInt(document.getElementById("lowSoul").value) || 0;
@@ -367,7 +438,3 @@ function clearTableHighlights(rows) {
 function openTab(name) {
   alert(`"${name}" 탭은 구현되지 않았습니다.\n필요 시 페이지를 연락하세요.`);
 }
-
-window.onload = () => {
-  setupExpTypeTabs();
-};

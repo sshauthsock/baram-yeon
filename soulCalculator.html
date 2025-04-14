@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>환수혼 계산기</title>
     <link href="assets/css/soulCalculator.css" rel="stylesheet">
     <link href="assets/css/global.css" rel="stylesheet">
@@ -11,7 +12,7 @@
 <body>
     <div class="tabs">
         <div class="tab" onclick="location.assign('index.html')">환수정보</div>
-        <div class="tab active" onclick="location.assign('bondCalculator.html')">환수 결속</div>
+        <div class="tab" onclick="location.assign('bondCalculator.html')">환수 결속</div>
         <div class="tab active" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
         <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
     </div>
@@ -91,17 +92,17 @@
                         <input type="number" id="lowSoul" min="0" value="0">
                     </div>
                     <div class="calc-btn">
-                        <button onclick="calculate()">계산</button>
+                        <button id="calculateBtn">계산</button>
                     </div>
                 </div>
             </div>
 
-            <div class="results-panel">
+            <div class="results-panel hidden" id="resultsPanel">
                 <div class="result-column">
-                    <div id="required"></div>
+                    <div id="required" class="result-box"></div>
                 </div>
                 <div class="result-column">
-                    <div id="maxLevel"></div>
+                    <div id="maxLevel" class="result-box"></div>
                 </div>
             </div>
         </div>

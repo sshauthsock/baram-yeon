@@ -5,6 +5,7 @@ body {
     background-color: #f0f2f5;
     color: #333;
     line-height: 1.6;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .top-controls {
@@ -41,6 +42,7 @@ body {
     display: flex;
     gap: 15px;
     margin-bottom: 15px;
+    flex-wrap: wrap;
 }
 
 .resources-section {
@@ -54,7 +56,19 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex: 0 0 auto;
+    flex: 1 1 auto;
+    min-width: 130px;
+}
+
+.resource-input input {
+    width: 100%;
+    min-width: 80px;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .resource-icon-img {
@@ -369,6 +383,7 @@ h3 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     position: relative;
     font-size: 13px;
+    touch-action: manipulation;
 }
 
 .equip-btn {
@@ -544,6 +559,8 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
+    touch-action: manipulation;
+    min-height: 36px;
 }
 
 .action-btn:hover {
@@ -571,6 +588,8 @@ h3 {
     cursor: pointer;
     font-size: 12px;
     transition: all 0.2s ease;
+    touch-action: manipulation;
+    min-height: 28px;
 }
 
 .redistribute-btn:hover {
@@ -721,6 +740,7 @@ h3 {
     font-weight: bold;
     cursor: pointer;
     transition: color 0.2s;
+    padding: 0 10px;
 }
 
 .close-modal:hover {
@@ -844,6 +864,7 @@ h3 {
     width: 100%;
     height: 65px;
     box-sizing: border-box;
+    touch-action: manipulation;
 }
 
 .stat-location:hover {
@@ -1011,15 +1032,6 @@ h3 {
     max-height: 70vh;
     box-sizing: border-box;
 }
-
-/* .optimize-results {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 15px;
-    box-sizing: border-box;
-    justify-content: start;
-} */
 
 .preset-summary {
     background-color: #f8fafc;
@@ -1195,6 +1207,8 @@ h3 {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
+    min-height: 38px;
+    touch-action: manipulation;
 }
 
 .apply-btn:hover {
@@ -1210,6 +1224,8 @@ h3 {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
+    min-height: 38px;
+    touch-action: manipulation;
 }
 
 .cancel-btn:hover {
@@ -1274,8 +1290,6 @@ h3 {
     font-weight: 600;
 }
 
-
-
 .compact-group {
     width: 100%;
     box-sizing: border-box;
@@ -1337,6 +1351,7 @@ h3 {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     border: 1px solid #e5e7eb;
     height: 60px;
+    touch-action: manipulation;
 }
 
 .compact-location:hover {
@@ -1399,6 +1414,10 @@ h3 {
 }
 
 @media (max-width: 1200px) {
+    .container {
+        padding: 0 15px;
+    }
+
     .compact-locations {
         grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     }
@@ -1413,6 +1432,7 @@ h3 {
     .right-panel {
         flex: 1;
         width: 100%;
+        padding: 20px;
     }
 
     .level-btn {
@@ -1443,6 +1463,11 @@ h3 {
     .search-results {
         flex: 0 0 100%;
         max-height: 40vh;
+        padding-right: 0;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
     }
 }
 
@@ -1450,27 +1475,53 @@ h3 {
     .container {
         flex-direction: column;
         padding: 0 15px;
+        gap: 15px;
     }
 
     .left {
         width: 100%;
+        min-width: 100%;
+    }
+
+    .center-panel,
+    .right-panel {
+        padding: 15px;
     }
 
     .button-grid {
         flex-direction: row;
         flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .selector-btn.equip-btn {
+        flex: 0 0 calc(33.33% - 5px);
     }
 
     .level-btn {
-        flex: 0 0 calc(25% - 6px);
+        flex: 0 0 calc(25% - 4px);
     }
 
     .preset-buttons {
-        flex-direction: column;
+        flex-direction: row;
+    }
+
+    .preset-btn {
+        flex: 1;
     }
 
     .compact-locations {
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+        margin: 5% auto;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -1483,8 +1534,17 @@ h3 {
         flex-direction: column;
     }
 
+    .resource-inputs {
+        flex-direction: column;
+        gap: 10px;
+    }
+
     .resource-input {
         width: 100%;
+    }
+
+    .resource-input input {
+        flex: 1;
     }
 
     .level-buttons {
@@ -1499,10 +1559,6 @@ h3 {
     .selector-btn {
         padding: 6px 10px;
         font-size: 12px;
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr;
     }
 
     .stat-card h3 {
@@ -1524,5 +1580,37 @@ h3 {
         padding: 10px;
         width: 98%;
         margin: 1% auto;
+    }
+
+    .search-results-container,
+    .optimize-container {
+        flex-direction: column;
+    }
+
+    .search-results-wrapper,
+    .optimize-description {
+        flex: 0 0 100%;
+        max-height: 30vh;
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+
+    .search-results,
+    .optimize-results-container {
+        flex: 0 0 100%;
+        max-height: 50vh;
+    }
+
+    .search-btn {
+        padding: 0 8px;
+    }
+
+    .optimize-buttons {
+        flex-direction: column;
+    }
+
+    .apply-btn,
+    .cancel-btn {
+        width: 100%;
     }
 }

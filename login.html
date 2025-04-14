@@ -97,14 +97,12 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            // 로그인 검증
             if (username === '귀검팟' && password === '123123') {
-                // 로그인 성공
+
                 sessionStorage.setItem('authenticated', 'true');
                 sessionStorage.setItem('username', username);
                 window.location.href = 'index.html';
             } else {
-                // 로그인 실패
                 document.getElementById('error-message').textContent = '사용자 이름 또는 비밀번호가 올바르지 않습니다.';
             }
         });

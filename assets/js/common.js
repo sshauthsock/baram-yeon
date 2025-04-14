@@ -1,4 +1,3 @@
-// 탭 클릭 시 해당 탭 렌더링
 document.addEventListener("DOMContentLoaded", function () {
   const tabs = document.querySelectorAll(".tab");
 
