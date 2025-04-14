@@ -20589,35 +20589,2733 @@
   },
   {
     "name": "극진 흑시응사",
-    "image": "images/transform/transform_59.jpg"
+    "image": "images/transform/transform_59.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "damageResistance": "300",
+          "healthIncreasePercent": "33",
+          "magicIncreasePercent": "33",
+          "pvpDamagePercent": "3",
+          "pvpDefensePercent": "3",
+          "movementSpeed": "9"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "damageResistance": "305",
+          "healthIncreasePercent": "33",
+          "magicIncreasePercent": "33",
+          "pvpDamagePercent": "3",
+          "pvpDefensePercent": "3",
+          "movementSpeed": "9"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "damageResistance": "310",
+          "healthIncreasePercent": "33",
+          "magicIncreasePercent": "33",
+          "pvpDamagePercent": "3",
+          "pvpDefensePercent": "3",
+          "movementSpeed": "9"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "damageResistance": "320",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "damageResistance": "325",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "damageResistance": "335",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "damageResistance": "340",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "damageResistance": "345",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "damageResistance": "365",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "damageResistance": "375",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "damageResistance": "385",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "damageResistance": "395",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "damageResistance": "415",
+          "healthIncreasePercent": "38",
+          "magicIncreasePercent": "38",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "damageResistance": "445",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "pvpDamagePercent": "6",
+          "pvpDefensePercent": "6",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "damageResistance": "465",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "pvpDamagePercent": "6",
+          "pvpDefensePercent": "6",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "damageResistance": "495",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "pvpDamagePercent": "7",
+          "pvpDefensePercent": "7",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "damageResistance": "525",
+          "healthIncreasePercent": "40",
+          "magicIncreasePercent": "40",
+          "pvpDamagePercent": "8",
+          "pvpDefensePercent": "8",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "damageResistance": "555",
+          "healthIncreasePercent": "41",
+          "magicIncreasePercent": "41",
+          "pvpDamagePercent": "8",
+          "pvpDefensePercent": "8",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "damageResistance": "585",
+          "healthIncreasePercent": "42",
+          "magicIncreasePercent": "42",
+          "pvpDamagePercent": "9",
+          "pvpDefensePercent": "9",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "damageResistance": "615",
+          "healthIncreasePercent": "43",
+          "magicIncreasePercent": "43",
+          "pvpDamagePercent": "9",
+          "pvpDefensePercent": "9",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "damageResistance": "645",
+          "healthIncreasePercent": "44",
+          "magicIncreasePercent": "44",
+          "pvpDamagePercent": "10",
+          "pvpDefensePercent": "10",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "damageResistance": "685",
+          "healthIncreasePercent": "45",
+          "magicIncreasePercent": "45",
+          "pvpDamagePercent": "11",
+          "pvpDefensePercent": "11",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "damageResistance": "720",
+          "healthIncreasePercent": "46",
+          "magicIncreasePercent": "46",
+          "pvpDamagePercent": "11",
+          "pvpDefensePercent": "11",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "damageResistance": "760",
+          "healthIncreasePercent": "47",
+          "magicIncreasePercent": "47",
+          "pvpDamagePercent": "12",
+          "pvpDefensePercent": "12",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "damageResistance": "795",
+          "healthIncreasePercent": "48",
+          "magicIncreasePercent": "48",
+          "pvpDamagePercent": "12",
+          "pvpDefensePercent": "12",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistance": "840",
+          "healthIncreasePercent": "50",
+          "magicIncreasePercent": "50",
+          "pvpDamagePercent": "13",
+          "pvpDefensePercent": "13",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "고요",
+    "type": "변신",
+    "grade": "전설"
   },
   {
     "name": "극진 혈독청편",
-    "image": "images/transform/transform_60.jpg"
+    "image": "images/transform/transform_60.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "damageResistancePenetration": "300",
+          "healthIncreasePercent": "33",
+          "magicIncreasePercent": "33",
+          "pvpDamagePercent": "3",
+          "pvpDefensePercent": "3",
+          "movementSpeed": "9"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "damageResistancePenetration": "305",
+          "healthIncreasePercent": "33",
+          "magicIncreasePercent": "33",
+          "pvpDamagePercent": "3",
+          "pvpDefensePercent": "3",
+          "movementSpeed": "9"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "damageResistancePenetration": "310",
+          "healthIncreasePercent": "33",
+          "magicIncreasePercent": "33",
+          "pvpDamagePercent": "3",
+          "pvpDefensePercent": "3",
+          "movementSpeed": "9"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "damageResistancePenetration": "320",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "damageResistancePenetration": "325",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "damageResistancePenetration": "335",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "damageResistancePenetration": "340",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "damageResistancePenetration": "345",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "damageResistancePenetration": "365",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "damageResistancePenetration": "375",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "damageResistancePenetration": "385",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "damageResistancePenetration": "395",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "damageResistancePenetration": "415",
+          "healthIncreasePercent": "38",
+          "magicIncreasePercent": "38",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "damageResistancePenetration": "445",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "pvpDamagePercent": "6",
+          "pvpDefensePercent": "6",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "damageResistancePenetration": "465",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "pvpDamagePercent": "6",
+          "pvpDefensePercent": "6",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "damageResistancePenetration": "495",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "pvpDamagePercent": "7",
+          "pvpDefensePercent": "7",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "damageResistancePenetration": "525",
+          "healthIncreasePercent": "40",
+          "magicIncreasePercent": "40",
+          "pvpDamagePercent": "8",
+          "pvpDefensePercent": "8",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "damageResistancePenetration": "555",
+          "healthIncreasePercent": "41",
+          "magicIncreasePercent": "41",
+          "pvpDamagePercent": "8",
+          "pvpDefensePercent": "8",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "damageResistancePenetration": "585",
+          "healthIncreasePercent": "42",
+          "magicIncreasePercent": "42",
+          "pvpDamagePercent": "9",
+          "pvpDefensePercent": "9",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "damageResistancePenetration": "615",
+          "healthIncreasePercent": "43",
+          "magicIncreasePercent": "43",
+          "pvpDamagePercent": "9",
+          "pvpDefensePercent": "9",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "damageResistancePenetration": "645",
+          "healthIncreasePercent": "44",
+          "magicIncreasePercent": "44",
+          "pvpDamagePercent": "10",
+          "pvpDefensePercent": "10",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "damageResistancePenetration": "685",
+          "healthIncreasePercent": "45",
+          "magicIncreasePercent": "45",
+          "pvpDamagePercent": "11",
+          "pvpDefensePercent": "11",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "damageResistancePenetration": "720",
+          "healthIncreasePercent": "46",
+          "magicIncreasePercent": "46",
+          "pvpDamagePercent": "11",
+          "pvpDefensePercent": "11",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "damageResistancePenetration": "760",
+          "healthIncreasePercent": "47",
+          "magicIncreasePercent": "47",
+          "pvpDamagePercent": "12",
+          "pvpDefensePercent": "12",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "damageResistancePenetration": "795",
+          "healthIncreasePercent": "48",
+          "magicIncreasePercent": "48",
+          "pvpDamagePercent": "12",
+          "pvpDefensePercent": "12",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistancePenetration": "840",
+          "healthIncreasePercent": "50",
+          "magicIncreasePercent": "50",
+          "pvpDamagePercent": "13",
+          "pvpDefensePercent": "13",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "고요",
+    "type": "변신",
+    "grade": "전설"
   },
   {
     "name": "극진 청령사록",
-    "image": "images/transform/transform_61.jpg"
+    "image": "images/transform/transform_61.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "damageResistancePenetration": "275",
+          "healthIncreasePercent": "30",
+          "magicIncreasePercent": "30",
+          "pvpDefensePercent": "7",
+          "pvpDefense": "3,500",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "damageResistancePenetration": "280",
+          "healthIncreasePercent": "30",
+          "magicIncreasePercent": "30",
+          "pvpDefensePercent": "7",
+          "pvpDefense": "3,556",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "damageResistancePenetration": "285",
+          "healthIncreasePercent": "30",
+          "magicIncreasePercent": "30",
+          "pvpDefensePercent": "7",
+          "pvpDefense": "3,612",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "damageResistancePenetration": "295",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "pvpDefensePercent": "8",
+          "pvpDefense": "3,762",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "damageResistancePenetration": "300",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "pvpDefensePercent": "8",
+          "pvpDefense": "3,818",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "damageResistancePenetration": "310",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "pvpDefensePercent": "9",
+          "pvpDefense": "3,874",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "damageResistancePenetration": "315",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "pvpDefensePercent": "9",
+          "pvpDefense": "3,930",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "damageResistancePenetration": "320",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "pvpDefensePercent": "9",
+          "pvpDefense": "3,986",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "damageResistancePenetration": "340",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "pvpDefensePercent": "10",
+          "pvpDefense": "4,136",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "damageResistancePenetration": "350",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "pvpDefensePercent": "10",
+          "pvpDefense": "4,192",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "damageResistancePenetration": "360",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "pvpDefensePercent": "10",
+          "pvpDefense": "4,248",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "damageResistancePenetration": "370",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "pvpDefensePercent": "11",
+          "pvpDefense": "4,304",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "damageResistancePenetration": "390",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "pvpDefensePercent": "11",
+          "pvpDefense": "4,360",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "damageResistancePenetration": "420",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "pvpDefensePercent": "13",
+          "pvpDefense": "4,510",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "damageResistancePenetration": "440",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "pvpDefensePercent": "13",
+          "pvpDefense": "4,566",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "damageResistancePenetration": "470",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "pvpDefensePercent": "15",
+          "pvpDefense": "4,622",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "damageResistancePenetration": "500",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "pvpDefensePercent": "17",
+          "pvpDefense": "4,772",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "damageResistancePenetration": "530",
+          "healthIncreasePercent": "38",
+          "magicIncreasePercent": "38",
+          "pvpDefensePercent": "17",
+          "pvpDefense": "4,922",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "damageResistancePenetration": "560",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "pvpDefensePercent": "19",
+          "pvpDefense": "5,172",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "damageResistancePenetration": "590",
+          "healthIncreasePercent": "40",
+          "magicIncreasePercent": "40",
+          "pvpDefensePercent": "19",
+          "pvpDefense": "5,422",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "damageResistancePenetration": "620",
+          "healthIncreasePercent": "41",
+          "magicIncreasePercent": "41",
+          "pvpDefensePercent": "21",
+          "pvpDefense": "5,672",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "damageResistancePenetration": "655",
+          "healthIncreasePercent": "42",
+          "magicIncreasePercent": "42",
+          "pvpDefensePercent": "23",
+          "pvpDefense": "6,222",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "damageResistancePenetration": "685",
+          "healthIncreasePercent": "43",
+          "magicIncreasePercent": "43",
+          "pvpDefensePercent": "23",
+          "pvpDefense": "6,772",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "damageResistancePenetration": "720",
+          "healthIncreasePercent": "44",
+          "magicIncreasePercent": "44",
+          "pvpDefensePercent": "25",
+          "pvpDefense": "7,332",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "damageResistancePenetration": "750",
+          "healthIncreasePercent": "45",
+          "magicIncreasePercent": "45",
+          "pvpDefensePercent": "25",
+          "pvpDefense": "7,872",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistancePenetration": "790",
+          "healthIncreasePercent": "47",
+          "magicIncreasePercent": "47",
+          "pvpDefensePercent": "27",
+          "pvpDefense": "8,622",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "의지",
+    "type": "변신",
+    "grade": "전설"
   },
   {
     "name": "극진 묵시홍편",
-    "image": "images/transform/transform_62.jpg"
+    "image": "images/transform/transform_62.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "damageResistance": "275",
+          "healthIncreasePercent": "30",
+          "magicIncreasePercent": "30",
+          "pvpDamagePercent": "7",
+          "pvpDefense": "3,500",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "damageResistance": "280",
+          "healthIncreasePercent": "30",
+          "magicIncreasePercent": "30",
+          "pvpDamagePercent": "7",
+          "pvpDefense": "3,556",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "damageResistance": "285",
+          "healthIncreasePercent": "30",
+          "magicIncreasePercent": "30",
+          "pvpDamagePercent": "7",
+          "pvpDefense": "3,612",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "damageResistance": "295",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "pvpDamagePercent": "8",
+          "pvpDefense": "3,762",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "damageResistance": "300",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "pvpDamagePercent": "8",
+          "pvpDefense": "3,818",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "damageResistance": "310",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "pvpDamagePercent": "9",
+          "pvpDefense": "3,874",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "damageResistance": "315",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "pvpDamagePercent": "9",
+          "pvpDefense": "3,930",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "damageResistance": "320",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "pvpDamagePercent": "9",
+          "pvpDefense": "3,986",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "damageResistance": "340",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "pvpDamagePercent": "10",
+          "pvpDefense": "4,136",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "damageResistance": "350",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "pvpDamagePercent": "10",
+          "pvpDefense": "4,192",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "damageResistance": "360",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "pvpDamagePercent": "10",
+          "pvpDefense": "4,248",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "damageResistance": "370",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "pvpDamagePercent": "11",
+          "pvpDefense": "4,304",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "damageResistance": "390",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "pvpDamagePercent": "11",
+          "pvpDefense": "4,360",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "damageResistance": "420",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "pvpDamagePercent": "13",
+          "pvpDefense": "4,510",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "damageResistance": "440",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "pvpDamagePercent": "13",
+          "pvpDefense": "4,566",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "damageResistance": "470",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "pvpDamagePercent": "15",
+          "pvpDefense": "4,622",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "damageResistance": "500",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "pvpDamagePercent": "17",
+          "pvpDefense": "4,772",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "damageResistance": "530",
+          "healthIncreasePercent": "38",
+          "magicIncreasePercent": "38",
+          "pvpDamagePercent": "17",
+          "pvpDefense": "4,922",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "damageResistance": "560",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "pvpDamagePercent": "19",
+          "pvpDefense": "5,172",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "damageResistance": "590",
+          "healthIncreasePercent": "40",
+          "magicIncreasePercent": "40",
+          "pvpDamagePercent": "19",
+          "pvpDefense": "5,422",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "damageResistance": "620",
+          "healthIncreasePercent": "41",
+          "magicIncreasePercent": "41",
+          "pvpDamagePercent": "21",
+          "pvpDefense": "5,672",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "damageResistance": "655",
+          "healthIncreasePercent": "42",
+          "magicIncreasePercent": "42",
+          "pvpDamagePercent": "23",
+          "pvpDefense": "6,222",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "damageResistance": "685",
+          "healthIncreasePercent": "43",
+          "magicIncreasePercent": "43",
+          "pvpDamagePercent": "23",
+          "pvpDefense": "6,772",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "damageResistance": "720",
+          "healthIncreasePercent": "44",
+          "magicIncreasePercent": "44",
+          "pvpDamagePercent": "25",
+          "pvpDefense": "7,332",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "damageResistance": "750",
+          "healthIncreasePercent": "45",
+          "magicIncreasePercent": "45",
+          "pvpDamagePercent": "25",
+          "pvpDefense": "7,872",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistance": "790",
+          "healthIncreasePercent": "47",
+          "magicIncreasePercent": "47",
+          "pvpDamagePercent": "27",
+          "pvpDefense": "8,622",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "의지",
+    "type": "변신",
+    "grade": "전설"
   },
   {
     "name": "극진 사흉:혼돈",
-    "image": "images/transform/transform_63.jpg"
+    "image": "images/transform/transform_63.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "damageResistancePenetration": "200",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "normalMonsterPenetration": "250",
+          "normalMonsterAdditionalDamage": "290",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "damageResistancePenetration": "205",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "normalMonsterPenetration": "255",
+          "normalMonsterAdditionalDamage": "291",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "damageResistancePenetration": "210",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "normalMonsterPenetration": "260",
+          "normalMonsterAdditionalDamage": "292",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "damageResistancePenetration": "220",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "normalMonsterPenetration": "265",
+          "normalMonsterAdditionalDamage": "297",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "damageResistancePenetration": "225",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "normalMonsterPenetration": "270",
+          "normalMonsterAdditionalDamage": "298",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "damageResistancePenetration": "235",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "normalMonsterPenetration": "275",
+          "normalMonsterAdditionalDamage": "299",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "damageResistancePenetration": "240",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "normalMonsterPenetration": "280",
+          "normalMonsterAdditionalDamage": "300",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "damageResistancePenetration": "245",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "normalMonsterPenetration": "285",
+          "normalMonsterAdditionalDamage": "301",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "damageResistancePenetration": "265",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "normalMonsterPenetration": "290",
+          "normalMonsterAdditionalDamage": "306",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "damageResistancePenetration": "275",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "normalMonsterPenetration": "295",
+          "normalMonsterAdditionalDamage": "307",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "damageResistancePenetration": "285",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "normalMonsterPenetration": "300",
+          "normalMonsterAdditionalDamage": "308",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "damageResistancePenetration": "295",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "normalMonsterPenetration": "305",
+          "normalMonsterAdditionalDamage": "309",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "damageResistancePenetration": "315",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "normalMonsterPenetration": "310",
+          "normalMonsterAdditionalDamage": "310",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "damageResistancePenetration": "335",
+          "healthIncreasePercent": "38",
+          "magicIncreasePercent": "38",
+          "normalMonsterPenetration": "315",
+          "normalMonsterAdditionalDamage": "315",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "damageResistancePenetration": "355",
+          "healthIncreasePercent": "38",
+          "magicIncreasePercent": "38",
+          "normalMonsterPenetration": "320",
+          "normalMonsterAdditionalDamage": "316",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "damageResistancePenetration": "375",
+          "healthIncreasePercent": "38",
+          "magicIncreasePercent": "38",
+          "normalMonsterPenetration": "330",
+          "normalMonsterAdditionalDamage": "317",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "damageResistancePenetration": "395",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "normalMonsterPenetration": "340",
+          "normalMonsterAdditionalDamage": "322",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "damageResistancePenetration": "415",
+          "healthIncreasePercent": "40",
+          "magicIncreasePercent": "40",
+          "normalMonsterPenetration": "350",
+          "normalMonsterAdditionalDamage": "327",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "damageResistancePenetration": "435",
+          "healthIncreasePercent": "41",
+          "magicIncreasePercent": "41",
+          "normalMonsterPenetration": "360",
+          "normalMonsterAdditionalDamage": "337",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "damageResistancePenetration": "455",
+          "healthIncreasePercent": "42",
+          "magicIncreasePercent": "42",
+          "normalMonsterPenetration": "380",
+          "normalMonsterAdditionalDamage": "342",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "damageResistancePenetration": "475",
+          "healthIncreasePercent": "43",
+          "magicIncreasePercent": "43",
+          "normalMonsterPenetration": "400",
+          "normalMonsterAdditionalDamage": "367",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "damageResistancePenetration": "500",
+          "healthIncreasePercent": "44",
+          "magicIncreasePercent": "44",
+          "normalMonsterPenetration": "430",
+          "normalMonsterAdditionalDamage": "412",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "damageResistancePenetration": "520",
+          "healthIncreasePercent": "44",
+          "magicIncreasePercent": "44",
+          "normalMonsterPenetration": "445",
+          "normalMonsterAdditionalDamage": "447",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "damageResistancePenetration": "545",
+          "healthIncreasePercent": "45",
+          "magicIncreasePercent": "45",
+          "normalMonsterPenetration": "475",
+          "normalMonsterAdditionalDamage": "492",
+          "movementSpeed": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "damageResistancePenetration": "565",
+          "healthIncreasePercent": "46",
+          "magicIncreasePercent": "46",
+          "normalMonsterPenetration": "490",
+          "normalMonsterAdditionalDamage": "527",
+          "movementSpeed": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistancePenetration": "600",
+          "healthIncreasePercent": "47",
+          "magicIncreasePercent": "47",
+          "normalMonsterPenetration": "535",
+          "normalMonsterAdditionalDamage": "597",
+          "movementSpeed": "15"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "냉정",
+    "type": "변신",
+    "grade": "전설"
   },
   {
     "name": "극진 청순범경",
-    "image": "images/transform/transform_64.jpg"
+    "image": "images/transform/transform_64.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "damageResistance": "200",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "normalMonsterPenetration": "250",
+          "normalMonsterAdditionalDamage": "290",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "damageResistance": "205",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "normalMonsterPenetration": "255",
+          "normalMonsterAdditionalDamage": "291",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "damageResistance": "210",
+          "healthIncreasePercent": "32",
+          "magicIncreasePercent": "32",
+          "normalMonsterPenetration": "260",
+          "normalMonsterAdditionalDamage": "292",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "damageResistance": "220",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "normalMonsterPenetration": "265",
+          "normalMonsterAdditionalDamage": "297",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "damageResistance": "225",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "normalMonsterPenetration": "270",
+          "normalMonsterAdditionalDamage": "298",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "damageResistance": "235",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "normalMonsterPenetration": "275",
+          "normalMonsterAdditionalDamage": "299",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "damageResistance": "240",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "normalMonsterPenetration": "280",
+          "normalMonsterAdditionalDamage": "300",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "damageResistance": "245",
+          "healthIncreasePercent": "34",
+          "magicIncreasePercent": "34",
+          "normalMonsterPenetration": "285",
+          "normalMonsterAdditionalDamage": "301",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "damageResistance": "265",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "normalMonsterPenetration": "290",
+          "normalMonsterAdditionalDamage": "306",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "damageResistance": "275",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "normalMonsterPenetration": "295",
+          "normalMonsterAdditionalDamage": "307",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "damageResistance": "285",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "normalMonsterPenetration": "300",
+          "normalMonsterAdditionalDamage": "308",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "damageResistance": "295",
+          "healthIncreasePercent": "36",
+          "magicIncreasePercent": "36",
+          "normalMonsterPenetration": "305",
+          "normalMonsterAdditionalDamage": "309",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "damageResistance": "315",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "normalMonsterPenetration": "310",
+          "normalMonsterAdditionalDamage": "310",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "damageResistance": "335",
+          "healthIncreasePercent": "38",
+          "magicIncreasePercent": "38",
+          "normalMonsterPenetration": "315",
+          "normalMonsterAdditionalDamage": "315",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "damageResistance": "355",
+          "healthIncreasePercent": "38",
+          "magicIncreasePercent": "38",
+          "normalMonsterPenetration": "320",
+          "normalMonsterAdditionalDamage": "316",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "damageResistance": "375",
+          "healthIncreasePercent": "38",
+          "magicIncreasePercent": "38",
+          "normalMonsterPenetration": "330",
+          "normalMonsterAdditionalDamage": "317",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "damageResistance": "395",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "normalMonsterPenetration": "340",
+          "normalMonsterAdditionalDamage": "322",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "damageResistance": "415",
+          "healthIncreasePercent": "40",
+          "magicIncreasePercent": "40",
+          "normalMonsterPenetration": "350",
+          "normalMonsterAdditionalDamage": "327",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "damageResistance": "435",
+          "healthIncreasePercent": "41",
+          "magicIncreasePercent": "41",
+          "normalMonsterPenetration": "360",
+          "normalMonsterAdditionalDamage": "337",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "damageResistance": "455",
+          "healthIncreasePercent": "42",
+          "magicIncreasePercent": "42",
+          "normalMonsterPenetration": "380",
+          "normalMonsterAdditionalDamage": "342",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "damageResistance": "475",
+          "healthIncreasePercent": "43",
+          "magicIncreasePercent": "43",
+          "normalMonsterPenetration": "400",
+          "normalMonsterAdditionalDamage": "367",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "damageResistance": "500",
+          "healthIncreasePercent": "44",
+          "magicIncreasePercent": "44",
+          "normalMonsterPenetration": "430",
+          "normalMonsterAdditionalDamage": "412",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "damageResistance": "520",
+          "healthIncreasePercent": "44",
+          "magicIncreasePercent": "44",
+          "normalMonsterPenetration": "445",
+          "normalMonsterAdditionalDamage": "447",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "damageResistance": "545",
+          "healthIncreasePercent": "45",
+          "magicIncreasePercent": "45",
+          "normalMonsterPenetration": "475",
+          "normalMonsterAdditionalDamage": "492",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "damageResistance": "565",
+          "healthIncreasePercent": "46",
+          "magicIncreasePercent": "46",
+          "normalMonsterPenetration": "490",
+          "normalMonsterAdditionalDamage": "527",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistance": "600",
+          "healthIncreasePercent": "47",
+          "magicIncreasePercent": "47",
+          "normalMonsterPenetration": "535",
+          "normalMonsterAdditionalDamage": "597",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "냉정",
+    "type": "변신",
+    "grade": "전설"
   },
   {
     "name": "극진 금작천우",
-    "image": "images/transform/transform_65.jpg"
+    "image": "images/transform/transform_65.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "damageResistancePenetration": "40",
+          "damageResistance": "330",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "manaRecoveryImprovement": "40",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "damageResistancePenetration": "41",
+          "damageResistance": "332",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "manaRecoveryImprovement": "41",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "damageResistancePenetration": "42",
+          "damageResistance": "335",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "manaRecoveryImprovement": "42",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "damageResistancePenetration": "45",
+          "damageResistance": "350",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "manaRecoveryImprovement": "43",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "damageResistancePenetration": "46",
+          "damageResistance": "353",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "manaRecoveryImprovement": "44",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "damageResistancePenetration": "47",
+          "damageResistance": "356",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "manaRecoveryImprovement": "45",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "damageResistancePenetration": "48",
+          "damageResistance": "359",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "manaRecoveryImprovement": "46",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "damageResistancePenetration": "49",
+          "damageResistance": "362",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "manaRecoveryImprovement": "47",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "damageResistancePenetration": "52",
+          "damageResistance": "377",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "manaRecoveryImprovement": "49",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "damageResistancePenetration": "53",
+          "damageResistance": "381",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "manaRecoveryImprovement": "50",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "damageResistancePenetration": "54",
+          "damageResistance": "385",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "manaRecoveryImprovement": "51",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "damageResistancePenetration": "55",
+          "damageResistance": "389",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "manaRecoveryImprovement": "52",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "damageResistancePenetration": "56",
+          "damageResistance": "393",
+          "healthIncreasePercent": "40",
+          "magicIncreasePercent": "40",
+          "manaRecoveryImprovement": "53",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "damageResistancePenetration": "59",
+          "damageResistance": "408",
+          "healthIncreasePercent": "41",
+          "magicIncreasePercent": "41",
+          "manaRecoveryImprovement": "54",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "damageResistancePenetration": "60",
+          "damageResistance": "418",
+          "healthIncreasePercent": "41",
+          "magicIncreasePercent": "41",
+          "manaRecoveryImprovement": "55",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "damageResistancePenetration": "75",
+          "damageResistance": "448",
+          "healthIncreasePercent": "41",
+          "magicIncreasePercent": "41",
+          "manaRecoveryImprovement": "57",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "damageResistancePenetration": "80",
+          "damageResistance": "478",
+          "healthIncreasePercent": "42",
+          "magicIncreasePercent": "42",
+          "manaRecoveryImprovement": "59",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "damageResistancePenetration": "83",
+          "damageResistance": "498",
+          "healthIncreasePercent": "43",
+          "magicIncreasePercent": "43",
+          "manaRecoveryImprovement": "61",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "damageResistancePenetration": "98",
+          "damageResistance": "528",
+          "healthIncreasePercent": "44",
+          "magicIncreasePercent": "44",
+          "manaRecoveryImprovement": "62",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "damageResistancePenetration": "101",
+          "damageResistance": "548",
+          "healthIncreasePercent": "45",
+          "magicIncreasePercent": "45",
+          "manaRecoveryImprovement": "65",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "damageResistancePenetration": "116",
+          "damageResistance": "578",
+          "healthIncreasePercent": "46",
+          "magicIncreasePercent": "46",
+          "manaRecoveryImprovement": "67",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "damageResistancePenetration": "136",
+          "damageResistance": "613",
+          "healthIncreasePercent": "47",
+          "magicIncreasePercent": "47",
+          "manaRecoveryImprovement": "69",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "damageResistancePenetration": "146",
+          "damageResistance": "648",
+          "healthIncreasePercent": "48",
+          "magicIncreasePercent": "48",
+          "manaRecoveryImprovement": "71",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "damageResistancePenetration": "166",
+          "damageResistance": "683",
+          "healthIncreasePercent": "50",
+          "magicIncreasePercent": "50",
+          "manaRecoveryImprovement": "73",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "damageResistancePenetration": "176",
+          "damageResistance": "718",
+          "healthIncreasePercent": "51",
+          "magicIncreasePercent": "51",
+          "manaRecoveryImprovement": "75",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistancePenetration": "211",
+          "damageResistance": "763",
+          "healthIncreasePercent": "53",
+          "magicIncreasePercent": "53",
+          "manaRecoveryImprovement": "77",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "침착",
+    "type": "변신",
+    "grade": "전설"
   },
   {
     "name": "극진 황천갑충",
-    "image": "images/transform/transform_66.jpg"
+    "image": "images/transform/transform_66.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "damageResistancePenetration": "330",
+          "damageResistance": "40",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "healthRecoveryImprovement": "40",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "damageResistancePenetration": "332",
+          "damageResistance": "41",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "healthRecoveryImprovement": "41",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "damageResistancePenetration": "335",
+          "damageResistance": "42",
+          "healthIncreasePercent": "35",
+          "magicIncreasePercent": "35",
+          "healthRecoveryImprovement": "42",
+          "movementSpeed": "10"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "damageResistancePenetration": "350",
+          "damageResistance": "45",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "healthRecoveryImprovement": "43",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "damageResistancePenetration": "353",
+          "damageResistance": "46",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "healthRecoveryImprovement": "44",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "damageResistancePenetration": "356",
+          "damageResistance": "47",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "healthRecoveryImprovement": "45",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "damageResistancePenetration": "359",
+          "damageResistance": "48",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "healthRecoveryImprovement": "46",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "damageResistancePenetration": "362",
+          "damageResistance": "49",
+          "healthIncreasePercent": "37",
+          "magicIncreasePercent": "37",
+          "healthRecoveryImprovement": "47",
+          "movementSpeed": "11"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "damageResistancePenetration": "377",
+          "damageResistance": "52",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "healthRecoveryImprovement": "49",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "damageResistancePenetration": "381",
+          "damageResistance": "53",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "healthRecoveryImprovement": "50",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "damageResistancePenetration": "385",
+          "damageResistance": "54",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "healthRecoveryImprovement": "51",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "damageResistancePenetration": "389",
+          "damageResistance": "55",
+          "healthIncreasePercent": "39",
+          "magicIncreasePercent": "39",
+          "healthRecoveryImprovement": "52",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "damageResistancePenetration": "393",
+          "damageResistance": "56",
+          "healthIncreasePercent": "40",
+          "magicIncreasePercent": "40",
+          "healthRecoveryImprovement": "53",
+          "movementSpeed": "12"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "damageResistancePenetration": "408",
+          "damageResistance": "59",
+          "healthIncreasePercent": "41",
+          "magicIncreasePercent": "41",
+          "healthRecoveryImprovement": "54",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "damageResistancePenetration": "418",
+          "damageResistance": "60",
+          "healthIncreasePercent": "41",
+          "magicIncreasePercent": "41",
+          "healthRecoveryImprovement": "55",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "damageResistancePenetration": "448",
+          "damageResistance": "75",
+          "healthIncreasePercent": "41",
+          "magicIncreasePercent": "41",
+          "healthRecoveryImprovement": "57",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "damageResistancePenetration": "478",
+          "damageResistance": "80",
+          "healthIncreasePercent": "42",
+          "magicIncreasePercent": "42",
+          "healthRecoveryImprovement": "59",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "damageResistancePenetration": "498",
+          "damageResistance": "83",
+          "healthIncreasePercent": "43",
+          "magicIncreasePercent": "43",
+          "healthRecoveryImprovement": "61",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "damageResistancePenetration": "528",
+          "damageResistance": "98",
+          "healthIncreasePercent": "44",
+          "magicIncreasePercent": "44",
+          "healthRecoveryImprovement": "62",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "damageResistancePenetration": "548",
+          "damageResistance": "101",
+          "healthIncreasePercent": "45",
+          "magicIncreasePercent": "45",
+          "healthRecoveryImprovement": "65",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "damageResistancePenetration": "578",
+          "damageResistance": "116",
+          "healthIncreasePercent": "46",
+          "magicIncreasePercent": "46",
+          "healthRecoveryImprovement": "67",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "damageResistancePenetration": "613",
+          "damageResistance": "136",
+          "healthIncreasePercent": "47",
+          "magicIncreasePercent": "47",
+          "healthRecoveryImprovement": "69",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "damageResistancePenetration": "648",
+          "damageResistance": "146",
+          "healthIncreasePercent": "48",
+          "magicIncreasePercent": "48",
+          "healthRecoveryImprovement": "71",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "damageResistancePenetration": "683",
+          "damageResistance": "166",
+          "healthIncreasePercent": "50",
+          "magicIncreasePercent": "50",
+          "healthRecoveryImprovement": "73",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "damageResistancePenetration": "718",
+          "damageResistance": "176",
+          "healthIncreasePercent": "51",
+          "magicIncreasePercent": "51",
+          "healthRecoveryImprovement": "75",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistancePenetration": "763",
+          "damageResistance": "211",
+          "healthIncreasePercent": "53",
+          "magicIncreasePercent": "53",
+          "healthRecoveryImprovement": "77",
+          "movementSpeed": "13"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "침착",
+    "type": "변신",
+    "grade": "전설"
+  },
+  {
+    "name": "고요의 변신",
+    "image": "images/transform/transform_67.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistancePenetration": "520",
+          "damageResistance": "180",
+          "healthIncreasePercent": "30",
+          "magicIncreasePercent": "20",
+          "normalMonsterPenetration": "100",
+          "movementSpeed": "9"
+        },
+        "bindStat": {
+          "damageResistancePenetration": "130",
+          "damageResistance": "45",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "normalMonsterPenetration": "25"
+        }
+      }
+    ],
+    "influence": "고요",
+    "type": "변신",
+    "grade": "전설"
+  },
+  {
+    "name": "결의의 변신",
+    "image": "images/transform/transform_68.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistancePenetration": "600",
+          "damageResistance": "100",
+          "healthIncreasePercent": "30",
+          "magicIncreasePercent": "20",
+          "normalMonsterPenetration": "100",
+          "movementSpeed": "9"
+        },
+        "bindStat": {
+          "damageResistancePenetration": "150",
+          "damageResistance": "25",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "normalMonsterPenetration": "25"
+        }
+      }
+    ],
+    "influence": "결의",
+    "type": "변신",
+    "grade": "전설"
+  },
+  {
+    "name": "활력의 변신",
+    "image": "images/transform/transform_69.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistancePenetration": "100",
+          "damageResistance": "600",
+          "healthIncreasePercent": "30",
+          "magicIncreasePercent": "20",
+          "normalMonsterPenetration": "100",
+          "movementSpeed": "9"
+        },
+        "bindStat": {
+          "damageResistancePenetration": "25",
+          "damageResistance": "150",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "normalMonsterPenetration": "25"
+        }
+      }
+    ],
+    "influence": "활력",
+    "type": "변신",
+    "grade": "전설"
+  },
+  {
+    "name": "침착의 변신",
+    "image": "images/transform/transform_70.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistancePenetration": "250",
+          "damageResistance": "450",
+          "healthIncreasePercent": "30",
+          "magicIncreasePercent": "20",
+          "normalMonsterPenetration": "100",
+          "movementSpeed": "9"
+        },
+        "bindStat": {
+          "damageResistancePenetration": "62",
+          "damageResistance": "112",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "normalMonsterPenetration": "25"
+        }
+      }
+    ],
+    "influence": "침착",
+    "type": "변신",
+    "grade": "전설"
+  },
+  {
+    "name": "냉정의 변신",
+    "image": "images/transform/transform_71.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistancePenetration": "180",
+          "damageResistance": "520",
+          "healthIncreasePercent": "30",
+          "magicIncreasePercent": "20",
+          "normalMonsterPenetration": "100",
+          "movementSpeed": "9"
+        },
+        "bindStat": {
+          "damageResistancePenetration": "45",
+          "damageResistance": "130",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "normalMonsterPenetration": "25"
+        }
+      }
+    ],
+    "influence": "냉정",
+    "type": "변신",
+    "grade": "전설"
+  },
+  {
+    "name": "의지의 변신",
+    "image": "images/transform/transform_72.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "damageResistancePenetration": "450",
+          "damageResistance": "250",
+          "healthIncreasePercent": "30",
+          "magicIncreasePercent": "20",
+          "normalMonsterPenetration": "100",
+          "movementSpeed": "9"
+        },
+        "bindStat": {
+          "damageResistancePenetration": "112",
+          "damageResistance": "62",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "normalMonsterPenetration": "25"
+        }
+      }
+    ],
+    "influence": "의지",
+    "type": "변신",
+    "grade": "전설"
   },
   {
     "name": "멸 화저폭군",

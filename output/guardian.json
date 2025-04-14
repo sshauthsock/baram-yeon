@@ -27347,6 +27347,174 @@
     "grade": "전설"
   },
   {
+    "name": "고요의 수호",
+    "image": "images/guardian/guardian_73.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "90",
+          "damageResistancePenetration": "150",
+          "damageResistance": "50",
+          "normalMonsterPenetration": "100",
+          "healthRecoveryImprovement": "50",
+          "manaRecoveryImprovement": "50"
+        },
+        "bindStat": {
+          "experienceGainIncrease": "6",
+          "damageResistancePenetration": "37",
+          "damageResistance": "12",
+          "normalMonsterPenetration": "25",
+          "healthRecoveryImprovement": "3",
+          "manaRecoveryImprovement": "3"
+        }
+      }
+    ],
+    "influence": "고요",
+    "type": "수호",
+    "grade": "전설"
+  },
+  {
+    "name": "결의의 수호",
+    "image": "images/guardian/guardian_72.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "90",
+          "damageResistancePenetration": "170",
+          "damageResistance": "30",
+          "normalMonsterPenetration": "100",
+          "healthRecoveryImprovement": "50",
+          "manaRecoveryImprovement": "50"
+        },
+        "bindStat": {
+          "experienceGainIncrease": "6",
+          "damageResistancePenetration": "42",
+          "damageResistance": "7",
+          "normalMonsterPenetration": "25",
+          "healthRecoveryImprovement": "3",
+          "manaRecoveryImprovement": "3"
+        }
+      }
+    ],
+    "influence": "결의",
+    "type": "수호",
+    "grade": "전설"
+  },
+  {
+    "name": "활력의 수호",
+    "image": "images/guardian/guardian_74.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "90",
+          "damageResistancePenetration": "30",
+          "damageResistance": "170",
+          "normalMonsterPenetration": "100",
+          "healthRecoveryImprovement": "50",
+          "manaRecoveryImprovement": "50"
+        },
+        "bindStat": {
+          "experienceGainIncrease": "6",
+          "damageResistancePenetration": "7",
+          "damageResistance": "42",
+          "normalMonsterPenetration": "25",
+          "healthRecoveryImprovement": "3",
+          "manaRecoveryImprovement": "3"
+        }
+      }
+    ],
+    "influence": "활력",
+    "type": "수호",
+    "grade": "전설"
+  },
+  {
+    "name": "침착의 수호",
+    "image": "images/guardian/guardian_71.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "90",
+          "damageResistancePenetration": "70",
+          "damageResistance": "130",
+          "normalMonsterPenetration": "100",
+          "healthRecoveryImprovement": "50",
+          "manaRecoveryImprovement": "50"
+        },
+        "bindStat": {
+          "experienceGainIncrease": "6",
+          "damageResistancePenetration": "17",
+          "damageResistance": "32",
+          "normalMonsterPenetration": "25",
+          "healthRecoveryImprovement": "3",
+          "manaRecoveryImprovement": "3"
+        }
+      }
+    ],
+    "influence": "침착",
+    "type": "수호",
+    "grade": "전설"
+  },
+  {
+    "name": "냉정의 수호",
+    "image": "images/guardian/guardian_70.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "90",
+          "damageResistancePenetration": "50",
+          "damageResistance": "150",
+          "normalMonsterPenetration": "100",
+          "healthRecoveryImprovement": "50",
+          "manaRecoveryImprovement": "50"
+        },
+        "bindStat": {
+          "experienceGainIncrease": "6",
+          "damageResistancePenetration": "12",
+          "damageResistance": "37",
+          "normalMonsterPenetration": "25",
+          "healthRecoveryImprovement": "3",
+          "manaRecoveryImprovement": "3"
+        }
+      }
+    ],
+    "influence": "냉정",
+    "type": "수호",
+    "grade": "전설"
+  },
+  {
+    "name": "의지의 수호",
+    "image": "images/guardian/guardian_75.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "90",
+          "damageResistancePenetration": "130",
+          "damageResistance": "70",
+          "normalMonsterPenetration": "100",
+          "healthRecoveryImprovement": "50",
+          "manaRecoveryImprovement": "50"
+        },
+        "bindStat": {
+          "experienceGainIncrease": "6",
+          "damageResistancePenetration": "32",
+          "damageResistance": "17",
+          "normalMonsterPenetration": "25",
+          "healthRecoveryImprovement": "3",
+          "manaRecoveryImprovement": "3"
+        }
+      }
+    ],
+    "influence": "의지",
+    "type": "수호",
+    "grade": "전설"
+  },
+  {
     "name": "화운 금돼지",
     "image": "images/guardian/guardian_i1.jpg",
     "stats": [
@@ -27712,7 +27880,16 @@
           "healthRecoveryImprovement": "192",
           "manaRecoveryImprovement": "192"
         },
-        "bindStat": {}
+        "bindStat": {
+          "experienceGainIncrease": "16",
+          "damageResistance": "57",
+          "damageResistancePenetration": "57",
+          "pvpDefensePercent": "7",
+          "pvpDamagePercent": "7",
+          "statusEffectResistance": "54",
+          "healthRecoveryImprovement": "13",
+          "manaRecoveryImprovement": "13"
+        }
       }
     ],
     "influence": "결의",
@@ -28085,7 +28262,16 @@
           "healthRecoveryImprovement": "192",
           "manaRecoveryImprovement": "192"
         },
-        "bindStat": {}
+        "bindStat": {
+          "experienceGainIncrease": "16",
+          "damageResistance": "59",
+          "damageResistancePenetration": "124",
+          "criticalPowerPercent": "12",
+          "bossMonsterAdditionalDamage": "217",
+          "normalMonsterAdditionalDamage": "217",
+          "healthRecoveryImprovement": "13",
+          "manaRecoveryImprovement": "13"
+        }
       }
     ],
     "influence": "고요",
@@ -28468,6 +28654,372 @@
   {
     "name": "유성 일각수",
     "image": "images/guardian/guardian_i4.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "120",
+          "damageResistance": "90",
+          "damageResistancePenetration": "90",
+          "normalMonsterPenetration": "180",
+          "bossMonsterPenetration": "180",
+          "movementSpeed": "10",
+          "healthRecoveryImprovement": "60",
+          "manaRecoveryImprovement": "60"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "121",
+          "damageResistance": "92",
+          "damageResistancePenetration": "90",
+          "normalMonsterPenetration": "185",
+          "bossMonsterPenetration": "185",
+          "movementSpeed": "10",
+          "healthRecoveryImprovement": "62",
+          "manaRecoveryImprovement": "62"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "122",
+          "damageResistance": "92",
+          "damageResistancePenetration": "92",
+          "normalMonsterPenetration": "185",
+          "bossMonsterPenetration": "190",
+          "movementSpeed": "10",
+          "healthRecoveryImprovement": "63",
+          "manaRecoveryImprovement": "63"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "129",
+          "damageResistance": "93",
+          "damageResistancePenetration": "93",
+          "normalMonsterPenetration": "190",
+          "bossMonsterPenetration": "190",
+          "movementSpeed": "11",
+          "healthRecoveryImprovement": "70",
+          "manaRecoveryImprovement": "70"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "130",
+          "damageResistance": "95",
+          "damageResistancePenetration": "95",
+          "normalMonsterPenetration": "190",
+          "bossMonsterPenetration": "195",
+          "movementSpeed": "11",
+          "healthRecoveryImprovement": "70",
+          "manaRecoveryImprovement": "70"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "131",
+          "damageResistance": "95",
+          "damageResistancePenetration": "95",
+          "normalMonsterPenetration": "195",
+          "bossMonsterPenetration": "195",
+          "movementSpeed": "11",
+          "healthRecoveryImprovement": "72",
+          "manaRecoveryImprovement": "72"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "132",
+          "damageResistance": "96",
+          "damageResistancePenetration": "96",
+          "normalMonsterPenetration": "195",
+          "bossMonsterPenetration": "200",
+          "movementSpeed": "11",
+          "healthRecoveryImprovement": "74",
+          "manaRecoveryImprovement": "74"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "133",
+          "damageResistance": "97",
+          "damageResistancePenetration": "97",
+          "normalMonsterPenetration": "200",
+          "bossMonsterPenetration": "200",
+          "movementSpeed": "11",
+          "healthRecoveryImprovement": "76",
+          "manaRecoveryImprovement": "76"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "140",
+          "damageResistance": "100",
+          "damageResistancePenetration": "100",
+          "normalMonsterPenetration": "210",
+          "bossMonsterPenetration": "210",
+          "movementSpeed": "12",
+          "healthRecoveryImprovement": "83",
+          "manaRecoveryImprovement": "83"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "141",
+          "damageResistance": "100",
+          "damageResistancePenetration": "102",
+          "normalMonsterPenetration": "220",
+          "bossMonsterPenetration": "210",
+          "movementSpeed": "12",
+          "healthRecoveryImprovement": "85",
+          "manaRecoveryImprovement": "85"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "142",
+          "damageResistance": "102",
+          "damageResistancePenetration": "102",
+          "normalMonsterPenetration": "220",
+          "bossMonsterPenetration": "220",
+          "movementSpeed": "12",
+          "healthRecoveryImprovement": "85",
+          "manaRecoveryImprovement": "85"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "143",
+          "damageResistance": "104",
+          "damageResistancePenetration": "104",
+          "normalMonsterPenetration": "230",
+          "bossMonsterPenetration": "220",
+          "movementSpeed": "12",
+          "healthRecoveryImprovement": "87",
+          "manaRecoveryImprovement": "87"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "144",
+          "damageResistance": "106",
+          "damageResistancePenetration": "106",
+          "normalMonsterPenetration": "230",
+          "bossMonsterPenetration": "230",
+          "movementSpeed": "12",
+          "healthRecoveryImprovement": "89",
+          "manaRecoveryImprovement": "89"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "151",
+          "damageResistance": "111",
+          "damageResistancePenetration": "111",
+          "normalMonsterPenetration": "250",
+          "bossMonsterPenetration": "230",
+          "movementSpeed": "13",
+          "healthRecoveryImprovement": "96",
+          "manaRecoveryImprovement": "96"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "152",
+          "damageResistance": "116",
+          "damageResistancePenetration": "116",
+          "normalMonsterPenetration": "250",
+          "bossMonsterPenetration": "250",
+          "movementSpeed": "13",
+          "healthRecoveryImprovement": "98",
+          "manaRecoveryImprovement": "98"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "159",
+          "damageResistance": "123",
+          "damageResistancePenetration": "123",
+          "normalMonsterPenetration": "270",
+          "bossMonsterPenetration": "250",
+          "movementSpeed": "14",
+          "healthRecoveryImprovement": "107",
+          "manaRecoveryImprovement": "107"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "164",
+          "damageResistance": "128",
+          "damageResistancePenetration": "128",
+          "normalMonsterPenetration": "270",
+          "bossMonsterPenetration": "270",
+          "movementSpeed": "14",
+          "healthRecoveryImprovement": "116",
+          "manaRecoveryImprovement": "116"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "169",
+          "damageResistance": "133",
+          "damageResistancePenetration": "133",
+          "normalMonsterPenetration": "295",
+          "bossMonsterPenetration": "270",
+          "movementSpeed": "14",
+          "healthRecoveryImprovement": "122",
+          "manaRecoveryImprovement": "122"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "176",
+          "damageResistance": "140",
+          "damageResistancePenetration": "140",
+          "normalMonsterPenetration": "295",
+          "bossMonsterPenetration": "295",
+          "movementSpeed": "15",
+          "healthRecoveryImprovement": "131",
+          "manaRecoveryImprovement": "131"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "181",
+          "damageResistance": "145",
+          "damageResistancePenetration": "145",
+          "normalMonsterPenetration": "320",
+          "bossMonsterPenetration": "295",
+          "movementSpeed": "15",
+          "healthRecoveryImprovement": "137",
+          "manaRecoveryImprovement": "137"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "191",
+          "damageResistance": "154",
+          "damageResistancePenetration": "154",
+          "normalMonsterPenetration": "320",
+          "bossMonsterPenetration": "320",
+          "movementSpeed": "15",
+          "healthRecoveryImprovement": "147",
+          "manaRecoveryImprovement": "147"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "206",
+          "damageResistance": "164",
+          "damageResistancePenetration": "164",
+          "normalMonsterPenetration": "355",
+          "bossMonsterPenetration": "355",
+          "movementSpeed": "17",
+          "healthRecoveryImprovement": "157",
+          "manaRecoveryImprovement": "157"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "215",
+          "damageResistance": "169",
+          "damageResistancePenetration": "169",
+          "normalMonsterPenetration": "375",
+          "bossMonsterPenetration": "375",
+          "movementSpeed": "17",
+          "healthRecoveryImprovement": "162",
+          "manaRecoveryImprovement": "162"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "230",
+          "damageResistance": "179",
+          "damageResistancePenetration": "179",
+          "normalMonsterPenetration": "410",
+          "bossMonsterPenetration": "410",
+          "movementSpeed": "18",
+          "healthRecoveryImprovement": "172",
+          "manaRecoveryImprovement": "172"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "240",
+          "damageResistance": "184",
+          "damageResistancePenetration": "184",
+          "normalMonsterPenetration": "430",
+          "bossMonsterPenetration": "430",
+          "movementSpeed": "18",
+          "healthRecoveryImprovement": "177",
+          "manaRecoveryImprovement": "177"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "260",
+          "damageResistance": "199",
+          "damageResistancePenetration": "199",
+          "normalMonsterPenetration": "470",
+          "bossMonsterPenetration": "470",
+          "movementSpeed": "20",
+          "healthRecoveryImprovement": "192",
+          "manaRecoveryImprovement": "192"
+        },
+        "bindStat": {}
+      }
+    ],
     "influence": "침착",
     "type": "수호",
     "grade": "불멸"

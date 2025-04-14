@@ -1,35 +1,35 @@
-| 한글 명칭          | 영어 명칭                   | 변수명/키명 사용 예         |
-| ------------------ | --------------------------- | --------------------------- |
-| 치명위력           | CriticalPower               | criticalPower               |
-| 일반몬스터추가피해 | NormalMonsterBonusDamage    | normalMonsterBonusDamage    |
-| 체력증가           | HealthIncrease              | healthIncrease              |
-| 힘                 | Strength                    | strength                    |
-| 민첩               | Agility                     | agility                     |
-| 지력               | Intelligence                | intelligence                |
-| 피해흡수           | DamageAbsorption            | damageAbsorption            |
-| 피해저항관통       | DamageResistancePenetration | damageResistancePenetration |
-| 마력증가           | MagicIncrease               | magicIncrease               |
-| 피해저항           | DamageResistance            | damageResistance            |
-| 체력시약향상       | HealthPotionEnhancement     | healthPotionEnhancement     |
-| 치명확률           | CriticalChance              | criticalChance              |
-| 보스몬스터추가피해 | BossMonsterBonusDamage      | bossMonsterBonusDamage      |
-| 위력               | Power                       | power                       |
-| 마력시약향상       | MagicPotionEnhancement      | magicPotionEnhancement      |
-| 대인피해           | PvPDamage                   | pvpDamage                   |
-| 대인방어           | PvPDefense                  | pvpDefense                  |
-| 상태이상적중       | StatusEffectAccuracy        | statusEffectAccuracy        |
-| 상태이상저항       | StatusEffectResistance      | statusEffectResistance      |
-| 치명위력%          | CriticalPowerPercent        | criticalPowerPercent        |
-| 대인피해%          | PvPDamagePercent            | pvpDamagePercent            |
-| 대인방어%          | PvPDefensePercent           | pvpDefensePercent           |
-| 치명피해저항       | CriticalDamageResistance    | criticalDamageResistance    |
-| 치명저항           | CriticalResistance          | criticalResistance          |
-| 이동속도           | MovementSpeed               | movementSpeed               |
-| 파괴력증가         | DestructionPowerIncrease    | destructionPowerIncrease    |
-| 파괴력증가%        | DestructionPowerPercent     | destructionPowerPercent     |
-| 무장도             | ArmorStrength               | armorStrength               |
-| 전리품획득증가     | LootAcquisitionIncrease     | lootAcquisitionIncrease     |
-| 경험치획득증가     | ExperienceGainIncrease      | experienceGainIncrease      |
+| 한글 명칭          | 영어 명칭                     | 변수명/키명 사용 예           |
+| ------------------ | ----------------------------- | ----------------------------- |
+| 치명위력           | CriticalPower                 | criticalPower                 |
+| 일반몬스터추가피해 | NormalMonsterAdditionalDamage | normalMonsterAdditionalDamage |
+| 체력증가           | HealthIncrease                | healthIncrease                |
+| 힘                 | Strength                      | strength                      |
+| 민첩               | Agility                       | agility                       |
+| 지력               | Intelligence                  | intelligence                  |
+| 피해흡수           | DamageAbsorption              | damageAbsorption              |
+| 피해저항관통       | DamageResistancePenetration   | damageResistancePenetration   |
+| 마력증가           | MagicIncrease                 | magicIncrease                 |
+| 피해저항           | DamageResistance              | damageResistance              |
+| 체력시약향상       | HealthPotionEnhancement       | healthPotionEnhancement       |
+| 치명확률           | CriticalChance                | criticalChance                |
+| 보스몬스터추가피해 | BossMonsterAdditionalDamage   | bossMonsterAdditionalDamage   |
+| 위력               | Power                         | power                         |
+| 마력시약향상       | MagicPotionEnhancement        | magicPotionEnhancement        |
+| 대인피해           | PvPDamage                     | pvpDamage                     |
+| 대인방어           | PvPDefense                    | pvpDefense                    |
+| 상태이상적중       | StatusEffectAccuracy          | statusEffectAccuracy          |
+| 상태이상저항       | StatusEffectResistance        | statusEffectResistance        |
+| 치명위력%          | CriticalPowerPercent          | criticalPowerPercent          |
+| 대인피해%          | PvPDamagePercent              | pvpDamagePercent              |
+| 대인방어%          | PvPDefensePercent             | pvpDefensePercent             |
+| 치명피해저항       | CriticalDamageResistance      | criticalDamageResistance      |
+| 치명저항           | CriticalResistance            | criticalResistance            |
+| 이동속도           | MovementSpeed                 | movementSpeed                 |
+| 파괴력증가         | DestructionPowerIncrease      | destructionPowerIncrease      |
+| 파괴력증가%        | DestructionPowerPercent       | destructionPowerPercent       |
+| 무장도             | ArmorStrength                 | armorStrength                 |
+| 전리품획득증가     | LootAcquisitionIncrease       | lootAcquisitionIncrease       |
+| 경험치획득증가     | ExperienceGainIncrease        | experienceGainIncrease        |
 
 착 계산기
 게임 내 장비의 '착' 능력치 시스템을 시뮬레이션하고 관리하는 계산기입니다. 사용자가 장비의 능력치를 계획하고 자원 소모량을 미리 계산할 수 있도록 도와줍니다.

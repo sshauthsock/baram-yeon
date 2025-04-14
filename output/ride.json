@@ -29185,54 +29185,4734 @@
   },
   {
     "name": "숙련된 거대참매",
-    "image": "images/ride/ride_62.jpg"
+    "image": "images/ride/ride_62.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "30",
+          "statusEffectAccuracy": "30",
+          "pvpDamage": "12",
+          "magicIncrease": "15,500",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "31",
+          "statusEffectAccuracy": "31",
+          "pvpDamage": "121",
+          "magicIncrease": "15,650",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "32",
+          "statusEffectAccuracy": "32",
+          "pvpDamage": "122",
+          "magicIncrease": "15,800",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "33",
+          "statusEffectAccuracy": "33",
+          "pvpDamage": "129",
+          "magicIncrease": "16,925",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "34",
+          "statusEffectAccuracy": "34",
+          "pvpDamage": "129",
+          "magicIncrease": "17,075",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "35",
+          "statusEffectAccuracy": "35",
+          "pvpDamage": "130",
+          "magicIncrease": "17,225",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "36",
+          "statusEffectAccuracy": "36",
+          "pvpDamage": "131",
+          "magicIncrease": "17,375",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "37",
+          "statusEffectAccuracy": "37",
+          "pvpDamage": "132",
+          "magicIncrease": "17,525",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "39",
+          "statusEffectAccuracy": "39",
+          "pvpDamage": "139",
+          "magicIncrease": "18,650",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "41",
+          "statusEffectAccuracy": "41",
+          "pvpDamage": "140",
+          "magicIncrease": "18,800",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "43",
+          "statusEffectAccuracy": "43",
+          "pvpDamage": "141",
+          "magicIncrease": "18,950",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "45",
+          "statusEffectAccuracy": "45",
+          "pvpDamage": "142",
+          "magicIncrease": "19,100",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "47",
+          "statusEffectAccuracy": "47",
+          "pvpDamage": "143",
+          "magicIncrease": "19,250",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "49",
+          "statusEffectAccuracy": "49",
+          "pvpDamage": "149",
+          "magicIncrease": "20,375",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "51",
+          "statusEffectAccuracy": "51",
+          "pvpDamage": "150",
+          "magicIncrease": "20,525",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "7",
+          "statusEffectResistance": "53",
+          "statusEffectAccuracy": "53",
+          "pvpDamage": "151",
+          "magicIncrease": "20,675",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "63",
+          "statusEffectAccuracy": "63",
+          "pvpDamage": "156",
+          "magicIncrease": "21,585",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "68",
+          "statusEffectAccuracy": "68",
+          "pvpDamage": "161",
+          "magicIncrease": "22,495",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "78",
+          "statusEffectAccuracy": "78",
+          "pvpDamage": "191",
+          "magicIncrease": "24,202",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "83",
+          "statusEffectAccuracy": "83",
+          "pvpDamage": "211",
+          "magicIncrease": "25,340",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "statusEffectResistance": "93",
+          "statusEffectAccuracy": "93",
+          "pvpDamage": "241",
+          "magicIncrease": "27,047",
+          "lootAcquisitionIncrease": "20"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "103",
+          "statusEffectAccuracy": "103",
+          "pvpDamage": "276",
+          "magicIncrease": "28,321",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "108",
+          "statusEffectAccuracy": "108",
+          "pvpDamage": "306",
+          "magicIncrease": "29,595",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "118",
+          "statusEffectAccuracy": "118",
+          "pvpDamage": "341",
+          "magicIncrease": "31,188",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "123",
+          "statusEffectAccuracy": "123",
+          "pvpDamage": "371",
+          "magicIncrease": "32,462",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "14",
+          "statusEffectResistance": "133",
+          "statusEffectAccuracy": "133",
+          "pvpDamage": "406",
+          "magicIncrease": "34,586",
+          "lootAcquisitionIncrease": "23"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "고요",
+    "type": "탑승",
+    "grade": "전설"
   },
   {
     "name": "우두머리 청사자",
-    "image": "images/ride/ride_63.jpg"
+    "image": "images/ride/ride_63.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "30",
+          "statusEffectAccuracy": "30",
+          "pvpDamage": "120",
+          "healthIncrease": "15,500",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "31",
+          "statusEffectAccuracy": "31",
+          "pvpDamage": "121",
+          "healthIncrease": "15,650",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "32",
+          "statusEffectAccuracy": "32",
+          "pvpDamage": "122",
+          "healthIncrease": "15,800",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "33",
+          "statusEffectAccuracy": "33",
+          "pvpDamage": "129",
+          "healthIncrease": "16,925",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "34",
+          "statusEffectAccuracy": "34",
+          "pvpDamage": "129",
+          "healthIncrease": "17,075",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "35",
+          "statusEffectAccuracy": "35",
+          "pvpDamage": "130",
+          "healthIncrease": "17,225",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "36",
+          "statusEffectAccuracy": "36",
+          "pvpDamage": "131",
+          "healthIncrease": "17,375",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "37",
+          "statusEffectAccuracy": "37",
+          "pvpDamage": "132",
+          "healthIncrease": "17,525",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "39",
+          "statusEffectAccuracy": "39",
+          "pvpDamage": "139",
+          "healthIncrease": "18,650",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "41",
+          "statusEffectAccuracy": "41",
+          "pvpDamage": "140",
+          "healthIncrease": "18,800",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "43",
+          "statusEffectAccuracy": "43",
+          "pvpDamage": "141",
+          "healthIncrease": "18,950",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "45",
+          "statusEffectAccuracy": "45",
+          "pvpDamage": "142",
+          "healthIncrease": "19,100",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "47",
+          "statusEffectAccuracy": "47",
+          "pvpDamage": "143",
+          "healthIncrease": "19,250",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "49",
+          "statusEffectAccuracy": "49",
+          "pvpDamage": "149",
+          "healthIncrease": "20,375",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "51",
+          "statusEffectAccuracy": "51",
+          "pvpDamage": "150",
+          "healthIncrease": "20,525",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "7",
+          "statusEffectResistance": "53",
+          "statusEffectAccuracy": "53",
+          "pvpDamage": "151",
+          "healthIncrease": "20,675",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "63",
+          "statusEffectAccuracy": "63",
+          "pvpDamage": "156",
+          "healthIncrease": "21,585",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "68",
+          "statusEffectAccuracy": "68",
+          "pvpDamage": "161",
+          "healthIncrease": "22,495",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "78",
+          "statusEffectAccuracy": "78",
+          "pvpDamage": "191",
+          "healthIncrease": "24,202",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "83",
+          "statusEffectAccuracy": "83",
+          "pvpDamage": "211",
+          "healthIncrease": "25,340",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "statusEffectResistance": "93",
+          "statusEffectAccuracy": "93",
+          "pvpDamage": "241",
+          "healthIncrease": "27,047",
+          "lootAcquisitionIncrease": "20"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "103",
+          "statusEffectAccuracy": "103",
+          "pvpDamage": "276",
+          "healthIncrease": "28,321",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "108",
+          "statusEffectAccuracy": "108",
+          "pvpDamage": "306",
+          "healthIncrease": "29,595",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "118",
+          "statusEffectAccuracy": "118",
+          "pvpDamage": "341",
+          "healthIncrease": "31,188",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "123",
+          "statusEffectAccuracy": "123",
+          "pvpDamage": "371",
+          "healthIncrease": "32,462",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "14",
+          "statusEffectResistance": "133",
+          "statusEffectAccuracy": "133",
+          "pvpDamage": "406",
+          "healthIncrease": "34,586",
+          "lootAcquisitionIncrease": "23"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "고요",
+    "type": "탑승",
+    "grade": "전설"
   },
   {
     "name": "하늘꽃사슴",
-    "image": "images/ride/ride_64.jpg"
+    "image": "images/ride/ride_64.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "50",
+          "statusEffectAccuracy": "50",
+          "pvpDamage": "150",
+          "healthIncrease": "15,500",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "51",
+          "statusEffectAccuracy": "51",
+          "pvpDamage": "151",
+          "healthIncrease": "15,650",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "52",
+          "statusEffectAccuracy": "52",
+          "pvpDamage": "152",
+          "healthIncrease": "15,800",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "53",
+          "statusEffectAccuracy": "53",
+          "pvpDamage": "159",
+          "healthIncrease": "16,925",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "54",
+          "statusEffectAccuracy": "54",
+          "pvpDamage": "159",
+          "healthIncrease": "17,075",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "55",
+          "statusEffectAccuracy": "55",
+          "pvpDamage": "160",
+          "healthIncrease": "17,225",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "56",
+          "statusEffectAccuracy": "56",
+          "pvpDamage": "161",
+          "healthIncrease": "17,375",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "57",
+          "statusEffectAccuracy": "57",
+          "pvpDamage": "162",
+          "healthIncrease": "17,525",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "59",
+          "statusEffectAccuracy": "59",
+          "pvpDamage": "169",
+          "healthIncrease": "18,650",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "61",
+          "statusEffectAccuracy": "61",
+          "pvpDamage": "170",
+          "healthIncrease": "18,800",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "63",
+          "statusEffectAccuracy": "63",
+          "pvpDamage": "171",
+          "healthIncrease": "18,950",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "65",
+          "statusEffectAccuracy": "65",
+          "pvpDamage": "172",
+          "healthIncrease": "19,100",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "67",
+          "statusEffectAccuracy": "67",
+          "pvpDamage": "173",
+          "healthIncrease": "19,250",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "69",
+          "statusEffectAccuracy": "69",
+          "pvpDamage": "179",
+          "healthIncrease": "20,375",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "71",
+          "statusEffectAccuracy": "71",
+          "pvpDamage": "180",
+          "healthIncrease": "20,525",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "7",
+          "statusEffectResistance": "73",
+          "statusEffectAccuracy": "73",
+          "pvpDamage": "181",
+          "healthIncrease": "20,675",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "83",
+          "statusEffectAccuracy": "83",
+          "pvpDamage": "186",
+          "healthIncrease": "21,585",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "88",
+          "statusEffectAccuracy": "88",
+          "pvpDamage": "191",
+          "healthIncrease": "22,495",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "98",
+          "statusEffectAccuracy": "98",
+          "pvpDamage": "221",
+          "healthIncrease": "24,202",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "103",
+          "statusEffectAccuracy": "103",
+          "pvpDamage": "241",
+          "healthIncrease": "25,340",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "statusEffectResistance": "113",
+          "statusEffectAccuracy": "113",
+          "pvpDamage": "271",
+          "healthIncrease": "27,047",
+          "lootAcquisitionIncrease": "20"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "123",
+          "statusEffectAccuracy": "123",
+          "pvpDamage": "306",
+          "healthIncrease": "28,321",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "128",
+          "statusEffectAccuracy": "128",
+          "pvpDamage": "336",
+          "healthIncrease": "29,595",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "138",
+          "statusEffectAccuracy": "138",
+          "pvpDamage": "371",
+          "healthIncrease": "31,188",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "143",
+          "statusEffectAccuracy": "143",
+          "pvpDamage": "401",
+          "healthIncrease": "32,462",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "14",
+          "statusEffectResistance": "153",
+          "statusEffectAccuracy": "153",
+          "pvpDamage": "436",
+          "healthIncrease": "34,586",
+          "lootAcquisitionIncrease": "23"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "의지",
+    "type": "탑승",
+    "grade": "전설"
   },
   {
     "name": "강철옥좌 도마뱀",
-    "image": "images/ride/ride_65.jpg"
+    "image": "images/ride/ride_65.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "50",
+          "statusEffectAccuracy": "50",
+          "pvpDamage": "150",
+          "magicIncrease": "15,500",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "51",
+          "statusEffectAccuracy": "51",
+          "pvpDamage": "151",
+          "magicIncrease": "15,650",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "52",
+          "statusEffectAccuracy": "52",
+          "pvpDamage": "152",
+          "magicIncrease": "15,800",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "53",
+          "statusEffectAccuracy": "53",
+          "pvpDamage": "159",
+          "magicIncrease": "16,925",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "54",
+          "statusEffectAccuracy": "54",
+          "pvpDamage": "159",
+          "magicIncrease": "17,075",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "55",
+          "statusEffectAccuracy": "55",
+          "pvpDamage": "160",
+          "magicIncrease": "17,225",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "56",
+          "statusEffectAccuracy": "56",
+          "pvpDamage": "161",
+          "magicIncrease": "17,375",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "57",
+          "statusEffectAccuracy": "57",
+          "pvpDamage": "162",
+          "magicIncrease": "17,525",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "59",
+          "statusEffectAccuracy": "59",
+          "pvpDamage": "169",
+          "magicIncrease": "18,650",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "61",
+          "statusEffectAccuracy": "61",
+          "pvpDamage": "170",
+          "magicIncrease": "18,800",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "63",
+          "statusEffectAccuracy": "63",
+          "pvpDamage": "171",
+          "magicIncrease": "18,950",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "65",
+          "statusEffectAccuracy": "65",
+          "pvpDamage": "172",
+          "magicIncrease": "19,100",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "67",
+          "statusEffectAccuracy": "67",
+          "pvpDamage": "173",
+          "magicIncrease": "19,250",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "69",
+          "statusEffectAccuracy": "69",
+          "pvpDamage": "179",
+          "magicIncrease": "20,375",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "71",
+          "statusEffectAccuracy": "71",
+          "pvpDamage": "180",
+          "magicIncrease": "20,525",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "7",
+          "statusEffectResistance": "73",
+          "statusEffectAccuracy": "73",
+          "pvpDamage": "181",
+          "magicIncrease": "20,675",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "83",
+          "statusEffectAccuracy": "83",
+          "pvpDamage": "186",
+          "magicIncrease": "21,585",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "88",
+          "statusEffectAccuracy": "88",
+          "pvpDamage": "191",
+          "magicIncrease": "22,495",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "98",
+          "statusEffectAccuracy": "98",
+          "pvpDamage": "221",
+          "magicIncrease": "24,202",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "103",
+          "statusEffectAccuracy": "103",
+          "pvpDamage": "241",
+          "magicIncrease": "25,340",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "statusEffectResistance": "113",
+          "statusEffectAccuracy": "113",
+          "pvpDamage": "271",
+          "magicIncrease": "27,047",
+          "lootAcquisitionIncrease": "20"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "123",
+          "statusEffectAccuracy": "123",
+          "pvpDamage": "306",
+          "magicIncrease": "28,321",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "128",
+          "statusEffectAccuracy": "128",
+          "pvpDamage": "336",
+          "magicIncrease": "29,595",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "138",
+          "statusEffectAccuracy": "138",
+          "pvpDamage": "371",
+          "magicIncrease": "31,188",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "143",
+          "statusEffectAccuracy": "143",
+          "pvpDamage": "401",
+          "magicIncrease": "32,462",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "14",
+          "statusEffectResistance": "153",
+          "statusEffectAccuracy": "153",
+          "pvpDamage": "436",
+          "magicIncrease": "34,586",
+          "lootAcquisitionIncrease": "23"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "의지",
+    "type": "탑승",
+    "grade": "전설"
   },
   {
     "name": "포악한 마수",
-    "image": "images/ride/ride_66.jpg"
+    "image": "images/ride/ride_66.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "40",
+          "statusEffectAccuracy": "40",
+          "normalMonsterPenetration": "75",
+          "magicIncrease": "14,500",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "41",
+          "statusEffectAccuracy": "41",
+          "normalMonsterPenetration": "76",
+          "magicIncrease": "14,650",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "42",
+          "statusEffectAccuracy": "42",
+          "normalMonsterPenetration": "77",
+          "magicIncrease": "14,800",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "43",
+          "statusEffectAccuracy": "43",
+          "normalMonsterPenetration": "79",
+          "magicIncrease": "15,925",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "44",
+          "statusEffectAccuracy": "44",
+          "normalMonsterPenetration": "80",
+          "magicIncrease": "16,075",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "45",
+          "statusEffectAccuracy": "45",
+          "normalMonsterPenetration": "81",
+          "magicIncrease": "16,225",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "46",
+          "statusEffectAccuracy": "46",
+          "normalMonsterPenetration": "82",
+          "magicIncrease": "16,375",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "47",
+          "statusEffectAccuracy": "47",
+          "normalMonsterPenetration": "83",
+          "magicIncrease": "16,525",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "49",
+          "statusEffectAccuracy": "49",
+          "normalMonsterPenetration": "85",
+          "magicIncrease": "17,650",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "51",
+          "statusEffectAccuracy": "51",
+          "normalMonsterPenetration": "86",
+          "magicIncrease": "17,800",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "53",
+          "statusEffectAccuracy": "53",
+          "normalMonsterPenetration": "87",
+          "magicIncrease": "17,950",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "55",
+          "statusEffectAccuracy": "55",
+          "normalMonsterPenetration": "88",
+          "magicIncrease": "18,100",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "57",
+          "statusEffectAccuracy": "57",
+          "normalMonsterPenetration": "89",
+          "magicIncrease": "18,250",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "59",
+          "statusEffectAccuracy": "59",
+          "normalMonsterPenetration": "92",
+          "magicIncrease": "19,375",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "61",
+          "statusEffectAccuracy": "61",
+          "normalMonsterPenetration": "93",
+          "magicIncrease": "19,525",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "7",
+          "statusEffectResistance": "63",
+          "statusEffectAccuracy": "63",
+          "normalMonsterPenetration": "103",
+          "magicIncrease": "19,675",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "73",
+          "statusEffectAccuracy": "73",
+          "normalMonsterPenetration": "118",
+          "magicIncrease": "20,585",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "78",
+          "statusEffectAccuracy": "78",
+          "normalMonsterPenetration": "133",
+          "magicIncrease": "21,495",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "88",
+          "statusEffectAccuracy": "88",
+          "normalMonsterPenetration": "148",
+          "magicIncrease": "23,202",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "93",
+          "statusEffectAccuracy": "93",
+          "normalMonsterPenetration": "163",
+          "magicIncrease": "24,340",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "statusEffectResistance": "103",
+          "statusEffectAccuracy": "103",
+          "normalMonsterPenetration": "178",
+          "magicIncrease": "26,047",
+          "lootAcquisitionIncrease": "20"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "113",
+          "statusEffectAccuracy": "113",
+          "normalMonsterPenetration": "193",
+          "magicIncrease": "27,321",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "118",
+          "statusEffectAccuracy": "118",
+          "normalMonsterPenetration": "208",
+          "magicIncrease": "28,595",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "128",
+          "statusEffectAccuracy": "128",
+          "normalMonsterPenetration": "223",
+          "magicIncrease": "39,188",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "133",
+          "statusEffectAccuracy": "133",
+          "normalMonsterPenetration": "238",
+          "magicIncrease": "31,462",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "14",
+          "statusEffectResistance": "143",
+          "statusEffectAccuracy": "143",
+          "normalMonsterPenetration": "253",
+          "magicIncrease": "33,586",
+          "lootAcquisitionIncrease": "23"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "냉정",
+    "type": "탑승",
+    "grade": "전설"
   },
   {
     "name": "정복자 보라고래",
-    "image": "images/ride/ride_67.jpg"
+    "image": "images/ride/ride_67.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "40",
+          "statusEffectAccuracy": "40",
+          "normalMonsterPenetration": "75",
+          "healthIncrease": "14,500",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "41",
+          "statusEffectAccuracy": "41",
+          "normalMonsterPenetration": "76",
+          "healthIncrease": "14,650",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "42",
+          "statusEffectAccuracy": "42",
+          "normalMonsterPenetration": "77",
+          "healthIncrease": "14,800",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "43",
+          "statusEffectAccuracy": "43",
+          "normalMonsterPenetration": "79",
+          "healthIncrease": "15,925",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "44",
+          "statusEffectAccuracy": "44",
+          "normalMonsterPenetration": "80",
+          "healthIncrease": "16,075",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "45",
+          "statusEffectAccuracy": "45",
+          "normalMonsterPenetration": "81",
+          "healthIncrease": "16,225",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "46",
+          "statusEffectAccuracy": "46",
+          "normalMonsterPenetration": "82",
+          "healthIncrease": "16,375",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "47",
+          "statusEffectAccuracy": "47",
+          "normalMonsterPenetration": "83",
+          "healthIncrease": "16,525",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "49",
+          "statusEffectAccuracy": "49",
+          "normalMonsterPenetration": "85",
+          "healthIncrease": "17,650",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "51",
+          "statusEffectAccuracy": "51",
+          "normalMonsterPenetration": "86",
+          "healthIncrease": "17,800",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "53",
+          "statusEffectAccuracy": "53",
+          "normalMonsterPenetration": "87",
+          "healthIncrease": "17,950",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "55",
+          "statusEffectAccuracy": "55",
+          "normalMonsterPenetration": "88",
+          "healthIncrease": "18,100",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "57",
+          "statusEffectAccuracy": "57",
+          "normalMonsterPenetration": "89",
+          "healthIncrease": "18,250",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "59",
+          "statusEffectAccuracy": "59",
+          "normalMonsterPenetration": "92",
+          "healthIncrease": "19,375",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "61",
+          "statusEffectAccuracy": "61",
+          "normalMonsterPenetration": "93",
+          "healthIncrease": "19,525",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "7",
+          "statusEffectResistance": "63",
+          "statusEffectAccuracy": "63",
+          "normalMonsterPenetration": "103",
+          "healthIncrease": "19,675",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "73",
+          "statusEffectAccuracy": "73",
+          "normalMonsterPenetration": "118",
+          "healthIncrease": "20,585",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "78",
+          "statusEffectAccuracy": "78",
+          "normalMonsterPenetration": "133",
+          "healthIncrease": "21,495",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "88",
+          "statusEffectAccuracy": "88",
+          "normalMonsterPenetration": "148",
+          "healthIncrease": "23,202",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "93",
+          "statusEffectAccuracy": "93",
+          "normalMonsterPenetration": "163",
+          "healthIncrease": "24,340",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "statusEffectResistance": "103",
+          "statusEffectAccuracy": "103",
+          "normalMonsterPenetration": "178",
+          "healthIncrease": "26,047",
+          "lootAcquisitionIncrease": "20"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "113",
+          "statusEffectAccuracy": "113",
+          "normalMonsterPenetration": "193",
+          "healthIncrease": "27,321",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "118",
+          "statusEffectAccuracy": "118",
+          "normalMonsterPenetration": "208",
+          "healthIncrease": "28,595",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "128",
+          "statusEffectAccuracy": "128",
+          "normalMonsterPenetration": "223",
+          "healthIncrease": "39,188",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "133",
+          "statusEffectAccuracy": "133",
+          "normalMonsterPenetration": "238",
+          "healthIncrease": "31,462",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "14",
+          "statusEffectResistance": "143",
+          "statusEffectAccuracy": "143",
+          "normalMonsterPenetration": "253",
+          "healthIncrease": "33,586",
+          "lootAcquisitionIncrease": "23"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "냉정",
+    "type": "탑승",
+    "grade": "전설"
   },
   {
     "name": "별빛 공작새",
-    "image": "images/ride/ride_68.jpg"
+    "image": "images/ride/ride_68.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "30",
+          "statusEffectAccuracy": "30",
+          "normalMonsterAdditionalDamage": "65",
+          "magicIncrease": "15,500",
+          "lootAcquisitionIncrease": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "31",
+          "statusEffectAccuracy": "31",
+          "normalMonsterAdditionalDamage": "66",
+          "magicIncrease": "15,650",
+          "lootAcquisitionIncrease": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "32",
+          "statusEffectAccuracy": "32",
+          "normalMonsterAdditionalDamage": "67",
+          "magicIncrease": "15,800",
+          "lootAcquisitionIncrease": "13"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "33",
+          "statusEffectAccuracy": "33",
+          "normalMonsterAdditionalDamage": "74",
+          "magicIncrease": "16,925",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "34",
+          "statusEffectAccuracy": "34",
+          "normalMonsterAdditionalDamage": "74",
+          "magicIncrease": "17,075",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "35",
+          "statusEffectAccuracy": "35",
+          "normalMonsterAdditionalDamage": "75",
+          "magicIncrease": "17,225",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "36",
+          "statusEffectAccuracy": "36",
+          "normalMonsterAdditionalDamage": "76",
+          "magicIncrease": "17,375",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "37",
+          "statusEffectAccuracy": "37",
+          "normalMonsterAdditionalDamage": "77",
+          "magicIncrease": "17,525",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "39",
+          "statusEffectAccuracy": "39",
+          "normalMonsterAdditionalDamage": "84",
+          "magicIncrease": "18,650",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "41",
+          "statusEffectAccuracy": "41",
+          "normalMonsterAdditionalDamage": "85",
+          "magicIncrease": "18,800",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "43",
+          "statusEffectAccuracy": "43",
+          "normalMonsterAdditionalDamage": "86",
+          "magicIncrease": "18,950",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "45",
+          "statusEffectAccuracy": "45",
+          "normalMonsterAdditionalDamage": "87",
+          "magicIncrease": "19,100",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "47",
+          "statusEffectAccuracy": "47",
+          "normalMonsterAdditionalDamage": "88",
+          "magicIncrease": "19,250",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "49",
+          "statusEffectAccuracy": "49",
+          "normalMonsterAdditionalDamage": "94",
+          "magicIncrease": "20,375",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "51",
+          "statusEffectAccuracy": "51",
+          "normalMonsterAdditionalDamage": "95",
+          "magicIncrease": "20,525",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "7",
+          "statusEffectResistance": "53",
+          "statusEffectAccuracy": "53",
+          "normalMonsterAdditionalDamage": "96",
+          "magicIncrease": "20,675",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "63",
+          "statusEffectAccuracy": "63",
+          "normalMonsterAdditionalDamage": "116",
+          "magicIncrease": "21,585",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "68",
+          "statusEffectAccuracy": "68",
+          "normalMonsterAdditionalDamage": "131",
+          "magicIncrease": "22,495",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "78",
+          "statusEffectAccuracy": "78",
+          "normalMonsterAdditionalDamage": "151",
+          "magicIncrease": "24,202",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "83",
+          "statusEffectAccuracy": "83",
+          "normalMonsterAdditionalDamage": "166",
+          "magicIncrease": "25,340",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "statusEffectResistance": "93",
+          "statusEffectAccuracy": "93",
+          "normalMonsterAdditionalDamage": "186",
+          "magicIncrease": "27,047",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "103",
+          "statusEffectAccuracy": "103",
+          "normalMonsterAdditionalDamage": "206",
+          "magicIncrease": "28,321",
+          "lootAcquisitionIncrease": "20"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "108",
+          "statusEffectAccuracy": "108",
+          "normalMonsterAdditionalDamage": "221",
+          "magicIncrease": "29,595",
+          "lootAcquisitionIncrease": "20"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "118",
+          "statusEffectAccuracy": "118",
+          "normalMonsterAdditionalDamage": "241",
+          "magicIncrease": "31,188",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "123",
+          "statusEffectAccuracy": "123",
+          "normalMonsterAdditionalDamage": "256",
+          "magicIncrease": "32,462",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "14",
+          "statusEffectResistance": "133",
+          "statusEffectAccuracy": "133",
+          "normalMonsterAdditionalDamage": "276",
+          "magicIncrease": "34,586",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "침착",
+    "type": "탑승",
+    "grade": "전설"
   },
   {
     "name": "광속 바람꽃 해파리",
-    "image": "images/ride/ride_69.jpg"
+    "image": "images/ride/ride_69.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "40",
+          "statusEffectAccuracy": "40",
+          "normalMonsterPenetration": "75",
+          "healthIncrease": "15,000",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "41",
+          "statusEffectAccuracy": "41",
+          "normalMonsterPenetration": "76",
+          "healthIncrease": "15,150",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "4",
+          "statusEffectResistance": "42",
+          "statusEffectAccuracy": "42",
+          "normalMonsterPenetration": "77",
+          "healthIncrease": "15,300",
+          "lootAcquisitionIncrease": "14"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "43",
+          "statusEffectAccuracy": "43",
+          "normalMonsterPenetration": "79",
+          "healthIncrease": "16,425",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "44",
+          "statusEffectAccuracy": "44",
+          "normalMonsterPenetration": "80",
+          "healthIncrease": "16,575",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "45",
+          "statusEffectAccuracy": "45",
+          "normalMonsterPenetration": "81",
+          "healthIncrease": "16,725",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "46",
+          "statusEffectAccuracy": "46",
+          "normalMonsterPenetration": "82",
+          "healthIncrease": "16,875",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "5",
+          "statusEffectResistance": "47",
+          "statusEffectAccuracy": "47",
+          "normalMonsterPenetration": "83",
+          "healthIncrease": "17,025",
+          "lootAcquisitionIncrease": "15"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "49",
+          "statusEffectAccuracy": "49",
+          "normalMonsterPenetration": "85",
+          "healthIncrease": "18,150",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "51",
+          "statusEffectAccuracy": "51",
+          "normalMonsterPenetration": "86",
+          "healthIncrease": "18,300",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "53",
+          "statusEffectAccuracy": "53",
+          "normalMonsterPenetration": "87",
+          "healthIncrease": "18,450",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "55",
+          "statusEffectAccuracy": "55",
+          "normalMonsterPenetration": "88",
+          "healthIncrease": "18,600",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "57",
+          "statusEffectAccuracy": "57",
+          "normalMonsterPenetration": "89",
+          "healthIncrease": "18,750",
+          "lootAcquisitionIncrease": "16"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "59",
+          "statusEffectAccuracy": "59",
+          "normalMonsterPenetration": "92",
+          "healthIncrease": "19,875",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "6",
+          "statusEffectResistance": "61",
+          "statusEffectAccuracy": "61",
+          "normalMonsterPenetration": "93",
+          "healthIncrease": "20,025",
+          "lootAcquisitionIncrease": "17"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "7",
+          "statusEffectResistance": "63",
+          "statusEffectAccuracy": "63",
+          "normalMonsterPenetration": "98",
+          "healthIncrease": "20,175",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "68",
+          "statusEffectAccuracy": "68",
+          "normalMonsterPenetration": "103",
+          "healthIncrease": "21,085",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "8",
+          "statusEffectResistance": "73",
+          "statusEffectAccuracy": "73",
+          "normalMonsterPenetration": "108",
+          "healthIncrease": "21,995",
+          "lootAcquisitionIncrease": "18"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "78",
+          "statusEffectAccuracy": "78",
+          "normalMonsterPenetration": "113",
+          "healthIncrease": "23,702",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "9",
+          "statusEffectResistance": "83",
+          "statusEffectAccuracy": "83",
+          "normalMonsterPenetration": "118",
+          "healthIncrease": "24,840",
+          "lootAcquisitionIncrease": "19"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "statusEffectResistance": "88",
+          "statusEffectAccuracy": "88",
+          "normalMonsterPenetration": "128",
+          "healthIncrease": "26,547",
+          "lootAcquisitionIncrease": "20"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "93",
+          "statusEffectAccuracy": "93",
+          "normalMonsterPenetration": "138",
+          "healthIncrease": "27,821",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "statusEffectResistance": "98",
+          "statusEffectAccuracy": "98",
+          "normalMonsterPenetration": "148",
+          "healthIncrease": "29,095",
+          "lootAcquisitionIncrease": "21"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "103",
+          "statusEffectAccuracy": "103",
+          "normalMonsterPenetration": "158",
+          "healthIncrease": "30,688",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "statusEffectResistance": "108",
+          "statusEffectAccuracy": "108",
+          "normalMonsterPenetration": "168",
+          "healthIncrease": "31,962",
+          "lootAcquisitionIncrease": "22"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "14",
+          "statusEffectResistance": "113",
+          "statusEffectAccuracy": "113",
+          "normalMonsterPenetration": "178",
+          "healthIncrease": "34,086",
+          "lootAcquisitionIncrease": "23"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "냉정",
+    "type": "탑승",
+    "grade": "전설"
+  },
+  {
+    "name": "고요의 탑승",
+    "image": "images/ride/ride_70.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "statusEffectResistance": "30",
+          "statusEffectAccuracy": "30",
+          "normalMonsterPenetration": "50",
+          "magicIncrease": "10,000",
+          "lootAcquisitionIncrease": "12",
+          "experienceGainIncrease": "3"
+        },
+        "bindStat": {
+          "statusEffectResistance": "7",
+          "statusEffectAccuracy": "7",
+          "normalMonsterPenetration": "12",
+          "magicIncrease": "2,000",
+          "lootAcquisitionIncrease": "2"
+        }
+      }
+    ],
+    "influence": "고요",
+    "type": "탑승",
+    "grade": "전설"
+  },
+  {
+    "name": "결의의 탑승",
+    "image": "images/ride/ride_73.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "statusEffectResistance": "30",
+          "statusEffectAccuracy": "30",
+          "normalMonsterPenetration": "50",
+          "magicIncrease": "10,000",
+          "lootAcquisitionIncrease": "12",
+          "experienceGainIncrease": "3"
+        },
+        "bindStat": {
+          "statusEffectResistance": "7",
+          "statusEffectAccuracy": "7",
+          "normalMonsterPenetration": "12",
+          "magicIncrease": "2,000",
+          "lootAcquisitionIncrease": "2"
+        }
+      }
+    ],
+    "influence": "결의",
+    "type": "탑승",
+    "grade": "전설"
+  },
+  {
+    "name": "활력의 탑승",
+    "image": "images/ride/ride_72.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "statusEffectResistance": "30",
+          "statusEffectAccuracy": "30",
+          "normalMonsterPenetration": "50",
+          "healthIncrease": "10,000",
+          "lootAcquisitionIncrease": "12",
+          "experienceGainIncrease": "3"
+        },
+        "bindStat": {
+          "statusEffectResistance": "7",
+          "statusEffectAccuracy": "7",
+          "normalMonsterPenetration": "12",
+          "healthIncrease": "2,000",
+          "lootAcquisitionIncrease": "2"
+        }
+      }
+    ],
+    "influence": "활력",
+    "type": "탑승",
+    "grade": "전설"
+  },
+  {
+    "name": "침착의 탑승",
+    "image": "images/ride/ride_71.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "statusEffectResistance": "30",
+          "statusEffectAccuracy": "30",
+          "normalMonsterPenetration": "50",
+          "healthIncrease": "10,000",
+          "lootAcquisitionIncrease": "12",
+          "experienceGainIncrease": "3"
+        },
+        "bindStat": {
+          "statusEffectResistance": "7",
+          "statusEffectAccuracy": "7",
+          "normalMonsterPenetration": "12",
+          "healthIncrease": "2,000",
+          "lootAcquisitionIncrease": "2"
+        }
+      }
+    ],
+    "influence": "침착",
+    "type": "탑승",
+    "grade": "전설"
+  },
+  {
+    "name": "냉정의 탑승",
+    "image": "images/ride/ride_75.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "statusEffectResistance": "30",
+          "statusEffectAccuracy": "30",
+          "normalMonsterPenetration": "50",
+          "healthIncrease": "10,000",
+          "lootAcquisitionIncrease": "12",
+          "experienceGainIncrease": "3"
+        },
+        "bindStat": {
+          "statusEffectResistance": "7",
+          "statusEffectAccuracy": "7",
+          "normalMonsterPenetration": "12",
+          "healthIncrease": "2,000",
+          "lootAcquisitionIncrease": "2"
+        }
+      }
+    ],
+    "influence": "냉정",
+    "type": "탑승",
+    "grade": "전설"
+  },
+  {
+    "name": "의지의 탑승",
+    "image": "images/ride/ride_74.jpg",
+    "stats": [
+      {
+        "level": 25,
+        "registrationStat": {
+          "statusEffectResistance": "30",
+          "statusEffectAccuracy": "30",
+          "normalMonsterPenetration": "50",
+          "magicIncrease": "10,000",
+          "lootAcquisitionIncrease": "12",
+          "experienceGainIncrease": "3"
+        },
+        "bindStat": {
+          "statusEffectResistance": "7",
+          "statusEffectAccuracy": "7",
+          "normalMonsterPenetration": "12",
+          "magicIncrease": "2,000",
+          "lootAcquisitionIncrease": "2"
+        }
+      }
+    ],
+    "influence": "의지",
+    "type": "탑승",
+    "grade": "전설"
   },
   {
     "name": "운석 갑주돈",
-    "image": "images/ride/ride_i1.jpg"
+    "image": "images/ride/ride_i1.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistance": "20",
+          "movementSpeed": "1",
+          "pvpDamagePercent": "5",
+          "statusEffectResistance": "70",
+          "statusEffectAccuracy": "70"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistance": "21",
+          "movementSpeed": "1",
+          "pvpDamagePercent": "5",
+          "statusEffectResistance": "71",
+          "statusEffectAccuracy": "71"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistance": "21",
+          "movementSpeed": "1",
+          "pvpDamagePercent": "5",
+          "statusEffectResistance": "72",
+          "statusEffectAccuracy": "72"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistance": "22",
+          "movementSpeed": "1",
+          "pvpDamagePercent": "6",
+          "statusEffectResistance": "73",
+          "statusEffectAccuracy": "73"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistance": "22",
+          "movementSpeed": "1",
+          "pvpDamagePercent": "6",
+          "statusEffectResistance": "74",
+          "statusEffectAccuracy": "74"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistance": "23",
+          "movementSpeed": "1",
+          "pvpDamagePercent": "6",
+          "statusEffectResistance": "75",
+          "statusEffectAccuracy": "75"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistance": "23",
+          "movementSpeed": "1",
+          "pvpDamagePercent": "6",
+          "statusEffectResistance": "76",
+          "statusEffectAccuracy": "76"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistance": "24",
+          "movementSpeed": "1",
+          "pvpDamagePercent": "6",
+          "statusEffectResistance": "77",
+          "statusEffectAccuracy": "77"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "lootAcquisitionIncrease": "20",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistance": "27",
+          "movementSpeed": "2",
+          "pvpDamagePercent": "7",
+          "statusEffectResistance": "80",
+          "statusEffectAccuracy": "80"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "13",
+          "lootAcquisitionIncrease": "21",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistance": "27",
+          "movementSpeed": "2",
+          "pvpDamagePercent": "7",
+          "statusEffectResistance": "82",
+          "statusEffectAccuracy": "82"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "14",
+          "lootAcquisitionIncrease": "22",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistance": "28",
+          "movementSpeed": "2",
+          "pvpDamagePercent": "7",
+          "statusEffectResistance": "84",
+          "statusEffectAccuracy": "84"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "15",
+          "lootAcquisitionIncrease": "23",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistance": "29",
+          "movementSpeed": "2",
+          "pvpDamagePercent": "7",
+          "statusEffectResistance": "87",
+          "statusEffectAccuracy": "87"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "15",
+          "lootAcquisitionIncrease": "24",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistance": "30",
+          "movementSpeed": "2",
+          "pvpDamagePercent": "7",
+          "statusEffectResistance": "90",
+          "statusEffectAccuracy": "90"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "16",
+          "lootAcquisitionIncrease": "25",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistance": "33",
+          "movementSpeed": "2",
+          "pvpDamagePercent": "8",
+          "statusEffectResistance": "100",
+          "statusEffectAccuracy": "100"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "17",
+          "lootAcquisitionIncrease": "26",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistance": "34",
+          "movementSpeed": "2",
+          "pvpDamagePercent": "8",
+          "statusEffectResistance": "105",
+          "statusEffectAccuracy": "105"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "18",
+          "lootAcquisitionIncrease": "27",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistance": "37",
+          "movementSpeed": "3",
+          "pvpDamagePercent": "9",
+          "statusEffectResistance": "115",
+          "statusEffectAccuracy": "115"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "19",
+          "lootAcquisitionIncrease": "28",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistance": "40",
+          "movementSpeed": "3",
+          "pvpDamagePercent": "10",
+          "statusEffectResistance": "125",
+          "statusEffectAccuracy": "125"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "20",
+          "lootAcquisitionIncrease": "29",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistance": "41",
+          "movementSpeed": "3",
+          "pvpDamagePercent": "10",
+          "statusEffectResistance": "130",
+          "statusEffectAccuracy": "130"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "21",
+          "lootAcquisitionIncrease": "30",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistance": "44",
+          "movementSpeed": "4",
+          "pvpDamagePercent": "11",
+          "statusEffectResistance": "145",
+          "statusEffectAccuracy": "145"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "22",
+          "lootAcquisitionIncrease": "31",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistance": "46",
+          "movementSpeed": "4",
+          "pvpDamagePercent": "11",
+          "statusEffectResistance": "155",
+          "statusEffectAccuracy": "155"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "23",
+          "lootAcquisitionIncrease": "32",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistance": "49",
+          "movementSpeed": "4",
+          "pvpDamagePercent": "12",
+          "statusEffectResistance": "170",
+          "statusEffectAccuracy": "170"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "24",
+          "lootAcquisitionIncrease": "33",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistance": "52",
+          "movementSpeed": "5",
+          "pvpDamagePercent": "13",
+          "statusEffectResistance": "190",
+          "statusEffectAccuracy": "190"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "25",
+          "lootAcquisitionIncrease": "34",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistance": "54",
+          "movementSpeed": "5",
+          "pvpDamagePercent": "13",
+          "statusEffectResistance": "205",
+          "statusEffectAccuracy": "205"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "26",
+          "lootAcquisitionIncrease": "35",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistance": "57",
+          "movementSpeed": "5",
+          "pvpDamagePercent": "14",
+          "statusEffectResistance": "225",
+          "statusEffectAccuracy": "225"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "27",
+          "lootAcquisitionIncrease": "36",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistance": "59",
+          "movementSpeed": "5",
+          "pvpDamagePercent": "14",
+          "statusEffectResistance": "240",
+          "statusEffectAccuracy": "240"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "29",
+          "lootAcquisitionIncrease": "37",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistance": "62",
+          "movementSpeed": "6",
+          "pvpDamagePercent": "15",
+          "statusEffectResistance": "270",
+          "statusEffectAccuracy": "270"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "결의",
+    "type": "탑승",
+    "grade": "불멸"
   },
   {
     "name": "벽력 초월용",
-    "image": "images/ride/ride_i2.jpg"
+    "image": "images/ride/ride_i2.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "35",
+          "movementSpeed": "1",
+          "criticalPowerPercent": "10",
+          "statusEffectResistance": "70",
+          "statusEffectAccuracy": "70"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "36",
+          "movementSpeed": "1",
+          "criticalPowerPercent": "10",
+          "statusEffectResistance": "71",
+          "statusEffectAccuracy": "71"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "36",
+          "movementSpeed": "1",
+          "criticalPowerPercent": "10",
+          "statusEffectResistance": "72",
+          "statusEffectAccuracy": "72"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "37",
+          "movementSpeed": "1",
+          "criticalPowerPercent": "11",
+          "statusEffectResistance": "73",
+          "statusEffectAccuracy": "73"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "37",
+          "movementSpeed": "1",
+          "criticalPowerPercent": "11",
+          "statusEffectResistance": "74",
+          "statusEffectAccuracy": "74"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "38",
+          "movementSpeed": "1",
+          "criticalPowerPercent": "11",
+          "statusEffectResistance": "75",
+          "statusEffectAccuracy": "75"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "38",
+          "movementSpeed": "1",
+          "criticalPowerPercent": "11",
+          "statusEffectResistance": "76",
+          "statusEffectAccuracy": "76"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "39",
+          "movementSpeed": "1",
+          "criticalPowerPercent": "11",
+          "statusEffectResistance": "77",
+          "statusEffectAccuracy": "77"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "lootAcquisitionIncrease": "20",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistancePenetration": "42",
+          "movementSpeed": "2",
+          "criticalPowerPercent": "12",
+          "statusEffectResistance": "80",
+          "statusEffectAccuracy": "80"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "13",
+          "lootAcquisitionIncrease": "21",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistancePenetration": "42",
+          "movementSpeed": "2",
+          "criticalPowerPercent": "12",
+          "statusEffectResistance": "82",
+          "statusEffectAccuracy": "82"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "14",
+          "lootAcquisitionIncrease": "22",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistancePenetration": "43",
+          "movementSpeed": "2",
+          "criticalPowerPercent": "12",
+          "statusEffectResistance": "84",
+          "statusEffectAccuracy": "84"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "15",
+          "lootAcquisitionIncrease": "23",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistancePenetration": "44",
+          "movementSpeed": "2",
+          "criticalPowerPercent": "12",
+          "statusEffectResistance": "87",
+          "statusEffectAccuracy": "87"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "15",
+          "lootAcquisitionIncrease": "24",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistancePenetration": "45",
+          "movementSpeed": "2",
+          "criticalPowerPercent": "12",
+          "statusEffectResistance": "90",
+          "statusEffectAccuracy": "90"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "16",
+          "lootAcquisitionIncrease": "25",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "48",
+          "movementSpeed": "2",
+          "criticalPowerPercent": "13",
+          "statusEffectResistance": "100",
+          "statusEffectAccuracy": "100"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "17",
+          "lootAcquisitionIncrease": "26",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "50",
+          "movementSpeed": "2",
+          "criticalPowerPercent": "13",
+          "statusEffectResistance": "105",
+          "statusEffectAccuracy": "105"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "18",
+          "lootAcquisitionIncrease": "27",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "55",
+          "movementSpeed": "3",
+          "criticalPowerPercent": "14",
+          "statusEffectResistance": "115",
+          "statusEffectAccuracy": "115"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "19",
+          "lootAcquisitionIncrease": "28",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "60",
+          "movementSpeed": "3",
+          "criticalPowerPercent": "15",
+          "statusEffectResistance": "125",
+          "statusEffectAccuracy": "125"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "20",
+          "lootAcquisitionIncrease": "29",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "62",
+          "movementSpeed": "3",
+          "criticalPowerPercent": "15",
+          "statusEffectResistance": "130",
+          "statusEffectAccuracy": "130"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "21",
+          "lootAcquisitionIncrease": "30",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "67",
+          "movementSpeed": "4",
+          "criticalPowerPercent": "16",
+          "statusEffectResistance": "145",
+          "statusEffectAccuracy": "145"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "22",
+          "lootAcquisitionIncrease": "31",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "69",
+          "movementSpeed": "4",
+          "criticalPowerPercent": "16",
+          "statusEffectResistance": "155",
+          "statusEffectAccuracy": "155"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "23",
+          "lootAcquisitionIncrease": "32",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "74",
+          "movementSpeed": "4",
+          "criticalPowerPercent": "17",
+          "statusEffectResistance": "170",
+          "statusEffectAccuracy": "170"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "24",
+          "lootAcquisitionIncrease": "33",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "79",
+          "movementSpeed": "5",
+          "criticalPowerPercent": "20",
+          "statusEffectResistance": "190",
+          "statusEffectAccuracy": "190"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "25",
+          "lootAcquisitionIncrease": "34",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "82",
+          "movementSpeed": "5",
+          "criticalPowerPercent": "20",
+          "statusEffectResistance": "205",
+          "statusEffectAccuracy": "205"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "26",
+          "lootAcquisitionIncrease": "35",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "87",
+          "movementSpeed": "5",
+          "criticalPowerPercent": "22",
+          "statusEffectResistance": "225",
+          "statusEffectAccuracy": "225"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "27",
+          "lootAcquisitionIncrease": "36",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "90",
+          "movementSpeed": "5",
+          "criticalPowerPercent": "22",
+          "statusEffectResistance": "240",
+          "statusEffectAccuracy": "240"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "29",
+          "lootAcquisitionIncrease": "37",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "100",
+          "movementSpeed": "6",
+          "criticalPowerPercent": "25",
+          "statusEffectResistance": "270",
+          "statusEffectAccuracy": "270"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "고요",
+    "type": "탑승",
+    "grade": "불멸"
   },
   {
     "name": "황금각 신령양",
-    "image": "images/ride/ride_i3.jpg"
+    "image": "images/ride/ride_i3.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "20",
+          "movementSpeed": "1",
+          "pvpDefensePercent": "5",
+          "statusEffectResistance": "70",
+          "statusEffectAccuracy": "70"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "21",
+          "movementSpeed": "1",
+          "pvpDefensePercent": "5",
+          "statusEffectResistance": "71",
+          "statusEffectAccuracy": "71"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "21",
+          "movementSpeed": "1",
+          "pvpDefensePercent": "5",
+          "statusEffectResistance": "72",
+          "statusEffectAccuracy": "72"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "22",
+          "movementSpeed": "1",
+          "pvpDefensePercent": "6",
+          "statusEffectResistance": "73",
+          "statusEffectAccuracy": "73"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "22",
+          "movementSpeed": "1",
+          "pvpDefensePercent": "6",
+          "statusEffectResistance": "74",
+          "statusEffectAccuracy": "74"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "23",
+          "movementSpeed": "1",
+          "pvpDefensePercent": "6",
+          "statusEffectResistance": "75",
+          "statusEffectAccuracy": "75"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "23",
+          "movementSpeed": "1",
+          "pvpDefensePercent": "6",
+          "statusEffectResistance": "76",
+          "statusEffectAccuracy": "76"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "damageResistancePenetration": "24",
+          "movementSpeed": "1",
+          "pvpDefensePercent": "6",
+          "statusEffectResistance": "77",
+          "statusEffectAccuracy": "77"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "lootAcquisitionIncrease": "20",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistancePenetration": "27",
+          "movementSpeed": "2",
+          "pvpDefensePercent": "7",
+          "statusEffectResistance": "80",
+          "statusEffectAccuracy": "80"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "13",
+          "lootAcquisitionIncrease": "21",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistancePenetration": "27",
+          "movementSpeed": "2",
+          "pvpDefensePercent": "7",
+          "statusEffectResistance": "82",
+          "statusEffectAccuracy": "82"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "14",
+          "lootAcquisitionIncrease": "22",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistancePenetration": "28",
+          "movementSpeed": "2",
+          "pvpDefensePercent": "7",
+          "statusEffectResistance": "84",
+          "statusEffectAccuracy": "84"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "15",
+          "lootAcquisitionIncrease": "23",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistancePenetration": "29",
+          "movementSpeed": "2",
+          "pvpDefensePercent": "7",
+          "statusEffectResistance": "87",
+          "statusEffectAccuracy": "87"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "15",
+          "lootAcquisitionIncrease": "24",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "damageResistancePenetration": "30",
+          "movementSpeed": "2",
+          "pvpDefensePercent": "7",
+          "statusEffectResistance": "90",
+          "statusEffectAccuracy": "90"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "16",
+          "lootAcquisitionIncrease": "25",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "33",
+          "movementSpeed": "2",
+          "pvpDefensePercent": "8",
+          "statusEffectResistance": "100",
+          "statusEffectAccuracy": "100"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "17",
+          "lootAcquisitionIncrease": "26",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "34",
+          "movementSpeed": "2",
+          "pvpDefensePercent": "8",
+          "statusEffectResistance": "105",
+          "statusEffectAccuracy": "105"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "18",
+          "lootAcquisitionIncrease": "27",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "37",
+          "movementSpeed": "3",
+          "pvpDefensePercent": "9",
+          "statusEffectResistance": "115",
+          "statusEffectAccuracy": "115"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "19",
+          "lootAcquisitionIncrease": "28",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "40",
+          "movementSpeed": "3",
+          "pvpDefensePercent": "10",
+          "statusEffectResistance": "125",
+          "statusEffectAccuracy": "125"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "20",
+          "lootAcquisitionIncrease": "29",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "41",
+          "movementSpeed": "3",
+          "pvpDefensePercent": "10",
+          "statusEffectResistance": "130",
+          "statusEffectAccuracy": "130"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "21",
+          "lootAcquisitionIncrease": "30",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "44",
+          "movementSpeed": "4",
+          "pvpDefensePercent": "11",
+          "statusEffectResistance": "145",
+          "statusEffectAccuracy": "145"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "22",
+          "lootAcquisitionIncrease": "31",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "46",
+          "movementSpeed": "4",
+          "pvpDefensePercent": "11",
+          "statusEffectResistance": "155",
+          "statusEffectAccuracy": "155"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "23",
+          "lootAcquisitionIncrease": "32",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "49",
+          "movementSpeed": "4",
+          "pvpDefensePercent": "12",
+          "statusEffectResistance": "170",
+          "statusEffectAccuracy": "170"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "24",
+          "lootAcquisitionIncrease": "33",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "52",
+          "movementSpeed": "5",
+          "pvpDefensePercent": "13",
+          "statusEffectResistance": "190",
+          "statusEffectAccuracy": "190"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "25",
+          "lootAcquisitionIncrease": "34",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "54",
+          "movementSpeed": "5",
+          "pvpDefensePercent": "13",
+          "statusEffectResistance": "205",
+          "statusEffectAccuracy": "205"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "26",
+          "lootAcquisitionIncrease": "35",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "57",
+          "movementSpeed": "5",
+          "pvpDefensePercent": "14",
+          "statusEffectResistance": "225",
+          "statusEffectAccuracy": "225"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "27",
+          "lootAcquisitionIncrease": "36",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "59",
+          "movementSpeed": "5",
+          "pvpDefensePercent": "14",
+          "statusEffectResistance": "240",
+          "statusEffectAccuracy": "240"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "29",
+          "lootAcquisitionIncrease": "37",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "damageResistancePenetration": "62",
+          "movementSpeed": "6",
+          "pvpDefensePercent": "15",
+          "statusEffectResistance": "270",
+          "statusEffectAccuracy": "270"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "결의",
+    "type": "탑승",
+    "grade": "불멸"
   },
   {
     "name": "비황 천마",
-    "image": "images/ride/ride_i4.jpg"
+    "image": "images/ride/ride_i4.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "15",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "movementSpeed": "5",
+          "normalMonsterPenetration": "30",
+          "bossMonsterPenetration": "30",
+          "statusEffectResistance": "60",
+          "statusEffectAccuracy": "60"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "15",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "movementSpeed": "5",
+          "normalMonsterPenetration": "33",
+          "bossMonsterPenetration": "33",
+          "statusEffectResistance": "61",
+          "statusEffectAccuracy": "61"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "15",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "movementSpeed": "5",
+          "normalMonsterPenetration": "33",
+          "bossMonsterPenetration": "36",
+          "statusEffectResistance": "62",
+          "statusEffectAccuracy": "62"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "16",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "movementSpeed": "6",
+          "normalMonsterPenetration": "36",
+          "bossMonsterPenetration": "36",
+          "statusEffectResistance": "63",
+          "statusEffectAccuracy": "63"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "16",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "movementSpeed": "6",
+          "normalMonsterPenetration": "63",
+          "bossMonsterPenetration": "39",
+          "statusEffectResistance": "64",
+          "statusEffectAccuracy": "64"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "16",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "movementSpeed": "6",
+          "normalMonsterPenetration": "39",
+          "bossMonsterPenetration": "39",
+          "statusEffectResistance": "65",
+          "statusEffectAccuracy": "65"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "16",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "movementSpeed": "6",
+          "normalMonsterPenetration": "39",
+          "bossMonsterPenetration": "42",
+          "statusEffectResistance": "66",
+          "statusEffectAccuracy": "66"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "16",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "movementSpeed": "6",
+          "normalMonsterPenetration": "42",
+          "bossMonsterPenetration": "42",
+          "statusEffectResistance": "67",
+          "statusEffectAccuracy": "67"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "17",
+          "lootAcquisitionIncrease": "20",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "movementSpeed": "7",
+          "normalMonsterPenetration": "45",
+          "bossMonsterPenetration": "45",
+          "statusEffectResistance": "70",
+          "statusEffectAccuracy": "70"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "18",
+          "lootAcquisitionIncrease": "21",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "movementSpeed": "7",
+          "normalMonsterPenetration": "50",
+          "bossMonsterPenetration": "45",
+          "statusEffectResistance": "72",
+          "statusEffectAccuracy": "72"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "19",
+          "lootAcquisitionIncrease": "22",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "movementSpeed": "7",
+          "normalMonsterPenetration": "50",
+          "bossMonsterPenetration": "50",
+          "statusEffectResistance": "74",
+          "statusEffectAccuracy": "74"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "20",
+          "lootAcquisitionIncrease": "23",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "movementSpeed": "7",
+          "normalMonsterPenetration": "55",
+          "bossMonsterPenetration": "50",
+          "statusEffectResistance": "77",
+          "statusEffectAccuracy": "77"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "20",
+          "lootAcquisitionIncrease": "24",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "movementSpeed": "7",
+          "normalMonsterPenetration": "55",
+          "bossMonsterPenetration": "55",
+          "statusEffectResistance": "80",
+          "statusEffectAccuracy": "80"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "21",
+          "lootAcquisitionIncrease": "25",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "movementSpeed": "7",
+          "normalMonsterPenetration": "60",
+          "bossMonsterPenetration": "55",
+          "statusEffectResistance": "90",
+          "statusEffectAccuracy": "90"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "22",
+          "lootAcquisitionIncrease": "26",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "movementSpeed": "7",
+          "normalMonsterPenetration": "60",
+          "bossMonsterPenetration": "60",
+          "statusEffectResistance": "95",
+          "statusEffectAccuracy": "95"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "23",
+          "lootAcquisitionIncrease": "27",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "movementSpeed": "8",
+          "normalMonsterPenetration": "65",
+          "bossMonsterPenetration": "60",
+          "statusEffectResistance": "105",
+          "statusEffectAccuracy": "105"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "24",
+          "lootAcquisitionIncrease": "28",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "movementSpeed": "8",
+          "normalMonsterPenetration": "65",
+          "bossMonsterPenetration": "65",
+          "statusEffectResistance": "115",
+          "statusEffectAccuracy": "115"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "25",
+          "lootAcquisitionIncrease": "29",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "movementSpeed": "8",
+          "normalMonsterPenetration": "75",
+          "bossMonsterPenetration": "65",
+          "statusEffectResistance": "120",
+          "statusEffectAccuracy": "120"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "26",
+          "lootAcquisitionIncrease": "30",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "movementSpeed": "9",
+          "normalMonsterPenetration": "75",
+          "bossMonsterPenetration": "75",
+          "statusEffectResistance": "135",
+          "statusEffectAccuracy": "135"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "27",
+          "lootAcquisitionIncrease": "31",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "movementSpeed": "9",
+          "normalMonsterPenetration": "85",
+          "bossMonsterPenetration": "75",
+          "statusEffectResistance": "145",
+          "statusEffectAccuracy": "145"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "28",
+          "lootAcquisitionIncrease": "32",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "movementSpeed": "10",
+          "normalMonsterPenetration": "85",
+          "bossMonsterPenetration": "85",
+          "statusEffectResistance": "160",
+          "statusEffectAccuracy": "160"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "30",
+          "lootAcquisitionIncrease": "33",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "movementSpeed": "12",
+          "normalMonsterPenetration": "100",
+          "bossMonsterPenetration": "100",
+          "statusEffectResistance": "180",
+          "statusEffectAccuracy": "180"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "31",
+          "lootAcquisitionIncrease": "34",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "movementSpeed": "12",
+          "normalMonsterPenetration": "110",
+          "bossMonsterPenetration": "110",
+          "statusEffectResistance": "195",
+          "statusEffectAccuracy": "195"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "33",
+          "lootAcquisitionIncrease": "35",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "movementSpeed": "13",
+          "normalMonsterPenetration": "125",
+          "bossMonsterPenetration": "125",
+          "statusEffectResistance": "215",
+          "statusEffectAccuracy": "215"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "34",
+          "lootAcquisitionIncrease": "36",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "movementSpeed": "13",
+          "normalMonsterPenetration": "135",
+          "bossMonsterPenetration": "135",
+          "statusEffectResistance": "230",
+          "statusEffectAccuracy": "230"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "37",
+          "lootAcquisitionIncrease": "37",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "movementSpeed": "15",
+          "normalMonsterPenetration": "155",
+          "bossMonsterPenetration": "155",
+          "statusEffectResistance": "260",
+          "statusEffectAccuracy": "260"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "침착",
+    "type": "탑승",
+    "grade": "불멸"
   },
   {
     "name": "화검 영사",
-    "image": "images/ride/ride_i5.jpg"
+    "image": "images/ride/ride_i5.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "movementSpeed": "1",
+          "statusEffectResistance": "80",
+          "statusEffectAccuracy": "80"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "movementSpeed": "1",
+          "statusEffectResistance": "81",
+          "statusEffectAccuracy": "81"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "10",
+          "lootAcquisitionIncrease": "18",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "movementSpeed": "1",
+          "statusEffectResistance": "82",
+          "statusEffectAccuracy": "82"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "1",
+          "statusEffectResistance": "83",
+          "statusEffectAccuracy": "83"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "1",
+          "statusEffectResistance": "84",
+          "statusEffectAccuracy": "84"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "1",
+          "statusEffectResistance": "85",
+          "statusEffectAccuracy": "85"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "1",
+          "statusEffectResistance": "86",
+          "statusEffectAccuracy": "86"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "11",
+          "lootAcquisitionIncrease": "19",
+          "healthIncreasePercent": "1",
+          "magicIncreasePercent": "1",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "movementSpeed": "1",
+          "statusEffectResistance": "87",
+          "statusEffectAccuracy": "87"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "12",
+          "lootAcquisitionIncrease": "20",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "pvpDamagePercent": "6",
+          "pvpDefensePercent": "6",
+          "movementSpeed": "2",
+          "statusEffectResistance": "90",
+          "statusEffectAccuracy": "90"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "13",
+          "lootAcquisitionIncrease": "21",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "pvpDamagePercent": "6",
+          "pvpDefensePercent": "6",
+          "movementSpeed": "2",
+          "statusEffectResistance": "92",
+          "statusEffectAccuracy": "92"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "14",
+          "lootAcquisitionIncrease": "22",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "pvpDamagePercent": "6",
+          "pvpDefensePercent": "6",
+          "movementSpeed": "2",
+          "statusEffectResistance": "94",
+          "statusEffectAccuracy": "94"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "15",
+          "lootAcquisitionIncrease": "23",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "pvpDamagePercent": "6",
+          "pvpDefensePercent": "6",
+          "movementSpeed": "2",
+          "statusEffectResistance": "97",
+          "statusEffectAccuracy": "97"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "15",
+          "lootAcquisitionIncrease": "24",
+          "healthIncreasePercent": "2",
+          "magicIncreasePercent": "2",
+          "pvpDamagePercent": "6",
+          "pvpDefensePercent": "6",
+          "movementSpeed": "2",
+          "statusEffectResistance": "100",
+          "statusEffectAccuracy": "100"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "16",
+          "lootAcquisitionIncrease": "25",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "pvpDamagePercent": "7",
+          "pvpDefensePercent": "7",
+          "movementSpeed": "2",
+          "statusEffectResistance": "110",
+          "statusEffectAccuracy": "110"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "17",
+          "lootAcquisitionIncrease": "26",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "pvpDamagePercent": "7",
+          "pvpDefensePercent": "7",
+          "movementSpeed": "2",
+          "statusEffectResistance": "115",
+          "statusEffectAccuracy": "115"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "18",
+          "lootAcquisitionIncrease": "27",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "pvpDamagePercent": "8",
+          "pvpDefensePercent": "8",
+          "movementSpeed": "3",
+          "statusEffectResistance": "125",
+          "statusEffectAccuracy": "125"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "19",
+          "lootAcquisitionIncrease": "28",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "pvpDamagePercent": "9",
+          "pvpDefensePercent": "9",
+          "movementSpeed": "3",
+          "statusEffectResistance": "135",
+          "statusEffectAccuracy": "135"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "20",
+          "lootAcquisitionIncrease": "29",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "pvpDamagePercent": "9",
+          "pvpDefensePercent": "9",
+          "movementSpeed": "3",
+          "statusEffectResistance": "140",
+          "statusEffectAccuracy": "140"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "21",
+          "lootAcquisitionIncrease": "30",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "pvpDamagePercent": "10",
+          "pvpDefensePercent": "10",
+          "movementSpeed": "4",
+          "statusEffectResistance": "155",
+          "statusEffectAccuracy": "155"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "22",
+          "lootAcquisitionIncrease": "31",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "pvpDamagePercent": "10",
+          "pvpDefensePercent": "10",
+          "movementSpeed": "4",
+          "statusEffectResistance": "165",
+          "statusEffectAccuracy": "165"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "23",
+          "lootAcquisitionIncrease": "32",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "pvpDamagePercent": "11",
+          "pvpDefensePercent": "11",
+          "movementSpeed": "4",
+          "statusEffectResistance": "180",
+          "statusEffectAccuracy": "180"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "24",
+          "lootAcquisitionIncrease": "33",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "pvpDamagePercent": "12",
+          "pvpDefensePercent": "12",
+          "movementSpeed": "5",
+          "statusEffectResistance": "200",
+          "statusEffectAccuracy": "200"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "25",
+          "lootAcquisitionIncrease": "34",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "pvpDamagePercent": "12",
+          "pvpDefensePercent": "12",
+          "movementSpeed": "5",
+          "statusEffectResistance": "215",
+          "statusEffectAccuracy": "215"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "26",
+          "lootAcquisitionIncrease": "35",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "pvpDamagePercent": "13",
+          "pvpDefensePercent": "13",
+          "movementSpeed": "5",
+          "statusEffectResistance": "235",
+          "statusEffectAccuracy": "235"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "27",
+          "lootAcquisitionIncrease": "36",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "pvpDamagePercent": "13",
+          "pvpDefensePercent": "13",
+          "movementSpeed": "5",
+          "statusEffectResistance": "250",
+          "statusEffectAccuracy": "250"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "29",
+          "lootAcquisitionIncrease": "37",
+          "healthIncreasePercent": "3",
+          "magicIncreasePercent": "3",
+          "pvpDamagePercent": "14",
+          "pvpDefensePercent": "14",
+          "movementSpeed": "6",
+          "statusEffectResistance": "280",
+          "statusEffectAccuracy": "280"
+        },
+        "bindStat": {
+          "experienceGainIncrease": "2",
+          "lootAcquisitionIncrease": "7",
+          "pvpDamagePercent": "3",
+          "pvpDefensePercent": "134",
+          "statusEffectResistance": "70",
+          "statusEffectAccuracy": "70"
+        }
+      }
+    ],
+    "influence": "의지",
+    "type": "탑승",
+    "grade": "불멸"
   }
 ]
