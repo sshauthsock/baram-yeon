@@ -1,0 +1,170 @@
+{
+    "수호": {
+        "전설": {
+            "2": {
+                "power": 150
+            },
+            "3": {
+                "power": 150,
+                "experienceGainIncrease": 10
+            },
+            "4": {
+                "power": 150,
+                "experienceGainIncrease": 10,
+                "damageResistancePenetration": 100
+            },
+            "5": {
+                "power": 150,
+                "experienceGainIncrease": 10,
+                "damageResistancePenetration": 100,
+                "statusEffectResistance": 150
+            },
+            "6": {
+                "power": 150,
+                "experienceGainIncrease": 10,
+                "damageResistancePenetration": 100,
+                "statusEffectResistance": 150,
+                "damageResistance": 100
+            }
+        },
+        "불멸": {
+            "2": {
+                "damageResistancePenetration": 200
+            },
+            "3": {
+                "damageResistancePenetration": 200,
+                "damageResistance": 150
+            },
+            "4": {
+                "damageResistancePenetration": 200,
+                "damageResistance": 150,
+                "experienceGainIncrease": 15
+            },
+            "5": {
+                "damageResistancePenetration": 200,
+                "damageResistance": 150,
+                "experienceGainIncrease": 15,
+                "pvpDamagePercent": 20
+            },
+            "6": {
+                "damageResistancePenetration": 200,
+                "damageResistance": 150,
+                "experienceGainIncrease": 15,
+                "pvpDamagePercent": 20,
+                "pvpDefensePercent": 20
+            }
+        }
+    },
+    "탑승": {
+        "전설": {
+            "2": {
+                "normalMonsterAdditionalDamage": 50
+            },
+            "3": {
+                "normalMonsterAdditionalDamage": 50,
+                "bossMonsterAdditionalDamage": 50
+            },
+            "4": {
+                "normalMonsterAdditionalDamage": 50,
+                "bossMonsterAdditionalDamage": 50,
+                "damageResistancePenetration": 50
+            },
+            "5": {
+                "normalMonsterAdditionalDamage": 50,
+                "bossMonsterAdditionalDamage": 50,
+                "damageResistancePenetration": 50,
+                "statusEffectAccuracy": 50
+            },
+            "6": {
+                "normalMonsterAdditionalDamage": 50,
+                "bossMonsterAdditionalDamage": 50,
+                "damageResistancePenetration": 50,
+                "statusEffectAccuracy": 50,
+                "damageResistance": 50
+            }
+        },
+        "불멸": {
+            "2": {
+                "damageResistancePenetration": 150
+            },
+            "3": {
+                "damageResistancePenetration": 150,
+                "damageResistance": 150
+            },
+            "4": {
+                "damageResistancePenetration": 150,
+                "damageResistance": 150,
+                "movementSpeed": 5
+            },
+            "5": {
+                "damageResistancePenetration": 150,
+                "damageResistance": 150,
+                "movementSpeed": 5,
+                "pvpDamagePercent": 20
+            },
+            "6": {
+                "damageResistancePenetration": 150,
+                "damageResistance": 150,
+                "movementSpeed": 5,
+                "pvpDamagePercent": 20,
+                "pvpDefensePercent": 20
+            }
+        }
+    },
+    "변신": {
+        "전설": {
+            "2": {
+                "magicIncreasePercent": 3
+            },
+            "3": {
+                "magicIncreasePercent": 3,
+                "healthIncreasePercent": 3
+            },
+            "4": {
+                "magicIncreasePercent": 3,
+                "healthIncreasePercent": 3,
+                "damageResistancePenetration": 100
+            },
+            "5": {
+                "magicIncreasePercent": 3,
+                "healthIncreasePercent": 3,
+                "damageResistancePenetration": 100,
+                "movementSpeed": 3
+            },
+            "6": {
+                "magicIncreasePercent": 3,
+                "healthIncreasePercent": 3,
+                "damageResistancePenetration": 100,
+                "movementSpeed": 3,
+                "damageResistance": 100
+            }
+        },
+        "불멸": {
+            "2": {
+                "damageResistancePenetration": 150
+            },
+            "3": {
+                "damageResistancePenetration": 150,
+                "damageResistance": 150
+            },
+            "4": {
+                "damageResistancePenetration": 150,
+                "damageResistance": 150,
+                "criticalPowerPercent": 30
+            },
+            "5": {
+                "damageResistancePenetration": 150,
+                "damageResistance": 150,
+                "criticalPowerPercent": 30,
+                "pvpDamagePercent": 20
+            },
+            "6": {
+                "damageResistancePenetration": 150,
+                "damageResistance": 150,
+                "criticalPowerPercent": 30,
+                "pvpDamagePercent": 20,
+                "pvpDefensePercent": 20
+            }
+        }
+    }
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>환수혼 계산기</title>
+    <link href="/assets/css/soulCalculator.css" rel="stylesheet">
+    <link href="/assets/css/global.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="tabs">
+        <div class="tab" onclick="location.assign('index.html')">환수정보</div>
+        <div class="tab active" onclick="location.assign('bondCalculator.html')">환수 결속</div>
+        <div class="tab active" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
+        <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
+    </div>
+
+    <div class="container">
+        <div class="left">
+            <h3>환수 성장 경험치 테이블</h3>
+            <div class="exp-type-tabs">
+                <div class="exp-tab active" data-type="legend">전설</div>
+                <div class="exp-tab" data-type="immortal">불멸</div>
+            </div>
+
+            <div class="tables-container">
+                <div class="table-half">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Lv</th>
+                                <th>경험치</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expTableLeft"></tbody>
+                    </table>
+                </div>
+                <div class="table-half">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Lv</th>
+                                <th>경험치</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expTableRight"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="right">
+            <h2>환수혼 계산기</h2>
+
+            <div class="calculator-form">
+                <div class="input-row">
+                    <div class="input-group type-select">
+                        <label>종류:</label>
+                        <select id="expType">
+                            <option value="legend">전설</option>
+                            <option value="immortal">불멸</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>현재:</label>
+                        <input type="number" id="currentLevel" min="0" max="24" value="0">
+                    </div>
+
+                    <div class="input-group">
+                        <label>목표:</label>
+                        <input type="number" id="targetLevel" min="1" max="25" value="1">
+                    </div>
+                </div>
+
+                <div class="soul-panel">
+                    <div class="soul-item">
+                        <img src="assets/img/high-soul.jpg" alt="최상급">
+                        <label>최상급 (1000)</label>
+                        <input type="number" id="highSoul" min="0" value="0">
+                    </div>
+                    <div class="soul-item">
+                        <img src="assets/img/mid-soul.jpg" alt="상급">
+                        <label>상급 (100)</label>
+                        <input type="number" id="midSoul" min="0" value="0">
+                    </div>
+                    <div class="soul-item">
+                        <img src="assets/img/low-soul.jpg" alt="하급">
+                        <label>하급 (10)</label>
+                        <input type="number" id="lowSoul" min="0" value="0">
+                    </div>
+                    <div class="calc-btn">
+                        <button onclick="calculate()">계산</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-panel">
+                <div class="result-column">
+                    <div id="required"></div>
+                </div>
+                <div class="result-column">
+                    <div id="maxLevel"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/soulCalculator.js"></script>
+</body>
+
+</html>

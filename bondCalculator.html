@@ -1,0 +1,299 @@
+<!-- <!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>환수 결속 계산기</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/global.css" rel="stylesheet">
+    <link href="/assets/css/bond.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="tabs">
+        <div class="tab" onclick="location.assign('index.html')">환수정보</div>
+        <div class="tab active" onclick="location.assign('bondCalculator.html')">환수 결속</div>
+        <div class="tab" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
+        <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
+    </div>
+
+    <div class="sub-tabs" id="subTabs">
+        <div class="tab active" onclick="showCategory('수호', true)">수호</div>
+        <div class="tab" onclick="showCategory('탑승', true)">탑승</div>
+        <div class="tab" onclick="showCategory('변신', true)">변신</div>
+    </div>
+
+    <div class="bond-container">
+        <div class="spirit-selection">
+            <h3>환수 선택 (<span id="selectedCount">0</span>/12)</h3>
+            <div class="image-container" id="imageContainer"></div>
+        </div>
+
+        <div class="selected-spirits-container">
+            <div class="selected-spirits-header">
+                <h3>선택된 환수</h3>
+                <div class="level-batch-control">
+                    <label>일괄 레벨 설정:</label>
+                    <input type="number" id="batchLevel" min="0" max="25" value="0">
+                    <button onclick="applyBatchLevel()">적용</button>
+                </div>
+            </div>
+            <div id="selectedSpirits" class="selected-spirits"></div>
+        </div>
+
+        <div class="calculate-btn-container">
+            <button id="findOptimalBtn" onclick="findOptimalCombination()">최적 조합 찾기</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="resultModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeResultModal()">✕</button>
+            <h3 class="modal-title">결속 효과 계산 결과</h3>
+            <div class="modal-content">
+                <div id="selectedSpiritsInfo" class="selected-spirits-info">
+                    <h4>선택된 환수 정보</h4>
+                    <div id="spiritsInfoList" class="spirits-info-list"></div>
+                </div>
+
+                <div class="results-container">
+                    <div class="results-section">
+                        <h4>등급 결속 효과</h4>
+                        <div id="gradeEffects" class="effects-list"></div>
+                    </div>
+                    <div class="results-section">
+                        <h4>세력 결속 효과</h4>
+                        <div id="factionEffects" class="effects-list"></div>
+                    </div>
+                    <div class="results-section">
+                        <h4>총 결속 효과</h4>
+                        <div id="totalEffects" class="effects-list"></div>
+                    </div>
+                </div>
+
+                <div class="weighted-score">
+                    <h4>환산합산: <span id="weightedScore">0</span></h4>
+                    <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small>
+                </div>
+
+                <div id="missingDataWarning" class="warning-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="optimalModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeOptimalModal()">✕</button>
+            <h3 class="modal-title">최적 결속 조합 결과 (최대 6개)</h3>
+            <div class="modal-content">
+                <div class="optimal-score">
+                    <h4>환산합산: <span id="optimalScore">0</span></h4>
+                    <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small>
+                </div>
+
+                <div id="optimalSpiritsInfo" class="selected-spirits-info">
+                    <h4>최적 환수 조합</h4>
+                    <div id="optimalSpiritsList" class="spirits-info-list"></div>
+                </div>
+
+                <div class="results-container">
+                    <div class="results-section">
+                        <h4>등급 결속 효과</h4>
+                        <div id="optimalGradeEffects" class="effects-list"></div>
+                    </div>
+                    <div class="results-section">
+                        <h4>세력 결속 효과</h4>
+                        <div id="optimalFactionEffects" class="effects-list"></div>
+                    </div>
+                    <div class="results-section">
+                        <h4>총 결속 효과</h4>
+                        <div id="optimalTotalEffects" class="effects-list"></div>
+                    </div>
+                </div>
+
+                <div id="optimalSpiritsDetails" class="spirit-details-container">
+                    <h4>선택된 환수 상세 스탯</h4>
+                    <div id="spiritStatsDetails" class="spirit-stats-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/js/bondCalculator.js"></script>
+</body>
+
+</html> -->
+
+<!-- test -->
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>환수 결속 계산기</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/global.css" rel="stylesheet">
+    <link href="/assets/css/bond.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="tabs">
+        <div class="tab" onclick="location.assign('index.html')">환수정보</div>
+        <div class="tab active" onclick="location.assign('bondCalculator.html')">환수 결속</div>
+        <div class="tab" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
+        <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
+    </div>
+
+    <div class="sub-tabs" id="subTabs">
+        <div class="tab active" onclick="showCategory('수호', true)">수호</div>
+        <div class="tab" onclick="showCategory('탑승', true)">탑승</div>
+        <div class="tab" onclick="showCategory('변신', true)">변신</div>
+    </div>
+
+    <div class="bond-container">
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="spirit-selection">
+                    <div class="spirit-selection-header">
+                        <h3>환수 선택 (<span id="selectedCount">0</span>/12)</h3>
+                        <button class="clear-selection-btn" onclick="clearAllSelections()">선택해제</button>
+                    </div>
+                    <div class="image-container" id="imageContainer"></div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="selected-spirits-container">
+                    <div class="selected-spirits-header">
+                        <h3>선택된 환수</h3>
+                        <div class="level-batch-control">
+                            <label>일괄 레벨 설정:</label>
+                            <input type="number" id="batchLevel" min="0" max="25" value="0">
+                            <button onclick="applyBatchLevel()">적용</button>
+                        </div>
+                    </div>
+                    <div id="selectedSpirits" class="selected-spirits"></div>
+
+                    <div class="calculate-btn-container">
+                        <button id="findOptimalBtn" onclick="findOptimalCombination()">최적 조합 찾기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="resultModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeResultModal()">✕</button>
+            <h3 class="modal-title">결속 효과 계산 결과</h3>
+            <div class="modal-content">
+                <div id="selectedSpiritsInfo" class="selected-spirits-info">
+                    <h4>선택된 환수 정보</h4>
+                    <div id="spiritsInfoList" class="spirits-info-list"></div>
+                </div>
+
+                <div class="results-container">
+                    <div class="results-section">
+                        <h4>등급 결속 효과</h4>
+                        <div id="gradeEffects" class="effects-list"></div>
+                    </div>
+                    <div class="results-section">
+                        <h4>세력 결속 효과</h4>
+                        <div id="factionEffects" class="effects-list"></div>
+                    </div>
+                    <div class="results-section">
+                        <h4>총 결속 효과</h4>
+                        <div id="totalEffects" class="effects-list"></div>
+                    </div>
+                </div>
+
+                <div class="weighted-score">
+                    <h4>환산합산: <span id="weightedScore">0</span></h4>
+                    <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small>
+                </div>
+
+                <div id="missingDataWarning" class="warning-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="optimalModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeOptimalModal()">✕</button>
+            <h3 class="modal-title">최적 결속 조합 결과 (최대 6개)</h3>
+            <div class="modal-content">
+                <div class="optimal-score">
+                    <h4>환산합산: <span id="optimalScore">0</span></h4>
+                    <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small>
+                </div>
+
+                <div id="optimalSpiritsInfo" class="selected-spirits-info">
+                    <h4>최적 환수 조합</h4>
+                    <div id="optimalSpiritsList" class="spirits-info-list"></div>
+                </div>
+
+                <div class="results-container">
+                    <div class="results-section">
+                        <h4>등급 결속 효과</h4>
+                        <div id="optimalGradeEffects" class="effects-list"></div>
+                    </div>
+                    <div class="results-section">
+                        <h4>세력 결속 효과</h4>
+                        <div id="optimalFactionEffects" class="effects-list"></div>
+                    </div>
+                    <div class="results-section">
+                        <h4>총 결속 효과</h4>
+                        <div id="optimalTotalEffects" class="effects-list"></div>
+                    </div>
+                </div>
+
+                <div id="optimalSpiritsDetails" class="spirit-details-container">
+                    <h4>선택된 환수 상세 스탯</h4>
+                    <div id="spiritStatsDetails" class="spirit-stats-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/js/bondCalculator.js"></script>
+    <script>
+        function clearAllSelections() {
+            selectedSpirits = [];
+            updateSelectedCount();
+            renderSelectedSpirits();
+            showCategory(document.querySelector(".sub-tabs .tab.active").textContent, false);
+        }
+    </script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            if (!sessionStorage.getItem('authenticated')) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const username = sessionStorage.getItem('username');
+            document.getElementById('userWelcome').textContent = `환영합니다, ${username}님!`;
+
+            document.getElementById('logoutBtn').addEventListener('click', function () {
+                sessionStorage.removeItem('authenticated');
+                sessionStorage.removeItem('username');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+
+</html>
