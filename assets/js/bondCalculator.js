@@ -14,12 +14,12 @@ const percentStats = [
 ];
 
 const factionIcons = {
-  결의: "/assets/img/bond/결의.jpg",
-  고요: "/assets/img/bond/고요.jpg",
-  냉정: "/assets/img/bond/냉정.jpg",
-  의지: "/assets/img/bond/의지.jpg",
-  침착: "/assets/img/bond/침착.jpg",
-  활력: "/assets/img/bond/활력.jpg",
+  결의: "assets/img/bond/결의.jpg",
+  고요: "assets/img/bond/고요.jpg",
+  냉정: "assets/img/bond/냉정.jpg",
+  의지: "assets/img/bond/의지.jpg",
+  침착: "assets/img/bond/침착.jpg",
+  활력: "assets/img/bond/활력.jpg",
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -563,8 +563,7 @@ function showResultsInModal(result) {
     const factionTags = Object.entries(factions)
       .filter(([_, count]) => count >= 2)
       .map(([faction, count]) => {
-        const iconPath =
-          factionIcons[faction] || "/assets/img/bond/default.jpg";
+        const iconPath = factionIcons[faction] || "assets/img/bond/default.jpg";
         return `<span class="faction-tag"><img src="${iconPath}" class="faction-icon" alt="${faction}"> ${faction} X ${count}</span>`;
       })
       .join(" ");
@@ -860,8 +859,7 @@ function showOptimalResults(result) {
     const factionTags = Object.entries(factions)
       .filter(([_, count]) => count >= 2)
       .map(([faction, count]) => {
-        const iconPath =
-          factionIcons[faction] || "/assets/img/bond/default.jpg";
+        const iconPath = factionIcons[faction] || "assets/img/bond/default.jpg";
         return `<span class="faction-tag"><img src="${iconPath}" class="faction-icon" alt="${faction}"> ${faction} X ${count}</span>`;
       })
       .join(" ");
@@ -1061,12 +1059,12 @@ const statsMapping = {
 // ];
 
 // const factionIcons = {
-//   결의: "/assets/img/bond/결의.jpg",
-//   고요: "/assets/img/bond/고요.jpg",
-//   냉정: "/assets/img/bond/냉정.jpg",
-//   의지: "/assets/img/bond/의지.jpg",
-//   침착: "/assets/img/bond/침착.jpg",
-//   활력: "/assets/img/bond/활력.jpg",
+//   결의: "assets/img/bond/결의.jpg",
+//   고요: "assets/img/bond/고요.jpg",
+//   냉정: "assets/img/bond/냉정.jpg",
+//   의지: "assets/img/bond/의지.jpg",
+//   침착: "assets/img/bond/침착.jpg",
+//   활력: "assets/img/bond/활력.jpg",
 // };
 
 // document.addEventListener("DOMContentLoaded", function () {
@@ -1443,7 +1441,7 @@ const statsMapping = {
 //       .filter(([_, count]) => count >= 2)
 //       .map(([faction, count]) => {
 //         const iconPath =
-//           factionIcons[faction] || "/assets/img/bond/default.jpg";
+//           factionIcons[faction] || "assets/img/bond/default.jpg";
 //         return `<span class="faction-tag"><img src="${iconPath}" class="faction-icon" alt="${faction}"> ${faction} X ${count}</span>`;
 //       })
 //       .join(" ");
@@ -1955,7 +1953,7 @@ const statsMapping = {
 //       .filter(([_, count]) => count >= 2)
 //       .map(([faction, count]) => {
 //         const iconPath =
-//           factionIcons[faction] || "/assets/img/bond/default.jpg";
+//           factionIcons[faction] || "assets/img/bond/default.jpg";
 //         return `<span class="faction-tag"><img src="${iconPath}" class="faction-icon" alt="${faction}"> ${faction} X ${count}</span>`;
 //       })
 //       .join(" ");
