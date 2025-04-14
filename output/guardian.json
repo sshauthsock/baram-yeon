@@ -25731,7 +25731,324 @@
   },
   {
     "name": "왕관 깃털수리",
-    "image": "images/guardian/guardian_62.jpg"
+    "image": "images/guardian/guardian_62.jpg",
+    "stats": [
+      {
+        "level": 0,
+        "registrationStat": {
+          "experienceGainIncrease": "100",
+          "damageResistance": "115",
+          "pvpDamagePercent": "3",
+          "pvpDefensePercent": "3",
+          "healthRecoveryImprovement": "60",
+          "magicRecoveryImprovement": "60"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 1,
+        "registrationStat": {
+          "experienceGainIncrease": "101",
+          "damageResistance": "117",
+          "pvpDamagePercent": "3",
+          "pvpDefensePercent": "3",
+          "healthRecoveryImprovement": "61",
+          "magicRecoveryImprovement": "61"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 2,
+        "registrationStat": {
+          "experienceGainIncrease": "101",
+          "damageResistance": "119",
+          "pvpDamagePercent": "3",
+          "pvpDefensePercent": "3",
+          "healthRecoveryImprovement": "62",
+          "magicRecoveryImprovement": "62"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 3,
+        "registrationStat": {
+          "experienceGainIncrease": "107",
+          "damageResistance": "121",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "healthRecoveryImprovement": "68",
+          "magicRecoveryImprovement": "68"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 4,
+        "registrationStat": {
+          "experienceGainIncrease": "107",
+          "damageResistance": "123",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "healthRecoveryImprovement": "68",
+          "magicRecoveryImprovement": "68"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 5,
+        "registrationStat": {
+          "experienceGainIncrease": "108",
+          "damageResistance": "125",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "healthRecoveryImprovement": "69",
+          "magicRecoveryImprovement": "69"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 6,
+        "registrationStat": {
+          "experienceGainIncrease": "109",
+          "damageResistance": "127",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "healthRecoveryImprovement": "70",
+          "magicRecoveryImprovement": "70"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 7,
+        "registrationStat": {
+          "experienceGainIncrease": "109",
+          "damageResistance": "129",
+          "pvpDamagePercent": "4",
+          "pvpDefensePercent": "4",
+          "healthRecoveryImprovement": "71",
+          "magicRecoveryImprovement": "71"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 8,
+        "registrationStat": {
+          "experienceGainIncrease": "115",
+          "damageResistance": "132",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "healthRecoveryImprovement": "77",
+          "magicRecoveryImprovement": "77"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 9,
+        "registrationStat": {
+          "experienceGainIncrease": "115",
+          "damageResistance": "135",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "healthRecoveryImprovement": "78",
+          "magicRecoveryImprovement": "78"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 10,
+        "registrationStat": {
+          "experienceGainIncrease": "116",
+          "damageResistance": "135",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "healthRecoveryImprovement": "78",
+          "magicRecoveryImprovement": "78"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 11,
+        "registrationStat": {
+          "experienceGainIncrease": "117",
+          "damageResistance": "138",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "healthRecoveryImprovement": "79",
+          "magicRecoveryImprovement": "79"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 12,
+        "registrationStat": {
+          "experienceGainIncrease": "118",
+          "damageResistance": "141",
+          "pvpDamagePercent": "5",
+          "pvpDefensePercent": "5",
+          "healthRecoveryImprovement": "80",
+          "magicRecoveryImprovement": "80"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 13,
+        "registrationStat": {
+          "experienceGainIncrease": "123",
+          "damageResistance": "144",
+          "pvpDamagePercent": "6",
+          "pvpDefensePercent": "6",
+          "healthRecoveryImprovement": "86",
+          "magicRecoveryImprovement": "86"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 14,
+        "registrationStat": {
+          "experienceGainIncrease": "123",
+          "damageResistance": "147",
+          "pvpDamagePercent": "6",
+          "pvpDefensePercent": "6",
+          "healthRecoveryImprovement": "87",
+          "magicRecoveryImprovement": "87"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 15,
+        "registrationStat": {
+          "experienceGainIncrease": "124",
+          "damageResistance": "151",
+          "pvpDamagePercent": "7",
+          "pvpDefensePercent": "7",
+          "healthRecoveryImprovement": "88",
+          "magicRecoveryImprovement": "88"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 16,
+        "registrationStat": {
+          "experienceGainIncrease": "128",
+          "damageResistance": "161",
+          "pvpDamagePercent": "8",
+          "pvpDefensePercent": "8",
+          "healthRecoveryImprovement": "92",
+          "magicRecoveryImprovement": "92"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 17,
+        "registrationStat": {
+          "experienceGainIncrease": "132",
+          "damageResistance": "171",
+          "pvpDamagePercent": "8",
+          "pvpDefensePercent": "8",
+          "healthRecoveryImprovement": "96",
+          "magicRecoveryImprovement": "96"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 18,
+        "registrationStat": {
+          "experienceGainIncrease": "139",
+          "damageResistance": "181",
+          "pvpDamagePercent": "9",
+          "pvpDefensePercent": "9",
+          "healthRecoveryImprovement": "105",
+          "magicRecoveryImprovement": "105"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 19,
+        "registrationStat": {
+          "experienceGainIncrease": "144",
+          "damageResistance": "191",
+          "pvpDamagePercent": "9",
+          "pvpDefensePercent": "9",
+          "healthRecoveryImprovement": "111",
+          "magicRecoveryImprovement": "111"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 20,
+        "registrationStat": {
+          "experienceGainIncrease": "151",
+          "damageResistance": "201",
+          "pvpDamagePercent": "10",
+          "pvpDefensePercent": "10",
+          "healthRecoveryImprovement": "120",
+          "magicRecoveryImprovement": "120"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 21,
+        "registrationStat": {
+          "experienceGainIncrease": "159",
+          "damageResistance": "211",
+          "pvpDamagePercent": "11",
+          "pvpDefensePercent": "11",
+          "healthRecoveryImprovement": "130",
+          "magicRecoveryImprovement": "130"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 22,
+        "registrationStat": {
+          "experienceGainIncrease": "164",
+          "damageResistance": "221",
+          "pvpDamagePercent": "11",
+          "pvpDefensePercent": "11",
+          "healthRecoveryImprovement": "136",
+          "magicRecoveryImprovement": "136"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 23,
+        "registrationStat": {
+          "experienceGainIncrease": "172",
+          "damageResistance": "231",
+          "pvpDamagePercent": "12",
+          "pvpDefensePercent": "12",
+          "healthRecoveryImprovement": "146",
+          "magicRecoveryImprovement": "146"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 24,
+        "registrationStat": {
+          "experienceGainIncrease": "178",
+          "damageResistance": "241",
+          "pvpDamagePercent": "12",
+          "pvpDefensePercent": "12",
+          "healthRecoveryImprovement": "154",
+          "magicRecoveryImprovement": "154"
+        },
+        "bindStat": {}
+      },
+      {
+        "level": 25,
+        "registrationStat": {
+          "experienceGainIncrease": "189",
+          "damageResistance": "256",
+          "pvpDamagePercent": "13",
+          "pvpDefensePercent": "13",
+          "healthRecoveryImprovement": "167",
+          "magicRecoveryImprovement": "167"
+        },
+        "bindStat": {}
+      }
+    ],
+    "influence": "고요",
+    "type": "수호",
+    "grade": "전설"
   },
   {
     "name": "광폭한 맹독박쥐",
@@ -26381,7 +26698,7 @@
           "pvpDamagePercent": "7",
           "pvpDefense": "2,500",
           "healthRecoveryImprovement": "50",
-          "manaRecoveryImprovement": "50"
+          "magicRecoveryImprovement": "50"
         },
         "bindStat": {}
       },
@@ -26393,7 +26710,7 @@
           "pvpDamagePercent": "7",
           "pvpDefense": "2,556",
           "healthRecoveryImprovement": "51",
-          "manaRecoveryImprovement": "51"
+          "magicRecoveryImprovement": "51"
         },
         "bindStat": {}
       },
@@ -26405,7 +26722,7 @@
           "pvpDamagePercent": "7",
           "pvpDefense": "2,612",
           "healthRecoveryImprovement": "52",
-          "manaRecoveryImprovement": "52"
+          "magicRecoveryImprovement": "52"
         },
         "bindStat": {}
       },
@@ -26417,7 +26734,7 @@
           "pvpDamagePercent": "8",
           "pvpDefense": "2,762",
           "healthRecoveryImprovement": "58",
-          "manaRecoveryImprovement": "58"
+          "magicRecoveryImprovement": "58"
         },
         "bindStat": {}
       },
@@ -26429,7 +26746,7 @@
           "pvpDamagePercent": "8",
           "pvpDefense": "2,818",
           "healthRecoveryImprovement": "58",
-          "manaRecoveryImprovement": "58"
+          "magicRecoveryImprovement": "58"
         },
         "bindStat": {}
       },
@@ -26441,7 +26758,7 @@
           "pvpDamagePercent": "9",
           "pvpDefense": "2,874",
           "healthRecoveryImprovement": "59",
-          "manaRecoveryImprovement": "59"
+          "magicRecoveryImprovement": "59"
         },
         "bindStat": {}
       },
@@ -26453,7 +26770,7 @@
           "pvpDamagePercent": "9",
           "pvpDefense": "2,930",
           "healthRecoveryImprovement": "60",
-          "manaRecoveryImprovement": "60"
+          "magicRecoveryImprovement": "60"
         },
         "bindStat": {}
       },
@@ -26465,7 +26782,7 @@
           "pvpDamagePercent": "9",
           "pvpDefense": "2,986",
           "healthRecoveryImprovement": "61",
-          "manaRecoveryImprovement": "61"
+          "magicRecoveryImprovement": "61"
         },
         "bindStat": {}
       },
@@ -26477,7 +26794,7 @@
           "pvpDamagePercent": "10",
           "pvpDefense": "3,136",
           "healthRecoveryImprovement": "67",
-          "manaRecoveryImprovement": "67"
+          "magicRecoveryImprovement": "67"
         },
         "bindStat": {}
       },
@@ -26489,7 +26806,7 @@
           "pvpDamagePercent": "10",
           "pvpDefense": "3,192",
           "healthRecoveryImprovement": "68",
-          "manaRecoveryImprovement": "68"
+          "magicRecoveryImprovement": "68"
         },
         "bindStat": {}
       },
@@ -26501,7 +26818,7 @@
           "pvpDamagePercent": "10",
           "pvpDefense": "3,248",
           "healthRecoveryImprovement": "68",
-          "manaRecoveryImprovement": "68"
+          "magicRecoveryImprovement": "68"
         },
         "bindStat": {}
       },
@@ -26513,7 +26830,7 @@
           "pvpDamagePercent": "11",
           "pvpDefense": "3,304",
           "healthRecoveryImprovement": "69",
-          "manaRecoveryImprovement": "69"
+          "magicRecoveryImprovement": "69"
         },
         "bindStat": {}
       },
@@ -26525,7 +26842,7 @@
           "pvpDamagePercent": "11",
           "pvpDefense": "3,360",
           "healthRecoveryImprovement": "70",
-          "manaRecoveryImprovement": "70"
+          "magicRecoveryImprovement": "70"
         },
         "bindStat": {}
       },
@@ -26537,7 +26854,7 @@
           "pvpDamagePercent": "13",
           "pvpDefense": "3,510",
           "healthRecoveryImprovement": "76",
-          "manaRecoveryImprovement": "76"
+          "magicRecoveryImprovement": "76"
         },
         "bindStat": {}
       },
@@ -26549,7 +26866,7 @@
           "pvpDamagePercent": "13",
           "pvpDefense": "3,566",
           "healthRecoveryImprovement": "77",
-          "manaRecoveryImprovement": "77"
+          "magicRecoveryImprovement": "77"
         },
         "bindStat": {}
       },
@@ -26561,7 +26878,7 @@
           "pvpDamagePercent": "15",
           "pvpDefense": "3,622",
           "healthRecoveryImprovement": "78",
-          "manaRecoveryImprovement": "78"
+          "magicRecoveryImprovement": "78"
         },
         "bindStat": {}
       },
@@ -26573,7 +26890,7 @@
           "pvpDamagePercent": "17",
           "pvpDefense": "3,772",
           "healthRecoveryImprovement": "82",
-          "manaRecoveryImprovement": "82"
+          "magicRecoveryImprovement": "82"
         },
         "bindStat": {}
       },
@@ -26585,7 +26902,7 @@
           "pvpDamagePercent": "17",
           "pvpDefense": "3,922",
           "healthRecoveryImprovement": "86",
-          "manaRecoveryImprovement": "86"
+          "magicRecoveryImprovement": "86"
         },
         "bindStat": {}
       },
@@ -26597,7 +26914,7 @@
           "pvpDamagePercent": "19",
           "pvpDefense": "4,172",
           "healthRecoveryImprovement": "95",
-          "manaRecoveryImprovement": "95"
+          "magicRecoveryImprovement": "95"
         },
         "bindStat": {}
       },
@@ -26609,7 +26926,7 @@
           "pvpDamagePercent": "19",
           "pvpDefense": "4,422",
           "healthRecoveryImprovement": "101",
-          "manaRecoveryImprovement": "101"
+          "magicRecoveryImprovement": "101"
         },
         "bindStat": {}
       },
@@ -26621,7 +26938,7 @@
           "pvpDamagePercent": "21",
           "pvpDefense": "4,672",
           "healthRecoveryImprovement": "110",
-          "manaRecoveryImprovement": "110"
+          "magicRecoveryImprovement": "110"
         },
         "bindStat": {}
       },
@@ -26633,7 +26950,7 @@
           "pvpDamagePercent": "23",
           "pvpDefense": "5,222",
           "healthRecoveryImprovement": "120",
-          "manaRecoveryImprovement": "120"
+          "magicRecoveryImprovement": "120"
         },
         "bindStat": {}
       },
@@ -26645,7 +26962,7 @@
           "pvpDamagePercent": "23",
           "pvpDefense": "5,772",
           "healthRecoveryImprovement": "126",
-          "manaRecoveryImprovement": "126"
+          "magicRecoveryImprovement": "126"
         },
         "bindStat": {}
       },
@@ -26657,7 +26974,7 @@
           "pvpDamagePercent": "25",
           "pvpDefense": "6,322",
           "healthRecoveryImprovement": "136",
-          "manaRecoveryImprovement": "136"
+          "magicRecoveryImprovement": "136"
         },
         "bindStat": {}
       },
@@ -26669,7 +26986,7 @@
           "pvpDamagePercent": "25",
           "pvpDefense": "6,872",
           "healthRecoveryImprovement": "144",
-          "manaRecoveryImprovement": "144"
+          "magicRecoveryImprovement": "144"
         },
         "bindStat": {}
       },
@@ -26681,7 +26998,7 @@
           "pvpDamagePercent": "27",
           "pvpDefense": "7,622",
           "healthRecoveryImprovement": "157",
-          "manaRecoveryImprovement": "157"
+          "magicRecoveryImprovement": "157"
         },
         "bindStat": {}
       }
@@ -26702,7 +27019,7 @@
           "normalMonsterPenetration": "220",
           "normalMonsterAdditionalDamage": "270",
           "healthRecoveryImprovement": "50",
-          "manaRecoveryImprovement": "50"
+          "magicRecoveryImprovement": "50"
         },
         "bindStat": {}
       },
@@ -26714,7 +27031,7 @@
           "normalMonsterPenetration": "225",
           "normalMonsterAdditionalDamage": "271",
           "healthRecoveryImprovement": "51",
-          "manaRecoveryImprovement": "51"
+          "magicRecoveryImprovement": "51"
         },
         "bindStat": {}
       },
@@ -26726,7 +27043,7 @@
           "normalMonsterPenetration": "230",
           "normalMonsterAdditionalDamage": "272",
           "healthRecoveryImprovement": "52",
-          "manaRecoveryImprovement": "52"
+          "magicRecoveryImprovement": "52"
         },
         "bindStat": {}
       },
@@ -26738,7 +27055,7 @@
           "normalMonsterPenetration": "235",
           "normalMonsterAdditionalDamage": "277",
           "healthRecoveryImprovement": "58",
-          "manaRecoveryImprovement": "58"
+          "magicRecoveryImprovement": "58"
         },
         "bindStat": {}
       },
@@ -26750,7 +27067,7 @@
           "normalMonsterPenetration": "240",
           "normalMonsterAdditionalDamage": "278",
           "healthRecoveryImprovement": "58",
-          "manaRecoveryImprovement": "58"
+          "magicRecoveryImprovement": "58"
         },
         "bindStat": {}
       },
@@ -26762,7 +27079,7 @@
           "normalMonsterPenetration": "245",
           "normalMonsterAdditionalDamage": "279",
           "healthRecoveryImprovement": "59",
-          "manaRecoveryImprovement": "59"
+          "magicRecoveryImprovement": "59"
         },
         "bindStat": {}
       },
@@ -26774,7 +27091,7 @@
           "normalMonsterPenetration": "250",
           "normalMonsterAdditionalDamage": "280",
           "healthRecoveryImprovement": "60",
-          "manaRecoveryImprovement": "60"
+          "magicRecoveryImprovement": "60"
         },
         "bindStat": {}
       },
@@ -26786,7 +27103,7 @@
           "normalMonsterPenetration": "255",
           "normalMonsterAdditionalDamage": "281",
           "healthRecoveryImprovement": "61",
-          "manaRecoveryImprovement": "61"
+          "magicRecoveryImprovement": "61"
         },
         "bindStat": {}
       },
@@ -26798,7 +27115,7 @@
           "normalMonsterPenetration": "260",
           "normalMonsterAdditionalDamage": "286",
           "healthRecoveryImprovement": "67",
-          "manaRecoveryImprovement": "67"
+          "magicRecoveryImprovement": "67"
         },
         "bindStat": {}
       },
@@ -26810,7 +27127,7 @@
           "normalMonsterPenetration": "265",
           "normalMonsterAdditionalDamage": "287",
           "healthRecoveryImprovement": "68",
-          "manaRecoveryImprovement": "68"
+          "magicRecoveryImprovement": "68"
         },
         "bindStat": {}
       },
@@ -26822,7 +27139,7 @@
           "normalMonsterPenetration": "270",
           "normalMonsterAdditionalDamage": "288",
           "healthRecoveryImprovement": "68",
-          "manaRecoveryImprovement": "68"
+          "magicRecoveryImprovement": "68"
         },
         "bindStat": {}
       },
@@ -26834,7 +27151,7 @@
           "normalMonsterPenetration": "275",
           "normalMonsterAdditionalDamage": "289",
           "healthRecoveryImprovement": "69",
-          "manaRecoveryImprovement": "69"
+          "magicRecoveryImprovement": "69"
         },
         "bindStat": {}
       },
@@ -26846,7 +27163,7 @@
           "normalMonsterPenetration": "280",
           "normalMonsterAdditionalDamage": "290",
           "healthRecoveryImprovement": "70",
-          "manaRecoveryImprovement": "70"
+          "magicRecoveryImprovement": "70"
         },
         "bindStat": {}
       },
@@ -26858,7 +27175,7 @@
           "normalMonsterPenetration": "285",
           "normalMonsterAdditionalDamage": "295",
           "healthRecoveryImprovement": "76",
-          "manaRecoveryImprovement": "76"
+          "magicRecoveryImprovement": "76"
         },
         "bindStat": {}
       },
@@ -26870,7 +27187,7 @@
           "normalMonsterPenetration": "290",
           "normalMonsterAdditionalDamage": "296",
           "healthRecoveryImprovement": "77",
-          "manaRecoveryImprovement": "77"
+          "magicRecoveryImprovement": "77"
         },
         "bindStat": {}
       },
@@ -26882,7 +27199,7 @@
           "normalMonsterPenetration": "300",
           "normalMonsterAdditionalDamage": "297",
           "healthRecoveryImprovement": "78",
-          "manaRecoveryImprovement": "78"
+          "magicRecoveryImprovement": "78"
         },
         "bindStat": {}
       },
@@ -26894,7 +27211,7 @@
           "normalMonsterPenetration": "310",
           "normalMonsterAdditionalDamage": "302",
           "healthRecoveryImprovement": "82",
-          "manaRecoveryImprovement": "82"
+          "magicRecoveryImprovement": "82"
         },
         "bindStat": {}
       },
@@ -26906,7 +27223,7 @@
           "normalMonsterPenetration": "320",
           "normalMonsterAdditionalDamage": "307",
           "healthRecoveryImprovement": "86",
-          "manaRecoveryImprovement": "86"
+          "magicRecoveryImprovement": "86"
         },
         "bindStat": {}
       },
@@ -26918,7 +27235,7 @@
           "normalMonsterPenetration": "330",
           "normalMonsterAdditionalDamage": "317",
           "healthRecoveryImprovement": "95",
-          "manaRecoveryImprovement": "95"
+          "magicRecoveryImprovement": "95"
         },
         "bindStat": {}
       },
@@ -26930,7 +27247,7 @@
           "normalMonsterPenetration": "350",
           "normalMonsterAdditionalDamage": "322",
           "healthRecoveryImprovement": "101",
-          "manaRecoveryImprovement": "101"
+          "magicRecoveryImprovement": "101"
         },
         "bindStat": {}
       },
@@ -26942,7 +27259,7 @@
           "normalMonsterPenetration": "370",
           "normalMonsterAdditionalDamage": "347",
           "healthRecoveryImprovement": "110",
-          "manaRecoveryImprovement": "110"
+          "magicRecoveryImprovement": "110"
         },
         "bindStat": {}
       },
@@ -26954,7 +27271,7 @@
           "normalMonsterPenetration": "400",
           "normalMonsterAdditionalDamage": "392",
           "healthRecoveryImprovement": "120",
-          "manaRecoveryImprovement": "120"
+          "magicRecoveryImprovement": "120"
         },
         "bindStat": {}
       },
@@ -26966,7 +27283,7 @@
           "normalMonsterPenetration": "415",
           "normalMonsterAdditionalDamage": "427",
           "healthRecoveryImprovement": "126",
-          "manaRecoveryImprovement": "126"
+          "magicRecoveryImprovement": "126"
         },
         "bindStat": {}
       },
@@ -26978,7 +27295,7 @@
           "normalMonsterPenetration": "445",
           "normalMonsterAdditionalDamage": "472",
           "healthRecoveryImprovement": "136",
-          "manaRecoveryImprovement": "136"
+          "magicRecoveryImprovement": "136"
         },
         "bindStat": {}
       },
@@ -26990,7 +27307,7 @@
           "normalMonsterPenetration": "460",
           "normalMonsterAdditionalDamage": "507",
           "healthRecoveryImprovement": "144",
-          "manaRecoveryImprovement": "144"
+          "magicRecoveryImprovement": "144"
         },
         "bindStat": {}
       },
@@ -27002,7 +27319,7 @@
           "normalMonsterPenetration": "505",
           "normalMonsterAdditionalDamage": "577",
           "healthRecoveryImprovement": "157",
-          "manaRecoveryImprovement": "157"
+          "magicRecoveryImprovement": "157"
         },
         "bindStat": {}
       }
@@ -27023,7 +27340,7 @@
           "normalMonsterPenetration": "220",
           "normalMonsterAdditionalDamage": "270",
           "healthRecoveryImprovement": "50",
-          "manaRecoveryImprovement": "50"
+          "magicRecoveryImprovement": "50"
         },
         "bindStat": {}
       },
@@ -27035,7 +27352,7 @@
           "normalMonsterPenetration": "225",
           "normalMonsterAdditionalDamage": "271",
           "healthRecoveryImprovement": "51",
-          "manaRecoveryImprovement": "51"
+          "magicRecoveryImprovement": "51"
         },
         "bindStat": {}
       },
@@ -27047,7 +27364,7 @@
           "normalMonsterPenetration": "230",
           "normalMonsterAdditionalDamage": "272",
           "healthRecoveryImprovement": "52",
-          "manaRecoveryImprovement": "52"
+          "magicRecoveryImprovement": "52"
         },
         "bindStat": {}
       },
@@ -27059,7 +27376,7 @@
           "normalMonsterPenetration": "235",
           "normalMonsterAdditionalDamage": "277",
           "healthRecoveryImprovement": "58",
-          "manaRecoveryImprovement": "58"
+          "magicRecoveryImprovement": "58"
         },
         "bindStat": {}
       },
@@ -27071,7 +27388,7 @@
           "normalMonsterPenetration": "240",
           "normalMonsterAdditionalDamage": "278",
           "healthRecoveryImprovement": "58",
-          "manaRecoveryImprovement": "58"
+          "magicRecoveryImprovement": "58"
         },
         "bindStat": {}
       },
@@ -27083,7 +27400,7 @@
           "normalMonsterPenetration": "245",
           "normalMonsterAdditionalDamage": "279",
           "healthRecoveryImprovement": "59",
-          "manaRecoveryImprovement": "59"
+          "magicRecoveryImprovement": "59"
         },
         "bindStat": {}
       },
@@ -27095,7 +27412,7 @@
           "normalMonsterPenetration": "250",
           "normalMonsterAdditionalDamage": "280",
           "healthRecoveryImprovement": "60",
-          "manaRecoveryImprovement": "60"
+          "magicRecoveryImprovement": "60"
         },
         "bindStat": {}
       },
@@ -27107,7 +27424,7 @@
           "normalMonsterPenetration": "255",
           "normalMonsterAdditionalDamage": "281",
           "healthRecoveryImprovement": "61",
-          "manaRecoveryImprovement": "61"
+          "magicRecoveryImprovement": "61"
         },
         "bindStat": {}
       },
@@ -27119,7 +27436,7 @@
           "normalMonsterPenetration": "260",
           "normalMonsterAdditionalDamage": "286",
           "healthRecoveryImprovement": "67",
-          "manaRecoveryImprovement": "67"
+          "magicRecoveryImprovement": "67"
         },
         "bindStat": {}
       },
@@ -27131,7 +27448,7 @@
           "normalMonsterPenetration": "265",
           "normalMonsterAdditionalDamage": "287",
           "healthRecoveryImprovement": "68",
-          "manaRecoveryImprovement": "68"
+          "magicRecoveryImprovement": "68"
         },
         "bindStat": {}
       },
@@ -27143,7 +27460,7 @@
           "normalMonsterPenetration": "270",
           "normalMonsterAdditionalDamage": "288",
           "healthRecoveryImprovement": "68",
-          "manaRecoveryImprovement": "68"
+          "magicRecoveryImprovement": "68"
         },
         "bindStat": {}
       },
@@ -27155,7 +27472,7 @@
           "normalMonsterPenetration": "275",
           "normalMonsterAdditionalDamage": "289",
           "healthRecoveryImprovement": "69",
-          "manaRecoveryImprovement": "69"
+          "magicRecoveryImprovement": "69"
         },
         "bindStat": {}
       },
@@ -27167,7 +27484,7 @@
           "normalMonsterPenetration": "280",
           "normalMonsterAdditionalDamage": "290",
           "healthRecoveryImprovement": "70",
-          "manaRecoveryImprovement": "70"
+          "magicRecoveryImprovement": "70"
         },
         "bindStat": {}
       },
@@ -27179,7 +27496,7 @@
           "normalMonsterPenetration": "285",
           "normalMonsterAdditionalDamage": "295",
           "healthRecoveryImprovement": "76",
-          "manaRecoveryImprovement": "76"
+          "magicRecoveryImprovement": "76"
         },
         "bindStat": {}
       },
@@ -27191,7 +27508,7 @@
           "normalMonsterPenetration": "290",
           "normalMonsterAdditionalDamage": "296",
           "healthRecoveryImprovement": "77",
-          "manaRecoveryImprovement": "77"
+          "magicRecoveryImprovement": "77"
         },
         "bindStat": {}
       },
@@ -27203,7 +27520,7 @@
           "normalMonsterPenetration": "300",
           "normalMonsterAdditionalDamage": "297",
           "healthRecoveryImprovement": "78",
-          "manaRecoveryImprovement": "78"
+          "magicRecoveryImprovement": "78"
         },
         "bindStat": {}
       },
@@ -27215,7 +27532,7 @@
           "normalMonsterPenetration": "310",
           "normalMonsterAdditionalDamage": "302",
           "healthRecoveryImprovement": "82",
-          "manaRecoveryImprovement": "82"
+          "magicRecoveryImprovement": "82"
         },
         "bindStat": {}
       },
@@ -27227,7 +27544,7 @@
           "normalMonsterPenetration": "320",
           "normalMonsterAdditionalDamage": "307",
           "healthRecoveryImprovement": "86",
-          "manaRecoveryImprovement": "86"
+          "magicRecoveryImprovement": "86"
         },
         "bindStat": {}
       },
@@ -27239,7 +27556,7 @@
           "normalMonsterPenetration": "330",
           "normalMonsterAdditionalDamage": "317",
           "healthRecoveryImprovement": "95",
-          "manaRecoveryImprovement": "95"
+          "magicRecoveryImprovement": "95"
         },
         "bindStat": {}
       },
@@ -27251,7 +27568,7 @@
           "normalMonsterPenetration": "350",
           "normalMonsterAdditionalDamage": "322",
           "healthRecoveryImprovement": "101",
-          "manaRecoveryImprovement": "101"
+          "magicRecoveryImprovement": "101"
         },
         "bindStat": {}
       },
@@ -27263,7 +27580,7 @@
           "normalMonsterPenetration": "370",
           "normalMonsterAdditionalDamage": "347",
           "healthRecoveryImprovement": "110",
-          "manaRecoveryImprovement": "110"
+          "magicRecoveryImprovement": "110"
         },
         "bindStat": {}
       },
@@ -27275,7 +27592,7 @@
           "normalMonsterPenetration": "400",
           "normalMonsterAdditionalDamage": "392",
           "healthRecoveryImprovement": "120",
-          "manaRecoveryImprovement": "120"
+          "magicRecoveryImprovement": "120"
         },
         "bindStat": {}
       },
@@ -27287,7 +27604,7 @@
           "normalMonsterPenetration": "415",
           "normalMonsterAdditionalDamage": "427",
           "healthRecoveryImprovement": "126",
-          "manaRecoveryImprovement": "126"
+          "magicRecoveryImprovement": "126"
         },
         "bindStat": {}
       },
@@ -27299,7 +27616,7 @@
           "normalMonsterPenetration": "445",
           "normalMonsterAdditionalDamage": "472",
           "healthRecoveryImprovement": "136",
-          "manaRecoveryImprovement": "136"
+          "magicRecoveryImprovement": "136"
         },
         "bindStat": {}
       },
@@ -27311,7 +27628,7 @@
           "normalMonsterPenetration": "460",
           "normalMonsterAdditionalDamage": "507",
           "healthRecoveryImprovement": "144",
-          "manaRecoveryImprovement": "144"
+          "magicRecoveryImprovement": "144"
         },
         "bindStat": {}
       },
@@ -27323,7 +27640,7 @@
           "normalMonsterPenetration": "505",
           "normalMonsterAdditionalDamage": "577",
           "healthRecoveryImprovement": "157",
-          "manaRecoveryImprovement": "157"
+          "magicRecoveryImprovement": "157"
         },
         "bindStat": {}
       }
@@ -27332,20 +27649,650 @@
     "type": "수호",
     "grade": "전설"
   },
-  {
-    "name": "폭풍의 바람 공작",
-    "image": "images/guardian/guardian_68.jpg",
-    "influence": "침착",
-    "type": "수호",
-    "grade": "전설"
-  },
-  {
-    "name": "전령사관 천신나방",
-    "image": "images/guardian/guardian_69.jpg",
-    "influence": "침착",
-    "type": "수호",
-    "grade": "전설"
-  },
+  [
+    {
+      "name": "폭풍의 바람 공작",
+      "image": "images/guardian/guardian_68.jpg",
+      "stats": [
+        {
+          "level": 0,
+          "registrationStat": {
+            "experienceGainIncrease": "90",
+            "damageResistance": "150",
+            "damageResistancePenetration": "30",
+            "statusResistance": "70",
+            "magicPotionEnhancement": "1000",
+            "magicRecoveryImprovement": "70"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 1,
+          "registrationStat": {
+            "experienceGainIncrease": "91",
+            "damageResistance": "152",
+            "damageResistancePenetration": "30",
+            "statusResistance": "73",
+            "magicPotionEnhancement": "1050",
+            "magicRecoveryImprovement": "71"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 2,
+          "registrationStat": {
+            "experienceGainIncrease": "91",
+            "damageResistance": "154",
+            "damageResistancePenetration": "30",
+            "statusResistance": "74",
+            "magicPotionEnhancement": "1070",
+            "magicRecoveryImprovement": "72"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 3,
+          "registrationStat": {
+            "experienceGainIncrease": "97",
+            "damageResistance": "156",
+            "damageResistancePenetration": "30",
+            "statusResistance": "77",
+            "magicPotionEnhancement": "1120",
+            "magicRecoveryImprovement": "80"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 4,
+          "registrationStat": {
+            "experienceGainIncrease": "97",
+            "damageResistance": "158",
+            "damageResistancePenetration": "30",
+            "statusResistance": "78",
+            "magicPotionEnhancement": "1140",
+            "magicRecoveryImprovement": "81"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 5,
+          "registrationStat": {
+            "experienceGainIncrease": "98",
+            "damageResistance": "160",
+            "damageResistancePenetration": "30",
+            "statusResistance": "81",
+            "magicPotionEnhancement": "1190",
+            "magicRecoveryImprovement": "82"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 6,
+          "registrationStat": {
+            "experienceGainIncrease": "99",
+            "damageResistance": "162",
+            "damageResistancePenetration": "30",
+            "statusResistance": "82",
+            "magicPotionEnhancement": "1210",
+            "magicRecoveryImprovement": "83"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 7,
+          "registrationStat": {
+            "experienceGainIncrease": "99",
+            "damageResistance": "164",
+            "damageResistancePenetration": "30",
+            "statusResistance": "85",
+            "magicPotionEnhancement": "1260",
+            "magicRecoveryImprovement": "84"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 8,
+          "registrationStat": {
+            "experienceGainIncrease": "105",
+            "damageResistance": "167",
+            "damageResistancePenetration": "30",
+            "statusResistance": "90",
+            "magicPotionEnhancement": "1280",
+            "magicRecoveryImprovement": "91"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 9,
+          "registrationStat": {
+            "experienceGainIncrease": "105",
+            "damageResistance": "170",
+            "damageResistancePenetration": "30",
+            "statusResistance": "92",
+            "magicPotionEnhancement": "1330",
+            "magicRecoveryImprovement": "92"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 10,
+          "registrationStat": {
+            "experienceGainIncrease": "106",
+            "damageResistance": "170",
+            "damageResistancePenetration": "32",
+            "statusResistance": "97",
+            "magicPotionEnhancement": "1350",
+            "magicRecoveryImprovement": "93"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 11,
+          "registrationStat": {
+            "experienceGainIncrease": "107",
+            "damageResistance": "173",
+            "damageResistancePenetration": "32",
+            "statusResistance": "99",
+            "magicPotionEnhancement": "1400",
+            "magicRecoveryImprovement": "94"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 12,
+          "registrationStat": {
+            "experienceGainIncrease": "108",
+            "damageResistance": "176",
+            "damageResistancePenetration": "32",
+            "statusResistance": "104",
+            "magicPotionEnhancement": "1420",
+            "magicRecoveryImprovement": "95"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 13,
+          "registrationStat": {
+            "experienceGainIncrease": "113",
+            "damageResistance": "179",
+            "damageResistancePenetration": "34",
+            "statusResistance": "106",
+            "magicPotionEnhancement": "1470",
+            "magicRecoveryImprovement": "103"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 14,
+          "registrationStat": {
+            "experienceGainIncrease": "113",
+            "damageResistance": "182",
+            "damageResistancePenetration": "34",
+            "statusResistance": "111",
+            "magicPotionEnhancement": "1490",
+            "magicRecoveryImprovement": "104"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 15,
+          "registrationStat": {
+            "experienceGainIncrease": "114",
+            "damageResistance": "186",
+            "damageResistancePenetration": "34",
+            "statusResistance": "116",
+            "magicPotionEnhancement": "1540",
+            "magicRecoveryImprovement": "105"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 16,
+          "registrationStat": {
+            "experienceGainIncrease": "118",
+            "damageResistance": "190",
+            "damageResistancePenetration": "34",
+            "statusResistance": "121",
+            "magicPotionEnhancement": "1590",
+            "magicRecoveryImprovement": "111"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 17,
+          "registrationStat": {
+            "experienceGainIncrease": "122",
+            "damageResistance": "194",
+            "damageResistancePenetration": "34",
+            "statusResistance": "124",
+            "magicPotionEnhancement": "1640",
+            "magicRecoveryImprovement": "117"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 18,
+          "registrationStat": {
+            "experienceGainIncrease": "129",
+            "damageResistance": "200",
+            "damageResistancePenetration": "34",
+            "statusResistance": "129",
+            "magicPotionEnhancement": "1690",
+            "magicRecoveryImprovement": "128"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 19,
+          "registrationStat": {
+            "experienceGainIncrease": "134",
+            "damageResistance": "206",
+            "damageResistancePenetration": "34",
+            "statusResistance": "132",
+            "magicPotionEnhancement": "1740",
+            "magicRecoveryImprovement": "135"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 20,
+          "registrationStat": {
+            "experienceGainIncrease": "141",
+            "damageResistance": "226",
+            "damageResistancePenetration": "34",
+            "statusResistance": "137",
+            "magicPotionEnhancement": "1790",
+            "magicRecoveryImprovement": "146"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 21,
+          "registrationStat": {
+            "experienceGainIncrease": "149",
+            "damageResistance": "246",
+            "damageResistancePenetration": "41",
+            "statusResistance": "147",
+            "magicPotionEnhancement": "1890",
+            "magicRecoveryImprovement": "158"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 22,
+          "registrationStat": {
+            "experienceGainIncrease": "154",
+            "damageResistance": "256",
+            "damageResistancePenetration": "46",
+            "statusResistance": "152",
+            "magicPotionEnhancement": "1940",
+            "magicRecoveryImprovement": "166"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 23,
+          "registrationStat": {
+            "experienceGainIncrease": "162",
+            "damageResistance": "276",
+            "damageResistancePenetration": "53",
+            "statusResistance": "162",
+            "magicPotionEnhancement": "2040",
+            "magicRecoveryImprovement": "178"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 24,
+          "registrationStat": {
+            "experienceGainIncrease": "168",
+            "damageResistance": "286",
+            "damageResistancePenetration": "58",
+            "statusResistance": "167",
+            "magicPotionEnhancement": "2090",
+            "magicRecoveryImprovement": "188"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 25,
+          "registrationStat": {
+            "experienceGainIncrease": "179",
+            "damageResistance": "316",
+            "damageResistancePenetration": "73",
+            "statusResistance": "177",
+            "magicPotionEnhancement": "2240",
+            "magicRecoveryImprovement": "204"
+          },
+          "bindStat": {}
+        }
+      ],
+      "influence": "침착",
+      "type": "수호",
+      "grade": "전설"
+    },
+    {
+      "name": "전령사관 천신나방",
+      "image": "images/guardian/guardian_69.jpg",
+      "stats": [
+        {
+          "level": 0,
+          "registrationStat": {
+            "experienceGainIncrease": "90",
+            "damageResistancePenetration": "150",
+            "damageResistance": "30",
+            "statusResistance": "70",
+            "healthPotionEnhancement": "1000",
+            "healthRecoveryImprovement": "70"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 1,
+          "registrationStat": {
+            "experienceGainIncrease": "91",
+            "damageResistancePenetration": "152",
+            "damageResistance": "30",
+            "statusResistance": "73",
+            "healthPotionEnhancement": "1050",
+            "healthRecoveryImprovement": "71"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 2,
+          "registrationStat": {
+            "experienceGainIncrease": "91",
+            "damageResistancePenetration": "154",
+            "damageResistance": "30",
+            "statusResistance": "74",
+            "healthPotionEnhancement": "1070",
+            "healthRecoveryImprovement": "72"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 3,
+          "registrationStat": {
+            "experienceGainIncrease": "97",
+            "damageResistancePenetration": "156",
+            "damageResistance": "30",
+            "statusResistance": "77",
+            "healthPotionEnhancement": "1120",
+            "healthRecoveryImprovement": "80"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 4,
+          "registrationStat": {
+            "experienceGainIncrease": "97",
+            "damageResistancePenetration": "158",
+            "damageResistance": "30",
+            "statusResistance": "78",
+            "healthPotionEnhancement": "1140",
+            "healthRecoveryImprovement": "81"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 5,
+          "registrationStat": {
+            "experienceGainIncrease": "98",
+            "damageResistancePenetration": "160",
+            "damageResistance": "30",
+            "statusResistance": "81",
+            "healthPotionEnhancement": "1190",
+            "healthRecoveryImprovement": "82"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 6,
+          "registrationStat": {
+            "experienceGainIncrease": "99",
+            "damageResistancePenetration": "162",
+            "damageResistance": "30",
+            "statusResistance": "82",
+            "healthPotionEnhancement": "1210",
+            "healthRecoveryImprovement": "83"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 7,
+          "registrationStat": {
+            "experienceGainIncrease": "99",
+            "damageResistancePenetration": "164",
+            "damageResistance": "30",
+            "statusResistance": "85",
+            "healthPotionEnhancement": "1260",
+            "healthRecoveryImprovement": "84"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 8,
+          "registrationStat": {
+            "experienceGainIncrease": "105",
+            "damageResistancePenetration": "167",
+            "damageResistance": "30",
+            "statusResistance": "90",
+            "healthPotionEnhancement": "1280",
+            "healthRecoveryImprovement": "91"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 9,
+          "registrationStat": {
+            "experienceGainIncrease": "105",
+            "damageResistancePenetration": "170",
+            "damageResistance": "30",
+            "statusResistance": "92",
+            "healthPotionEnhancement": "1330",
+            "healthRecoveryImprovement": "92"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 10,
+          "registrationStat": {
+            "experienceGainIncrease": "106",
+            "damageResistancePenetration": "170",
+            "damageResistance": "32",
+            "statusResistance": "97",
+            "healthPotionEnhancement": "1350",
+            "healthRecoveryImprovement": "93"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 11,
+          "registrationStat": {
+            "experienceGainIncrease": "107",
+            "damageResistancePenetration": "173",
+            "damageResistance": "32",
+            "statusResistance": "99",
+            "healthPotionEnhancement": "1400",
+            "healthRecoveryImprovement": "94"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 12,
+          "registrationStat": {
+            "experienceGainIncrease": "108",
+            "damageResistancePenetration": "176",
+            "damageResistance": "32",
+            "statusResistance": "104",
+            "healthPotionEnhancement": "1420",
+            "healthRecoveryImprovement": "95"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 13,
+          "registrationStat": {
+            "experienceGainIncrease": "113",
+            "damageResistancePenetration": "179",
+            "damageResistance": "34",
+            "statusResistance": "106",
+            "healthPotionEnhancement": "1470",
+            "healthRecoveryImprovement": "103"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 14,
+          "registrationStat": {
+            "experienceGainIncrease": "113",
+            "damageResistancePenetration": "182",
+            "damageResistance": "34",
+            "statusResistance": "111",
+            "healthPotionEnhancement": "1490",
+            "healthRecoveryImprovement": "104"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 15,
+          "registrationStat": {
+            "experienceGainIncrease": "114",
+            "damageResistancePenetration": "186",
+            "damageResistance": "34",
+            "statusResistance": "116",
+            "healthPotionEnhancement": "1540",
+            "healthRecoveryImprovement": "105"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 16,
+          "registrationStat": {
+            "experienceGainIncrease": "118",
+            "damageResistancePenetration": "190",
+            "damageResistance": "34",
+            "statusResistance": "121",
+            "healthPotionEnhancement": "1590",
+            "healthRecoveryImprovement": "111"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 17,
+          "registrationStat": {
+            "experienceGainIncrease": "122",
+            "damageResistancePenetration": "194",
+            "damageResistance": "34",
+            "statusResistance": "124",
+            "healthPotionEnhancement": "1640",
+            "healthRecoveryImprovement": "117"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 18,
+          "registrationStat": {
+            "experienceGainIncrease": "129",
+            "damageResistancePenetration": "200",
+            "damageResistance": "34",
+            "statusResistance": "129",
+            "healthPotionEnhancement": "1690",
+            "healthRecoveryImprovement": "128"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 19,
+          "registrationStat": {
+            "experienceGainIncrease": "134",
+            "damageResistancePenetration": "206",
+            "damageResistance": "34",
+            "statusResistance": "132",
+            "healthPotionEnhancement": "1740",
+            "healthRecoveryImprovement": "135"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 20,
+          "registrationStat": {
+            "experienceGainIncrease": "141",
+            "damageResistancePenetration": "226",
+            "damageResistance": "34",
+            "statusResistance": "137",
+            "healthPotionEnhancement": "1790",
+            "healthRecoveryImprovement": "146"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 21,
+          "registrationStat": {
+            "experienceGainIncrease": "149",
+            "damageResistancePenetration": "246",
+            "damageResistance": "41",
+            "statusResistance": "147",
+            "healthPotionEnhancement": "1890",
+            "healthRecoveryImprovement": "158"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 22,
+          "registrationStat": {
+            "experienceGainIncrease": "154",
+            "damageResistancePenetration": "256",
+            "damageResistance": "46",
+            "statusResistance": "152",
+            "healthPotionEnhancement": "1940",
+            "healthRecoveryImprovement": "166"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 23,
+          "registrationStat": {
+            "experienceGainIncrease": "162",
+            "damageResistancePenetration": "276",
+            "damageResistance": "53",
+            "statusResistance": "162",
+            "healthPotionEnhancement": "2040",
+            "healthRecoveryImprovement": "178"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 24,
+          "registrationStat": {
+            "experienceGainIncrease": "168",
+            "damageResistancePenetration": "286",
+            "damageResistance": "58",
+            "statusResistance": "167",
+            "healthPotionEnhancement": "2090",
+            "healthRecoveryImprovement": "188"
+          },
+          "bindStat": {}
+        },
+        {
+          "level": 25,
+          "registrationStat": {
+            "experienceGainIncrease": "179",
+            "damageResistancePenetration": "316",
+            "damageResistance": "73",
+            "statusResistance": "177",
+            "healthPotionEnhancement": "2240",
+            "healthRecoveryImprovement": "204"
+          },
+          "bindStat": {}
+        }
+      ],
+      "influence": "침착",
+      "type": "수호",
+      "grade": "전설"
+    }
+  ],
   {
     "name": "고요의 수호",
     "image": "images/guardian/guardian_73.jpg",
@@ -27358,7 +28305,7 @@
           "damageResistance": "50",
           "normalMonsterPenetration": "100",
           "healthRecoveryImprovement": "50",
-          "manaRecoveryImprovement": "50"
+          "magicRecoveryImprovement": "50"
         },
         "bindStat": {
           "experienceGainIncrease": "6",
@@ -27366,7 +28313,7 @@
           "damageResistance": "12",
           "normalMonsterPenetration": "25",
           "healthRecoveryImprovement": "3",
-          "manaRecoveryImprovement": "3"
+          "magicRecoveryImprovement": "3"
         }
       }
     ],
@@ -27386,7 +28333,7 @@
           "damageResistance": "30",
           "normalMonsterPenetration": "100",
           "healthRecoveryImprovement": "50",
-          "manaRecoveryImprovement": "50"
+          "magicRecoveryImprovement": "50"
         },
         "bindStat": {
           "experienceGainIncrease": "6",
@@ -27394,7 +28341,7 @@
           "damageResistance": "7",
           "normalMonsterPenetration": "25",
           "healthRecoveryImprovement": "3",
-          "manaRecoveryImprovement": "3"
+          "magicRecoveryImprovement": "3"
         }
       }
     ],
@@ -27414,7 +28361,7 @@
           "damageResistance": "170",
           "normalMonsterPenetration": "100",
           "healthRecoveryImprovement": "50",
-          "manaRecoveryImprovement": "50"
+          "magicRecoveryImprovement": "50"
         },
         "bindStat": {
           "experienceGainIncrease": "6",
@@ -27422,7 +28369,7 @@
           "damageResistance": "42",
           "normalMonsterPenetration": "25",
           "healthRecoveryImprovement": "3",
-          "manaRecoveryImprovement": "3"
+          "magicRecoveryImprovement": "3"
         }
       }
     ],
@@ -27442,7 +28389,7 @@
           "damageResistance": "130",
           "normalMonsterPenetration": "100",
           "healthRecoveryImprovement": "50",
-          "manaRecoveryImprovement": "50"
+          "magicRecoveryImprovement": "50"
         },
         "bindStat": {
           "experienceGainIncrease": "6",
@@ -27450,7 +28397,7 @@
           "damageResistance": "32",
           "normalMonsterPenetration": "25",
           "healthRecoveryImprovement": "3",
-          "manaRecoveryImprovement": "3"
+          "magicRecoveryImprovement": "3"
         }
       }
     ],
@@ -27470,7 +28417,7 @@
           "damageResistance": "150",
           "normalMonsterPenetration": "100",
           "healthRecoveryImprovement": "50",
-          "manaRecoveryImprovement": "50"
+          "magicRecoveryImprovement": "50"
         },
         "bindStat": {
           "experienceGainIncrease": "6",
@@ -27478,7 +28425,7 @@
           "damageResistance": "37",
           "normalMonsterPenetration": "25",
           "healthRecoveryImprovement": "3",
-          "manaRecoveryImprovement": "3"
+          "magicRecoveryImprovement": "3"
         }
       }
     ],
@@ -27498,7 +28445,7 @@
           "damageResistance": "70",
           "normalMonsterPenetration": "100",
           "healthRecoveryImprovement": "50",
-          "manaRecoveryImprovement": "50"
+          "magicRecoveryImprovement": "50"
         },
         "bindStat": {
           "experienceGainIncrease": "6",
@@ -27506,7 +28453,7 @@
           "damageResistance": "17",
           "normalMonsterPenetration": "25",
           "healthRecoveryImprovement": "3",
-          "manaRecoveryImprovement": "3"
+          "magicRecoveryImprovement": "3"
         }
       }
     ],
@@ -27528,7 +28475,7 @@
           "pvpDamagePercent": "10",
           "statusEffectResistance": "100",
           "healthRecoveryImprovement": "60",
-          "manaRecoveryImprovement": "60"
+          "magicRecoveryImprovement": "60"
         },
         "bindStat": {}
       },
@@ -27542,7 +28489,7 @@
           "pvpDamagePercent": "10",
           "statusEffectResistance": "103",
           "healthRecoveryImprovement": "62",
-          "manaRecoveryImprovement": "62"
+          "magicRecoveryImprovement": "62"
         },
         "bindStat": {}
       },
@@ -27556,7 +28503,7 @@
           "pvpDamagePercent": "10",
           "statusEffectResistance": "104",
           "healthRecoveryImprovement": "63",
-          "manaRecoveryImprovement": "63"
+          "magicRecoveryImprovement": "63"
         },
         "bindStat": {}
       },
@@ -27570,7 +28517,7 @@
           "pvpDamagePercent": "11",
           "statusEffectResistance": "107",
           "healthRecoveryImprovement": "70",
-          "manaRecoveryImprovement": "70"
+          "magicRecoveryImprovement": "70"
         },
         "bindStat": {}
       },
@@ -27584,7 +28531,7 @@
           "pvpDamagePercent": "11",
           "statusEffectResistance": "108",
           "healthRecoveryImprovement": "70",
-          "manaRecoveryImprovement": "70"
+          "magicRecoveryImprovement": "70"
         },
         "bindStat": {}
       },
@@ -27598,7 +28545,7 @@
           "pvpDamagePercent": "11",
           "statusEffectResistance": "111",
           "healthRecoveryImprovement": "72",
-          "manaRecoveryImprovement": "72"
+          "magicRecoveryImprovement": "72"
         },
         "bindStat": {}
       },
@@ -27612,7 +28559,7 @@
           "pvpDamagePercent": "11",
           "statusEffectResistance": "112",
           "healthRecoveryImprovement": "74",
-          "manaRecoveryImprovement": "74"
+          "magicRecoveryImprovement": "74"
         },
         "bindStat": {}
       },
@@ -27626,7 +28573,7 @@
           "pvpDamagePercent": "11",
           "statusEffectResistance": "115",
           "healthRecoveryImprovement": "76",
-          "manaRecoveryImprovement": "76"
+          "magicRecoveryImprovement": "76"
         },
         "bindStat": {}
       },
@@ -27640,7 +28587,7 @@
           "pvpDamagePercent": "12",
           "statusEffectResistance": "120",
           "healthRecoveryImprovement": "83",
-          "manaRecoveryImprovement": "83"
+          "magicRecoveryImprovement": "83"
         },
         "bindStat": {}
       },
@@ -27654,7 +28601,7 @@
           "pvpDamagePercent": "12",
           "statusEffectResistance": "122",
           "healthRecoveryImprovement": "85",
-          "manaRecoveryImprovement": "85"
+          "magicRecoveryImprovement": "85"
         },
         "bindStat": {}
       },
@@ -27668,7 +28615,7 @@
           "pvpDamagePercent": "12",
           "statusEffectResistance": "127",
           "healthRecoveryImprovement": "85",
-          "manaRecoveryImprovement": "85"
+          "magicRecoveryImprovement": "85"
         },
         "bindStat": {}
       },
@@ -27682,7 +28629,7 @@
           "pvpDamagePercent": "12",
           "statusEffectResistance": "129",
           "healthRecoveryImprovement": "87",
-          "manaRecoveryImprovement": "87"
+          "magicRecoveryImprovement": "87"
         },
         "bindStat": {}
       },
@@ -27696,7 +28643,7 @@
           "pvpDamagePercent": "12",
           "statusEffectResistance": "134",
           "healthRecoveryImprovement": "89",
-          "manaRecoveryImprovement": "89"
+          "magicRecoveryImprovement": "89"
         },
         "bindStat": {}
       },
@@ -27710,7 +28657,7 @@
           "pvpDamagePercent": "14",
           "statusEffectResistance": "136",
           "healthRecoveryImprovement": "96",
-          "manaRecoveryImprovement": "96"
+          "magicRecoveryImprovement": "96"
         },
         "bindStat": {}
       },
@@ -27724,7 +28671,7 @@
           "pvpDamagePercent": "14",
           "statusEffectResistance": "141",
           "healthRecoveryImprovement": "98",
-          "manaRecoveryImprovement": "98"
+          "magicRecoveryImprovement": "98"
         },
         "bindStat": {}
       },
@@ -27738,7 +28685,7 @@
           "pvpDamagePercent": "16",
           "statusEffectResistance": "146",
           "healthRecoveryImprovement": "107",
-          "manaRecoveryImprovement": "107"
+          "magicRecoveryImprovement": "107"
         },
         "bindStat": {}
       },
@@ -27752,7 +28699,7 @@
           "pvpDamagePercent": "18",
           "statusEffectResistance": "151",
           "healthRecoveryImprovement": "116",
-          "manaRecoveryImprovement": "116"
+          "magicRecoveryImprovement": "116"
         },
         "bindStat": {}
       },
@@ -27766,7 +28713,7 @@
           "pvpDamagePercent": "18",
           "statusEffectResistance": "154",
           "healthRecoveryImprovement": "122",
-          "manaRecoveryImprovement": "122"
+          "magicRecoveryImprovement": "122"
         },
         "bindStat": {}
       },
@@ -27780,7 +28727,7 @@
           "pvpDamagePercent": "20",
           "statusEffectResistance": "159",
           "healthRecoveryImprovement": "131",
-          "manaRecoveryImprovement": "131"
+          "magicRecoveryImprovement": "131"
         },
         "bindStat": {}
       },
@@ -27794,7 +28741,7 @@
           "pvpDamagePercent": "20",
           "statusEffectResistance": "162",
           "healthRecoveryImprovement": "137",
-          "manaRecoveryImprovement": "137"
+          "magicRecoveryImprovement": "137"
         },
         "bindStat": {}
       },
@@ -27808,7 +28755,7 @@
           "pvpDamagePercent": "22",
           "statusEffectResistance": "167",
           "healthRecoveryImprovement": "147",
-          "manaRecoveryImprovement": "147"
+          "magicRecoveryImprovement": "147"
         },
         "bindStat": {}
       },
@@ -27822,7 +28769,7 @@
           "pvpDamagePercent": "24",
           "statusEffectResistance": "177",
           "healthRecoveryImprovement": "157",
-          "manaRecoveryImprovement": "157"
+          "magicRecoveryImprovement": "157"
         },
         "bindStat": {}
       },
@@ -27836,7 +28783,7 @@
           "pvpDamagePercent": "25",
           "statusEffectResistance": "184",
           "healthRecoveryImprovement": "162",
-          "manaRecoveryImprovement": "162"
+          "magicRecoveryImprovement": "162"
         },
         "bindStat": {}
       },
@@ -27850,7 +28797,7 @@
           "pvpDamagePercent": "27",
           "statusEffectResistance": "194",
           "healthRecoveryImprovement": "172",
-          "manaRecoveryImprovement": "172"
+          "magicRecoveryImprovement": "172"
         },
         "bindStat": {}
       },
@@ -27864,7 +28811,7 @@
           "pvpDamagePercent": "28",
           "statusEffectResistance": "201",
           "healthRecoveryImprovement": "177",
-          "manaRecoveryImprovement": "177"
+          "magicRecoveryImprovement": "177"
         },
         "bindStat": {}
       },
@@ -27878,7 +28825,7 @@
           "pvpDamagePercent": "30",
           "statusEffectResistance": "216",
           "healthRecoveryImprovement": "192",
-          "manaRecoveryImprovement": "192"
+          "magicRecoveryImprovement": "192"
         },
         "bindStat": {
           "experienceGainIncrease": "16",
@@ -27888,7 +28835,7 @@
           "pvpDamagePercent": "7",
           "statusEffectResistance": "54",
           "healthRecoveryImprovement": "13",
-          "manaRecoveryImprovement": "13"
+          "magicRecoveryImprovement": "13"
         }
       }
     ],
@@ -27910,7 +28857,7 @@
           "bossMonsterAdditionalDamage": "350",
           "normalMonsterAdditionalDamage": "350",
           "healthRecoveryImprovement": "60",
-          "manaRecoveryImprovement": "60"
+          "magicRecoveryImprovement": "60"
         },
         "bindStat": {}
       },
@@ -27924,7 +28871,7 @@
           "bossMonsterAdditionalDamage": "357",
           "normalMonsterAdditionalDamage": "357",
           "healthRecoveryImprovement": "62",
-          "manaRecoveryImprovement": "62"
+          "magicRecoveryImprovement": "62"
         },
         "bindStat": {}
       },
@@ -27938,7 +28885,7 @@
           "bossMonsterAdditionalDamage": "364",
           "normalMonsterAdditionalDamage": "364",
           "healthRecoveryImprovement": "63",
-          "manaRecoveryImprovement": "63"
+          "magicRecoveryImprovement": "63"
         },
         "bindStat": {}
       },
@@ -27952,7 +28899,7 @@
           "bossMonsterAdditionalDamage": "374",
           "normalMonsterAdditionalDamage": "374",
           "healthRecoveryImprovement": "70",
-          "manaRecoveryImprovement": "70"
+          "magicRecoveryImprovement": "70"
         },
         "bindStat": {}
       },
@@ -27966,7 +28913,7 @@
           "bossMonsterAdditionalDamage": "381",
           "normalMonsterAdditionalDamage": "381",
           "healthRecoveryImprovement": "70",
-          "manaRecoveryImprovement": "70"
+          "magicRecoveryImprovement": "70"
         },
         "bindStat": {}
       },
@@ -27980,7 +28927,7 @@
           "bossMonsterAdditionalDamage": "388",
           "normalMonsterAdditionalDamage": "388",
           "healthRecoveryImprovement": "72",
-          "manaRecoveryImprovement": "72"
+          "magicRecoveryImprovement": "72"
         },
         "bindStat": {}
       },
@@ -27994,7 +28941,7 @@
           "bossMonsterAdditionalDamage": "395",
           "normalMonsterAdditionalDamage": "395",
           "healthRecoveryImprovement": "74",
-          "manaRecoveryImprovement": "74"
+          "magicRecoveryImprovement": "74"
         },
         "bindStat": {}
       },
@@ -28008,7 +28955,7 @@
           "bossMonsterAdditionalDamage": "402",
           "normalMonsterAdditionalDamage": "402",
           "healthRecoveryImprovement": "76",
-          "manaRecoveryImprovement": "76"
+          "magicRecoveryImprovement": "76"
         },
         "bindStat": {}
       },
@@ -28022,7 +28969,7 @@
           "bossMonsterAdditionalDamage": "412",
           "normalMonsterAdditionalDamage": "412",
           "healthRecoveryImprovement": "83",
-          "manaRecoveryImprovement": "83"
+          "magicRecoveryImprovement": "83"
         },
         "bindStat": {}
       },
@@ -28036,7 +28983,7 @@
           "bossMonsterAdditionalDamage": "419",
           "normalMonsterAdditionalDamage": "419",
           "healthRecoveryImprovement": "85",
-          "manaRecoveryImprovement": "85"
+          "magicRecoveryImprovement": "85"
         },
         "bindStat": {}
       },
@@ -28050,7 +28997,7 @@
           "bossMonsterAdditionalDamage": "426",
           "normalMonsterAdditionalDamage": "426",
           "healthRecoveryImprovement": "85",
-          "manaRecoveryImprovement": "85"
+          "magicRecoveryImprovement": "85"
         },
         "bindStat": {}
       },
@@ -28064,7 +29011,7 @@
           "bossMonsterAdditionalDamage": "433",
           "normalMonsterAdditionalDamage": "433",
           "healthRecoveryImprovement": "87",
-          "manaRecoveryImprovement": "87"
+          "magicRecoveryImprovement": "87"
         },
         "bindStat": {}
       },
@@ -28078,7 +29025,7 @@
           "bossMonsterAdditionalDamage": "440",
           "normalMonsterAdditionalDamage": "440",
           "healthRecoveryImprovement": "89",
-          "manaRecoveryImprovement": "89"
+          "magicRecoveryImprovement": "89"
         },
         "bindStat": {}
       },
@@ -28092,7 +29039,7 @@
           "bossMonsterAdditionalDamage": "455",
           "normalMonsterAdditionalDamage": "455",
           "healthRecoveryImprovement": "96",
-          "manaRecoveryImprovement": "96"
+          "magicRecoveryImprovement": "96"
         },
         "bindStat": {}
       },
@@ -28106,7 +29053,7 @@
           "bossMonsterAdditionalDamage": "465",
           "normalMonsterAdditionalDamage": "465",
           "healthRecoveryImprovement": "98",
-          "manaRecoveryImprovement": "98"
+          "magicRecoveryImprovement": "98"
         },
         "bindStat": {}
       },
@@ -28120,7 +29067,7 @@
           "bossMonsterAdditionalDamage": "480",
           "normalMonsterAdditionalDamage": "480",
           "healthRecoveryImprovement": "107",
-          "manaRecoveryImprovement": "107"
+          "magicRecoveryImprovement": "107"
         },
         "bindStat": {}
       },
@@ -28134,7 +29081,7 @@
           "bossMonsterAdditionalDamage": "515",
           "normalMonsterAdditionalDamage": "515",
           "healthRecoveryImprovement": "116",
-          "manaRecoveryImprovement": "116"
+          "magicRecoveryImprovement": "116"
         },
         "bindStat": {}
       },
@@ -28148,7 +29095,7 @@
           "bossMonsterAdditionalDamage": "530",
           "normalMonsterAdditionalDamage": "530",
           "healthRecoveryImprovement": "122",
-          "manaRecoveryImprovement": "122"
+          "magicRecoveryImprovement": "122"
         },
         "bindStat": {}
       },
@@ -28162,7 +29109,7 @@
           "bossMonsterAdditionalDamage": "565",
           "normalMonsterAdditionalDamage": "565",
           "healthRecoveryImprovement": "131",
-          "manaRecoveryImprovement": "131"
+          "magicRecoveryImprovement": "131"
         },
         "bindStat": {}
       },
@@ -28176,7 +29123,7 @@
           "bossMonsterAdditionalDamage": "580",
           "normalMonsterAdditionalDamage": "580",
           "healthRecoveryImprovement": "137",
-          "manaRecoveryImprovement": "137"
+          "magicRecoveryImprovement": "137"
         },
         "bindStat": {}
       },
@@ -28190,7 +29137,7 @@
           "bossMonsterAdditionalDamage": "615",
           "normalMonsterAdditionalDamage": "615",
           "healthRecoveryImprovement": "147",
-          "manaRecoveryImprovement": "147"
+          "magicRecoveryImprovement": "147"
         },
         "bindStat": {}
       },
@@ -28204,7 +29151,7 @@
           "bossMonsterAdditionalDamage": "670",
           "normalMonsterAdditionalDamage": "670",
           "healthRecoveryImprovement": "157",
-          "manaRecoveryImprovement": "157"
+          "magicRecoveryImprovement": "157"
         },
         "bindStat": {}
       },
@@ -28218,7 +29165,7 @@
           "bossMonsterAdditionalDamage": "705",
           "normalMonsterAdditionalDamage": "705",
           "healthRecoveryImprovement": "162",
-          "manaRecoveryImprovement": "162"
+          "magicRecoveryImprovement": "162"
         },
         "bindStat": {}
       },
@@ -28232,7 +29179,7 @@
           "bossMonsterAdditionalDamage": "760",
           "normalMonsterAdditionalDamage": "760",
           "healthRecoveryImprovement": "172",
-          "manaRecoveryImprovement": "172"
+          "magicRecoveryImprovement": "172"
         },
         "bindStat": {}
       },
@@ -28246,7 +29193,7 @@
           "bossMonsterAdditionalDamage": "795",
           "normalMonsterAdditionalDamage": "795",
           "healthRecoveryImprovement": "177",
-          "manaRecoveryImprovement": "177"
+          "magicRecoveryImprovement": "177"
         },
         "bindStat": {}
       },
@@ -28260,7 +29207,7 @@
           "bossMonsterAdditionalDamage": "870",
           "normalMonsterAdditionalDamage": "870",
           "healthRecoveryImprovement": "192",
-          "manaRecoveryImprovement": "192"
+          "magicRecoveryImprovement": "192"
         },
         "bindStat": {
           "experienceGainIncrease": "16",
@@ -28270,7 +29217,7 @@
           "bossMonsterAdditionalDamage": "217",
           "normalMonsterAdditionalDamage": "217",
           "healthRecoveryImprovement": "13",
-          "manaRecoveryImprovement": "13"
+          "magicRecoveryImprovement": "13"
         }
       }
     ],
@@ -28292,7 +29239,7 @@
           "statusEffectResistance": "100",
           "movementSpeed": "5",
           "healthRecoveryImprovement": "80",
-          "manaRecoveryImprovement": "80"
+          "magicRecoveryImprovement": "80"
         },
         "bindStat": {}
       },
@@ -28306,7 +29253,7 @@
           "statusEffectResistance": "103",
           "movementSpeed": "5",
           "healthRecoveryImprovement": "82",
-          "manaRecoveryImprovement": "82"
+          "magicRecoveryImprovement": "82"
         },
         "bindStat": {}
       },
@@ -28320,7 +29267,7 @@
           "statusEffectResistance": "104",
           "movementSpeed": "5",
           "healthRecoveryImprovement": "83",
-          "manaRecoveryImprovement": "83"
+          "magicRecoveryImprovement": "83"
         },
         "bindStat": {}
       },
@@ -28334,7 +29281,7 @@
           "statusEffectResistance": "107",
           "movementSpeed": "6",
           "healthRecoveryImprovement": "90",
-          "manaRecoveryImprovement": "90"
+          "magicRecoveryImprovement": "90"
         },
         "bindStat": {}
       },
@@ -28348,7 +29295,7 @@
           "statusEffectResistance": "108",
           "movementSpeed": "6",
           "healthRecoveryImprovement": "90",
-          "manaRecoveryImprovement": "90"
+          "magicRecoveryImprovement": "90"
         },
         "bindStat": {}
       },
@@ -28362,7 +29309,7 @@
           "statusEffectResistance": "111",
           "movementSpeed": "6",
           "healthRecoveryImprovement": "92",
-          "manaRecoveryImprovement": "92"
+          "magicRecoveryImprovement": "92"
         },
         "bindStat": {}
       },
@@ -28376,7 +29323,7 @@
           "statusEffectResistance": "112",
           "movementSpeed": "6",
           "healthRecoveryImprovement": "94",
-          "manaRecoveryImprovement": "94"
+          "magicRecoveryImprovement": "94"
         },
         "bindStat": {}
       },
@@ -28390,7 +29337,7 @@
           "statusEffectResistance": "115",
           "movementSpeed": "6",
           "healthRecoveryImprovement": "96",
-          "manaRecoveryImprovement": "96"
+          "magicRecoveryImprovement": "96"
         },
         "bindStat": {}
       },
@@ -28404,7 +29351,7 @@
           "statusEffectResistance": "120",
           "movementSpeed": "7",
           "healthRecoveryImprovement": "103",
-          "manaRecoveryImprovement": "103"
+          "magicRecoveryImprovement": "103"
         },
         "bindStat": {}
       },
@@ -28418,7 +29365,7 @@
           "statusEffectResistance": "122",
           "movementSpeed": "7",
           "healthRecoveryImprovement": "105",
-          "manaRecoveryImprovement": "105"
+          "magicRecoveryImprovement": "105"
         },
         "bindStat": {}
       },
@@ -28432,7 +29379,7 @@
           "statusEffectResistance": "127",
           "movementSpeed": "7",
           "healthRecoveryImprovement": "105",
-          "manaRecoveryImprovement": "105"
+          "magicRecoveryImprovement": "105"
         },
         "bindStat": {}
       },
@@ -28446,7 +29393,7 @@
           "statusEffectResistance": "129",
           "movementSpeed": "7",
           "healthRecoveryImprovement": "107",
-          "manaRecoveryImprovement": "107"
+          "magicRecoveryImprovement": "107"
         },
         "bindStat": {}
       },
@@ -28460,7 +29407,7 @@
           "statusEffectResistance": "134",
           "movementSpeed": "7",
           "healthRecoveryImprovement": "109",
-          "manaRecoveryImprovement": "109"
+          "magicRecoveryImprovement": "109"
         },
         "bindStat": {}
       },
@@ -28474,7 +29421,7 @@
           "statusEffectResistance": "136",
           "movementSpeed": "8",
           "healthRecoveryImprovement": "116",
-          "manaRecoveryImprovement": "116"
+          "magicRecoveryImprovement": "116"
         },
         "bindStat": {}
       },
@@ -28488,7 +29435,7 @@
           "statusEffectResistance": "141",
           "movementSpeed": "8",
           "healthRecoveryImprovement": "118",
-          "manaRecoveryImprovement": "118"
+          "magicRecoveryImprovement": "118"
         },
         "bindStat": {}
       },
@@ -28502,7 +29449,7 @@
           "statusEffectResistance": "146",
           "movementSpeed": "9",
           "healthRecoveryImprovement": "127",
-          "manaRecoveryImprovement": "127"
+          "magicRecoveryImprovement": "127"
         },
         "bindStat": {}
       },
@@ -28516,7 +29463,7 @@
           "statusEffectResistance": "151",
           "movementSpeed": "9",
           "healthRecoveryImprovement": "136",
-          "manaRecoveryImprovement": "136"
+          "magicRecoveryImprovement": "136"
         },
         "bindStat": {}
       },
@@ -28530,7 +29477,7 @@
           "statusEffectResistance": "154",
           "movementSpeed": "9",
           "healthRecoveryImprovement": "142",
-          "manaRecoveryImprovement": "142"
+          "magicRecoveryImprovement": "142"
         },
         "bindStat": {}
       },
@@ -28544,7 +29491,7 @@
           "statusEffectResistance": "159",
           "movementSpeed": "10",
           "healthRecoveryImprovement": "151",
-          "manaRecoveryImprovement": "151"
+          "magicRecoveryImprovement": "151"
         },
         "bindStat": {}
       },
@@ -28558,7 +29505,7 @@
           "statusEffectResistance": "162",
           "movementSpeed": "10",
           "healthRecoveryImprovement": "157",
-          "manaRecoveryImprovement": "157"
+          "magicRecoveryImprovement": "157"
         },
         "bindStat": {}
       },
@@ -28572,7 +29519,7 @@
           "statusEffectResistance": "167",
           "movementSpeed": "10",
           "healthRecoveryImprovement": "167",
-          "manaRecoveryImprovement": "167"
+          "magicRecoveryImprovement": "167"
         },
         "bindStat": {}
       },
@@ -28586,7 +29533,7 @@
           "statusEffectResistance": "177",
           "movementSpeed": "11",
           "healthRecoveryImprovement": "182",
-          "manaRecoveryImprovement": "182"
+          "magicRecoveryImprovement": "182"
         },
         "bindStat": {}
       },
@@ -28600,7 +29547,7 @@
           "statusEffectResistance": "184",
           "movementSpeed": "11",
           "healthRecoveryImprovement": "189",
-          "manaRecoveryImprovement": "189"
+          "magicRecoveryImprovement": "189"
         },
         "bindStat": {}
       },
@@ -28614,7 +29561,7 @@
           "statusEffectResistance": "194",
           "movementSpeed": "11",
           "healthRecoveryImprovement": "204",
-          "manaRecoveryImprovement": "204"
+          "magicRecoveryImprovement": "204"
         },
         "bindStat": {}
       },
@@ -28628,7 +29575,7 @@
           "statusEffectResistance": "201",
           "movementSpeed": "11",
           "healthRecoveryImprovement": "211",
-          "manaRecoveryImprovement": "211"
+          "magicRecoveryImprovement": "211"
         },
         "bindStat": {}
       },
@@ -28642,7 +29589,7 @@
           "statusEffectResistance": "216",
           "movementSpeed": "12",
           "healthRecoveryImprovement": "230",
-          "manaRecoveryImprovement": "230"
+          "magicRecoveryImprovement": "230"
         },
         "bindStat": {}
       }
@@ -28665,7 +29612,7 @@
           "bossMonsterPenetration": "180",
           "movementSpeed": "10",
           "healthRecoveryImprovement": "60",
-          "manaRecoveryImprovement": "60"
+          "magicRecoveryImprovement": "60"
         },
         "bindStat": {}
       },
@@ -28679,7 +29626,7 @@
           "bossMonsterPenetration": "185",
           "movementSpeed": "10",
           "healthRecoveryImprovement": "62",
-          "manaRecoveryImprovement": "62"
+          "magicRecoveryImprovement": "62"
         },
         "bindStat": {}
       },
@@ -28693,7 +29640,7 @@
           "bossMonsterPenetration": "190",
           "movementSpeed": "10",
           "healthRecoveryImprovement": "63",
-          "manaRecoveryImprovement": "63"
+          "magicRecoveryImprovement": "63"
         },
         "bindStat": {}
       },
@@ -28707,7 +29654,7 @@
           "bossMonsterPenetration": "190",
           "movementSpeed": "11",
           "healthRecoveryImprovement": "70",
-          "manaRecoveryImprovement": "70"
+          "magicRecoveryImprovement": "70"
         },
         "bindStat": {}
       },
@@ -28721,7 +29668,7 @@
           "bossMonsterPenetration": "195",
           "movementSpeed": "11",
           "healthRecoveryImprovement": "70",
-          "manaRecoveryImprovement": "70"
+          "magicRecoveryImprovement": "70"
         },
         "bindStat": {}
       },
@@ -28735,7 +29682,7 @@
           "bossMonsterPenetration": "195",
           "movementSpeed": "11",
           "healthRecoveryImprovement": "72",
-          "manaRecoveryImprovement": "72"
+          "magicRecoveryImprovement": "72"
         },
         "bindStat": {}
       },
@@ -28749,7 +29696,7 @@
           "bossMonsterPenetration": "200",
           "movementSpeed": "11",
           "healthRecoveryImprovement": "74",
-          "manaRecoveryImprovement": "74"
+          "magicRecoveryImprovement": "74"
         },
         "bindStat": {}
       },
@@ -28763,7 +29710,7 @@
           "bossMonsterPenetration": "200",
           "movementSpeed": "11",
           "healthRecoveryImprovement": "76",
-          "manaRecoveryImprovement": "76"
+          "magicRecoveryImprovement": "76"
         },
         "bindStat": {}
       },
@@ -28777,7 +29724,7 @@
           "bossMonsterPenetration": "210",
           "movementSpeed": "12",
           "healthRecoveryImprovement": "83",
-          "manaRecoveryImprovement": "83"
+          "magicRecoveryImprovement": "83"
         },
         "bindStat": {}
       },
@@ -28791,7 +29738,7 @@
           "bossMonsterPenetration": "210",
           "movementSpeed": "12",
           "healthRecoveryImprovement": "85",
-          "manaRecoveryImprovement": "85"
+          "magicRecoveryImprovement": "85"
         },
         "bindStat": {}
       },
@@ -28805,7 +29752,7 @@
           "bossMonsterPenetration": "220",
           "movementSpeed": "12",
           "healthRecoveryImprovement": "85",
-          "manaRecoveryImprovement": "85"
+          "magicRecoveryImprovement": "85"
         },
         "bindStat": {}
       },
@@ -28819,7 +29766,7 @@
           "bossMonsterPenetration": "220",
           "movementSpeed": "12",
           "healthRecoveryImprovement": "87",
-          "manaRecoveryImprovement": "87"
+          "magicRecoveryImprovement": "87"
         },
         "bindStat": {}
       },
@@ -28833,7 +29780,7 @@
           "bossMonsterPenetration": "230",
           "movementSpeed": "12",
           "healthRecoveryImprovement": "89",
-          "manaRecoveryImprovement": "89"
+          "magicRecoveryImprovement": "89"
         },
         "bindStat": {}
       },
@@ -28847,7 +29794,7 @@
           "bossMonsterPenetration": "230",
           "movementSpeed": "13",
           "healthRecoveryImprovement": "96",
-          "manaRecoveryImprovement": "96"
+          "magicRecoveryImprovement": "96"
         },
         "bindStat": {}
       },
@@ -28861,7 +29808,7 @@
           "bossMonsterPenetration": "250",
           "movementSpeed": "13",
           "healthRecoveryImprovement": "98",
-          "manaRecoveryImprovement": "98"
+          "magicRecoveryImprovement": "98"
         },
         "bindStat": {}
       },
@@ -28875,7 +29822,7 @@
           "bossMonsterPenetration": "250",
           "movementSpeed": "14",
           "healthRecoveryImprovement": "107",
-          "manaRecoveryImprovement": "107"
+          "magicRecoveryImprovement": "107"
         },
         "bindStat": {}
       },
@@ -28889,7 +29836,7 @@
           "bossMonsterPenetration": "270",
           "movementSpeed": "14",
           "healthRecoveryImprovement": "116",
-          "manaRecoveryImprovement": "116"
+          "magicRecoveryImprovement": "116"
         },
         "bindStat": {}
       },
@@ -28903,7 +29850,7 @@
           "bossMonsterPenetration": "270",
           "movementSpeed": "14",
           "healthRecoveryImprovement": "122",
-          "manaRecoveryImprovement": "122"
+          "magicRecoveryImprovement": "122"
         },
         "bindStat": {}
       },
@@ -28917,7 +29864,7 @@
           "bossMonsterPenetration": "295",
           "movementSpeed": "15",
           "healthRecoveryImprovement": "131",
-          "manaRecoveryImprovement": "131"
+          "magicRecoveryImprovement": "131"
         },
         "bindStat": {}
       },
@@ -28931,7 +29878,7 @@
           "bossMonsterPenetration": "295",
           "movementSpeed": "15",
           "healthRecoveryImprovement": "137",
-          "manaRecoveryImprovement": "137"
+          "magicRecoveryImprovement": "137"
         },
         "bindStat": {}
       },
@@ -28945,7 +29892,7 @@
           "bossMonsterPenetration": "320",
           "movementSpeed": "15",
           "healthRecoveryImprovement": "147",
-          "manaRecoveryImprovement": "147"
+          "magicRecoveryImprovement": "147"
         },
         "bindStat": {}
       },
@@ -28959,7 +29906,7 @@
           "bossMonsterPenetration": "355",
           "movementSpeed": "17",
           "healthRecoveryImprovement": "157",
-          "manaRecoveryImprovement": "157"
+          "magicRecoveryImprovement": "157"
         },
         "bindStat": {}
       },
@@ -28973,7 +29920,7 @@
           "bossMonsterPenetration": "375",
           "movementSpeed": "17",
           "healthRecoveryImprovement": "162",
-          "manaRecoveryImprovement": "162"
+          "magicRecoveryImprovement": "162"
         },
         "bindStat": {}
       },
@@ -28987,7 +29934,7 @@
           "bossMonsterPenetration": "410",
           "movementSpeed": "18",
           "healthRecoveryImprovement": "172",
-          "manaRecoveryImprovement": "172"
+          "magicRecoveryImprovement": "172"
         },
         "bindStat": {}
       },
@@ -29001,7 +29948,7 @@
           "bossMonsterPenetration": "430",
           "movementSpeed": "18",
           "healthRecoveryImprovement": "177",
-          "manaRecoveryImprovement": "177"
+          "magicRecoveryImprovement": "177"
         },
         "bindStat": {}
       },
@@ -29015,7 +29962,7 @@
           "bossMonsterPenetration": "470",
           "movementSpeed": "20",
           "healthRecoveryImprovement": "192",
-          "manaRecoveryImprovement": "192"
+          "magicRecoveryImprovement": "192"
         },
         "bindStat": {}
       }
@@ -29038,7 +29985,7 @@
           "statusEffectAccuracy": "120",
           "statusEffectResistance": "120",
           "healthRecoveryImprovement": "60",
-          "manaRecoveryImprovement": "60"
+          "magicRecoveryImprovement": "60"
         },
         "bindStat": {}
       },
@@ -29052,7 +29999,7 @@
           "statusEffectAccuracy": "123",
           "statusEffectResistance": "123",
           "healthRecoveryImprovement": "62",
-          "manaRecoveryImprovement": "62"
+          "magicRecoveryImprovement": "62"
         },
         "bindStat": {}
       },
@@ -29066,7 +30013,7 @@
           "statusEffectAccuracy": "124",
           "statusEffectResistance": "124",
           "healthRecoveryImprovement": "63",
-          "manaRecoveryImprovement": "63"
+          "magicRecoveryImprovement": "63"
         },
         "bindStat": {}
       },
@@ -29080,7 +30027,7 @@
           "statusEffectAccuracy": "127",
           "statusEffectResistance": "127",
           "healthRecoveryImprovement": "70",
-          "manaRecoveryImprovement": "70"
+          "magicRecoveryImprovement": "70"
         },
         "bindStat": {}
       },
@@ -29094,7 +30041,7 @@
           "statusEffectAccuracy": "128",
           "statusEffectResistance": "128",
           "healthRecoveryImprovement": "70",
-          "manaRecoveryImprovement": "70"
+          "magicRecoveryImprovement": "70"
         },
         "bindStat": {}
       },
@@ -29108,7 +30055,7 @@
           "statusEffectAccuracy": "131",
           "statusEffectResistance": "131",
           "healthRecoveryImprovement": "72",
-          "manaRecoveryImprovement": "72"
+          "magicRecoveryImprovement": "72"
         },
         "bindStat": {}
       },
@@ -29122,7 +30069,7 @@
           "statusEffectAccuracy": "132",
           "statusEffectResistance": "132",
           "healthRecoveryImprovement": "74",
-          "manaRecoveryImprovement": "74"
+          "magicRecoveryImprovement": "74"
         },
         "bindStat": {}
       },
@@ -29136,7 +30083,7 @@
           "statusEffectAccuracy": "135",
           "statusEffectResistance": "135",
           "healthRecoveryImprovement": "76",
-          "manaRecoveryImprovement": "76"
+          "magicRecoveryImprovement": "76"
         },
         "bindStat": {}
       },
@@ -29150,7 +30097,7 @@
           "statusEffectAccuracy": "140",
           "statusEffectResistance": "140",
           "healthRecoveryImprovement": "83",
-          "manaRecoveryImprovement": "83"
+          "magicRecoveryImprovement": "83"
         },
         "bindStat": {}
       },
@@ -29164,7 +30111,7 @@
           "statusEffectAccuracy": "142",
           "statusEffectResistance": "142",
           "healthRecoveryImprovement": "85",
-          "manaRecoveryImprovement": "85"
+          "magicRecoveryImprovement": "85"
         },
         "bindStat": {}
       },
@@ -29178,7 +30125,7 @@
           "statusEffectAccuracy": "147",
           "statusEffectResistance": "147",
           "healthRecoveryImprovement": "85",
-          "manaRecoveryImprovement": "85"
+          "magicRecoveryImprovement": "85"
         },
         "bindStat": {}
       },
@@ -29192,7 +30139,7 @@
           "statusEffectAccuracy": "149",
           "statusEffectResistance": "149",
           "healthRecoveryImprovement": "87",
-          "manaRecoveryImprovement": "87"
+          "magicRecoveryImprovement": "87"
         },
         "bindStat": {}
       },
@@ -29206,7 +30153,7 @@
           "statusEffectAccuracy": "154",
           "statusEffectResistance": "154",
           "healthRecoveryImprovement": "89",
-          "manaRecoveryImprovement": "89"
+          "magicRecoveryImprovement": "89"
         },
         "bindStat": {}
       },
@@ -29220,7 +30167,7 @@
           "statusEffectAccuracy": "156",
           "statusEffectResistance": "156",
           "healthRecoveryImprovement": "96",
-          "manaRecoveryImprovement": "96"
+          "magicRecoveryImprovement": "96"
         },
         "bindStat": {}
       },
@@ -29234,7 +30181,7 @@
           "statusEffectAccuracy": "161",
           "statusEffectResistance": "161",
           "healthRecoveryImprovement": "98",
-          "manaRecoveryImprovement": "98"
+          "magicRecoveryImprovement": "98"
         },
         "bindStat": {}
       },
@@ -29248,7 +30195,7 @@
           "statusEffectAccuracy": "166",
           "statusEffectResistance": "166",
           "healthRecoveryImprovement": "107",
-          "manaRecoveryImprovement": "107"
+          "magicRecoveryImprovement": "107"
         },
         "bindStat": {}
       },
@@ -29262,7 +30209,7 @@
           "statusEffectAccuracy": "171",
           "statusEffectResistance": "171",
           "healthRecoveryImprovement": "116",
-          "manaRecoveryImprovement": "116"
+          "magicRecoveryImprovement": "116"
         },
         "bindStat": {}
       },
@@ -29276,7 +30223,7 @@
           "statusEffectAccuracy": "174",
           "statusEffectResistance": "174",
           "healthRecoveryImprovement": "122",
-          "manaRecoveryImprovement": "122"
+          "magicRecoveryImprovement": "122"
         },
         "bindStat": {}
       },
@@ -29290,7 +30237,7 @@
           "statusEffectAccuracy": "179",
           "statusEffectResistance": "179",
           "healthRecoveryImprovement": "131",
-          "manaRecoveryImprovement": "131"
+          "magicRecoveryImprovement": "131"
         },
         "bindStat": {}
       },
@@ -29304,7 +30251,7 @@
           "statusEffectAccuracy": "182",
           "statusEffectResistance": "182",
           "healthRecoveryImprovement": "137",
-          "manaRecoveryImprovement": "137"
+          "magicRecoveryImprovement": "137"
         },
         "bindStat": {}
       },
@@ -29318,7 +30265,7 @@
           "statusEffectAccuracy": "187",
           "statusEffectResistance": "187",
           "healthRecoveryImprovement": "147",
-          "manaRecoveryImprovement": "147"
+          "magicRecoveryImprovement": "147"
         },
         "bindStat": {}
       },
@@ -29332,7 +30279,7 @@
           "statusEffectAccuracy": "197",
           "statusEffectResistance": "197",
           "healthRecoveryImprovement": "157",
-          "manaRecoveryImprovement": "157"
+          "magicRecoveryImprovement": "157"
         },
         "bindStat": {}
       },
@@ -29346,7 +30293,7 @@
           "statusEffectAccuracy": "204",
           "statusEffectResistance": "204",
           "healthRecoveryImprovement": "162",
-          "manaRecoveryImprovement": "162"
+          "magicRecoveryImprovement": "162"
         },
         "bindStat": {}
       },
@@ -29360,7 +30307,7 @@
           "statusEffectAccuracy": "214",
           "statusEffectResistance": "214",
           "healthRecoveryImprovement": "172",
-          "manaRecoveryImprovement": "172"
+          "magicRecoveryImprovement": "172"
         },
         "bindStat": {}
       },
@@ -29374,7 +30321,7 @@
           "statusEffectAccuracy": "221",
           "statusEffectResistance": "221",
           "healthRecoveryImprovement": "177",
-          "manaRecoveryImprovement": "177"
+          "magicRecoveryImprovement": "177"
         },
         "bindStat": {}
       },
@@ -29388,7 +30335,7 @@
           "statusEffectAccuracy": "236",
           "statusEffectResistance": "236",
           "healthRecoveryImprovement": "192",
-          "manaRecoveryImprovement": "192"
+          "magicRecoveryImprovement": "192"
         },
         "bindStat": {}
       }

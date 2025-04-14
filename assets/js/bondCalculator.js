@@ -1019,7 +1019,8 @@ const statsMapping = {
   healthPotionEnhancement: "체력시약향상",
   healthRecoveryImprovement: "체력회복향상",
   damageIncrease: "피해증가",
-  manaRecoveryImprovement: "마나회복향상",
+
+  magicRecoveryImprovement: "마력회복향상",
   criticalChance: "치명확률",
   bossMonsterAdditionalDamage: "보스몬스터추가피해",
   power: "위력",
