@@ -3,6 +3,7 @@ let selectedSpirits = [];
 let gradeSetEffects = {};
 let factionSetEffects = {};
 let isProcessing = false;
+let isCalculationCancelled = false;
 
 const percentStats = [
   "healthIncreasePercent",
@@ -22,9 +23,65 @@ const factionIcons = {
   활력: "assets/img/bond/활력.jpg",
 };
 
+const statColorMap = {
+  damageResistance: "stat-damage-resistance",
+  damageResistancePenetration: "stat-damage-resistance-penetration",
+  pvpDefensePercent: "stat-pvp-defense-percent",
+  pvpDamagePercent: "stat-pvp-damage-percent",
+  healthIncreasePercent: "stat-health-increase-percent",
+  criticalPowerPercent: "stat-critical-power-percent",
+  magicIncreasePercent: "stat-magic-increase-percent",
+  destructionPowerPercent: "stat-destruction-power-percent",
+  criticalChance: "stat-critical-chance",
+  bossMonsterAdditionalDamage: "stat-boss-monster-additional-damage",
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   loadAllData();
+
+  const rightPanel = document.querySelector(".right-panel");
+  const selectedSpiritsHeader = document.querySelector(
+    ".selected-spirits-header"
+  );
+
+  if (window.innerWidth <= 768) {
+    const indicator = document.createElement("span");
+    indicator.className = "selected-spirits-collapse-indicator";
+    indicator.innerHTML = "▲";
+    selectedSpiritsHeader.appendChild(indicator);
+
+    rightPanel.classList.add("collapsed");
+
+    selectedSpiritsHeader.addEventListener("click", function () {
+      rightPanel.classList.toggle("collapsed");
+      indicator.innerHTML = rightPanel.classList.contains("collapsed")
+        ? "▲"
+        : "▼";
+    });
+
+    setTimeout(() => {
+      rightPanel.classList.add("collapsed");
+      indicator.innerHTML = "▲";
+    }, 500);
+  }
+
+  const images = document.querySelectorAll("img");
+  if ("loading" in HTMLImageElement.prototype) {
+    images.forEach((img) => {
+      if (img.getAttribute("loading") !== "lazy") {
+        img.setAttribute("loading", "lazy");
+      }
+    });
+  }
 });
+
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
 
 async function loadAllData() {
   for (const [category, filePath] of Object.entries({
@@ -46,8 +103,6 @@ async function loadAllData() {
 
     const factionResponse = await fetch("output/factionSetEffects.json");
     factionSetEffects = await factionResponse.json();
-
-    console.log("Loaded factionSetEffects:", factionSetEffects);
   } catch (err) {
     console.error("Error loading set effects:", err);
   }
@@ -136,8 +191,8 @@ function toggleSpiritSelection(spirit, category) {
   if (existingIndex !== -1) {
     selectedSpirits.splice(existingIndex, 1);
   } else {
-    if (selectedSpirits.length >= 12) {
-      alert("최대 12개의 환수만 선택할 수 있습니다.");
+    if (selectedSpirits.length >= 20) {
+      alert("최대 20개의 환수만 선택할 수 있습니다.");
       return;
     }
 
@@ -173,6 +228,9 @@ function updateSelectedCount() {
 
 function renderSelectedSpirits() {
   const container = document.getElementById("selectedSpirits");
+
+  if (!container) return;
+
   container.innerHTML = "";
 
   if (selectedSpirits.length === 0) {
@@ -181,78 +239,48 @@ function renderSelectedSpirits() {
     return;
   }
 
+  const fragment = document.createDocumentFragment();
+
   selectedSpirits.forEach((spirit, index) => {
     const card = document.createElement("div");
     card.className = "selected-spirit-card";
 
-    const header = document.createElement("div");
-    header.className = "selected-spirit-header";
+    card.innerHTML = `
+      <div class="selected-spirit-header">
+        <img src="${spirit.image}" alt="${spirit.name}">
+        <div class="spirit-info">
+          <div class="spirit-name">${spirit.name}</div>
+          <div class="spirit-grade">${spirit.grade || "전설"}</div>
+        </div>
+      </div>
+      <div class="spirit-level-control">
+        <button onclick="changeLevel(${index}, -1)">-</button>
+        <input type="number" min="0" max="25" value="${spirit.level}"
+          onchange="updateSpiritLevel(${index}, this.value)">
+        <button onclick="changeLevel(${index}, 1)">+</button>
+      </div>
+      <button class="remove-spirit" onclick="removeSpirit(${index})">제거</button>
+    `;
 
-    const img = document.createElement("img");
-    img.src = spirit.image;
-    img.alt = spirit.name;
-
-    const info = document.createElement("div");
-    info.className = "spirit-info";
-
-    const name = document.createElement("div");
-    name.className = "spirit-name";
-    name.textContent = spirit.name;
-
-    const grade = document.createElement("div");
-    grade.className = "spirit-grade";
-    grade.textContent = spirit.grade || "전설";
-
-    info.appendChild(name);
-    info.appendChild(grade);
-
-    header.appendChild(img);
-    header.appendChild(info);
-
-    const levelControl = document.createElement("div");
-    levelControl.className = "spirit-level-control";
-
-    const minusBtn = document.createElement("button");
-    minusBtn.innerHTML = "-";
-    minusBtn.onclick = () => changeLevel(index, -1);
-
-    const levelInput = document.createElement("input");
-    levelInput.type = "number";
-    levelInput.min = "0";
-    levelInput.max = "25";
-    levelInput.value = spirit.level;
-    levelInput.onchange = (e) => {
-      let value = parseInt(e.target.value);
-      if (isNaN(value)) value = 0;
-      if (value > 25) value = 25;
-      if (value < 0) value = 0;
-      selectedSpirits[index].level = value;
-    };
-
-    const plusBtn = document.createElement("button");
-    plusBtn.innerHTML = "+";
-    plusBtn.onclick = () => changeLevel(index, 1);
-
-    levelControl.appendChild(minusBtn);
-    levelControl.appendChild(levelInput);
-    levelControl.appendChild(plusBtn);
-
-    card.appendChild(header);
-    card.appendChild(levelControl);
-
-    const removeBtn = document.createElement("button");
-    removeBtn.className = "remove-spirit";
-    removeBtn.textContent = "제거";
-    removeBtn.onclick = () => {
-      selectedSpirits.splice(index, 1);
-      updateSelectedCount();
-      renderSelectedSpirits();
-      showCategory(document.querySelector(".sub-tabs .tab.active").textContent);
-    };
-
-    card.appendChild(removeBtn);
-    container.appendChild(card);
+    fragment.appendChild(card);
   });
+
+  container.appendChild(fragment);
+}
+
+function updateSpiritLevel(index, value) {
+  let level = parseInt(value);
+  if (isNaN(level)) level = 0;
+  if (level > 25) level = 25;
+  if (level < 0) level = 0;
+  selectedSpirits[index].level = level;
+}
+
+function removeSpirit(index) {
+  selectedSpirits.splice(index, 1);
+  updateSelectedCount();
+  renderSelectedSpirits();
+  showCategory(document.querySelector(".sub-tabs .tab.active").textContent);
 }
 
 function changeLevel(index, diff) {
@@ -286,16 +314,15 @@ function applyBatchLevel() {
   renderSelectedSpirits();
 }
 
-function calculateBondEffects() {
+const calculateBondEffects = debounce(function () {
   if (selectedSpirits.length === 0) {
     alert("결속 효과를 계산하려면 환수를 선택하세요.");
     return;
   }
 
   const result = calculateEffectsForSpirits(selectedSpirits);
-
   showResultsInModal(result);
-}
+}, 300);
 
 function calculateEffectsForSpirits(spirits) {
   const registrationStats = {};
@@ -343,12 +370,8 @@ function calculateEffectsForSpirits(spirits) {
     categoryFactionCount[category][faction]++;
   });
 
-  console.log("Category faction counts:", categoryFactionCount);
-
   const gradeEffects = calculateGradeSetEffects(categoryGradeCount);
-
   const factionEffects = calculateFactionSetEffects(categoryFactionCount);
-
   const combinedEffects = {};
 
   for (const [stat, value] of Object.entries(registrationStats)) {
@@ -425,30 +448,15 @@ function calculateGradeSetEffects(categoryGradeCount) {
 function calculateFactionSetEffects(categoryFactionCount) {
   const effects = {};
 
-  console.log("Starting faction effects calculation");
-
   for (const [category, factions] of Object.entries(categoryFactionCount)) {
-    console.log(`Processing category: ${category} with factions:`, factions);
-
     if (!factionSetEffects[category]) {
-      console.log(`No faction set effects defined for category: ${category}`);
       continue;
     }
 
     for (const [faction, count] of Object.entries(factions)) {
-      console.log(`Checking faction: ${faction} with count: ${count}`);
-
       if (count < 2 || !factionSetEffects[category][faction]) {
-        console.log(
-          `Skipping faction ${faction}: count < 2 or no effects defined`
-        );
         continue;
       }
-
-      console.log(
-        `Found faction effects for ${faction}:`,
-        factionSetEffects[category][faction]
-      );
 
       let maxCount = 0;
       let maxEffect = null;
@@ -456,9 +464,6 @@ function calculateFactionSetEffects(categoryFactionCount) {
       for (const effect of factionSetEffects[category][faction]) {
         if (typeof effect === "object" && effect !== null) {
           const requiredCount = parseInt(effect["개수"] || "0");
-          console.log(
-            `Effect requires ${requiredCount} spirits, we have ${count}`
-          );
 
           if (
             !isNaN(requiredCount) &&
@@ -467,13 +472,11 @@ function calculateFactionSetEffects(categoryFactionCount) {
           ) {
             maxCount = requiredCount;
             maxEffect = effect;
-            console.log(`Found new max effect with count ${maxCount}`);
           }
         }
       }
 
       if (maxEffect) {
-        console.log(`Applying max effect for ${faction}:`, maxEffect);
         for (const [stat, value] of Object.entries(maxEffect)) {
           if (stat !== "개수") {
             const numValue = parseFloat(value);
@@ -481,23 +484,16 @@ function calculateFactionSetEffects(categoryFactionCount) {
               const normalizedStat = normalizeStatKey(stat);
               if (effects[normalizedStat]) {
                 effects[normalizedStat] += numValue;
-                console.log(
-                  `Added ${numValue} to ${normalizedStat}, total now: ${effects[normalizedStat]}`
-                );
               } else {
                 effects[normalizedStat] = numValue;
-                console.log(`Set ${normalizedStat} to ${numValue}`);
               }
             }
           }
         }
-      } else {
-        console.log(`No applicable effect found for ${faction}`);
       }
     }
   }
 
-  console.log("Final faction effects:", effects);
   return effects;
 }
 
@@ -639,9 +635,10 @@ function renderEffectsList(
         ? `${Math.round(value * 100) / 100}%`
         : Math.round(value * 100) / 100;
 
+      const colorClass = statColorMap[normalizedStat] || "";
       const cssClass = percentStats.includes(normalizedStat)
-        ? "effect-item effect-item-percent"
-        : "effect-item";
+        ? `effect-item effect-item-percent ${colorClass}`
+        : `effect-item ${colorClass}`;
 
       html += `<div class="${cssClass}"><span>${statName}</span><span>${displayValue}</span></div>`;
     }
@@ -662,7 +659,8 @@ function renderEffectsList(
       for (const [stat, value] of Object.entries(normalEffects)) {
         const normalizedStat = normalizeStatKey(stat);
         const statName = statsMapping[normalizedStat] || normalizedStat;
-        html += `<div class="effect-item"><span>${statName}</span><span>${
+        const colorClass = statColorMap[normalizedStat] || "";
+        html += `<div class="effect-item ${colorClass}"><span>${statName}</span><span>${
           Math.round(value * 100) / 100
         }</span></div>`;
       }
@@ -673,7 +671,8 @@ function renderEffectsList(
       for (const [stat, value] of Object.entries(percentEffects)) {
         const normalizedStat = normalizeStatKey(stat);
         const statName = statsMapping[normalizedStat] || normalizedStat;
-        html += `<div class="effect-item effect-item-percent"><span>${statName}</span><span>${
+        const colorClass = statColorMap[normalizedStat] || "";
+        html += `<div class="effect-item effect-item-percent ${colorClass}"><span>${statName}</span><span>${
           Math.round(value * 100) / 100
         }%</span></div>`;
       }
@@ -695,18 +694,33 @@ function findOptimalCombination() {
   }
 
   isProcessing = true;
+  isCalculationCancelled = false;
 
   const optimalModal = document.getElementById("optimalModal");
   optimalModal.style.display = "flex";
   document.body.style.overflow = "hidden";
 
-  document.getElementById("optimalSpiritsList").innerHTML =
-    "<div class='processing-message'>최적 조합을 찾는 중입니다...</div>";
+  document.getElementById(
+    "optimalSpiritsList"
+  ).innerHTML = `<div class='processing-message'>
+      최적 조합을 찾는 중입니다... (0%)
+      <div style="margin-top: 10px;">
+        <button id="cancelCalculationBtn" class="cancel-calculation-btn">계산 중단</button>
+      </div>
+    </div>`;
   document.getElementById("optimalScore").textContent = "계산 중...";
   document.getElementById("optimalGradeEffects").innerHTML = "";
   document.getElementById("optimalFactionEffects").innerHTML = "";
   document.getElementById("optimalTotalEffects").innerHTML = "";
   document.getElementById("spiritStatsDetails").innerHTML = "";
+
+  document
+    .getElementById("cancelCalculationBtn")
+    .addEventListener("click", function () {
+      isCalculationCancelled = true;
+      document.getElementById("optimalSpiritsList").innerHTML =
+        "<div class='warning-message'>계산이 중단되었습니다. 현재까지 찾은 최적 조합을 표시합니다.</div>";
+    });
 
   setTimeout(() => {
     try {
@@ -722,22 +736,64 @@ function findOptimalCombination() {
       }
 
       const maxCombinationSize = Math.min(6, validSpirits.length);
+      let totalCombinations = 0;
+      for (let size = 1; size <= maxCombinationSize; size++) {
+        totalCombinations += binomialCoefficient(validSpirits.length, size);
+      }
+
+      let processedCombinations = 0;
       let bestCombination = null;
       let bestScore = -1;
       let bestResult = null;
 
+      const updateProgress = (progress) => {
+        if (!isCalculationCancelled) {
+          document.getElementById(
+            "optimalSpiritsList"
+          ).innerHTML = `<div class='processing-message'>
+              최적 조합을 찾는 중입니다... (${Math.round(progress * 100)}%)
+              <div style="margin-top: 10px;">
+                <button id="cancelCalculationBtn" class="cancel-calculation-btn">계산 중단</button>
+              </div>
+            </div>`;
+
+          document
+            .getElementById("cancelCalculationBtn")
+            .addEventListener("click", function () {
+              isCalculationCancelled = true;
+              document.getElementById("optimalSpiritsList").innerHTML =
+                "<div class='warning-message'>계산이 중단되었습니다. 현재까지 찾은 최적 조합을 표시합니다.</div>";
+            });
+        }
+      };
+
       for (let size = 1; size <= maxCombinationSize; size++) {
         const combinations = generateCombinations(validSpirits, size);
 
-        for (const combination of combinations) {
+        for (let i = 0; i < combinations.length; i++) {
+          if (isCalculationCancelled && bestCombination !== null) {
+            break;
+          }
+
+          const combination = combinations[i];
           const result = calculateEffectsForSpirits(combination);
           const score = result.score;
+
+          processedCombinations++;
+
+          if (processedCombinations % 40 === 0) {
+            updateProgress(processedCombinations / totalCombinations);
+          }
 
           if (score > bestScore) {
             bestScore = score;
             bestCombination = combination;
             bestResult = result;
           }
+        }
+
+        if (isCalculationCancelled && bestCombination !== null) {
+          break;
         }
       }
 
@@ -754,6 +810,18 @@ function findOptimalCombination() {
       isProcessing = false;
     }
   }, 100);
+}
+
+function binomialCoefficient(n, k) {
+  if (k < 0 || k > n) return 0;
+  if (k === 0 || k === n) return 1;
+
+  let result = 1;
+  for (let i = 1; i <= k; i++) {
+    result *= n - (i - 1);
+    result /= i;
+  }
+  return Math.round(result);
 }
 
 function generateCombinations(array, size) {
@@ -949,6 +1017,10 @@ function renderSpiritDetailsTable(spirits) {
   sortedStatKeys.forEach((statKey) => {
     const statHeader = document.createElement("th");
     statHeader.textContent = statsMapping[statKey] || statKey;
+    const colorClass = statColorMap[statKey] || "";
+    if (colorClass) {
+      statHeader.className = colorClass;
+    }
     headerRow.appendChild(statHeader);
   });
 
@@ -978,6 +1050,10 @@ function renderSpiritDetailsTable(spirits) {
 
     sortedStatKeys.forEach((statKey) => {
       const statCell = document.createElement("td");
+      const colorClass = statColorMap[statKey] || "";
+      if (colorClass) {
+        statCell.className = colorClass;
+      }
 
       let statValue = 0;
       for (const [key, value] of Object.entries(levelStats)) {
@@ -1006,6 +1082,7 @@ function renderSpiritDetailsTable(spirits) {
 const statsMapping = {
   criticalPower: "치명위력",
   normalMonsterAdditionalDamage: "일반몬스터추가피해",
+  normalMonsterPenetration: "일반몬스터관통",
   healthIncrease: "체력증가",
   healthIncreasePercent: "체력증가%",
   strength: "힘",
@@ -1022,6 +1099,7 @@ const statsMapping = {
   magicRecoveryImprovement: "마력회복향상",
   criticalChance: "치명확률",
   bossMonsterAdditionalDamage: "보스몬스터추가피해",
+  bossMonsterPenetration: "보스몬스터관통",
   power: "위력",
   magicPotionEnhancement: "마력시약향상",
   pvpDamage: "대인피해",
@@ -1040,3 +1118,13 @@ const statsMapping = {
   lootAcquisitionIncrease: "전리품획득증가",
   experienceGainIncrease: "경험치획득증가",
 };
+
+function clearAllSelections() {
+  selectedSpirits = [];
+  updateSelectedCount();
+  renderSelectedSpirits();
+  showCategory(
+    document.querySelector(".sub-tabs .tab.active").textContent,
+    false
+  );
+}

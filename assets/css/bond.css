@@ -32,6 +32,7 @@
     padding: 15px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
     height: 100%;
+    -webkit-overflow-scrolling: touch;
 }
 
 .spirit-selection-header {
@@ -82,6 +83,8 @@
     border: 2px solid transparent;
     background-color: #f8f8f8;
     padding: 3px;
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
 .img-name {
@@ -167,6 +170,7 @@
     max-height: calc(100vh - 300px);
     overflow-y: auto;
     margin-bottom: 15px;
+    -webkit-overflow-scrolling: touch;
 }
 
 .selected-spirit-card {
@@ -176,6 +180,7 @@
     border-radius: 8px;
     padding: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    will-change: transform;
 }
 
 .selected-spirit-header {
@@ -237,6 +242,7 @@
     justify-content: center;
     align-items: center;
     transition: all 0.2s;
+    will-change: transform;
 }
 
 .spirit-level-control button:hover {
@@ -267,6 +273,7 @@
     transition: all 0.2s;
     width: 100%;
     text-align: center;
+    will-change: transform;
 }
 
 .remove-spirit:hover {
@@ -594,6 +601,88 @@
     color: #f44336;
 }
 
+.stat-damage-resistance {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.stat-damage-resistance-penetration {
+    color: #3498db;
+    font-weight: 600;
+}
+
+.stat-pvp-defense-percent {
+    color: #2ecc71;
+    font-weight: 600;
+}
+
+.stat-pvp-damage-percent {
+    color: #9b59b6;
+    font-weight: 600;
+}
+
+.stat-health-increase-percent {
+    color: #f39c12;
+    font-weight: 600;
+}
+
+.stat-critical-power-percent {
+    color: #d35400;
+    font-weight: 600;
+}
+
+.stat-magic-increase-percent {
+    color: #16a085;
+    font-weight: 600;
+}
+
+.stat-destruction-power-percent {
+    color: #8e44ad;
+    font-weight: 600;
+}
+
+.stat-critical-chance {
+    color: #c0392b;
+    font-weight: 600;
+}
+
+.stat-boss-monster-additional-damage {
+    color: #27ae60;
+    font-weight: 600;
+}
+
+.cancel-calculation-btn {
+    padding: 6px 12px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.cancel-calculation-btn:hover {
+    background-color: #d32f2f;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #4caf50;
+    width: 0%;
+    transition: width 0.3s;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -627,25 +716,118 @@
         flex-direction: column;
     }
 
-    .left-panel,
-    .right-panel {
+    .left-panel {
         max-height: none;
         position: static;
+        margin-bottom: 35vh;
     }
 
     .right-panel {
-        margin-top: 15px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        top: auto;
+        width: 100%;
+        max-height: 30vh;
+        z-index: 999;
+        padding: 10px;
+        background-color: #fff;
+        box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        transition: transform 0.3s ease;
+        overflow: hidden;
+    }
+
+    .right-panel.collapsed {
+        transform: translateY(calc(100% - 40px));
     }
 
     .selected-spirits-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+
+    .selected-spirits-header h3 {
+        margin: 0;
+        font-size: 14px;
     }
 
     .level-batch-control {
-        width: 100%;
-        justify-content: space-between;
+        width: auto;
+        gap: 5px;
+    }
+
+    .level-batch-control label {
+        font-size: 12px;
+    }
+
+    .level-batch-control input {
+        width: 40px;
+        height: 24px;
+        font-size: 12px;
+    }
+
+    .level-batch-control button {
+        padding: 3px 8px;
+        font-size: 12px;
+    }
+
+    .selected-spirits-collapse-indicator {
+        display: inline-block;
+        margin-left: 5px;
+        font-size: 16px;
+        transition: transform 0.3s;
+    }
+
+    .right-panel.collapsed .selected-spirits-collapse-indicator {
+        transform: rotate(180deg);
+    }
+
+    .selected-spirits {
+        grid-template-columns: repeat(3, 1fr);
+        max-height: calc(30vh - 100px);
+        gap: 5px;
+    }
+
+    .selected-spirit-card {
+        padding: 1px;
+    }
+
+    .selected-spirit-header img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .selected-spirit-header .spirit-info .spirit-name {
+        font-size: 11px;
+    }
+
+    .spirit-level-control {
+        margin-bottom: 4px;
+    }
+
+    .spirit-level-control input {
+        width: 25px;
+    }
+
+    .remove-spirit {
+        padding: 2px;
+        font-size: 10px;
+    }
+
+    .calculate-btn-container {
+        margin: 8px 0;
+        padding-top: 8px;
+    }
+
+    #findOptimalBtn {
+        padding: 8px 15px;
+        font-size: 14px;
     }
 
     .results-container {
@@ -664,9 +846,8 @@
         width: 100%;
     }
 
-    .selected-spirits {
-        grid-template-columns: repeat(2, 1fr);
-        max-height: none;
+    .bond-container {
+        padding-bottom: 30vh;
     }
 }
 

@@ -33,7 +33,7 @@
             <div class="left-panel">
                 <div class="spirit-selection">
                     <div class="spirit-selection-header">
-                        <h3>환수 선택 (<span id="selectedCount">0</span>/12)</h3>
+                        <h3>환수 선택 (<span id="selectedCount">0</span>/20)</h3>
                         <button class="clear-selection-btn" onclick="clearAllSelections()">선택해제</button>
                     </div>
                     <div class="image-container" id="imageContainer"></div>
@@ -135,17 +135,7 @@
 
     <script src="assets/js/bondCalculator.js"></script>
     <script>
-        function clearAllSelections() {
-            selectedSpirits = [];
-            updateSelectedCount();
-            renderSelectedSpirits();
-            showCategory(document.querySelector(".sub-tabs .tab.active").textContent, false);
-        }
-    </script>
-    <script>
-
         document.addEventListener('DOMContentLoaded', function () {
-
             if (!sessionStorage.getItem('authenticated')) {
                 window.location.href = 'login.html';
                 return;
