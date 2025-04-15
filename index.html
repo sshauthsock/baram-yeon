@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>환수 정보</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
@@ -30,23 +30,6 @@
     <div class="image-container" id="imageContainer"></div>
 
     <script src="assets/js/index.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            if (!sessionStorage.getItem('authenticated')) {
-                window.location.href = 'login.html';
-                return;
-            }
-
-            const username = sessionStorage.getItem('username');
-            document.getElementById('userWelcome').textContent = `환영합니다, ${username}님!`;
-
-            document.getElementById('logoutBtn').addEventListener('click', function () {
-                sessionStorage.removeItem('authenticated');
-                sessionStorage.removeItem('username');
-                window.location.href = 'login.html';
-            });
-        });
-    </script>
 </body>
 
 </html>

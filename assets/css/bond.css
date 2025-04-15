@@ -1,13 +1,27 @@
+html,
+body {
+    overflow-x: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 .bond-container {
-    max-width: 1400px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 20px;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .main-content {
     display: flex;
     flex-direction: row;
     gap: 20px;
+    width: 100%;
 }
 
 .left-panel {
@@ -120,10 +134,18 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    flex-wrap: wrap;
 }
 
 .selected-spirits-header h3 {
     margin-top: 0;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .level-batch-control {
@@ -250,7 +272,7 @@
 }
 
 .spirit-level-control input {
-    width: 30px;
+    width: 35px;
     height: 20px;
     text-align: center;
     margin: 0 3px;
@@ -288,6 +310,11 @@
     margin: 15px 0;
     padding-top: 15px;
     border-top: 1px solid #eaeaea;
+}
+
+.calculate-btn-small {
+    display: flex;
+    align-items: center;
 }
 
 #findOptimalBtn {
@@ -683,6 +710,57 @@
     transition: width 0.3s;
 }
 
+.selected-spirits-collapse-indicator {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 16px;
+    transition: transform 0.3s;
+}
+
+.panel-toggle-button {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 14px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    cursor: pointer;
+    display: none;
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.panel-toggle-button:hover {
+    background-color: #1565c0;
+    transform: translateX(-50%) scale(1.05);
+}
+
+.toggle-icon {
+    display: inline-block;
+    margin-left: 5px;
+    transition: transform 0.3s;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(25, 118, 210, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
+    }
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -705,6 +783,8 @@
     }
 }
 
+
+
 @media (max-width: 1024px) {
     .results-container {
         grid-template-columns: repeat(2, 1fr);
@@ -719,7 +799,12 @@
     .left-panel {
         max-height: none;
         position: static;
-        margin-bottom: 35vh;
+        margin-bottom: 100px;
+        padding-bottom: 60px;
+    }
+
+    .panel-toggle-button {
+        display: block;
     }
 
     .right-panel {
@@ -728,33 +813,34 @@
         left: 0;
         top: auto;
         width: 100%;
-        max-height: 30vh;
+        max-height: 60vh;
         z-index: 999;
-        padding: 10px;
+        padding: 15px;
         background-color: #fff;
-        box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
-        transition: transform 0.3s ease;
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        transition: all 0.4s ease;
         overflow: hidden;
     }
 
     .right-panel.collapsed {
-        transform: translateY(calc(100% - 40px));
+        transform: translateY(calc(100% - 0px));
+        opacity: 0;
+    }
+
+    .right-panel:not(.collapsed) {
+        padding-top: 20px;
     }
 
     .selected-spirits-header {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
         cursor: pointer;
-        padding-bottom: 5px;
-        margin-bottom: 5px;
+        padding: 5px 0 10px;
     }
 
     .selected-spirits-header h3 {
+        font-size: 16px;
         margin: 0;
-        font-size: 14px;
     }
 
     .level-batch-control {
@@ -767,67 +853,65 @@
     }
 
     .level-batch-control input {
-        width: 40px;
-        height: 24px;
-        font-size: 12px;
+        width: 50px;
+        height: 30px;
+        font-size: 14px;
+        padding: 2px 5px;
     }
 
     .level-batch-control button {
-        padding: 3px 8px;
+        padding: 4px 10px;
         font-size: 12px;
-    }
-
-    .selected-spirits-collapse-indicator {
-        display: inline-block;
-        margin-left: 5px;
-        font-size: 16px;
-        transition: transform 0.3s;
-    }
-
-    .right-panel.collapsed .selected-spirits-collapse-indicator {
-        transform: rotate(180deg);
     }
 
     .selected-spirits {
         grid-template-columns: repeat(3, 1fr);
-        max-height: calc(30vh - 100px);
-        gap: 5px;
+        max-height: calc(60vh - 130px);
+        overflow-y: auto;
+        gap: 8px;
     }
 
     .selected-spirit-card {
-        padding: 1px;
+        padding: 5px;
     }
 
     .selected-spirit-header img {
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
     }
 
     .selected-spirit-header .spirit-info .spirit-name {
-        font-size: 11px;
+        font-size: 12px;
     }
 
     .spirit-level-control {
-        margin-bottom: 4px;
+        margin: 5px 0;
     }
 
     .spirit-level-control input {
-        width: 25px;
+        width: 35px;
+        padding: 1px;
     }
 
     .remove-spirit {
-        padding: 2px;
-        font-size: 10px;
+        padding: 3px;
+        font-size: 11px;
     }
 
     .calculate-btn-container {
-        margin: 8px 0;
-        padding-top: 8px;
+        margin: 10px 0;
+        padding-top: 10px;
     }
 
     #findOptimalBtn {
-        padding: 8px 15px;
-        font-size: 14px;
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .calculate-btn-small #findOptimalBtn {
+        padding: 6px 10px;
+        font-size: 12px;
+        width: auto;
     }
 
     .results-container {
@@ -835,24 +919,77 @@
     }
 
     .spirit-level-control {
-        margin-left: 0;
         justify-content: center;
         width: 100%;
-        margin-bottom: 8px;
     }
 
     .remove-spirit {
-        margin-left: 0;
         width: 100%;
     }
 
     .bond-container {
-        padding-bottom: 30vh;
+        padding-bottom: 0;
+    }
+
+    .spirit-selection {
+        padding: 12px;
+    }
+
+    .clear-selection-btn {
+        padding: 4px 12px;
+        font-size: 12px;
+    }
+
+    .header-controls {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 10px;
     }
 }
 
 @media (max-width: 480px) {
     .selected-spirits {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
+
+    .image-container {
+        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+        gap: 5px;
+    }
+
+    .img-wrapper img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .img-name {
+        font-size: 9px;
+        min-height: 20px;
+    }
+
+    .bond-container {
+        padding: 10px;
+    }
+
+    .spirit-selection {
+        padding: 10px;
+    }
+
+    .spirit-selection-header h3 {
+        font-size: 14px;
+    }
+
+    .clear-selection-btn {
+        padding: 3px 10px;
+        font-size: 12px;
+    }
+
+    .panel-toggle-button {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
+
 }

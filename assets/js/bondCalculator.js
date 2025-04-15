@@ -40,29 +40,38 @@ document.addEventListener("DOMContentLoaded", function () {
   loadAllData();
 
   const rightPanel = document.querySelector(".right-panel");
-  const selectedSpiritsHeader = document.querySelector(
-    ".selected-spirits-header"
-  );
+  const panelToggleBtn = document.getElementById("panelToggleBtn");
 
   if (window.innerWidth <= 768) {
-    const indicator = document.createElement("span");
-    indicator.className = "selected-spirits-collapse-indicator";
-    indicator.innerHTML = "▲";
-    selectedSpiritsHeader.appendChild(indicator);
-
     rightPanel.classList.add("collapsed");
 
-    selectedSpiritsHeader.addEventListener("click", function () {
+    const toggleIcon = panelToggleBtn.querySelector(".toggle-icon");
+    toggleIcon.textContent = "▲";
+
+    panelToggleBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
       rightPanel.classList.toggle("collapsed");
-      indicator.innerHTML = rightPanel.classList.contains("collapsed")
-        ? "▲"
-        : "▼";
+
+      if (rightPanel.classList.contains("collapsed")) {
+        toggleIcon.style.transform = "rotate(0)";
+        toggleIcon.textContent = "▲";
+      } else {
+        toggleIcon.style.transform = "rotate(240deg)";
+        toggleIcon.textContent = "▼";
+      }
     });
 
-    setTimeout(() => {
-      rightPanel.classList.add("collapsed");
-      indicator.innerHTML = "▲";
-    }, 500);
+    rightPanel.addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!rightPanel.classList.contains("collapsed")) {
+        rightPanel.classList.add("collapsed");
+        toggleIcon.textContent = "▲";
+        toggleIcon.style.transform = "rotate(0)";
+      }
+    });
   }
 
   const images = document.querySelectorAll("img");
@@ -211,6 +220,20 @@ function toggleSpiritSelection(spirit, category) {
   updateSelectedCount();
   updateSpiritSelectionUI(spirit.image);
   renderSelectedSpirits();
+
+  if (window.innerWidth <= 768) {
+    const rightPanel = document.querySelector(".right-panel");
+    const panelToggleBtn = document.getElementById("panelToggleBtn");
+
+    if (
+      selectedSpirits.length > 0 &&
+      rightPanel.classList.contains("collapsed")
+    ) {
+      rightPanel.classList.remove("collapsed");
+    } else if (selectedSpirits.length === 0) {
+      rightPanel.classList.add("collapsed");
+    }
+  }
 }
 
 function updateSpiritSelectionUI(spiritImage) {
@@ -223,7 +246,18 @@ function updateSpiritSelectionUI(spiritImage) {
 }
 
 function updateSelectedCount() {
-  document.getElementById("selectedCount").textContent = selectedSpirits.length;
+  const count = selectedSpirits.length;
+  document.getElementById("selectedCount").textContent = count;
+
+  const mobileCountElement = document.getElementById("mobileSelectedCount");
+  if (mobileCountElement) {
+    mobileCountElement.textContent = count;
+  }
+
+  const panelToggleBtn = document.getElementById("panelToggleBtn");
+  if (panelToggleBtn) {
+    panelToggleBtn.style.display = count > 0 ? "block" : "none";
+  }
 }
 
 function renderSelectedSpirits() {
@@ -250,7 +284,6 @@ function renderSelectedSpirits() {
         <img src="${spirit.image}" alt="${spirit.name}">
         <div class="spirit-info">
           <div class="spirit-name">${spirit.name}</div>
-          <div class="spirit-grade">${spirit.grade || "전설"}</div>
         </div>
       </div>
       <div class="spirit-level-control">
@@ -1127,4 +1160,14 @@ function clearAllSelections() {
     document.querySelector(".sub-tabs .tab.active").textContent,
     false
   );
+
+  const panelToggleBtn = document.getElementById("panelToggleBtn");
+  if (panelToggleBtn) {
+    panelToggleBtn.style.display = "none";
+  }
+
+  const rightPanel = document.querySelector(".right-panel");
+  if (rightPanel && window.innerWidth <= 768) {
+    rightPanel.classList.add("collapsed");
+  }
 }
