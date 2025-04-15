@@ -1054,11 +1054,3 @@ body {
         height: 50px;
     }
 }
-
-@media (max-width: 768px) {
-    .modal-close {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-    }
-}

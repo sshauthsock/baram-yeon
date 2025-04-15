@@ -109,6 +109,25 @@
     </div>
 
     <script src="assets/js/soulCalculator.js"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            if (!sessionStorage.getItem('authenticated')) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const username = sessionStorage.getItem('username');
+            document.getElementById('userWelcome').textContent = `환영합니다, ${username}님!`;
+
+            document.getElementById('logoutBtn').addEventListener('click', function () {
+                sessionStorage.removeItem('authenticated');
+                sessionStorage.removeItem('username');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
 </body>
 
 </html>
