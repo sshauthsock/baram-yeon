@@ -1193,3 +1193,26 @@ function clearAllSelections() {
   );
   handleResponsiveLayout();
 }
+
+function applyBatchLevel(inputId) {
+  const level = parseInt(document.getElementById(inputId).value);
+  if (isNaN(level) || level < 0) {
+    alert("올바른 레벨을 입력하세요.");
+    return;
+  }
+
+  if (level > 25) {
+    alert("최대 레벨은 25입니다.");
+    document.getElementById(inputId).value = 25;
+    return;
+  }
+
+  selectedSpirits.forEach((spirit) => {
+    spirit.level = level;
+  });
+
+  document.getElementById("batchLevel").value = level;
+  document.getElementById("mobileBatchLevel").value = level;
+
+  renderSelectedSpirits();
+}
