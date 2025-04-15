@@ -40,10 +40,6 @@
                 </div>
             </div>
 
-            <button class="panel-toggle-button" id="panelToggleBtn">
-                선택된 환수 <span id="mobileSelectedCount">0</span>개 <span class="toggle-icon">▲</span>
-            </button>
-
             <div class="right-panel">
                 <div class="selected-spirits-container">
                     <div class="selected-spirits-header">
@@ -61,6 +57,30 @@
                     </div>
                     <div id="selectedSpirits" class="selected-spirits"></div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-toggle-container" id="panelToggleContainer">
+        <button class="panel-toggle-button" id="panelToggleBtn">
+            선택된 환수 <span id="mobileSelectedCount">0</span>개 <span class="toggle-icon">▼</span>
+        </button>
+        <div class="right-panel collapsed">
+            <div class="selected-spirits-container">
+                <div class="selected-spirits-header">
+                    <h3>선택된 환수</h3>
+                    <div class="header-controls">
+                        <div class="level-batch-control">
+                            <label>일괄 레벨 설정:</label>
+                            <input type="number" id="batchLevel" min="0" max="25" value="0">
+                            <button onclick="applyBatchLevel()">적용</button>
+                        </div>
+                        <div class="calculate-btn-small">
+                            <button id="findOptimalBtn" onclick="findOptimalCombination()">최적 조합 찾기</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="selectedSpirits" class="selected-spirits"></div>
             </div>
         </div>
     </div>

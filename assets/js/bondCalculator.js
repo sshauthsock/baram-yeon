@@ -37,42 +37,16 @@ const statColorMap = {
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-  loadAllData();
-
-  const rightPanel = document.querySelector(".right-panel");
-  const panelToggleBtn = document.getElementById("panelToggleBtn");
-
   if (window.innerWidth <= 768) {
-    rightPanel.classList.add("collapsed");
-
-    const toggleIcon = panelToggleBtn.querySelector(".toggle-icon");
-    toggleIcon.textContent = "▲";
-
-    panelToggleBtn.addEventListener("click", function (e) {
-      e.stopPropagation();
-      rightPanel.classList.toggle("collapsed");
-
-      if (rightPanel.classList.contains("collapsed")) {
-        toggleIcon.style.transform = "rotate(0)";
-        toggleIcon.textContent = "▲";
-      } else {
-        toggleIcon.style.transform = "rotate(240deg)";
-        toggleIcon.textContent = "▼";
-      }
-    });
-
-    rightPanel.addEventListener("click", function (e) {
-      e.stopPropagation();
-    });
-
-    document.addEventListener("click", function (e) {
-      if (!rightPanel.classList.contains("collapsed")) {
-        rightPanel.classList.add("collapsed");
-        toggleIcon.textContent = "▲";
-        toggleIcon.style.transform = "rotate(0)";
-      }
-    });
+    const mainRightPanel = document.querySelector(".main-content .right-panel");
+    if (mainRightPanel) {
+      mainRightPanel.style.display = "none";
+    }
   }
+
+  loadAllData();
+  initializeUIEvents();
+  handleResponsiveLayout();
 
   const images = document.querySelectorAll("img");
   if ("loading" in HTMLImageElement.prototype) {
@@ -82,7 +56,92 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+  window.addEventListener("resize", handleResponsiveLayout);
 });
+
+function handleResponsiveLayout() {
+  const toggleContainer = document.getElementById("panelToggleContainer");
+  const mainRightPanel = document.querySelector(".main-content .right-panel");
+
+  if (window.innerWidth <= 768) {
+    if (selectedSpirits.length === 0) {
+      toggleContainer.style.display = "none";
+    } else {
+      toggleContainer.style.display = "flex";
+    }
+
+    if (mainRightPanel) {
+      mainRightPanel.style.display = "none";
+    }
+  } else {
+    toggleContainer.style.display = "none";
+
+    if (mainRightPanel) {
+      mainRightPanel.style.display = "block";
+    }
+  }
+}
+
+function initializeUIEvents() {
+  const toggleContainer = document.getElementById("panelToggleContainer");
+  const rightPanel = toggleContainer.querySelector(".right-panel");
+  const panelToggleBtn = document.getElementById("panelToggleBtn");
+
+  if (panelToggleBtn && rightPanel) {
+    const toggleIcon = panelToggleBtn.querySelector(".toggle-icon");
+    toggleIcon.textContent = "▲";
+    panelToggleBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      rightPanel.classList.toggle("collapsed");
+
+      if (rightPanel.classList.contains("collapsed")) {
+        toggleIcon.style.transform = "rotate(0)";
+        toggleIcon.textContent = "▲";
+      } else {
+        toggleIcon.style.transform = "rotate(360deg)";
+        toggleIcon.textContent = "▼";
+      }
+    });
+
+    document.addEventListener("click", function (e) {
+      if (
+        window.innerWidth <= 768 &&
+        !rightPanel.classList.contains("collapsed") &&
+        !rightPanel.contains(e.target) &&
+        e.target !== panelToggleBtn
+      ) {
+        rightPanel.classList.add("collapsed");
+
+        toggleIcon.style.transform = "rotate(0)";
+        toggleIcon.textContent = "▲";
+      }
+    });
+
+    rightPanel.addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
+  }
+
+  document
+    .getElementById("resultModal")
+    ?.addEventListener("click", function (e) {
+      if (e.target === this) closeResultModal();
+    });
+
+  document
+    .getElementById("optimalModal")
+    ?.addEventListener("click", function (e) {
+      if (e.target === this) closeOptimalModal();
+    });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      closeResultModal();
+      closeOptimalModal();
+    }
+  });
+}
 
 function debounce(func, wait) {
   let timeout;
@@ -117,25 +176,6 @@ async function loadAllData() {
   }
 
   showCategory("수호", false);
-
-  document
-    .getElementById("resultModal")
-    .addEventListener("click", function (e) {
-      if (e.target === this) closeResultModal();
-    });
-
-  document
-    .getElementById("optimalModal")
-    .addEventListener("click", function (e) {
-      if (e.target === this) closeOptimalModal();
-    });
-
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") {
-      closeResultModal();
-      closeOptimalModal();
-    }
-  });
 }
 
 function normalizeStatKey(key) {
@@ -220,20 +260,7 @@ function toggleSpiritSelection(spirit, category) {
   updateSelectedCount();
   updateSpiritSelectionUI(spirit.image);
   renderSelectedSpirits();
-
-  if (window.innerWidth <= 768) {
-    const rightPanel = document.querySelector(".right-panel");
-    const panelToggleBtn = document.getElementById("panelToggleBtn");
-
-    if (
-      selectedSpirits.length > 0 &&
-      rightPanel.classList.contains("collapsed")
-    ) {
-      rightPanel.classList.remove("collapsed");
-    } else if (selectedSpirits.length === 0) {
-      rightPanel.classList.add("collapsed");
-    }
-  }
+  handleResponsiveLayout();
 }
 
 function updateSpiritSelectionUI(spiritImage) {
@@ -254,51 +281,54 @@ function updateSelectedCount() {
     mobileCountElement.textContent = count;
   }
 
-  const panelToggleBtn = document.getElementById("panelToggleBtn");
-  if (panelToggleBtn) {
-    panelToggleBtn.style.display = count > 0 ? "block" : "none";
-  }
+  handleResponsiveLayout();
 }
 
 function renderSelectedSpirits() {
-  const container = document.getElementById("selectedSpirits");
+  const containerSelectors = [
+    "#selectedSpirits",
+    "#panelToggleContainer .selected-spirits",
+  ];
 
-  if (!container) return;
+  containerSelectors.forEach((selector) => {
+    const container = document.querySelector(selector);
+    if (!container) return;
 
-  container.innerHTML = "";
+    container.innerHTML = "";
 
-  if (selectedSpirits.length === 0) {
-    container.innerHTML =
-      "<p>선택된 환수가 없습니다. 위에서 환수를 선택해주세요.</p>";
-    return;
-  }
+    if (selectedSpirits.length === 0) {
+      container.innerHTML =
+        "<p>선택된 환수가 없습니다. 위에서 환수를 선택해주세요.</p>";
+      return;
+    }
 
-  const fragment = document.createDocumentFragment();
+    const fragment = document.createDocumentFragment();
 
-  selectedSpirits.forEach((spirit, index) => {
-    const card = document.createElement("div");
-    card.className = "selected-spirit-card";
+    selectedSpirits.forEach((spirit, index) => {
+      const card = document.createElement("div");
+      card.className = "selected-spirit-card";
 
-    card.innerHTML = `
-      <div class="selected-spirit-header">
-        <img src="${spirit.image}" alt="${spirit.name}">
-        <div class="spirit-info">
-          <div class="spirit-name">${spirit.name}</div>
+      card.innerHTML = `
+        <div class="selected-spirit-header">
+          <img src="${spirit.image}" alt="${spirit.name}">
+          <div class="spirit-info">
+            <div class="spirit-name">${spirit.name}</div>
+          </div>
         </div>
-      </div>
-      <div class="spirit-level-control">
-        <button onclick="changeLevel(${index}, -1)">-</button>
-        <input type="number" min="0" max="25" value="${spirit.level}"
-          onchange="updateSpiritLevel(${index}, this.value)">
-        <button onclick="changeLevel(${index}, 1)">+</button>
-      </div>
-      <button class="remove-spirit" onclick="removeSpirit(${index})">제거</button>
-    `;
+        <div class="spirit-level-control">
+          <button onclick="changeLevel(${index}, -1)">-</button>
+          <input type="number" min="0" max="25" value="${spirit.level}"
+            onchange="updateSpiritLevel(${index}, this.value)">
+          <button onclick="changeLevel(${index}, 1)">+</button>
+        </div>
+        <button class="remove-spirit" onclick="removeSpirit(${index})">제거</button>
+      `;
 
-    fragment.appendChild(card);
+      fragment.appendChild(card.cloneNode(true));
+    });
+
+    container.appendChild(fragment);
   });
-
-  container.appendChild(fragment);
 }
 
 function updateSpiritLevel(index, value) {
@@ -314,6 +344,7 @@ function removeSpirit(index) {
   updateSelectedCount();
   renderSelectedSpirits();
   showCategory(document.querySelector(".sub-tabs .tab.active").textContent);
+  handleResponsiveLayout();
 }
 
 function changeLevel(index, diff) {
@@ -1160,14 +1191,5 @@ function clearAllSelections() {
     document.querySelector(".sub-tabs .tab.active").textContent,
     false
   );
-
-  const panelToggleBtn = document.getElementById("panelToggleBtn");
-  if (panelToggleBtn) {
-    panelToggleBtn.style.display = "none";
-  }
-
-  const rightPanel = document.querySelector(".right-panel");
-  if (rightPanel && window.innerWidth <= 768) {
-    rightPanel.classList.add("collapsed");
-  }
+  handleResponsiveLayout();
 }
