@@ -149,23 +149,28 @@ function getBasePartName(part) {
 
 function renderStatCards(stats, containerId) {
   const container = document.getElementById(containerId);
+  if (!container) return;
 
-  document.querySelectorAll(`#${containerId} > div`).forEach((card) => {
-    card.style.display = "none";
-  });
+  const displayedCards = new Set();
 
   stats.forEach(([statName, maxValue], index) => {
     const cardId = `${statName}_${selectedPart}_${selectedLevel}_${index}`;
+    displayedCards.add(cardId);
 
-    let card = Array.from(container.children).find(
-      (c) => c.dataset.cardId === cardId
-    );
+    let card = document.querySelector(`[data-card-id="${cardId}"]`);
 
     if (!card) {
       card = createStatCard(statName, maxValue, container, cardId, index);
     }
 
     card.style.display = "flex";
+  });
+
+  // Hide cards that are not in the current stats
+  Array.from(container.children).forEach((card) => {
+    if (!displayedCards.has(card.dataset.cardId)) {
+      card.style.display = "none";
+    }
   });
 
   updateButtonStates();
@@ -188,7 +193,7 @@ function updateButtonStates() {
         if (hasFirstUnlocked) {
           button.innerHTML = `<img src="assets/img/gold-button.jpg" alt="황금단추" class="btn-icon"> <span>선택 500</span>`;
         } else {
-          button.innerHTML = `<span>선택</span>`;
+          button.innerHTML = `<img src="assets/img/fivecolored-beads.jpg" alt="오색구슬" class="btn-icon"> <span>선택 500</span>`;
         }
       }
     } else {
@@ -405,9 +410,10 @@ function populateStatOptions() {
     const option = document.createElement("div");
     option.className = "stat-option";
     option.textContent = stat;
-    option.onclick = function () {
+    option.addEventListener("click", function (e) {
+      e.stopPropagation();
       toggleStatSelection(stat);
-    };
+    });
     optionsContainer.appendChild(option);
   });
 }
@@ -421,9 +427,8 @@ function toggleStatSelection(stat) {
     selectedStats.splice(index, 1);
   }
 
-  document.getElementById("stat-options").style.display = "none";
   updateSelectedStatsDisplay();
-  document.getElementById("search-input").value = "";
+  toggleStatOptions(false);
 }
 
 function updateSelectedStatsDisplay() {
@@ -448,47 +453,44 @@ function removeSelectedStat(stat) {
   updateSelectedStatsDisplay();
 }
 
-function filterStatOptions() {
-  const input = document.getElementById("search-input");
-  const filter = input.value.toLowerCase();
-  const options = document.getElementById("stat-options");
+function filterStatOptions(filterText) {
+  const statOptions = document.getElementById("stat-options");
+  const options = statOptions.querySelectorAll(".stat-option");
 
-  if (!options) return;
-
-  options.style.display = "block";
-
-  const statOptions = options.querySelectorAll(".stat-option");
+  filterText = filterText.toLowerCase();
   let visibleCount = 0;
 
-  statOptions.forEach((option) => {
+  options.forEach((option) => {
     const text = option.textContent.toLowerCase();
-    if (text.includes(filter)) {
-      option.style.display = "block";
-      visibleCount++;
-    } else {
-      option.style.display = "none";
-    }
+    const isVisible = text.includes(filterText);
+
+    option.style.display = isVisible ? "flex" : "none";
+    if (isVisible) visibleCount++;
   });
 
+  const noMatches = statOptions.querySelector(".no-matches");
   if (visibleCount === 0) {
-    const existingNoMatches = options.querySelector(".no-matches");
-    if (existingNoMatches) {
-      existingNoMatches.remove();
+    if (!noMatches) {
+      const noMatchesElement = document.createElement("div");
+      noMatchesElement.className = "no-matches";
+      noMatchesElement.textContent = "일치하는 항목 없음";
+      statOptions.appendChild(noMatchesElement);
     }
-
-    const noMatches = document.createElement("div");
-    noMatches.className = "no-matches";
-    noMatches.textContent = "일치하는 항목 없음";
-    options.appendChild(noMatches);
   } else {
-    const noMatches = options.querySelector(".no-matches");
-    if (noMatches) {
-      noMatches.remove();
-    }
+    if (noMatches) noMatches.remove();
   }
 
-  if (filter === "") {
-    options.style.display = "none";
+  toggleStatOptions(true);
+}
+
+function toggleStatOptions(show) {
+  const statOptions = document.getElementById("stat-options");
+  if (statOptions) {
+    statOptions.style.display = show ? "block" : "none";
+
+    if (show) {
+      statOptions.scrollTop = 0;
+    }
   }
 }
 
@@ -522,7 +524,7 @@ function searchStats() {
   }
 
   showSearchResults();
-  document.getElementById("stat-options").style.display = "none";
+  toggleStatOptions(false);
 }
 
 function showSearchResults() {
@@ -828,14 +830,18 @@ function initUI() {
 
   const searchInput = document.getElementById("search-input");
   if (searchInput) {
-    searchInput.addEventListener("click", function () {
-      const statOptions = document.getElementById("stat-options");
-      if (statOptions) {
-        statOptions.style.display = "block";
-      }
+    searchInput.addEventListener("click", function (e) {
+      e.stopPropagation();
+      toggleStatOptions(true);
     });
 
-    searchInput.addEventListener("input", filterStatOptions);
+    searchInput.addEventListener("focus", function () {
+      toggleStatOptions(true);
+    });
+
+    searchInput.addEventListener("input", function () {
+      filterStatOptions(this.value);
+    });
 
     searchInput.addEventListener("keydown", function (e) {
       if (e.key === "Enter") {
@@ -845,13 +851,23 @@ function initUI() {
     });
   }
 
+  document.addEventListener("click", function (e) {
+    const statOptions = document.getElementById("stat-options");
+    const searchInput = document.getElementById("search-input");
+
+    if (statOptions && searchInput) {
+      if (!searchInput.contains(e.target) && !statOptions.contains(e.target)) {
+        toggleStatOptions(false);
+      }
+    }
+  });
+
   updateResourceDisplay();
   updateResourceSummary();
 
   parts.forEach((part) => {
     const btn = document.createElement("button");
-    btn.className =
-      "selector-btn equip-btn bg-white border px-3 py-2 rounded hover:bg-yellow-200";
+    btn.className = "selector-btn equip-btn";
     btn.textContent = part;
     btn.addEventListener("click", () => {
       selectedPart = part;
@@ -867,8 +883,7 @@ function initUI() {
 
   levels.forEach((level) => {
     const btn = document.createElement("button");
-    btn.className =
-      "selector-btn level-btn bg-white border rounded hover:bg-yellow-200";
+    btn.className = "selector-btn level-btn";
 
     const levelText = document.createElement("div");
     levelText.className = "level-text";
@@ -937,7 +952,7 @@ function handleStatButtonClick(card, button, statName, maxValue, cardId) {
     }
 
     if (isFirst) {
-      userColorBalls -= 0;
+      userColorBalls -= 500;
     } else {
       userGoldButtons -= requiredGold;
     }
@@ -1089,8 +1104,7 @@ function createStatCard(statName, maxValue, container, cardId, statIndex) {
   const displayStatName = getDisplayStatName(statName);
 
   const card = document.createElement("div");
-  card.className =
-    "bg-white p-4 rounded shadow-md flex flex-col gap-2 stat-card";
+  card.className = "stat-card";
   card.dataset.statName = statName;
   card.dataset.displayStatName = displayStatName;
   card.dataset.part = selectedPart;
@@ -1716,15 +1730,40 @@ document.addEventListener("DOMContentLoaded", function () {
     userInputColorBalls = parseInt(colorBallInput.value) || 10000;
     userColorBalls = userInputColorBalls;
   }
-});
 
-document.addEventListener("click", function (event) {
   const searchInput = document.getElementById("search-input");
-  const statOptions = document.getElementById("stat-options");
+  if (searchInput) {
+    searchInput.addEventListener("click", function (e) {
+      e.stopPropagation();
+      toggleStatOptions(true);
+    });
 
-  if (statOptions && !event.target.closest(".search-wrapper")) {
-    statOptions.style.display = "none";
+    searchInput.addEventListener("focus", function () {
+      toggleStatOptions(true);
+    });
+
+    searchInput.addEventListener("input", function () {
+      filterStatOptions(this.value);
+    });
+
+    searchInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        searchStats();
+      }
+    });
   }
+
+  document.addEventListener("click", function (e) {
+    const statOptions = document.getElementById("stat-options");
+    const searchInput = document.getElementById("search-input");
+
+    if (statOptions && searchInput) {
+      if (!searchInput.contains(e.target) && !statOptions.contains(e.target)) {
+        toggleStatOptions(false);
+      }
+    }
+  });
 });
 
 document.addEventListener("touchstart", function () {}, { passive: true });

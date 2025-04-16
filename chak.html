@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a2a3a">
     <title>착 계산기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="assets/css/global.css" rel="stylesheet">
     <link href="assets/css/chak.css" rel="stylesheet">
 </head>
@@ -17,57 +19,61 @@
         <div class="tab active" onclick="location.assign('chak.html')">착 계산</div>
     </div>
 
-    <div class="container">
-        <div class="left">
-            <h3>장비 부위</h3>
-            <div id="equipment-selector" class="button-grid"></div>
+    <div class="layout-container">
+        <div class="equipment-section">
+            <div class="panel equipment-panel">
+                <h3>장비 부위</h3>
+                <div id="equipment-selector" class="button-grid"></div>
+            </div>
         </div>
 
-        <div class="main-content">
-            <div class="center-panel">
+        <div class="level-info-section">
+            <div class="panel level-panel">
                 <h3>강화 레벨</h3>
                 <div id="level-selector" class="level-buttons"></div>
-
+            </div>
+            <div class="panel enhancement-panel">
                 <h3>능력치 정보</h3>
                 <div id="stats-display" class="stats-grid"></div>
             </div>
+        </div>
 
-            <div class="right-panel">
-                <div class="preset-container">
-                    <div class="preset-buttons">
-                        <button onclick="optimizeStats('boss')" class="preset-btn boss-btn">보스용 조합</button>
-                        <button onclick="optimizeStats('pvp')" class="preset-btn pvp-btn">피빕용 조합</button>
-                    </div>
+        <div class="panel summary-panel">
+            <div class="tool-section">
+                <div class="preset-section">
+                    <button onclick="optimizeStats('boss')" class="preset-btn boss-btn">보스용 조합</button>
+                    <button onclick="optimizeStats('pvp')" class="preset-btn pvp-btn">피빕용 조합</button>
                 </div>
-
-                <div class="search-container">
-                    <div class="search-wrapper">
+                <div class="search-section">
+                    <div class="search-input-container">
                         <input id="search-input" placeholder="능력치 검색..." class="search-input">
-                        <button onclick="searchStats()" class="search-btn">검색</button>
+                        <button id="search-button" class="search-btn">검색</button>
+                    </div>
+                    <div class="dropdown-container">
                         <div id="stat-options" class="stat-options"></div>
                     </div>
                     <div class="selected-stats" id="selected-stats"></div>
                 </div>
+            </div>
 
-                <h3>능력치 합계</h3>
-                <div class="resources-section">
-                    <label class="resource-label">보유 수량</label>
-                    <div class="resource-inputs">
-                        <div class="resource-input">
-                            <img src="assets/img/gold-button.jpg" alt="황금단추" class="resource-icon-img">
-                            <input type="number" id="gold-button" value="10000">
-                        </div>
-                        <div class="resource-input">
-                            <img src="assets/img/fivecolored-beads.jpg" alt="오색구슬" class="resource-icon-img">
-                            <input type="number" id="color-ball" value="10000">
-                        </div>
+            <h3>능력치 합계</h3>
+            <div class="resources-section">
+                <label class="resource-label">보유 수량</label>
+                <div class="resource-inputs">
+                    <div class="resource-input">
+                        <img src="assets/img/gold-button.jpg" alt="황금단추" class="resource-icon-img">
+                        <input type="number" id="gold-button" value="10000">
+                    </div>
+                    <div class="resource-input">
+                        <img src="assets/img/fivecolored-beads.jpg" alt="오색구슬" class="resource-icon-img">
+                        <input type="number" id="color-ball" value="10000">
                     </div>
                 </div>
                 <div class="resource-status">
                     <div id="resource-summary"></div>
                 </div>
-                <div id="summary-display" class="summary-box"></div>
             </div>
+            <div id="summary-display" class="summary-box"></div>
         </div>
     </div>
 
@@ -110,24 +116,38 @@
         </div>
     </div>
 
+    <div id="tutorial-tip" class="tutorial-tip">
+        <div class="tip-content">
+            <h4>착 계산기 사용법</h4>
+            <p>1. 왼쪽에서 장비 부위를 선택하세요</p>
+            <p>2. 강화 레벨을 선택하세요</p>
+            <p>3. 능력치를 개방하고 강화하세요</p>
+            <button id="close-tip" class="close-tip-btn">확인</button>
+        </div>
+    </div>
+
     <script src="assets/js/chak.js"></script>
     <script>
-
         document.addEventListener('DOMContentLoaded', function () {
-
             if (!sessionStorage.getItem('authenticated')) {
                 window.location.href = 'login.html';
                 return;
             }
 
             const username = sessionStorage.getItem('username');
-            document.getElementById('userWelcome').textContent = `환영합니다, ${username}님!`;
+            if (document.getElementById('userWelcome')) {
+                document.getElementById('userWelcome').textContent = `환영합니다, ${username}님!`;
+            }
 
-            document.getElementById('logoutBtn').addEventListener('click', function () {
-                sessionStorage.removeItem('authenticated');
-                sessionStorage.removeItem('username');
-                window.location.href = 'login.html';
-            });
+            const tutorialShown = localStorage.getItem('chakTutorialShown');
+            if (!tutorialShown && document.getElementById('tutorial-tip')) {
+                document.getElementById('tutorial-tip').style.display = 'flex';
+                document.getElementById('close-tip').addEventListener('click', function () {
+                    document.getElementById('tutorial-tip').style.display = 'none';
+                    localStorage.setItem('chakTutorialShown', 'true');
+                });
+            }
+            document.getElementById('search-button').addEventListener('click', searchStats);
         });
     </script>
 </body>

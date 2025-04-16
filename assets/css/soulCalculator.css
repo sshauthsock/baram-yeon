@@ -130,7 +130,7 @@ body {
 }
 
 .input-group.type-select {
-    flex: 1.2;
+    flex: 1;
 }
 
 .input-group label {
@@ -180,10 +180,25 @@ body {
 }
 
 .calc-btn {
+    margin-top: 10px;
     flex: 1;
     display: flex;
     align-items: center;
     min-width: 85px;
+}
+
+.calc-btn button {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin: 0 auto;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    border-radius: 6px;
 }
 
 button {
@@ -497,23 +512,8 @@ input:focus {
         min-width: auto;
     }
 
-    .input-row {
-        flex-wrap: wrap;
-    }
-
-    .input-group {
-        min-width: 110px;
-        flex: 1 0 45%;
-    }
-
     .soul-panel {
         flex-wrap: wrap;
-    }
-
-    .soul-item,
-    .calc-btn {
-        min-width: 80px;
-        flex: 1 0 45%;
     }
 
     .results-panel {
@@ -539,6 +539,7 @@ input:focus {
     .input-row,
     .soul-panel {
         gap: 5px;
+        display: flex;
     }
 
     .soul-item {

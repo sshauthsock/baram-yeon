@@ -369,11 +369,25 @@ body {
     }
 
     .stats-container {
-        flex-direction: column;
+        flex-direction: row;
+        gap: 8px;
     }
 
     .stats-column {
-        margin-bottom: 10px;
+        margin-bottom: 0;
+        width: 100%;
+        padding: 8px;
+    }
+
+    #registrationList li,
+    #bindList li {
+        font-size: 11px;
+        padding: 6px 10px;
+        margin-bottom: 4px;
+    }
+
+    .stats-container b {
+        font-size: 13px;
     }
 }
 
@@ -402,5 +416,27 @@ body {
     .modal {
         padding: 12px;
         width: 98%;
+    }
+
+    .stats-container {
+        flex-direction: row;
+        gap: 6px;
+    }
+
+    .stats-column {
+        padding: 6px;
+    }
+
+    #registrationList li,
+    #bindList li {
+        font-size: 10px;
+        padding: 5px 8px;
+        margin-bottom: 3px;
+        border-left-width: 3px;
+    }
+
+    .level25-notice {
+        font-size: 10px;
+        padding: 6px 8px;
     }
 }
