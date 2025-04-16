@@ -341,7 +341,7 @@ h3 {
     align-items: center;
     justify-content: center;
     touch-action: manipulation;
-    min-height: 44px;
+    font-size: 12px;
 }
 
 .action-btn:hover {
@@ -1707,6 +1707,7 @@ h3 {
     .optimize-results-container {
         max-height: 60vh;
     }
+
 }
 
 @media (max-width: 480px) {
@@ -1746,12 +1747,29 @@ h3 {
     }
 
     .resource-inputs {
-        flex-direction: column;
-        gap: 6px;
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+        width: 100%;
     }
 
     .resource-input {
-        gap: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1 1 auto;
+        min-width: 130px;
+    }
+
+    .resource-input input {
+        min-height: 30px;
+        padding: 4px 8px;
+    }
+
+    .resource-label {
+        font-size: 12px;
+        color: #4b5563;
+        font-weight: 500;
     }
 
     .level-buttons {
@@ -1862,4 +1880,22 @@ h3 {
         min-height: 40px;
         padding: 6px 8px;
     }
+
+    .preset-btn {
+        padding: 6px 8px;
+        font-size: 10px;
+        min-height: 30px;
+    }
+
+    .search-input {
+        padding: 6px 8px;
+        font-size: 12px;
+        min-height: 36px;
+    }
+
+    .redistribute-btn {
+        min-width: 20px;
+        min-height: 20px;
+    }
+
 }

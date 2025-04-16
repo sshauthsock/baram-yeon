@@ -1123,7 +1123,7 @@ function createStatCard(statName, maxValue, container, cardId, statIndex) {
   title.textContent = displayStatName;
 
   const resetBtn = document.createElement("button");
-  resetBtn.innerHTML = "재분배";
+  resetBtn.innerHTML = "↻";
   resetBtn.className = "redistribute-btn";
   resetBtn.title = "능력치 재분배";
 
