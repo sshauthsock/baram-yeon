@@ -123,46 +123,15 @@
     <div class="modal-overlay" id="optimalModal">
         <div class="modal">
             <button class="modal-close" onclick="closeOptimalModal()">✕</button>
-            <h3 class="modal-title">최적 결속 조합 결과 (최대 6개)</h3>
-            <div class="modal-content">
-                <div class="optimal-score">
-                    <h4>환산합산: <span id="optimalScore">0</span></h4>
-                    <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small>
-                </div>
-
-                <div id="optimalSpiritsInfo" class="selected-spirits-info">
-                    <h4>최적 환수 조합</h4>
-                    <div id="optimalSpiritsList" class="spirits-info-list"></div>
-                </div>
-
-                <div class="results-container">
-                    <div class="results-section">
-                        <h4>등급 결속 효과</h4>
-                        <div id="optimalGradeEffects" class="effects-list"></div>
-                    </div>
-                    <div class="results-section">
-                        <h4>세력 결속 효과</h4>
-                        <div id="optimalFactionEffects" class="effects-list"></div>
-                    </div>
-                    <div class="results-section">
-                        <h4>총 결속 효과</h4>
-                        <div id="optimalTotalEffects" class="effects-list"></div>
-                    </div>
-                </div>
-
-                <div id="optimalSpiritsDetails" class="spirit-details-container">
-                    <h4>선택된 환수 상세 스탯</h4>
-                    <div id="spiritStatsDetails" class="spirit-stats-grid"></div>
-                </div>
+            <div id="optimalModalContent">
+                <!-- 여기에 콘텐츠가 동적으로 로드됩니다 -->
             </div>
         </div>
     </div>
 
     <script src="assets/js/bondCalculator.js"></script>
     <script>
-
         document.addEventListener('DOMContentLoaded', function () {
-
             if (!sessionStorage.getItem('authenticated')) {
                 window.location.href = 'login.html';
                 return;

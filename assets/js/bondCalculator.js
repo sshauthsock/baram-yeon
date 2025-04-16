@@ -4,6 +4,7 @@ let gradeSetEffects = {};
 let factionSetEffects = {};
 let isProcessing = false;
 let isCalculationCancelled = false;
+let savedOptimalCombinations = [];
 
 const percentStats = [
   "healthIncreasePercent",
@@ -44,7 +45,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  loadAllData();
+  loadAllData().then(() => {
+    loadSelectedSpiritsFromStorage();
+  });
+
+  loadSavedOptimalCombinations();
   initializeUIEvents();
   handleResponsiveLayout();
 
@@ -195,6 +200,7 @@ function showCategory(category, resetSelection = false) {
     selectedSpirits = [];
     updateSelectedCount();
     renderSelectedSpirits();
+    saveSelectedSpiritsToStorage();
   }
 
   if (!mobData[category] || mobData[category].length === 0) {
@@ -232,6 +238,57 @@ function showCategory(category, resetSelection = false) {
   });
 }
 
+function saveSelectedSpiritsToStorage() {
+  localStorage.setItem("selectedSpirits", JSON.stringify(selectedSpirits));
+}
+
+function loadSelectedSpiritsFromStorage() {
+  const savedSpirits = localStorage.getItem("selectedSpirits");
+  if (savedSpirits) {
+    try {
+      selectedSpirits = JSON.parse(savedSpirits);
+      updateSelectedCount();
+      renderSelectedSpirits();
+
+      const images = document.querySelectorAll("#imageContainer img");
+      images.forEach((img) => {
+        const isSelected = selectedSpirits.some(
+          (s) => s.image === img.dataset.image
+        );
+        if (isSelected) {
+          img.classList.add("selected");
+        }
+      });
+    } catch (e) {
+      console.error("저장된 환수 데이터를 불러오는 중 오류 발생:", e);
+    }
+  }
+}
+
+function saveSavedOptimalCombinations() {
+  localStorage.setItem(
+    "savedOptimalCombinations",
+    JSON.stringify(savedOptimalCombinations)
+  );
+}
+
+function loadSavedOptimalCombinations() {
+  const savedCombos = localStorage.getItem("savedOptimalCombinations");
+  if (savedCombos) {
+    try {
+      savedOptimalCombinations = JSON.parse(savedCombos);
+    } catch (e) {
+      console.error("저장된 최적 조합 데이터를 불러오는 중 오류 발생:", e);
+      savedOptimalCombinations = [];
+    }
+  }
+}
+
+function clearSavedOptimalCombinations() {
+  savedOptimalCombinations = [];
+  saveSavedOptimalCombinations();
+}
+
 function toggleSpiritSelection(spirit, category) {
   const existingIndex = selectedSpirits.findIndex(
     (s) => s.image === spirit.image
@@ -261,6 +318,7 @@ function toggleSpiritSelection(spirit, category) {
   updateSpiritSelectionUI(spirit.image);
   renderSelectedSpirits();
   handleResponsiveLayout();
+  saveSelectedSpiritsToStorage();
 }
 
 function updateSpiritSelectionUI(spiritImage) {
@@ -337,6 +395,7 @@ function updateSpiritLevel(index, value) {
   if (level > 25) level = 25;
   if (level < 0) level = 0;
   selectedSpirits[index].level = level;
+  saveSelectedSpiritsToStorage();
 }
 
 function removeSpirit(index) {
@@ -345,6 +404,7 @@ function removeSpirit(index) {
   renderSelectedSpirits();
   showCategory(document.querySelector(".sub-tabs .tab.active").textContent);
   handleResponsiveLayout();
+  saveSelectedSpiritsToStorage();
 }
 
 function changeLevel(index, diff) {
@@ -356,10 +416,11 @@ function changeLevel(index, diff) {
 
   spirit.level = newLevel;
   renderSelectedSpirits();
+  saveSelectedSpiritsToStorage();
 }
 
-function applyBatchLevel() {
-  const level = parseInt(document.getElementById("batchLevel").value);
+function applyBatchLevel(inputId) {
+  const level = parseInt(document.getElementById(inputId).value);
   if (isNaN(level) || level < 0) {
     alert("올바른 레벨을 입력하세요.");
     return;
@@ -367,7 +428,7 @@ function applyBatchLevel() {
 
   if (level > 25) {
     alert("최대 레벨은 25입니다.");
-    document.getElementById("batchLevel").value = 25;
+    document.getElementById(inputId).value = 25;
     return;
   }
 
@@ -375,7 +436,11 @@ function applyBatchLevel() {
     spirit.level = level;
   });
 
+  document.getElementById("batchLevel").value = level;
+  document.getElementById("mobileBatchLevel").value = level;
+
   renderSelectedSpirits();
+  saveSelectedSpiritsToStorage();
 }
 
 const calculateBondEffects = debounce(function () {
@@ -764,19 +829,50 @@ function findOptimalCombination() {
   optimalModal.style.display = "flex";
   document.body.style.overflow = "hidden";
 
-  document.getElementById(
-    "optimalSpiritsList"
-  ).innerHTML = `<div class='processing-message'>
-      최적 조합을 찾는 중입니다... (0%)
-      <div style="margin-top: 10px;">
-        <button id="cancelCalculationBtn" class="cancel-calculation-btn">계산 중단</button>
+  document.getElementById("optimalModalContent").innerHTML = `
+    <h3 class="modal-title">최적 결속 조합 결과 (최대 6개)</h3>
+    <div class="modal-content">
+      <div id="optimalHeader" class="optimal-header">
+        <div class="optimal-score">
+          <h4>환산합산: <span id="optimalScore">계산 중...</span></h4>
+          <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small>
+        </div>
       </div>
-    </div>`;
-  document.getElementById("optimalScore").textContent = "계산 중...";
-  document.getElementById("optimalGradeEffects").innerHTML = "";
-  document.getElementById("optimalFactionEffects").innerHTML = "";
-  document.getElementById("optimalTotalEffects").innerHTML = "";
-  document.getElementById("spiritStatsDetails").innerHTML = "";
+      
+      <div class="action-buttons">
+        <button id="clearHistoryButton" class="clear-history-btn">기록 삭제</button>
+      </div>
+      
+      <div id="optimalSpiritsList" class="selected-spirits-info">
+        <div class='processing-message'>
+          최적 조합을 찾는 중입니다... (0%)
+          <div style="margin-top: 10px;">
+            <button id="cancelCalculationBtn" class="cancel-calculation-btn">계산 중단</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="results-container">
+        <div class="results-section">
+          <h4>등급 결속 효과</h4>
+          <div id="optimalGradeEffects" class="effects-list"></div>
+        </div>
+        <div class="results-section">
+          <h4>세력 결속 효과</h4>
+          <div id="optimalFactionEffects" class="effects-list"></div>
+        </div>
+        <div class="results-section">
+          <h4>총 결속 효과</h4>
+          <div id="optimalTotalEffects" class="effects-list"></div>
+        </div>
+      </div>
+
+      <div id="optimalSpiritsDetails" class="spirit-details-container">
+        <h4>선택된 환수 상세 스탯</h4>
+        <div id="spiritStatsDetails" class="spirit-stats-grid"></div>
+      </div>
+    </div>
+  `;
 
   document
     .getElementById("cancelCalculationBtn")
@@ -785,6 +881,30 @@ function findOptimalCombination() {
       document.getElementById("optimalSpiritsList").innerHTML =
         "<div class='warning-message'>계산이 중단되었습니다. 현재까지 찾은 최적 조합을 표시합니다.</div>";
     });
+
+  document
+    .getElementById("clearHistoryButton")
+    .addEventListener("click", function () {
+      if (confirm("저장된 모든 조합 기록을 삭제하시겠습니까?")) {
+        clearSavedOptimalCombinations();
+        renderHistoryTabs([]);
+        document.getElementById("optimalGradeEffects").innerHTML = "";
+        document.getElementById("optimalFactionEffects").innerHTML = "";
+        document.getElementById("optimalTotalEffects").innerHTML = "";
+        document.getElementById("spiritStatsDetails").innerHTML = "";
+        document.getElementById("combinationResultsContainer").innerHTML = "";
+        document.getElementById("optimalScore").textContent = "0";
+        alert("조합 기록이 모두 삭제되었습니다.");
+      }
+    });
+
+  renderHistoryTabs(savedOptimalCombinations);
+
+  if (savedOptimalCombinations.length > 0) {
+    showSingleOptimalResult(
+      savedOptimalCombinations[savedOptimalCombinations.length - 1]
+    );
+  }
 
   setTimeout(() => {
     try {
@@ -806,8 +926,6 @@ function findOptimalCombination() {
       }
 
       let processedCombinations = 0;
-      let bestCombination = null;
-      let bestScore = -1;
       let bestResult = null;
 
       const updateProgress = (progress) => {
@@ -835,13 +953,12 @@ function findOptimalCombination() {
         const combinations = generateCombinations(validSpirits, size);
 
         for (let i = 0; i < combinations.length; i++) {
-          if (isCalculationCancelled && bestCombination !== null) {
+          if (isCalculationCancelled && bestResult !== null) {
             break;
           }
 
           const combination = combinations[i];
           const result = calculateEffectsForSpirits(combination);
-          const score = result.score;
 
           processedCombinations++;
 
@@ -849,19 +966,22 @@ function findOptimalCombination() {
             updateProgress(processedCombinations / totalCombinations);
           }
 
-          if (score > bestScore) {
-            bestScore = score;
-            bestCombination = combination;
+          if (!bestResult || result.score > bestResult.score) {
             bestResult = result;
           }
         }
 
-        if (isCalculationCancelled && bestCombination !== null) {
+        if (isCalculationCancelled && bestResult !== null) {
           break;
         }
       }
 
-      showOptimalResults(bestResult);
+      if (bestResult) {
+        addNewOptimalCombination(bestResult);
+        saveSavedOptimalCombinations();
+        renderHistoryTabs(savedOptimalCombinations);
+        showSingleOptimalResult(bestResult);
+      }
     } catch (error) {
       console.error("Error finding optimal combination:", error);
       document.getElementById(
@@ -876,60 +996,93 @@ function findOptimalCombination() {
   }, 100);
 }
 
-function binomialCoefficient(n, k) {
-  if (k < 0 || k > n) return 0;
-  if (k === 0 || k === n) return 1;
+function addNewOptimalCombination(result) {
+  const timestamp = new Date().toLocaleString();
 
-  let result = 1;
-  for (let i = 1; i <= k; i++) {
-    result *= n - (i - 1);
-    result /= i;
+  const resultWithTimestamp = {
+    ...result,
+    timestamp,
+    combinationName: `조합 ${savedOptimalCombinations.length + 1}`,
+  };
+
+  if (savedOptimalCombinations.length < 5) {
+    savedOptimalCombinations.push(resultWithTimestamp);
+  } else {
+    savedOptimalCombinations.shift();
+    savedOptimalCombinations.push(resultWithTimestamp);
   }
-  return Math.round(result);
 }
 
-function generateCombinations(array, size) {
-  if (size > array.length) return [];
-  if (size === 0) return [[]];
-
-  const result = [];
-
-  for (let i = 0; i <= array.length - size; i++) {
-    const head = array.slice(i, i + 1);
-    const tailCombinations = generateCombinations(array.slice(i + 1), size - 1);
-
-    for (const tailCombo of tailCombinations) {
-      result.push([...head, ...tailCombo]);
-    }
-  }
-
-  return result;
-}
-
-function calculateScore(effects) {
-  const damageResistancePenetration = parseFloat(
-    effects.damageResistancePenetration || 0
-  );
-  const damageResistance = parseFloat(effects.damageResistance || 0);
-  const pvpDamagePercent = parseFloat(effects.pvpDamagePercent || 0) * 10;
-  const pvpDefensePercent = parseFloat(effects.pvpDefensePercent || 0) * 10;
-
-  return (
-    damageResistancePenetration +
-    damageResistance +
-    pvpDamagePercent +
-    pvpDefensePercent
-  );
-}
-
-function showOptimalResults(result) {
-  if (!result) {
-    document.getElementById("optimalSpiritsList").innerHTML =
-      "<p>최적 조합을 찾을 수 없습니다.</p>";
-    document.getElementById("optimalScore").textContent = "0";
+function renderHistoryTabs(combinations) {
+  if (combinations.length === 0) {
+    document.getElementById("optimalSpiritsList").innerHTML = `
+      <div class="history-tabs-container">
+        <p class="no-history-message">저장된 조합 기록이 없습니다.</p>
+      </div>
+      <div id="combinationResultsContainer"></div>
+    `;
     return;
   }
 
+  let highestScoreIndex = 0;
+  let highestScore = combinations[0].score;
+
+  for (let i = 1; i < combinations.length; i++) {
+    if (combinations[i].score > highestScore) {
+      highestScore = combinations[i].score;
+      highestScoreIndex = i;
+    }
+  }
+
+  const latestIndex = combinations.length - 1;
+
+  const tabsHtml = `
+    <div class="history-tabs-container">
+      <div class="history-tabs">
+        ${combinations
+          .map(
+            (combo, index) => `
+          <button class="history-tab ${index === latestIndex ? "active" : ""} ${
+              index === highestScoreIndex ? "best" : ""
+            }" 
+            data-index="${index}">
+            ${combo.combinationName}
+            <span class="tab-score">${combo.score}</span>
+          </button>
+        `
+          )
+          .join("")}
+      </div>
+    </div>
+    <div id="selected-tab-info" class="history-info">
+      <span class="timestamp">계산 시간: ${
+        combinations[latestIndex].timestamp
+      }</span>
+    </div>
+    <div id="combinationResultsContainer"></div>
+  `;
+
+  document.getElementById("optimalSpiritsList").innerHTML = tabsHtml;
+
+  document.querySelectorAll(".history-tab").forEach((tab) => {
+    tab.addEventListener("click", function () {
+      document
+        .querySelectorAll(".history-tab")
+        .forEach((t) => t.classList.remove("active"));
+      this.classList.add("active");
+
+      const comboIndex = parseInt(this.dataset.index);
+      const result = combinations[comboIndex];
+      showSingleOptimalResult(result);
+
+      document.getElementById("selected-tab-info").innerHTML = `
+        <span class="timestamp">계산 시간: ${result.timestamp}</span>
+      `;
+    });
+  });
+}
+
+function showSingleOptimalResult(result) {
   const {
     spirits,
     gradeEffects,
@@ -938,12 +1091,15 @@ function showOptimalResults(result) {
     score,
     gradeCounts,
     factionCounts,
+    timestamp,
   } = result;
 
   document.getElementById("optimalScore").textContent = score;
 
-  const spiritsListElement = document.getElementById("optimalSpiritsList");
-  spiritsListElement.innerHTML = "";
+  const resultsContainer = document.getElementById(
+    "combinationResultsContainer"
+  );
+  resultsContainer.innerHTML = "";
 
   spirits.forEach((spirit) => {
     const spiritInfo = document.createElement("div");
@@ -972,7 +1128,7 @@ function showOptimalResults(result) {
     spiritInfo.appendChild(img);
     spiritInfo.appendChild(details);
 
-    spiritsListElement.appendChild(spiritInfo);
+    resultsContainer.appendChild(spiritInfo);
   });
 
   let gradeSetInfo = "";
@@ -1039,24 +1195,6 @@ function renderSpiritDetailsTable(spirits) {
     }
   });
 
-  const table = document.createElement("table");
-  table.className = "spirits-stats-table";
-
-  const thead = document.createElement("thead");
-  const headerRow = document.createElement("tr");
-
-  const nameHeader = document.createElement("th");
-  nameHeader.textContent = "환수";
-  headerRow.appendChild(nameHeader);
-
-  const levelHeader = document.createElement("th");
-  levelHeader.textContent = "레벨";
-  headerRow.appendChild(levelHeader);
-
-  const factionHeader = document.createElement("th");
-  factionHeader.textContent = "세력";
-  headerRow.appendChild(factionHeader);
-
   const sortedStatKeys = Array.from(allStatKeys).sort((a, b) => {
     const priorityStats = [
       "damageResistancePenetration",
@@ -1078,46 +1216,67 @@ function renderSpiritDetailsTable(spirits) {
     }
   });
 
+  const table = document.createElement("table");
+  table.className = "spirits-stats-table";
+
+  const headerRow = document.createElement("tr");
+
+  const emptyHeader = document.createElement("th");
+  emptyHeader.textContent = "스탯";
+  headerRow.appendChild(emptyHeader);
+
+  spirits.forEach((spirit) => {
+    const spiritHeader = document.createElement("th");
+    spiritHeader.innerHTML = `<img src="${spirit.image}" alt="${spirit.name}" class="spirit-thumbnail"><br>${spirit.name}`;
+    headerRow.appendChild(spiritHeader);
+  });
+
+  table.appendChild(headerRow);
+
+  const levelRow = document.createElement("tr");
+  const levelHeader = document.createElement("th");
+  levelHeader.textContent = "레벨";
+  levelRow.appendChild(levelHeader);
+
+  spirits.forEach((spirit) => {
+    const levelCell = document.createElement("td");
+    levelCell.textContent = spirit.level;
+    levelRow.appendChild(levelCell);
+  });
+  table.appendChild(levelRow);
+
+  const factionRow = document.createElement("tr");
+  const factionHeader = document.createElement("th");
+  factionHeader.textContent = "세력";
+  factionRow.appendChild(factionHeader);
+
+  spirits.forEach((spirit) => {
+    const factionCell = document.createElement("td");
+    factionCell.textContent = spirit.influence || spirit.faction || "결의";
+    factionRow.appendChild(factionCell);
+  });
+  table.appendChild(factionRow);
+
   sortedStatKeys.forEach((statKey) => {
+    const row = document.createElement("tr");
+
     const statHeader = document.createElement("th");
     statHeader.textContent = statsMapping[statKey] || statKey;
     const colorClass = statColorMap[statKey] || "";
     if (colorClass) {
       statHeader.className = colorClass;
     }
-    headerRow.appendChild(statHeader);
-  });
+    row.appendChild(statHeader);
 
-  thead.appendChild(headerRow);
-  table.appendChild(thead);
-
-  const tbody = document.createElement("tbody");
-
-  spirits.forEach((spirit) => {
-    const row = document.createElement("tr");
-
-    const nameCell = document.createElement("td");
-    nameCell.innerHTML = `<img src="${spirit.image}" alt="${spirit.name}" class="spirit-thumbnail"> ${spirit.name}`;
-    row.appendChild(nameCell);
-
-    const levelCell = document.createElement("td");
-    levelCell.textContent = spirit.level;
-    row.appendChild(levelCell);
-
-    const factionCell = document.createElement("td");
-    factionCell.textContent = spirit.influence || spirit.faction || "결의";
-    row.appendChild(factionCell);
-
-    const levelStats =
-      spirit.stats?.find((s) => s.level === spirit.level)?.registrationStat ||
-      {};
-
-    sortedStatKeys.forEach((statKey) => {
+    spirits.forEach((spirit) => {
       const statCell = document.createElement("td");
-      const colorClass = statColorMap[statKey] || "";
       if (colorClass) {
         statCell.className = colorClass;
       }
+
+      const levelStats =
+        spirit.stats?.find((s) => s.level === spirit.level)?.registrationStat ||
+        {};
 
       let statValue = 0;
       for (const [key, value] of Object.entries(levelStats)) {
@@ -1136,11 +1295,68 @@ function renderSpiritDetailsTable(spirits) {
       row.appendChild(statCell);
     });
 
-    tbody.appendChild(row);
+    table.appendChild(row);
   });
 
-  table.appendChild(tbody);
   container.appendChild(table);
+}
+
+function binomialCoefficient(n, k) {
+  if (k < 0 || k > n) return 0;
+  if (k === 0 || k === n) return 1;
+
+  let result = 1;
+  for (let i = 1; i <= k; i++) {
+    result *= n - (i - 1);
+    result /= i;
+  }
+  return Math.round(result);
+}
+
+function generateCombinations(array, size) {
+  if (size > array.length) return [];
+  if (size === 0) return [[]];
+
+  const result = [];
+
+  for (let i = 0; i <= array.length - size; i++) {
+    const head = array.slice(i, i + 1);
+    const tailCombinations = generateCombinations(array.slice(i + 1), size - 1);
+
+    for (const tailCombo of tailCombinations) {
+      result.push([...head, ...tailCombo]);
+    }
+  }
+
+  return result;
+}
+
+function calculateScore(effects) {
+  const damageResistancePenetration = parseFloat(
+    effects.damageResistancePenetration || 0
+  );
+  const damageResistance = parseFloat(effects.damageResistance || 0);
+  const pvpDamagePercent = parseFloat(effects.pvpDamagePercent || 0) * 10;
+  const pvpDefensePercent = parseFloat(effects.pvpDefensePercent || 0) * 10;
+
+  return (
+    damageResistancePenetration +
+    damageResistance +
+    pvpDamagePercent +
+    pvpDefensePercent
+  );
+}
+
+function clearAllSelections() {
+  selectedSpirits = [];
+  updateSelectedCount();
+  renderSelectedSpirits();
+  showCategory(
+    document.querySelector(".sub-tabs .tab.active").textContent,
+    false
+  );
+  handleResponsiveLayout();
+  saveSelectedSpiritsToStorage();
 }
 
 const statsMapping = {
@@ -1182,37 +1398,3 @@ const statsMapping = {
   lootAcquisitionIncrease: "전리품획득증가",
   experienceGainIncrease: "경험치획득증가",
 };
-
-function clearAllSelections() {
-  selectedSpirits = [];
-  updateSelectedCount();
-  renderSelectedSpirits();
-  showCategory(
-    document.querySelector(".sub-tabs .tab.active").textContent,
-    false
-  );
-  handleResponsiveLayout();
-}
-
-function applyBatchLevel(inputId) {
-  const level = parseInt(document.getElementById(inputId).value);
-  if (isNaN(level) || level < 0) {
-    alert("올바른 레벨을 입력하세요.");
-    return;
-  }
-
-  if (level > 25) {
-    alert("최대 레벨은 25입니다.");
-    document.getElementById(inputId).value = 25;
-    return;
-  }
-
-  selectedSpirits.forEach((spirit) => {
-    spirit.level = level;
-  });
-
-  document.getElementById("batchLevel").value = level;
-  document.getElementById("mobileBatchLevel").value = level;
-
-  renderSelectedSpirits();
-}

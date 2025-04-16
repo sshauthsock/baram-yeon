@@ -602,6 +602,19 @@ body {
     top: 0;
 }
 
+.spirits-stats-table thead tr {
+    display: table-row;
+    width: 100%;
+}
+
+.spirits-stats-table th {
+    background-color: #f2f2f2;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    white-space: nowrap;
+}
+
 .spirits-stats-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
@@ -777,6 +790,174 @@ body {
     background-color: #1565c0;
     transform: translateX(-50%) scale(1.05);
 }
+
+.history-tabs-container {
+    margin-bottom: 20px;
+}
+
+.history-tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 5px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.history-tab {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    font-size: 12px;
+    background-color: #f5f5f5;
+    color: #666;
+    margin-right: 2px;
+    margin-bottom: -1px;
+    position: relative;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.history-tab.active {
+    background-color: #fff;
+    color: #000;
+    border-bottom: 1px solid #fff;
+    font-weight: 500;
+    z-index: 1;
+}
+
+.history-tab.best {
+    background-color: #fff8e1;
+    color: #ff8f00;
+    border-color: #ffcc80;
+}
+
+.history-tab.best.active {
+    border-bottom: 1px solid #fff8e1;
+}
+
+.history-tab:hover {
+    background-color: #fff;
+}
+
+.tab-score {
+    font-size: 10px;
+    margin-top: 2px;
+    font-weight: 500;
+}
+
+.history-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.timestamp {
+    font-style: italic;
+}
+
+.no-history-message {
+    text-align: center;
+    padding: 10px;
+    color: #666;
+    font-style: italic;
+}
+
+.optimal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.action-buttons {
+    margin: 0 0 15px 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.clear-history-btn {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s;
+}
+
+.clear-history-btn:hover {
+    background-color: #d32f2f;
+}
+
+.spirits-stats-table th:first-child {
+    position: sticky;
+    left: 0;
+    background-color: #f2f2f2;
+    z-index: 2;
+}
+
+.spirits-stats-table th {
+    white-space: nowrap;
+    min-width: 100px;
+}
+
+.spirits-stats-table td {
+    text-align: center;
+}
+
+.modal-close {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.2s;
+    z-index: 2010;
+    padding: 10px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    touch-action: manipulation;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.modal-close:hover {
+    color: #f44336;
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .history-tab {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    .tab-score {
+        font-size: 9px;
+    }
+
+    .modal-close {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+    }
+}
+
+
+
 
 @keyframes pulse {
     0% {
