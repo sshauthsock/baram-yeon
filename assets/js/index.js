@@ -51,6 +51,20 @@ let currentLevel = 0;
 let currentName = "";
 let modalElement = null;
 
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBWBbe8carOdeIzP6hQsarDOz5H0TuEj9A",
+  authDomain: "baram-yeon.firebaseapp.com",
+  projectId: "baram-yeon",
+  storageBucket: "baram-yeon.firebasestorage.app",
+  messagingSenderId: "924298156656",
+  appId: "1:924298156656:web:845c94e771625fbd24b2b5",
+  measurementId: "G-F2BT2T7HCL",
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 document.addEventListener("DOMContentLoaded", function () {
   const tabs = document.querySelectorAll(".tab");
   tabs.forEach((tab) => {
@@ -69,46 +83,146 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const categoryFileMap = {
   수호: {
-    registration: "output/guardian-registration-stats.json",
-    bind: "output/guardian-bind-stats.json",
+    registration: "guardian-registration-stats",
+    bind: "guardian-bind-stats",
   },
   탑승: {
-    registration: "output/ride-registration-stats.json",
-    bind: "output/ride-bind-stats.json",
+    registration: "ride-registration-stats",
+    bind: "ride-bind-stats",
   },
   변신: {
-    registration: "output/transform-registration-stats.json",
-    bind: "output/transform-bind-stats.json",
+    registration: "transform-registration-stats",
+    bind: "transform-bind-stats",
   },
 };
 
 let mobData = { 수호: [], 탑승: [], 변신: [] };
 
+async function bulkLoadFirestoreDocuments() {
+  try {
+    const snapshot = await db.collection("jsonData").get();
+    const documents = {};
+
+    snapshot.forEach((doc) => {
+      documents[doc.id] = doc.data();
+    });
+
+    return documents;
+  } catch (error) {
+    console.error("Error bulk loading documents:", error);
+    return {};
+  }
+}
+
+let cachedFirestoreDocuments = null;
+async function getCachedData(key, fetchFunction, expiryHours = 24) {
+  const cachedData = localStorage.getItem(key);
+  const cachedTime = localStorage.getItem(`${key}_time`);
+
+  const now = new Date().getTime();
+  const expiryTime = expiryHours * 60 * 60 * 1000; // 시간을 밀리초로 변환
+
+  // 캐시 데이터가 있고 만료되지 않았으면 사용
+  if (cachedData && cachedTime && now - parseInt(cachedTime) < expiryTime) {
+    return JSON.parse(cachedData);
+  }
+
+  // 새 데이터 가져오기
+  const freshData = await fetchFunction();
+
+  // 데이터 캐싱
+  localStorage.setItem(key, JSON.stringify(freshData));
+  localStorage.setItem(`${key}_time`, now.toString());
+
+  return freshData;
+}
+async function getFirestoreDocument(fileName) {
+  try {
+    const documentMap = {
+      "guardian-bind-stats": "data-1744895158504",
+      "guardian-registration-stats": "data-1744895164886",
+      "ride-bind-stats": "data-1744895170256",
+      "ride-registration-stats": "data-1744895175627",
+      "transform-bind-stats": "data-1744895179894",
+      "transform-registration-stats": "data-1744895184028",
+    };
+
+    const docId = documentMap[fileName];
+
+    if (!docId) {
+      throw new Error(`No mapping for ${fileName}`);
+    }
+
+    if (!cachedFirestoreDocuments) {
+      const cachedData = localStorage.getItem("firestoreDocuments");
+      const cachedTime = localStorage.getItem("firestoreDocuments_time");
+
+      if (
+        cachedData &&
+        cachedTime &&
+        Date.now() - parseInt(cachedTime) < 24 * 60 * 60 * 1000
+      ) {
+        cachedFirestoreDocuments = JSON.parse(cachedData);
+      } else {
+        cachedFirestoreDocuments = await bulkLoadFirestoreDocuments();
+
+        localStorage.setItem(
+          "firestoreDocuments",
+          JSON.stringify(cachedFirestoreDocuments)
+        );
+        localStorage.setItem("firestoreDocuments_time", Date.now().toString());
+      }
+    }
+
+    if (cachedFirestoreDocuments[docId]) {
+      return cachedFirestoreDocuments[docId];
+    } else {
+      throw new Error(`Document ${docId} not found in cache`);
+    }
+  } catch (error) {
+    try {
+      const response = await fetch(`output/${fileName}.json`);
+      return await response.json();
+    } catch (fallbackError) {
+      return { data: [] };
+    }
+  }
+}
+
 async function loadCategoryData() {
   for (const [category, files] of Object.entries(categoryFileMap)) {
     try {
-      // Load registration stats
-      const registrationResponse = await fetch(files.registration);
-      let registrationData = await registrationResponse.json();
+      let registrationData = await getFirestoreDocument(files.registration);
+      let bindData = await getFirestoreDocument(files.bind);
 
-      // Load bind stats
-      const bindResponse = await fetch(files.bind);
-      let bindData = await bindResponse.json();
-
-      if (registrationData.data && Array.isArray(registrationData.data)) {
-        registrationData = registrationData.data;
+      let registrationArray = [];
+      if (
+        registrationData &&
+        registrationData.data &&
+        Array.isArray(registrationData.data)
+      ) {
+        registrationArray = registrationData.data;
+      } else if (Array.isArray(registrationData)) {
+        registrationArray = registrationData;
       }
 
-      if (bindData.data && Array.isArray(bindData.data)) {
-        bindData = bindData.data;
+      let bindArray = [];
+      if (bindData && bindData.data && Array.isArray(bindData.data)) {
+        bindArray = bindData.data;
+      } else if (Array.isArray(bindData)) {
+        bindArray = bindData;
       }
 
-      // Merge the data
-      const mergedData = registrationData.map((regItem) => {
-        const bindItem = bindData.find((b) => b.name === regItem.name);
+      if (!registrationArray.length) {
+        mobData[category] = [];
+        continue;
+      }
+
+      const mergedData = registrationArray.map((regItem) => {
+        const bindItem = bindArray.find((b) => b && b.name === regItem.name);
         if (bindItem) {
           const mergedStats = regItem.stats.map((regStat, index) => {
-            const bindStat = bindItem.stats[index];
+            const bindStat = bindItem.stats && bindItem.stats[index];
             return {
               level: regStat.level,
               registrationStat: regStat.registrationStat,
@@ -126,7 +240,47 @@ async function loadCategoryData() {
 
       mobData[category] = mergedData;
     } catch (err) {
-      console.error(`Error fetching data for category "${category}":`, err);
+      try {
+        const registrationResponse = await fetch(
+          `output/${files.registration}.json`
+        );
+        let registrationData = await registrationResponse.json();
+
+        const bindResponse = await fetch(`output/${files.bind}.json`);
+        let bindData = await bindResponse.json();
+
+        if (registrationData.data && Array.isArray(registrationData.data)) {
+          registrationData = registrationData.data;
+        }
+
+        if (bindData.data && Array.isArray(bindData.data)) {
+          bindData = bindData.data;
+        }
+
+        const mergedData = registrationData.map((regItem) => {
+          const bindItem = bindData.find((b) => b.name === regItem.name);
+          if (bindItem) {
+            const mergedStats = regItem.stats.map((regStat, index) => {
+              const bindStat = bindItem.stats[index];
+              return {
+                level: regStat.level,
+                registrationStat: regStat.registrationStat,
+                bindStat: bindStat ? bindStat.bindStat : {},
+              };
+            });
+
+            return {
+              ...regItem,
+              stats: mergedStats,
+            };
+          }
+          return regItem;
+        });
+
+        mobData[category] = mergedData;
+      } catch (fallbackErr) {
+        mobData[category] = [];
+      }
     }
   }
 
