@@ -5,4 +5,4 @@ package*.json
 output/encrypted/*
 split-stats.mjs
 jsonUploader*
-output/*
+output/*.json

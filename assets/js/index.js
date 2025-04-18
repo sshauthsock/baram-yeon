@@ -136,56 +136,66 @@ async function getCachedData(key, fetchFunction, expiryHours = 24) {
 
   return freshData;
 }
+
 async function getFirestoreDocument(fileName) {
   try {
     const documentMap = {
-      "guardian-bind-stats": "data-1744895158504",
-      "guardian-registration-stats": "data-1744895164886",
-      "ride-bind-stats": "data-1744895170256",
-      "ride-registration-stats": "data-1744895175627",
-      "transform-bind-stats": "data-1744895179894",
-      "transform-registration-stats": "data-1744895184028",
+      "guardian-bind-stats.json": "data-1744895158504",
+      "guardian-registration-stats.json": "data-1744895164886",
+      "ride-bind-stats.json": "data-1744895170256",
+      "ride-registration-stats.json": "data-1744895175627",
+      "transform-bind-stats.json": "data-1744895179894",
+      "transform-registration-stats.json": "data-1744895184028",
+      "gradeSetEffects.json": "data-1744943824244",
+      "factionSetEffects.json": "data-1744943824244",
     };
 
-    const docId = documentMap[fileName];
+    const docId = documentMap[fileName + ".json"];
 
     if (!docId) {
-      throw new Error(`No mapping for ${fileName}`);
-    }
-
-    if (!cachedFirestoreDocuments) {
-      const cachedData = localStorage.getItem("firestoreDocuments");
-      const cachedTime = localStorage.getItem("firestoreDocuments_time");
-
-      if (
-        cachedData &&
-        cachedTime &&
-        Date.now() - parseInt(cachedTime) < 24 * 60 * 60 * 1000
-      ) {
-        cachedFirestoreDocuments = JSON.parse(cachedData);
-      } else {
-        cachedFirestoreDocuments = await bulkLoadFirestoreDocuments();
-
-        localStorage.setItem(
-          "firestoreDocuments",
-          JSON.stringify(cachedFirestoreDocuments)
-        );
-        localStorage.setItem("firestoreDocuments_time", Date.now().toString());
-      }
-    }
-
-    if (cachedFirestoreDocuments[docId]) {
-      return cachedFirestoreDocuments[docId];
-    } else {
-      throw new Error(`Document ${docId} not found in cache`);
-    }
-  } catch (error) {
-    try {
       const response = await fetch(`output/${fileName}.json`);
       return await response.json();
-    } catch (fallbackError) {
-      return { data: [] };
     }
+
+    const cachedKey = `firestore_${fileName}`;
+    const cachedData = localStorage.getItem(cachedKey);
+    const cachedTime = localStorage.getItem(`${cachedKey}_time`);
+
+    if (
+      cachedData &&
+      cachedTime &&
+      Date.now() - parseInt(cachedTime) < 24 * 60 * 60 * 1000
+    ) {
+      return JSON.parse(cachedData);
+    }
+
+    const docRef = await db.collection("jsonData").doc(docId).get();
+
+    if (!docRef.exists) {
+      const response = await fetch(`output/${fileName}.json`);
+      const data = await response.json();
+
+      localStorage.setItem(cachedKey, JSON.stringify(data));
+      localStorage.setItem(`${cachedKey}_time`, Date.now().toString());
+
+      return data;
+    }
+
+    const data = docRef.data();
+
+    if (!data) {
+      throw new Error(`Document ${docId} exists but has no data`);
+    }
+
+    // Firestore 데이터 캐싱
+    localStorage.setItem(cachedKey, JSON.stringify(data));
+    localStorage.setItem(`${cachedKey}_time`, Date.now().toString());
+
+    return data;
+  } catch (error) {
+    console.error(`Firestore error for ${fileName}:`, error);
+    const response = await fetch(`output/${fileName}.json`);
+    return await response.json();
   }
 }
 

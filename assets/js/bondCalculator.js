@@ -274,6 +274,8 @@ async function getFirestoreDocument(fileName) {
       "ride-registration-stats": "data-1744895175627",
       "transform-bind-stats": "data-1744895179894",
       "transform-registration-stats": "data-1744895184028",
+      gradeSetEffects: "data-1744943824244",
+      factionSetEffects: "data-1744943824244",
     };
 
     const docId = documentMap[fileName];
@@ -282,42 +284,44 @@ async function getFirestoreDocument(fileName) {
       throw new Error(`No mapping for ${fileName}`);
     }
 
-    if (!cachedFirestoreDocuments) {
-      const cachedData = localStorage.getItem("firestoreDocuments");
-      const cachedTime = localStorage.getItem("firestoreDocuments_time");
+    const cachedKey = `firestore_${fileName}`;
+    const cachedData = localStorage.getItem(cachedKey);
+    const cachedTime = localStorage.getItem(`${cachedKey}_time`);
 
-      if (
-        cachedData &&
-        cachedTime &&
-        Date.now() - parseInt(cachedTime) < 24 * 60 * 60 * 1000
-      ) {
-        cachedFirestoreDocuments = JSON.parse(cachedData);
-      } else {
-        cachedFirestoreDocuments = await bulkLoadFirestoreDocuments();
-
-        localStorage.setItem(
-          "firestoreDocuments",
-          JSON.stringify(cachedFirestoreDocuments)
-        );
-        localStorage.setItem("firestoreDocuments_time", Date.now().toString());
-      }
+    // 24시간 내 캐싱된 데이터 사용
+    if (
+      cachedData &&
+      cachedTime &&
+      Date.now() - parseInt(cachedTime) < 24 * 60 * 60 * 1000
+    ) {
+      return JSON.parse(cachedData);
     }
 
-    if (cachedFirestoreDocuments[docId]) {
-      return cachedFirestoreDocuments[docId];
-    } else {
-      throw new Error(`Document ${docId} not found in cache`);
+    const docRef = await db.collection("jsonData").doc(docId).get();
+
+    if (!docRef.exists) {
+      throw new Error(`Document ${docId} not found`);
     }
+
+    const data = docRef.data();
+
+    if (!data) {
+      throw new Error(`Document ${docId} exists but has no data`);
+    }
+
+    // Firestore 데이터 캐싱
+    localStorage.setItem(cachedKey, JSON.stringify(data));
+    localStorage.setItem(`${cachedKey}_time`, Date.now().toString());
+
+    return data;
   } catch (error) {
-    try {
-      const response = await fetch(`output/${fileName}.json`);
-      return await response.json();
-    } catch (fallbackError) {
-      return { data: [] };
-    }
+    console.error(`Firestore error for ${fileName}:`, error);
+    const response = await fetch(`output/${fileName}.json`);
+    return await response.json();
   }
 }
 
+// loadAllData 함수 수정
 async function loadAllData() {
   const categoryFileMap = {
     수호: {
@@ -336,6 +340,7 @@ async function loadAllData() {
 
   for (const [category, files] of Object.entries(categoryFileMap)) {
     try {
+      // Firestore에서 데이터 불러오기
       let registrationData = await getFirestoreDocument(files.registration);
       let bindData = await getFirestoreDocument(files.bind);
 
@@ -384,7 +389,9 @@ async function loadAllData() {
 
       mobData[category] = mergedData;
     } catch (err) {
+      console.error(`Error loading ${category} data:`, err);
       try {
+        // 로컬 파일로 폴백
         const registrationResponse = await fetch(
           `output/${files.registration}.json`
         );
@@ -423,19 +430,18 @@ async function loadAllData() {
 
         mobData[category] = mergedData;
       } catch (fallbackErr) {
+        console.error(
+          `Fallback loading also failed for ${category}:`,
+          fallbackErr
+        );
         mobData[category] = [];
       }
     }
   }
 
   try {
-    let gradeData;
-    try {
-      gradeData = await getFirestoreDocument("gradeSetEffects");
-    } catch (e) {
-      const response = await fetch("output/gradeSetEffects.json");
-      gradeData = await response.json();
-    }
+    // Firestore에서 등급 효과 불러오기
+    let gradeData = await getFirestoreDocument("gradeSetEffects");
 
     if (!gradeData || typeof gradeData !== "object") {
       gradeSetEffects = {};
@@ -445,13 +451,8 @@ async function loadAllData() {
       gradeSetEffects = gradeData;
     }
 
-    let factionData;
-    try {
-      factionData = await getFirestoreDocument("factionSetEffects");
-    } catch (e) {
-      const response = await fetch("output/factionSetEffects.json");
-      factionData = await response.json();
-    }
+    // Firestore에서 세력 효과 불러오기
+    let factionData = await getFirestoreDocument("factionSetEffects");
 
     if (!factionData || typeof factionData !== "object") {
       factionSetEffects = {};
@@ -462,96 +463,41 @@ async function loadAllData() {
     }
   } catch (err) {
     console.error("Error loading set effects:", err);
+    try {
+      // 로컬 파일로 폴백
+      const gradeResponse = await fetch("output/gradeSetEffects.json");
+      let gradeData = await gradeResponse.json();
+
+      if (!gradeData || typeof gradeData !== "object") {
+        gradeSetEffects = {};
+      } else if (gradeData.data) {
+        gradeSetEffects = gradeData.data;
+      } else {
+        gradeSetEffects = gradeData;
+      }
+
+      const factionResponse = await fetch("output/factionSetEffects.json");
+      let factionData = await factionResponse.json();
+
+      if (!factionData || typeof factionData !== "object") {
+        factionSetEffects = {};
+      } else if (factionData.data) {
+        factionSetEffects = factionData.data;
+      } else {
+        factionSetEffects = factionData;
+      }
+    } catch (fallbackErr) {
+      console.error(
+        "Fallback loading for set effects also failed:",
+        fallbackErr
+      );
+      gradeSetEffects = {};
+      factionSetEffects = {};
+    }
   }
 
   showCategory("수호", false);
 }
-// async function loadAllData() {
-//   const categoryFileMap = {
-//     수호: {
-//       registration: "output/guardian-registration-stats.json",
-//       bind: "output/guardian-bind-stats.json",
-//     },
-//     탑승: {
-//       registration: "output/ride-registration-stats.json",
-//       bind: "output/ride-bind-stats.json",
-//     },
-//     변신: {
-//       registration: "output/transform-registration-stats.json",
-//       bind: "output/transform-bind-stats.json",
-//     },
-//   };
-
-//   for (const [category, files] of Object.entries(categoryFileMap)) {
-//     try {
-//       const registrationResponse = await fetch(files.registration);
-//       let registrationData = await registrationResponse.json();
-
-//       const bindResponse = await fetch(files.bind);
-//       let bindData = await bindResponse.json();
-
-//       if (registrationData.data && Array.isArray(registrationData.data)) {
-//         registrationData = registrationData.data;
-//       }
-
-//       if (bindData.data && Array.isArray(bindData.data)) {
-//         bindData = bindData.data;
-//       }
-
-//       const mergedData = registrationData.map((regItem) => {
-//         const bindItem = bindData.find((b) => b.name === regItem.name);
-//         if (bindItem) {
-//           const mergedStats = regItem.stats.map((regStat, index) => {
-//             const bindStat = bindItem.stats[index];
-//             return {
-//               level: regStat.level,
-//               registrationStat: regStat.registrationStat,
-//               bindStat: bindStat ? bindStat.bindStat : {},
-//             };
-//           });
-
-//           return {
-//             ...regItem,
-//             stats: mergedStats,
-//           };
-//         }
-//         return regItem;
-//       });
-
-//       mobData[category] = mergedData;
-//     } catch (err) {
-//       console.error(`Error loading ${category} data:`, err);
-//     }
-//   }
-
-//   try {
-//     const gradeResponse = await fetch("output/gradeSetEffects.json");
-//     let gradeData = await gradeResponse.json();
-
-//     if (!gradeData || typeof gradeData !== "object") {
-//       gradeSetEffects = {};
-//     } else if (gradeData.data) {
-//       gradeSetEffects = gradeData.data;
-//     } else {
-//       gradeSetEffects = gradeData;
-//     }
-
-//     const factionResponse = await fetch("output/factionSetEffects.json");
-//     let factionData = await factionResponse.json();
-
-//     if (!factionData || typeof factionData !== "object") {
-//       factionSetEffects = {};
-//     } else if (factionData.data) {
-//       factionSetEffects = factionData.data;
-//     } else {
-//       factionSetEffects = factionData;
-//     }
-//   } catch (err) {
-//     console.error("Error loading set effects:", err);
-//   }
-
-//   showCategory("수호", false);
-// }
 
 function normalizeStatKey(key) {
   return key.replace(/\d+$/, "");
