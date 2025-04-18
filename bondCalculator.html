@@ -138,7 +138,7 @@
             }
 
             const username = sessionStorage.getItem('username');
-            document.getElementById('userWelcome').textContent = `환영합니다, ${username}님!`;
+            document.getElementById('userWelcome')?.textContent = `환영합니다, ${username}님!`;
 
             document.getElementById('logoutBtn').addEventListener('click', function () {
                 sessionStorage.removeItem('authenticated');

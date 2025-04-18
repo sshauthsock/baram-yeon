@@ -1,10 +1,60 @@
+const statsMapping = {
+  criticalPower: "치명위력",
+  normalMonsterAdditionalDamage: "일반몬스터추가피해",
+  normalMonsterPenetration: "일반몬스터관통",
+  healthIncrease: "체력증가",
+  healthIncreasePercent: "체력증가%",
+  strength: "힘",
+  agility: "민첩",
+  intelligence: "지력",
+  damageAbsorption: "피해흡수",
+  damageResistancePenetration: "피해저항관통",
+  magicIncrease: "마력증가",
+  magicIncreasePercent: "마력증가%",
+  damageResistance: "피해저항",
+  healthPotionEnhancement: "체력시약향상",
+  healthRecoveryImprovement: "체력회복향상",
+  damageIncrease: "피해증가",
+  magicRecoveryImprovement: "마력회복향상",
+  criticalChance: "치명확률",
+  bossMonsterAdditionalDamage: "보스몬스터추가피해",
+  bossMonsterPenetration: "보스몬스터관통",
+  power: "위력",
+  magicPotionEnhancement: "마력시약향상",
+  pvpDamage: "대인피해",
+  pvpDefense: "대인방어",
+  statusEffectAccuracy: "상태이상적중",
+  statusEffectResistance: "상태이상저항",
+  criticalPowerPercent: "치명위력%",
+  pvpDamagePercent: "대인피해%",
+  pvpDefensePercent: "대인방어%",
+  criticalDamageResistance: "치명피해저항",
+  criticalResistance: "치명저항",
+  movementSpeed: "이동속도",
+  destructionPowerIncrease: "파괴력증가",
+  destructionPowerPercent: "파괴력증가%",
+  armorStrength: "무장도",
+  lootAcquisitionIncrease: "전리품획득증가",
+  experienceGainIncrease: "경험치획득증가",
+};
+
 let mobData = { 수호: [], 탑승: [], 변신: [] };
 let selectedSpirits = [];
 let gradeSetEffects = {};
 let factionSetEffects = {};
 let isProcessing = false;
 let isCalculationCancelled = false;
-let savedOptimalCombinations = [];
+let savedOptimalCombinations = {
+  수호: [],
+  탑승: [],
+  변신: [],
+};
+let currentActiveIndex = -1;
+let combinationCounter = {
+  수호: 0,
+  탑승: 0,
+  변신: 0,
+};
 
 const percentStats = [
   "healthIncreasePercent",
@@ -61,6 +111,33 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+  document.querySelectorAll(".sub-tabs .tab").forEach((tab) => {
+    tab.addEventListener("click", function () {
+      const category = this.textContent;
+
+      if (document.getElementById("optimalModal").style.display === "flex") {
+        renderHistoryTabs(category);
+
+        if (
+          savedOptimalCombinations[category] &&
+          savedOptimalCombinations[category].length > 0
+        ) {
+          currentActiveIndex = savedOptimalCombinations[category].length - 1;
+          showSingleOptimalResult(
+            savedOptimalCombinations[category][currentActiveIndex]
+          );
+        } else {
+          document.getElementById("optimalGradeEffects").innerHTML = "";
+          document.getElementById("optimalFactionEffects").innerHTML = "";
+          document.getElementById("optimalTotalEffects").innerHTML = "";
+          document.getElementById("spiritStatsDetails").innerHTML = "";
+          document.getElementById("combinationResultsContainer").innerHTML = "";
+          document.getElementById("optimalScore").textContent = "0";
+        }
+      }
+    });
+  });
 
   window.addEventListener("resize", handleResponsiveLayout);
 });
@@ -157,14 +234,58 @@ function debounce(func, wait) {
 }
 
 async function loadAllData() {
-  for (const [category, filePath] of Object.entries({
-    수호: "output/guardian.json",
-    탑승: "output/ride.json",
-    변신: "output/transform.json",
-  })) {
+  const categoryFileMap = {
+    수호: {
+      registration: "output/guardian-registration-stats.json",
+      bind: "output/guardian-bind-stats.json",
+    },
+    탑승: {
+      registration: "output/ride-registration-stats.json",
+      bind: "output/ride-bind-stats.json",
+    },
+    변신: {
+      registration: "output/transform-registration-stats.json",
+      bind: "output/transform-bind-stats.json",
+    },
+  };
+
+  for (const [category, files] of Object.entries(categoryFileMap)) {
     try {
-      const response = await fetch(filePath);
-      mobData[category] = await response.json();
+      const registrationResponse = await fetch(files.registration);
+      let registrationData = await registrationResponse.json();
+
+      const bindResponse = await fetch(files.bind);
+      let bindData = await bindResponse.json();
+
+      if (registrationData.data && Array.isArray(registrationData.data)) {
+        registrationData = registrationData.data;
+      }
+
+      if (bindData.data && Array.isArray(bindData.data)) {
+        bindData = bindData.data;
+      }
+
+      const mergedData = registrationData.map((regItem) => {
+        const bindItem = bindData.find((b) => b.name === regItem.name);
+        if (bindItem) {
+          const mergedStats = regItem.stats.map((regStat, index) => {
+            const bindStat = bindItem.stats[index];
+            return {
+              level: regStat.level,
+              registrationStat: regStat.registrationStat,
+              bindStat: bindStat ? bindStat.bindStat : {},
+            };
+          });
+
+          return {
+            ...regItem,
+            stats: mergedStats,
+          };
+        }
+        return regItem;
+      });
+
+      mobData[category] = mergedData;
     } catch (err) {
       console.error(`Error loading ${category} data:`, err);
     }
@@ -172,10 +293,26 @@ async function loadAllData() {
 
   try {
     const gradeResponse = await fetch("output/gradeSetEffects.json");
-    gradeSetEffects = await gradeResponse.json();
+    let gradeData = await gradeResponse.json();
+
+    if (!gradeData || typeof gradeData !== "object") {
+      gradeSetEffects = {};
+    } else if (gradeData.data) {
+      gradeSetEffects = gradeData.data;
+    } else {
+      gradeSetEffects = gradeData;
+    }
 
     const factionResponse = await fetch("output/factionSetEffects.json");
-    factionSetEffects = await factionResponse.json();
+    let factionData = await factionResponse.json();
+
+    if (!factionData || typeof factionData !== "object") {
+      factionSetEffects = {};
+    } else if (factionData.data) {
+      factionSetEffects = factionData.data;
+    } else {
+      factionSetEffects = factionData;
+    }
   } catch (err) {
     console.error("Error loading set effects:", err);
   }
@@ -201,6 +338,27 @@ function showCategory(category, resetSelection = false) {
     updateSelectedCount();
     renderSelectedSpirits();
     saveSelectedSpiritsToStorage();
+  }
+
+  if (document.getElementById("optimalModal").style.display === "flex") {
+    renderHistoryTabs(category);
+
+    if (
+      savedOptimalCombinations[category] &&
+      savedOptimalCombinations[category].length > 0
+    ) {
+      currentActiveIndex = savedOptimalCombinations[category].length - 1;
+      showSingleOptimalResult(
+        savedOptimalCombinations[category][currentActiveIndex]
+      );
+    } else {
+      document.getElementById("optimalGradeEffects").innerHTML = "";
+      document.getElementById("optimalFactionEffects").innerHTML = "";
+      document.getElementById("optimalTotalEffects").innerHTML = "";
+      document.getElementById("spiritStatsDetails").innerHTML = "";
+      document.getElementById("combinationResultsContainer").innerHTML = "";
+      document.getElementById("optimalScore").textContent = "0";
+    }
   }
 
   if (!mobData[category] || mobData[category].length === 0) {
@@ -270,23 +428,88 @@ function saveSavedOptimalCombinations() {
     "savedOptimalCombinations",
     JSON.stringify(savedOptimalCombinations)
   );
+  localStorage.setItem(
+    "combinationCounter",
+    JSON.stringify(combinationCounter)
+  );
 }
 
 function loadSavedOptimalCombinations() {
   const savedCombos = localStorage.getItem("savedOptimalCombinations");
   if (savedCombos) {
     try {
-      savedOptimalCombinations = JSON.parse(savedCombos);
+      const parsed = JSON.parse(savedCombos);
+      if (Array.isArray(parsed)) {
+        savedOptimalCombinations = {
+          수호: [],
+          탑승: [],
+          변신: [],
+        };
+      } else {
+        savedOptimalCombinations = parsed;
+      }
+
+      if (!savedOptimalCombinations.수호) savedOptimalCombinations.수호 = [];
+      if (!savedOptimalCombinations.탑승) savedOptimalCombinations.탑승 = [];
+      if (!savedOptimalCombinations.변신) savedOptimalCombinations.변신 = [];
     } catch (e) {
       console.error("저장된 최적 조합 데이터를 불러오는 중 오류 발생:", e);
-      savedOptimalCombinations = [];
+      savedOptimalCombinations = {
+        수호: [],
+        탑승: [],
+        변신: [],
+      };
     }
+  } else {
+    savedOptimalCombinations = {
+      수호: [],
+      탑승: [],
+      변신: [],
+    };
+  }
+
+  const savedCounter = localStorage.getItem("combinationCounter");
+  if (savedCounter) {
+    try {
+      combinationCounter = JSON.parse(savedCounter);
+    } catch (e) {
+      console.error("저장된 조합 카운터 데이터를 불러오는 중 오류 발생:", e);
+      combinationCounter = {
+        수호: 0,
+        탑승: 0,
+        변신: 0,
+      };
+    }
+  } else {
+    combinationCounter = {
+      수호: 0,
+      탑승: 0,
+      변신: 0,
+    };
   }
 }
 
 function clearSavedOptimalCombinations() {
-  savedOptimalCombinations = [];
-  saveSavedOptimalCombinations();
+  const activeTab = document.querySelector(".sub-tabs .tab.active");
+  const currentCategory = activeTab ? activeTab.textContent : "수호";
+
+  if (
+    confirm(
+      `${currentCategory} 카테고리의 저장된 모든 조합 기록을 삭제하시겠습니까?`
+    )
+  ) {
+    savedOptimalCombinations[currentCategory] = [];
+    combinationCounter[currentCategory] = 0;
+    saveSavedOptimalCombinations();
+    renderHistoryTabs(currentCategory);
+    document.getElementById("optimalGradeEffects").innerHTML = "";
+    document.getElementById("optimalFactionEffects").innerHTML = "";
+    document.getElementById("optimalTotalEffects").innerHTML = "";
+    document.getElementById("spiritStatsDetails").innerHTML = "";
+    document.getElementById("combinationResultsContainer").innerHTML = "";
+    document.getElementById("optimalScore").textContent = "0";
+    alert(`${currentCategory} 조합 기록이 모두 삭제되었습니다.`);
+  }
 }
 
 function toggleSpiritSelection(spirit, category) {
@@ -466,7 +689,7 @@ function calculateEffectsForSpirits(spirits) {
     )?.registrationStat;
     if (levelStats) {
       for (const [stat, value] of Object.entries(levelStats)) {
-        const numValue = parseFloat(value);
+        const numValue = parseFloat(String(value).replace(/,/g, ""));
         if (!isNaN(numValue)) {
           const normalizedStat = normalizeStatKey(stat);
           registrationStats[normalizedStat] =
@@ -557,7 +780,7 @@ function calculateGradeSetEffects(categoryGradeCount) {
 
       if (highestStepEffects) {
         for (const [stat, value] of Object.entries(highestStepEffects)) {
-          const numValue = parseFloat(value);
+          const numValue = parseFloat(String(value).replace(/,/g, ""));
           if (!isNaN(numValue)) {
             const normalizedStat = normalizeStatKey(stat);
             if (effects[normalizedStat]) {
@@ -608,7 +831,7 @@ function calculateFactionSetEffects(categoryFactionCount) {
       if (maxEffect) {
         for (const [stat, value] of Object.entries(maxEffect)) {
           if (stat !== "개수") {
-            const numValue = parseFloat(value);
+            const numValue = parseFloat(String(value).replace(/,/g, ""));
             if (!isNaN(numValue)) {
               const normalizedStat = normalizeStatKey(stat);
               if (effects[normalizedStat]) {
@@ -825,6 +1048,9 @@ function findOptimalCombination() {
   isProcessing = true;
   isCalculationCancelled = false;
 
+  const activeTab = document.querySelector(".sub-tabs .tab.active");
+  const currentCategory = activeTab ? activeTab.textContent : "수호";
+
   const optimalModal = document.getElementById("optimalModal");
   optimalModal.style.display = "flex";
   document.body.style.overflow = "hidden";
@@ -840,7 +1066,7 @@ function findOptimalCombination() {
       </div>
       
       <div class="action-buttons">
-        <button id="clearHistoryButton" class="clear-history-btn">기록 삭제</button>
+        <button id="clearHistoryButton" class="clear-history-btn">${currentCategory} 기록 삭제</button>
       </div>
       
       <div id="optimalSpiritsList" class="selected-spirits-info">
@@ -885,35 +1111,32 @@ function findOptimalCombination() {
   document
     .getElementById("clearHistoryButton")
     .addEventListener("click", function () {
-      if (confirm("저장된 모든 조합 기록을 삭제하시겠습니까?")) {
-        clearSavedOptimalCombinations();
-        renderHistoryTabs([]);
-        document.getElementById("optimalGradeEffects").innerHTML = "";
-        document.getElementById("optimalFactionEffects").innerHTML = "";
-        document.getElementById("optimalTotalEffects").innerHTML = "";
-        document.getElementById("spiritStatsDetails").innerHTML = "";
-        document.getElementById("combinationResultsContainer").innerHTML = "";
-        document.getElementById("optimalScore").textContent = "0";
-        alert("조합 기록이 모두 삭제되었습니다.");
-      }
+      clearSavedOptimalCombinations();
     });
 
-  renderHistoryTabs(savedOptimalCombinations);
+  renderHistoryTabs(currentCategory);
 
-  if (savedOptimalCombinations.length > 0) {
+  if (
+    savedOptimalCombinations[currentCategory] &&
+    savedOptimalCombinations[currentCategory].length > 0
+  ) {
+    currentActiveIndex = savedOptimalCombinations[currentCategory].length - 1;
     showSingleOptimalResult(
-      savedOptimalCombinations[savedOptimalCombinations.length - 1]
+      savedOptimalCombinations[currentCategory][currentActiveIndex]
     );
   }
 
   setTimeout(() => {
     try {
-      const validSpirits = selectedSpirits.filter((spirit) => {
-        const levelStats = spirit.stats?.find(
-          (s) => s.level === spirit.level
-        )?.registrationStat;
-        return levelStats !== undefined;
-      });
+      // Create deep copies of spirits to prevent reference issues
+      const validSpirits = selectedSpirits
+        .filter((spirit) => {
+          const levelStats = spirit.stats?.find(
+            (s) => s.level === spirit.level
+          )?.registrationStat;
+          return levelStats !== undefined;
+        })
+        .map((spirit) => JSON.parse(JSON.stringify(spirit)));
 
       if (validSpirits.length === 0) {
         throw new Error("유효한 환수 데이터가 없습니다.");
@@ -977,9 +1200,13 @@ function findOptimalCombination() {
       }
 
       if (bestResult) {
-        addNewOptimalCombination(bestResult);
+        // Deep copy the best result before saving
+        const deepCopiedResult = JSON.parse(JSON.stringify(bestResult));
+        addNewOptimalCombination(deepCopiedResult);
         saveSavedOptimalCombinations();
-        renderHistoryTabs(savedOptimalCombinations);
+        const category = bestResult.spirits[0]?.category || "수호";
+        currentActiveIndex = savedOptimalCombinations[category].length - 1;
+        renderHistoryTabs(category);
         showSingleOptimalResult(bestResult);
       }
     } catch (error) {
@@ -998,26 +1225,43 @@ function findOptimalCombination() {
 
 function addNewOptimalCombination(result) {
   const timestamp = new Date().toLocaleString();
+  const category = result.spirits[0]?.category || "수호";
+
+  if (!savedOptimalCombinations[category]) {
+    savedOptimalCombinations[category] = [];
+  }
+
+  if (combinationCounter[category] === undefined) {
+    combinationCounter[category] = 0;
+  }
+
+  const MAX_COMBINATIONS = 5;
+
+  combinationCounter[category]++;
+
+  const index = (combinationCounter[category] - 1) % MAX_COMBINATIONS;
 
   const resultWithTimestamp = {
-    ...result,
+    ...result, // No need for deep copy here since we already did it before
     timestamp,
-    combinationName: `조합 ${savedOptimalCombinations.length + 1}`,
+    combinationName: `조합 ${index + 1}`,
+    addedAt: Date.now(),
   };
 
-  if (savedOptimalCombinations.length < 5) {
-    savedOptimalCombinations.push(resultWithTimestamp);
+  if (savedOptimalCombinations[category].length < MAX_COMBINATIONS) {
+    savedOptimalCombinations[category].push(resultWithTimestamp);
   } else {
-    savedOptimalCombinations.shift();
-    savedOptimalCombinations.push(resultWithTimestamp);
+    savedOptimalCombinations[category][index] = resultWithTimestamp;
   }
 }
 
-function renderHistoryTabs(combinations) {
-  if (combinations.length === 0) {
+function renderHistoryTabs(category) {
+  const categoryCombinations = savedOptimalCombinations[category] || [];
+
+  if (categoryCombinations.length === 0) {
     document.getElementById("optimalSpiritsList").innerHTML = `
       <div class="history-tabs-container">
-        <p class="no-history-message">저장된 조합 기록이 없습니다.</p>
+        <p class="no-history-message">${category} 카테고리에 저장된 조합 기록이 없습니다.</p>
       </div>
       <div id="combinationResultsContainer"></div>
     `;
@@ -1025,44 +1269,228 @@ function renderHistoryTabs(combinations) {
   }
 
   let highestScoreIndex = 0;
-  let highestScore = combinations[0].score;
+  let highestScore = categoryCombinations[0].score;
 
-  for (let i = 1; i < combinations.length; i++) {
-    if (combinations[i].score > highestScore) {
-      highestScore = combinations[i].score;
+  for (let i = 1; i < categoryCombinations.length; i++) {
+    if (categoryCombinations[i].score > highestScore) {
+      highestScore = categoryCombinations[i].score;
       highestScoreIndex = i;
     }
   }
 
-  const latestIndex = combinations.length - 1;
+  let newestIndex = 0;
+  let newestTime = categoryCombinations[0].addedAt || 0;
+
+  for (let i = 1; i < categoryCombinations.length; i++) {
+    const addedTime = categoryCombinations[i].addedAt || 0;
+    if (addedTime > newestTime) {
+      newestTime = addedTime;
+      newestIndex = i;
+    }
+  }
+
+  currentActiveIndex = newestIndex;
 
   const tabsHtml = `
     <div class="history-tabs-container">
       <div class="history-tabs">
-        ${combinations
-          .map(
-            (combo, index) => `
-          <button class="history-tab ${index === latestIndex ? "active" : ""} ${
-              index === highestScoreIndex ? "best" : ""
-            }" 
-            data-index="${index}">
-            ${combo.combinationName}
-            <span class="tab-score">${combo.score}</span>
-          </button>
-        `
-          )
+        ${Array(5)
+          .fill()
+          .map((_, index) => {
+            const combo = categoryCombinations[index];
+            if (!combo) {
+              return `<div class="history-tab-placeholder"></div>`;
+            }
+
+            return `
+            <button class="history-tab ${
+              index === currentActiveIndex ? "active" : ""
+            } 
+              ${index === highestScoreIndex ? "best" : ""}" 
+              data-index="${index}">
+              <div class="tab-content">
+                <div class="tab-indicators">
+                  ${
+                    index === newestIndex
+                      ? '<span class="current-marker">최신</span>'
+                      : ""
+                  }
+                  ${
+                    index === highestScoreIndex
+                      ? '<span class="best-marker">최고</span>'
+                      : ""
+                  }
+                </div>
+                <span class="combo-name">${combo.combinationName}</span>
+                <span class="tab-score">${combo.score}</span>
+              </div>
+            </button>
+          `;
+          })
           .join("")}
       </div>
     </div>
     <div id="selected-tab-info" class="history-info">
-      <span class="timestamp">계산 시간: ${
-        combinations[latestIndex].timestamp
-      }</span>
+      ${
+        categoryCombinations[currentActiveIndex]
+          ? `
+        <span class="timestamp">계산 시간: ${
+          categoryCombinations[currentActiveIndex].timestamp
+        }</span>
+        ${
+          currentActiveIndex === highestScoreIndex
+            ? '<span class="best-notice">(최고 점수입니다!)</span>'
+            : ""
+        }
+      `
+          : ""
+      }
     </div>
     <div id="combinationResultsContainer"></div>
   `;
 
   document.getElementById("optimalSpiritsList").innerHTML = tabsHtml;
+
+  const oldStyle = document.getElementById("history-tab-styles");
+  if (oldStyle) {
+    oldStyle.remove();
+  }
+
+  const style = document.createElement("style");
+  style.id = "history-tab-styles";
+  style.textContent = `
+    .history-tabs-container {
+      width: 100%;
+      overflow-x: hidden;
+      padding-bottom: 5px;
+    }
+    
+    .history-tabs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      width: 100%;
+      margin-bottom: 12px;
+      gap: 4px;
+    }
+    
+    .history-tab, .history-tab-placeholder {
+      border-radius: 6px;
+      padding: 20px 2px 5px;
+      margin: 0;
+      position: relative;
+      min-height: 65px;
+    }
+    
+    .history-tab {
+      border: 1px solid #ddd;
+      background-color: #f8f8f8;
+      cursor: pointer;
+      transition: all 0.2s;
+      overflow: hidden;
+    }
+    
+    .history-tab-placeholder {
+      background-color: transparent;
+      border: 1px dashed #eee;
+    }
+    
+    .tab-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .combo-name {
+      font-weight: bold;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    
+    .tab-indicators {
+      position: absolute;
+      top: 2px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 2px;
+    }
+    
+    .current-marker, .best-marker {
+      font-size: 9px;
+      padding: 1px 4px;
+      border-radius: 2px;
+      font-weight: normal;
+    }
+    
+    .current-marker {
+      background: #3498db;
+      color: white;
+    }
+    
+    .best-marker {
+      background: #e74c3c;
+      color: white;
+    }
+    
+    .tab-score {
+      font-size: 11px;
+      font-weight: bold;
+      margin-top: 3px;
+    }
+    
+    .best-notice {
+      margin-left: 10px;
+      color: #e74c3c;
+      font-weight: bold;
+    }
+    
+    .history-tab.active {
+      border: 2px solid #3498db;
+      background-color: #ebf5fb;
+    }
+    
+    .history-tab.best {
+      border: 2px solid #e74c3c;
+      background-color: #fdedec;
+    }
+    
+    .history-tab.active.best {
+      background: linear-gradient(135deg, #ebf5fb 0%, #fdedec 100%);
+    }
+    
+    @media (max-width: 480px) {
+      .history-tab, .history-tab-placeholder {
+        padding: 18px 2px 5px;
+        min-height: 58px;
+      }
+      
+      .combo-name {
+        font-size: 10px;
+      }
+      
+      .current-marker, .best-marker {
+        font-size: 8px;
+        padding: 0px 2px;
+      }
+      
+      .tab-score {
+        font-size: 10px;
+      }
+      
+      .best-notice {
+        display: block;
+        margin-top: 5px;
+        margin-left: 0;
+        font-size: 11px;
+      }
+      
+      .timestamp {
+        font-size: 11px;
+      }
+    }
+  `;
+  document.head.appendChild(style);
 
   document.querySelectorAll(".history-tab").forEach((tab) => {
     tab.addEventListener("click", function () {
@@ -1072,11 +1500,17 @@ function renderHistoryTabs(combinations) {
       this.classList.add("active");
 
       const comboIndex = parseInt(this.dataset.index);
-      const result = combinations[comboIndex];
+      currentActiveIndex = comboIndex;
+      const result = categoryCombinations[comboIndex];
       showSingleOptimalResult(result);
 
       document.getElementById("selected-tab-info").innerHTML = `
         <span class="timestamp">계산 시간: ${result.timestamp}</span>
+        ${
+          comboIndex === highestScoreIndex
+            ? '<span class="best-notice">(이 조합이 최고 점수입니다!)</span>'
+            : ""
+        }
       `;
     });
   });
@@ -1320,7 +1754,7 @@ function generateCombinations(array, size) {
   const result = [];
 
   for (let i = 0; i <= array.length - size; i++) {
-    const head = array.slice(i, i + 1);
+    const head = [JSON.parse(JSON.stringify(array[i]))];
     const tailCombinations = generateCombinations(array.slice(i + 1), size - 1);
 
     for (const tailCombo of tailCombinations) {
@@ -1358,43 +1792,3 @@ function clearAllSelections() {
   handleResponsiveLayout();
   saveSelectedSpiritsToStorage();
 }
-
-const statsMapping = {
-  criticalPower: "치명위력",
-  normalMonsterAdditionalDamage: "일반몬스터추가피해",
-  normalMonsterPenetration: "일반몬스터관통",
-  healthIncrease: "체력증가",
-  healthIncreasePercent: "체력증가%",
-  strength: "힘",
-  agility: "민첩",
-  intelligence: "지력",
-  damageAbsorption: "피해흡수",
-  damageResistancePenetration: "피해저항관통",
-  magicIncrease: "마력증가",
-  magicIncreasePercent: "마력증가%",
-  damageResistance: "피해저항",
-  healthPotionEnhancement: "체력시약향상",
-  healthRecoveryImprovement: "체력회복향상",
-  damageIncrease: "피해증가",
-  magicRecoveryImprovement: "마력회복향상",
-  criticalChance: "치명확률",
-  bossMonsterAdditionalDamage: "보스몬스터추가피해",
-  bossMonsterPenetration: "보스몬스터관통",
-  power: "위력",
-  magicPotionEnhancement: "마력시약향상",
-  pvpDamage: "대인피해",
-  pvpDefense: "대인방어",
-  statusEffectAccuracy: "상태이상적중",
-  statusEffectResistance: "상태이상저항",
-  criticalPowerPercent: "치명위력%",
-  pvpDamagePercent: "대인피해%",
-  pvpDefensePercent: "대인방어%",
-  criticalDamageResistance: "치명피해저항",
-  criticalResistance: "치명저항",
-  movementSpeed: "이동속도",
-  destructionPowerIncrease: "파괴력증가",
-  destructionPowerPercent: "파괴력증가%",
-  armorStrength: "무장도",
-  lootAcquisitionIncrease: "전리품획득증가",
-  experienceGainIncrease: "경험치획득증가",
-};

@@ -67,20 +67,64 @@ document.addEventListener("DOMContentLoaded", function () {
   loadCategoryData();
 });
 
-const categoryToFileMap = {
-  수호: "output/guardian.json",
-  탑승: "output/ride.json",
-  변신: "output/transform.json",
+const categoryFileMap = {
+  수호: {
+    registration: "output/guardian-registration-stats.json",
+    bind: "output/guardian-bind-stats.json",
+  },
+  탑승: {
+    registration: "output/ride-registration-stats.json",
+    bind: "output/ride-bind-stats.json",
+  },
+  변신: {
+    registration: "output/transform-registration-stats.json",
+    bind: "output/transform-bind-stats.json",
+  },
 };
 
 let mobData = { 수호: [], 탑승: [], 변신: [] };
 
 async function loadCategoryData() {
-  for (const [category, filePath] of Object.entries(categoryToFileMap)) {
+  for (const [category, files] of Object.entries(categoryFileMap)) {
     try {
-      const response = await fetch(filePath);
-      const jsonData = await response.json();
-      mobData[category] = jsonData;
+      // Load registration stats
+      const registrationResponse = await fetch(files.registration);
+      let registrationData = await registrationResponse.json();
+
+      // Load bind stats
+      const bindResponse = await fetch(files.bind);
+      let bindData = await bindResponse.json();
+
+      if (registrationData.data && Array.isArray(registrationData.data)) {
+        registrationData = registrationData.data;
+      }
+
+      if (bindData.data && Array.isArray(bindData.data)) {
+        bindData = bindData.data;
+      }
+
+      // Merge the data
+      const mergedData = registrationData.map((regItem) => {
+        const bindItem = bindData.find((b) => b.name === regItem.name);
+        if (bindItem) {
+          const mergedStats = regItem.stats.map((regStat, index) => {
+            const bindStat = bindItem.stats[index];
+            return {
+              level: regStat.level,
+              registrationStat: regStat.registrationStat,
+              bindStat: bindStat ? bindStat.bindStat : {},
+            };
+          });
+
+          return {
+            ...regItem,
+            stats: mergedStats,
+          };
+        }
+        return regItem;
+      });
+
+      mobData[category] = mergedData;
     } catch (err) {
       console.error(`Error fetching data for category "${category}":`, err);
     }
