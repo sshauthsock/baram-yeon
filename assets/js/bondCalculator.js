@@ -274,7 +274,7 @@ async function getFirestoreDocument(fileName) {
       "ride-registration-stats": "data-1744895175627",
       "transform-bind-stats": "data-1744895179894",
       "transform-registration-stats": "data-1744895184028",
-      gradeSetEffects: "data-1744943824244",
+      gradeSetEffects: "data-1744943853697",
       factionSetEffects: "data-1744943824244",
     };
 
