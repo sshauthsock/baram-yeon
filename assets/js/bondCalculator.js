@@ -376,7 +376,7 @@ async function getFirestoreDocument(fileName) {
   try {
     const documentMap = {
       "guardian-bind-stats": "data-1745191165859",
-      "guardian-registration-stats.json": "data-1745191061765",
+      "guardian-registration-stats": "data-1745191061765",
       "ride-bind-stats": "data-1744895170256",
       "ride-registration-stats": "data-1744895175627",
       "transform-bind-stats": "data-1744895179894",
