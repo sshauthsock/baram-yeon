@@ -176,10 +176,14 @@ body {
     -moz-appearance: textfield;
 }
 
-.level-batch-control button {
-    padding: 5px 15px;
+.apply-level-btn {
+
     background-color: #3498db;
     color: white;
+}
+
+.level-batch-control button {
+    padding: 5px 15px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
@@ -196,59 +200,86 @@ body {
 .selected-spirits {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 10px;
+    gap: 8px;
     max-height: calc(100vh - 300px);
     overflow-y: auto;
-    margin-bottom: 15px;
-    -webkit-overflow-scrolling: touch;
+    margin-bottom: 10px;
+    padding: 5px;
 }
 
 .selected-spirit-card {
-    display: flex;
-    flex-direction: column;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 2px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    will-change: transform;
-}
-
-.selected-spirit-header {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 8px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    padding: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+    height: 115px;
+}
+
+.selected-spirit-card:hover {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.selected-spirit-header {
+    position: relative;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2px;
 }
 
 .selected-spirit-header img {
     width: 40px;
     height: 40px;
     object-fit: contain;
-    margin-bottom: 5px;
-    border-radius: 6px;
+    border-radius: 4px;
     background-color: #fff;
-    padding: 3px;
+    padding: 2px;
     border: 1px solid #eaeaea;
 }
 
-.selected-spirit-header .spirit-info {
+.spirit-info {
     width: 100%;
     text-align: center;
+    margin-top: 3px;
 }
 
-.selected-spirit-header .spirit-info .spirit-name {
-    font-weight: 600;
-    font-size: 13px;
-    margin-bottom: 3px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.selected-spirit-header .spirit-info .spirit-grade {
+.spirit-name {
     font-size: 11px;
-    color: #666;
+    font-weight: 600;
+    margin: 2px 0;
+    line-height: 1.2;
+    max-height: 26px;
+    overflow: hidden;
+    padding: 0 2px;
+    color: #333;
+}
+
+.remove-spirit {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 16px;
+    height: 16px;
+    font-size: 9px;
+    line-height: 1;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .spirit-level-control {
@@ -256,59 +287,88 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
-    margin-bottom: 8px;
+    margin-top: auto;
+    margin-bottom: 4px;
+    height: 24px;
 }
 
 .spirit-level-control button {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     border: none;
     background-color: #3498db;
     color: white;
-    font-size: 12px;
+    font-size: 11px;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.2s;
-    will-change: transform;
-}
-
-.spirit-level-control button:hover {
-    background-color: #2980b9;
+    padding: 0;
 }
 
 .spirit-level-control input {
-    width: 35px;
-    height: 20px;
+    width: 28px;
+    height: 18px;
     text-align: center;
-    margin: 0 3px;
+    margin: 0 2px;
     font-weight: bold;
-    font-size: 12px;
-    padding: 2px;
-    border-radius: 4px;
+    font-size: 11px;
+    padding: 0;
+    border-radius: 3px;
     border: 1px solid #d1e7f8;
     background-color: #f1f8fe;
 }
 
-.remove-spirit {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 4px;
-    cursor: pointer;
-    font-size: 11px;
-    transition: all 0.2s;
-    width: 100%;
-    text-align: center;
-    will-change: transform;
+.max-btn {
+    font-size: 9px !important;
+    background-color: #4CAF50 !important;
+    border-radius: 3px !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-left: 2px;
 }
 
-.remove-spirit:hover {
-    background-color: #d32f2f;
-    transform: scale(1.05);
+.fixed-level {
+    background-color: #e8f5e9;
+    border: 1px solid #4caf50;
+    color: #2e7d32;
+    font-weight: bold;
+    text-align: center;
+    width: 28px;
+    height: 18px;
+    border-radius: 3px;
+    cursor: not-allowed;
+    font-size: 11px;
+}
+
+.fixed-level-badge {
+    font-size: 8px;
+    background-color: #4caf50;
+    color: white;
+    padding: 1px 3px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-top: 2px;
+}
+
+.spirit-grade-legend {
+    border-top: 2px solid #e53935;
+}
+
+.spirit-grade-immortal {
+    border-top: 2px solid #ffa000;
+}
+
+.spirit-category-badge {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    font-size: 8px;
+    padding: 1px 3px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border-radius: 2px;
 }
 
 .calculate-btn-container {
@@ -939,10 +999,35 @@ body {
     transform: scale(1.1);
 }
 
+.max-level-btn {
+    padding: 5px 15px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
+    margin-left: 5px;
+}
+
+.max-level-btn:hover {
+    background-color: #388E3C;
+    transform: scale(1.05);
+}
+
 @media (max-width: 768px) {
     .history-tab {
         padding: 4px 8px;
         font-size: 11px;
+    }
+
+    .max-level-btn {
+
+        background-color: red;
+        padding: 4px 10px;
+        font-size: 12px;
     }
 
     .tab-score {
@@ -954,10 +1039,25 @@ body {
         height: 40px;
         padding: 8px;
     }
+
+    .selected-spirits {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        max-height: calc(60vh - 150px);
+    }
+
+    .selected-spirit-card {
+        height: 105px;
+    }
+
+    .selected-spirit-header img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .spirit-name {
+        font-size: 10px;
+    }
 }
-
-
-
 
 @keyframes pulse {
     0% {
@@ -1185,7 +1285,25 @@ body {
 
 @media (max-width: 480px) {
     .selected-spirits {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+
+    .level-batch-control {
+        flex-wrap: wrap;
+    }
+
+    .max-level-btn {
+
+        background-color: red;
+        margin-top: 5px;
+    }
+
+    .selected-spirit-card {
+        height: 100px;
+    }
+
+    .spirit-name {
+        max-height: 24px;
     }
 
     .image-container {
@@ -1233,5 +1351,11 @@ body {
         padding: 15px;
         width: 50px;
         height: 50px;
+    }
+
+    .level-batch-control button {
+        padding: 4px 10px;
+        margin-top: 0px;
+        font-size: 10px;
     }
 }

@@ -87,6 +87,32 @@ const statColorMap = {
   bossMonsterAdditionalDamage: "stat-boss-monster-additional-damage",
 };
 
+// 25레벨만 가능한 특수 환수 목록
+const fixedLevel25Spirits = [
+  "결의의 탑승",
+  "결의의 수호",
+  "결의의 변신",
+  "의지의 탑승",
+  "의지의 수호",
+  "의지의 변신",
+  "냉정의 탑승",
+  "냉정의 수호",
+  "냉정의 변신",
+  "침착의 탑승",
+  "침착의 수호",
+  "침착의 변신",
+  "고요의 탑승",
+  "고요의 수호",
+  "고요의 변신",
+  "활력의 탑승",
+  "활력의 수호",
+  "활력의 변신",
+];
+
+function isFixedLevelSpirit(spiritName) {
+  return fixedLevel25Spirits.includes(spiritName);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   if (window.innerWidth <= 768) {
     const mainRightPanel = document.querySelector(".main-content .right-panel");
@@ -140,6 +166,88 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   window.addEventListener("resize", handleResponsiveLayout);
+
+  const styleSheet = document.createElement("style");
+  styleSheet.innerHTML = `
+    .selected-spirit-header {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    .remove-spirit {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 18px;
+      height: 18px;
+      font-size: 10px;
+      line-height: 1;
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .spirit-level-control {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 8px;
+    }
+    .spirit-level-control button {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: none;
+      background-color: #3498db;
+      color: white;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.2s;
+    }
+    .max-btn {
+      font-size: 10px;
+      background-color: #4CAF50 !important;
+      border-radius: 3px !important;
+      width: 16px !important;
+      height: 16px !important;
+      margin-left: 3px;
+    }
+    .fixed-level {
+      background-color: #e8f5e9;
+      border: 1px solid #4caf50;
+      color: #2e7d32;
+      font-weight: bold;
+      text-align: center;
+      width: 35px;
+      height: 20px;
+      border-radius: 4px;
+      cursor: not-allowed;
+    }
+    .fixed-level-badge {
+      font-size: 9px;
+      background-color: #4caf50;
+      color: white;
+      padding: 1px 4px;
+      border-radius: 10px;
+      display: inline-block;
+      margin-top: 2px;
+    }
+  `;
+  document.head.appendChild(styleSheet);
 });
 
 function handleResponsiveLayout() {
@@ -233,15 +341,7 @@ function debounce(func, wait) {
   };
 }
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBWBbe8carOdeIzP6hQsarDOz5H0TuEj9A",
-  authDomain: "baram-yeon.firebaseapp.com",
-  projectId: "baram-yeon",
-  storageBucket: "baram-yeon.firebasestorage.app",
-  messagingSenderId: "924298156656",
-  appId: "1:924298156656:web:845c94e771625fbd24b2b5",
-  measurementId: "G-F2BT2T7HCL",
-};
+const firebaseConfig = {};
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
@@ -869,13 +969,16 @@ function toggleSpiritSelection(spirit, category) {
     }
 
     const faction = spirit.influence || spirit.faction || "결의";
+    const isFixed = isFixedLevelSpirit(spirit.name);
+    const spiritLevel = isFixed ? 25 : 0;
 
     const spiritData = {
       ...spirit,
       category,
-      level: 0,
+      level: spiritLevel,
       grade: spirit.grade || "전설",
       faction: faction,
+      isFixedLevel: isFixed,
     };
     selectedSpirits.push(spiritData);
   }
@@ -908,6 +1011,11 @@ function updateSelectedCount() {
   handleResponsiveLayout();
 }
 
+function setMaxBatchLevel(inputId) {
+  document.getElementById(inputId).value = 25;
+  applyBatchLevel(inputId);
+}
+
 function renderSelectedSpirits() {
   const containerSelectors = [
     "#selectedSpirits",
@@ -930,22 +1038,38 @@ function renderSelectedSpirits() {
 
     selectedSpirits.forEach((spirit, index) => {
       const card = document.createElement("div");
-      card.className = "selected-spirit-card";
+      card.className = `selected-spirit-card spirit-grade-${
+        spirit.grade === "불멸" ? "immortal" : "legend"
+      }`;
+
+      const isFixed = spirit.isFixedLevel;
+      const categoryBadge = `<div class="spirit-category-badge">${spirit.category}</div>`;
+
+      const levelControls = isFixed
+        ? `<div class="spirit-level-control">
+           <input type="number" value="25" readonly class="fixed-level" title="이 환수는 25레벨만 사용 가능합니다">
+         </div>`
+        : `<div class="spirit-level-control">
+           <button onclick="changeLevel(${index}, -1)">-</button>
+           <input type="number" min="0" max="25" value="${spirit.level || 0}"
+             onchange="updateSpiritLevel(${index}, this.value)">
+           <button onclick="changeLevel(${index}, 1)">+</button>
+           <button class="max-btn" onclick="setMaxLevel(${index})">M</button>
+         </div>`;
 
       card.innerHTML = `
+        <button class="remove-spirit" onclick="removeSpirit(${index})">X</button>
+        ${categoryBadge}
         <div class="selected-spirit-header">
-          <img src="${spirit.image}" alt="${spirit.name}">
+          <img src="${spirit.image}" alt="${spirit.name}" title="${
+        spirit.name
+      }">
           <div class="spirit-info">
             <div class="spirit-name">${spirit.name}</div>
+            ${isFixed ? '<div class="fixed-level-badge">고정 25</div>' : ""}
           </div>
         </div>
-        <div class="spirit-level-control">
-          <button onclick="changeLevel(${index}, -1)">-</button>
-          <input type="number" min="0" max="25" value="${spirit.level}"
-            onchange="updateSpiritLevel(${index}, this.value)">
-          <button onclick="changeLevel(${index}, 1)">+</button>
-        </div>
-        <button class="remove-spirit" onclick="removeSpirit(${index})">제거</button>
+         ${isFixed ? "" : levelControls}
       `;
 
       fragment.appendChild(card.cloneNode(true));
@@ -956,11 +1080,25 @@ function renderSelectedSpirits() {
 }
 
 function updateSpiritLevel(index, value) {
+  const spirit = selectedSpirits[index];
+
+  if (spirit.isFixedLevel) {
+    alert(`${spirit.name}은(는) 25레벨만 사용 가능합니다.`);
+    renderSelectedSpirits();
+    return;
+  }
+
   let level = parseInt(value);
   if (isNaN(level)) level = 0;
   if (level > 25) level = 25;
   if (level < 0) level = 0;
-  selectedSpirits[index].level = level;
+  spirit.level = level;
+  saveSelectedSpiritsToStorage();
+}
+
+function setMaxLevel(index) {
+  selectedSpirits[index].level = 25;
+  renderSelectedSpirits();
   saveSelectedSpiritsToStorage();
 }
 
@@ -975,7 +1113,13 @@ function removeSpirit(index) {
 
 function changeLevel(index, diff) {
   const spirit = selectedSpirits[index];
-  let newLevel = spirit.level + diff;
+
+  if (spirit.isFixedLevel) {
+    alert(`${spirit.name}은(는) 25레벨만 사용 가능합니다.`);
+    return;
+  }
+
+  let newLevel = (spirit.level || 0) + diff;
 
   if (newLevel < 0) newLevel = 0;
   if (newLevel > 25) newLevel = 25;
@@ -999,7 +1143,9 @@ function applyBatchLevel(inputId) {
   }
 
   selectedSpirits.forEach((spirit) => {
-    spirit.level = level;
+    if (!spirit.isFixedLevel) {
+      spirit.level = level;
+    }
   });
 
   document.getElementById("batchLevel").value = level;
@@ -1084,250 +1230,24 @@ function calculateEffectsForSpirits(spirits) {
   };
 }
 
-// function calculateGradeSetEffects(categoryGradeCount) {
-//   const effects = {};
-
-//   Object.entries(categoryGradeCount).forEach(([category, grades]) => {
-//     if (!gradeSetEffects[category]) return;
-
-//     Object.entries(grades).forEach(([grade, count]) => {
-//       if (count < 2 || !gradeSetEffects[category][grade]) return;
-
-//       let maxStep = 0;
-//       for (let i = 2; i <= Math.min(6, count); i++) {
-//         if (gradeSetEffects[category][grade][i.toString()]) {
-//           maxStep = i;
-//         }
-//       }
-
-//       if (maxStep >= 2) {
-//         const stepEffects =
-//           gradeSetEffects[category][grade][maxStep.toString()];
-//         Object.entries(stepEffects).forEach(([stat, value]) => {
-//           const numValue = parseFloat(String(value).replace(/,/g, ""));
-//           if (!isNaN(numValue)) {
-//             effects[stat] = (effects[stat] || 0) + numValue;
-//           }
-//         });
-//       }
-//     });
-//   });
-
-//   return effects;
-// }
-
-// function showSingleOptimalResult(result) {
-//   console.log("Showing optimal result:", result);
-
-//   const { spirits, score, gradeCounts, factionCounts } = result;
-
-//   // 여기서 등급 효과 직접 계산하기
-//   const gradeEffects = calculateGradeSetEffects(gradeCounts || {});
-//   console.log("Recalculated grade effects:", gradeEffects);
-
-//   // 세력 효과 직접 계산하기
-//   const factionEffects = calculateFactionSetEffects(factionCounts || {});
-
-//   document.getElementById("optimalScore").textContent = score;
-
-//   const resultsContainer = document.getElementById(
-//     "combinationResultsContainer"
-//   );
-//   resultsContainer.innerHTML = "";
-
-//   spirits.forEach((spirit) => {
-//     const spiritInfo = document.createElement("div");
-//     spiritInfo.className = "spirit-info-item";
-
-//     const img = document.createElement("img");
-//     img.src = spirit.image;
-//     img.alt = spirit.name;
-
-//     const details = document.createElement("div");
-//     details.className = "spirit-info-details";
-
-//     const name = document.createElement("div");
-//     name.className = "spirit-info-name";
-//     name.textContent = spirit.name;
-
-//     const faction = spirit.influence || spirit.faction || "결의";
-
-//     const level = document.createElement("div");
-//     level.className = "spirit-info-level";
-//     level.textContent = `레벨: ${spirit.level}, ${spirit.category}, ${spirit.grade}, ${faction}`;
-
-//     details.appendChild(name);
-//     details.appendChild(level);
-
-//     spiritInfo.appendChild(img);
-//     spiritInfo.appendChild(details);
-
-//     resultsContainer.appendChild(spiritInfo);
-//   });
-
-//   let gradeSetInfo = "";
-//   for (const [category, grades] of Object.entries(gradeCounts || {})) {
-//     for (const [grade, count] of Object.entries(grades)) {
-//       if (count >= 2) {
-//         const gradeClass =
-//           grade === "전설" ? "grade-tag-legend" : "grade-tag-immortal";
-//         gradeSetInfo += `<span class="grade-tag ${gradeClass}">${category} ${grade} X ${count}</span> `;
-//       }
-//     }
-//   }
-
-//   let factionSetInfo = "";
-//   for (const [category, factions] of Object.entries(factionCounts || {})) {
-//     const factionTags = Object.entries(factions)
-//       .filter(([_, count]) => count >= 2)
-//       .map(([faction, count]) => {
-//         const iconPath = factionIcons[faction] || "assets/img/bond/default.jpg";
-//         return `<span class="faction-tag"><img src="${iconPath}" class="faction-icon" alt="${faction}"> ${faction} X ${count}</span>`;
-//       })
-//       .join(" ");
-
-//     if (factionTags) {
-//       factionSetInfo += `<div>${category}: ${factionTags}</div>`;
-//     }
-//   }
-
-//   // 재계산된 효과 사용하기
-//   document.getElementById("optimalGradeEffects").innerHTML = renderEffectsList(
-//     gradeEffects, // 직접 계산한 등급 효과 사용
-//     gradeSetInfo,
-//     true
-//   );
-//   document.getElementById("optimalFactionEffects").innerHTML =
-//     renderEffectsList(
-//       factionEffects, // 직접 계산한 세력 효과 사용
-//       factionSetInfo,
-//       true
-//     );
-
-//   // 총합 효과 계산하기
-//   const combinedEffects = { ...result.combinedEffects } || {};
-//   if (!combinedEffects || Object.keys(combinedEffects).length === 0) {
-//     // 필요한 경우 다시 계산
-//     const registrationStats = {}; // 등록 스탯 모으기
-//     spirits.forEach((spirit) => {
-//       const levelStats = spirit.stats?.find(
-//         (s) => s.level === spirit.level
-//       )?.registrationStat;
-//       if (levelStats) {
-//         Object.entries(levelStats).forEach(([stat, value]) => {
-//           const numValue = parseFloat(String(value).replace(/,/g, ""));
-//           if (!isNaN(numValue)) {
-//             const normalizedStat = normalizeStatKey(stat);
-//             registrationStats[normalizedStat] =
-//               (registrationStats[normalizedStat] || 0) + numValue;
-//           }
-//         });
-//       }
-//     });
-
-//     // 총합에 등급 및 세력 효과 추가
-//     Object.entries(gradeEffects).forEach(([stat, value]) => {
-//       combinedEffects[stat] = (combinedEffects[stat] || 0) + value;
-//     });
-
-//     Object.entries(factionEffects).forEach(([stat, value]) => {
-//       combinedEffects[stat] = (combinedEffects[stat] || 0) + value;
-//     });
-//   }
-
-//   document.getElementById("optimalTotalEffects").innerHTML = renderEffectsList(
-//     combinedEffects,
-//     "",
-//     true
-//   );
-
-//   renderSpiritDetailsTable(spirits);
-// }
-
 function calculateGradeSetEffects(categoryGradeCount) {
   const effects = {};
 
-  console.log("Grade count input:", JSON.stringify(categoryGradeCount));
-  console.log("Grade effects data:", gradeSetEffects);
-
-  // gradeSetEffects 구조 분석
-  if (gradeSetEffects) {
-    console.log("gradeSetEffects keys:", Object.keys(gradeSetEffects));
-    if (gradeSetEffects.data) {
-      console.log(
-        "Using gradeSetEffects.data instead of gradeSetEffects directly"
-      );
-      gradeSetEffects = gradeSetEffects.data;
-    }
-
-    if (gradeSetEffects["수호"]) {
-      console.log(
-        "수호 category exists, with keys:",
-        Object.keys(gradeSetEffects["수호"])
-      );
-    }
-  }
-
-  if (!categoryGradeCount || Object.keys(categoryGradeCount).length === 0) {
-    console.log("Empty category grade count provided");
+  if (!categoryGradeCount || typeof categoryGradeCount !== "object") {
     return effects;
   }
 
-  // 수호 전설 6개 효과를 직접 반환 (임시 해결책)
   for (const category in categoryGradeCount) {
-    if (category === "수호") {
-      const grades = categoryGradeCount[category];
-      for (const grade in grades) {
-        if (grade === "전설" && grades[grade] === 6) {
-          console.log("특수 케이스: 수호 전설 6개 효과 직접 적용");
-          return {
-            power: 150,
-            experienceGainIncrease: 10,
-            damageResistancePenetration: 100,
-            statusEffectResistance: 150,
-            damageResistance: 100,
-          };
-        }
-      }
-    }
-  }
-
-  // 원래 계산 로직
-  for (const category in categoryGradeCount) {
-    console.log(`Processing category: ${category}`);
-
-    // Firebase에서 가져온 데이터 구조가 다를 수 있음
-    let categoryEffects = null;
-    if (gradeSetEffects[category]) {
-      categoryEffects = gradeSetEffects[category];
-    } else if (gradeSetEffects["data"] && gradeSetEffects["data"][category]) {
-      categoryEffects = gradeSetEffects["data"][category];
-    }
-
-    if (!categoryEffects) {
-      console.log(`No effects data found for category: ${category}`);
-      continue;
-    }
+    const categoryEffects = gradeSetEffects[category];
+    if (!categoryEffects) continue;
 
     const grades = categoryGradeCount[category];
     for (const grade in grades) {
       const count = grades[grade];
-      console.log(`Processing grade: ${grade}, count: ${count}`);
+      if (count < 2) continue;
 
-      if (count < 2) {
-        console.log(`Count less than 2 for ${category} ${grade}`);
-        continue;
-      }
-
-      let gradeEffects = null;
-      if (categoryEffects[grade]) {
-        gradeEffects = categoryEffects[grade];
-      }
-
-      if (!gradeEffects) {
-        console.log(`No effects data for ${category} ${grade}`);
-        continue;
-      }
+      const gradeEffects = categoryEffects[grade];
+      if (!gradeEffects) continue;
 
       let highestStep = 0;
       for (let step = 2; step <= Math.min(6, count); step++) {
@@ -1337,206 +1257,137 @@ function calculateGradeSetEffects(categoryGradeCount) {
         }
       }
 
-      if (highestStep === 0) {
-        console.log(`No valid step found for ${category} ${grade}`);
-        continue;
-      }
+      if (highestStep > 0) {
+        const stepEffects = gradeEffects[highestStep.toString()];
 
-      const stepEffects = gradeEffects[highestStep.toString()];
-      console.log(`Applying effects for step ${highestStep}:`, stepEffects);
-
-      for (const stat in stepEffects) {
-        const value = stepEffects[stat];
-        const numValue = parseFloat(String(value).replace(/,/g, ""));
-
-        if (!isNaN(numValue)) {
-          if (effects[stat]) {
-            effects[stat] += numValue;
-          } else {
-            effects[stat] = numValue;
+        for (const stat in stepEffects) {
+          const value = parseFloat(String(stepEffects[stat]).replace(/,/g, ""));
+          if (!isNaN(value)) {
+            effects[stat] = (effects[stat] || 0) + value;
           }
-          console.log(`Added effect: ${stat} = ${numValue}`);
         }
       }
     }
   }
 
-  // 결과가 비어있다면 임시 데이터 반환 (추후 삭제 가능)
-  if (Object.keys(effects).length === 0) {
-    console.log("결과가 비어있어 기본 값을 반환합니다");
-    // 수호 전설 6개 효과 (임시)
-    const defaultEffects = {
-      power: 150,
-      experienceGainIncrease: 10,
-      damageResistancePenetration: 100,
-      statusEffectResistance: 150,
-      damageResistance: 100,
-    };
-    return defaultEffects;
-  }
-
-  console.log("Final calculated grade effects:", effects);
   return effects;
 }
-
-function showSingleOptimalResult(result) {
-  console.log("Full result object:", result);
-
-  const {
-    spirits,
-    gradeEffects: storedGradeEffects,
-    factionEffects: storedFactionEffects,
-    combinedEffects: storedCombinedEffects,
-    score,
-    gradeCounts,
-    factionCounts,
-  } = result;
-
-  document.getElementById("optimalScore").textContent = score;
-
-  // 환수 정보 표시
-  const resultsContainer = document.getElementById(
-    "combinationResultsContainer"
-  );
-  resultsContainer.innerHTML = "";
-  spirits.forEach((spirit) => {
-    // 기존 코드...
-    // 환수 정보 표시 코드 유지
-    const spiritInfo = document.createElement("div");
-    spiritInfo.className = "spirit-info-item";
-
-    const img = document.createElement("img");
-    img.src = spirit.image;
-    img.alt = spirit.name;
-
-    const details = document.createElement("div");
-    details.className = "spirit-info-details";
-
-    const name = document.createElement("div");
-    name.className = "spirit-info-name";
-    name.textContent = spirit.name;
-
-    const faction = spirit.influence || spirit.faction || "결의";
-
-    const level = document.createElement("div");
-    level.className = "spirit-info-level";
-    level.textContent = `레벨: ${spirit.level}, ${spirit.category}, ${spirit.grade}, ${faction}`;
-
-    details.appendChild(name);
-    details.appendChild(level);
-
-    spiritInfo.appendChild(img);
-    spiritInfo.appendChild(details);
-
-    resultsContainer.appendChild(spiritInfo);
-  });
-
-  // 등급 태그 생성
-  let gradeSetInfo = "";
-  for (const category in gradeCounts) {
-    for (const grade in gradeCounts[category]) {
-      const count = gradeCounts[category][grade];
-      if (count >= 2) {
-        const gradeClass =
-          grade === "전설" ? "grade-tag-legend" : "grade-tag-immortal";
-        gradeSetInfo += `<span class="grade-tag ${gradeClass}">${category} ${grade} X ${count}</span> `;
-      }
-    }
-  }
-
-  // 세력 태그 생성
-  let factionSetInfo = "";
-  for (const category in factionCounts) {
-    const factionTags = Object.entries(factionCounts[category])
-      .filter(([_, count]) => count >= 2)
-      .map(([faction, count]) => {
-        const iconPath = factionIcons[faction] || "assets/img/bond/default.jpg";
-        return `<span class="faction-tag"><img src="${iconPath}" class="faction-icon" alt="${faction}"> ${faction} X ${count}</span>`;
-      })
-      .join(" ");
-
-    if (factionTags) {
-      factionSetInfo += `<div>${category}: ${factionTags}</div>`;
-    }
-  }
-
-  // 저장된 값이 없거나 빈 객체인 경우 직접 계산
-  let gradeEffectsToUse = null;
-  if (!storedGradeEffects || Object.keys(storedGradeEffects).length === 0) {
-    console.log("Recalculating grade effects because stored value is empty");
-    gradeEffectsToUse = calculateGradeSetEffects(gradeCounts);
-  } else {
-    gradeEffectsToUse = storedGradeEffects;
-    console.log("Using stored grade effects:", gradeEffectsToUse);
-  }
-
-  let factionEffectsToUse = null;
-  if (!storedFactionEffects || Object.keys(storedFactionEffects).length === 0) {
-    console.log("Recalculating faction effects because stored value is empty");
-    factionEffectsToUse = calculateFactionSetEffects(factionCounts);
-  } else {
-    factionEffectsToUse = storedFactionEffects;
-  }
-
-  // 효과 표시
-  document.getElementById("optimalGradeEffects").innerHTML = renderEffectsList(
-    gradeEffectsToUse,
-    gradeSetInfo,
-    true
-  );
-  document.getElementById("optimalFactionEffects").innerHTML =
-    renderEffectsList(factionEffectsToUse, factionSetInfo, true);
-  document.getElementById("optimalTotalEffects").innerHTML = renderEffectsList(
-    storedCombinedEffects || {},
-    "",
-    true
-  );
-
-  renderSpiritDetailsTable(spirits);
-}
-//////////////////
 
 function calculateFactionSetEffects(categoryFactionCount) {
   const effects = {};
 
-  Object.entries(categoryFactionCount).forEach(([category, factions]) => {
-    if (!factionSetEffects[category]) return;
+  for (const category in categoryFactionCount) {
+    if (!factionSetEffects[category]) continue;
 
-    Object.entries(factions).forEach(([faction, count]) => {
-      if (count < 2 || !factionSetEffects[category][faction]) return;
+    const factions = categoryFactionCount[category];
+    for (const faction in factions) {
+      const count = factions[faction];
 
-      let maxCount = 0;
+      if (count < 2 || !factionSetEffects[category][faction]) continue;
+
+      let maxEffectCount = 0;
       let maxEffect = null;
 
-      factionSetEffects[category][faction].forEach((effect) => {
-        if (typeof effect !== "object" || effect === null) return;
+      for (const effect of factionSetEffects[category][faction]) {
+        if (!effect || typeof effect !== "object") continue;
 
         const requiredCount = parseInt(effect["개수"] || "0");
         if (
           !isNaN(requiredCount) &&
           count >= requiredCount &&
-          requiredCount > maxCount
+          requiredCount > maxEffectCount
         ) {
-          maxCount = requiredCount;
+          maxEffectCount = requiredCount;
           maxEffect = effect;
         }
-      });
+      }
 
       if (maxEffect) {
-        Object.entries(maxEffect).forEach(([stat, value]) => {
-          if (stat === "개수") return;
+        for (const stat in maxEffect) {
+          if (stat === "개수") continue;
 
-          const numValue = parseFloat(String(value).replace(/,/g, ""));
+          const numValue = parseFloat(
+            String(maxEffect[stat]).replace(/,/g, "")
+          );
           if (!isNaN(numValue)) {
             const normalizedStat = normalizeStatKey(stat);
             effects[normalizedStat] = (effects[normalizedStat] || 0) + numValue;
           }
-        });
+        }
       }
-    });
-  });
+    }
+  }
 
   return effects;
+}
+
+function checkSpiritLevelData() {
+  const invalidSpirits = [];
+  const spiritsWithSuggestions = [];
+
+  for (const spirit of selectedSpirits) {
+    const name = spirit.name;
+    const level = spirit.level || 0;
+    const availableLevels = [];
+
+    if (spirit.stats && Array.isArray(spirit.stats)) {
+      spirit.stats.forEach((stat) => {
+        if (
+          stat.registrationStat &&
+          Object.keys(stat.registrationStat).length > 0
+        ) {
+          availableLevels.push(stat.level);
+        }
+      });
+    }
+
+    if (!availableLevels.includes(level)) {
+      invalidSpirits.push({
+        name,
+        level,
+        availableLevels,
+      });
+
+      if (availableLevels.length > 0) {
+        spiritsWithSuggestions.push({
+          name,
+          level,
+          availableLevels,
+        });
+      }
+    }
+  }
+
+  return { invalidSpirits, spiritsWithSuggestions };
+}
+
+function showLevelDataWarning(invalidSpirits, spiritsWithSuggestions) {
+  let message = "";
+
+  if (invalidSpirits.length > 0) {
+    message += "<strong>데이터 누락 경고:</strong><br><br>";
+
+    invalidSpirits.forEach((spirit) => {
+      message += `- <strong>${spirit.name}</strong>: ${spirit.level}레벨에 데이터가 없습니다.`;
+
+      if (spirit.availableLevels.length > 0) {
+        message += ` 다음 레벨에는 데이터가 있습니다: ${spirit.availableLevels.join(
+          ", "
+        )}`;
+      } else {
+        message += " (사용 가능한 데이터가 없습니다)";
+      }
+
+      message += "<br>";
+    });
+
+    if (spiritsWithSuggestions.length > 0) {
+      message +=
+        '<br>권장 조치: 각 환수의 레벨을 데이터가 있는 레벨로 변경하시거나 "MAX" 버튼을 눌러 최대 레벨로 설정하세요.';
+    }
+  }
+
+  return message;
 }
 
 function showResultsInModal(result) {
@@ -1732,6 +1583,58 @@ function findOptimalCombination() {
     return;
   }
 
+  const { invalidSpirits, spiritsWithSuggestions } = checkSpiritLevelData();
+  if (invalidSpirits.length > 0) {
+    const warning = showLevelDataWarning(
+      invalidSpirits,
+      spiritsWithSuggestions
+    );
+    if (warning) {
+      const warningDialog = document.createElement("div");
+      warningDialog.style.position = "fixed";
+      warningDialog.style.top = "50%";
+      warningDialog.style.left = "50%";
+      warningDialog.style.transform = "translate(-50%, -50%)";
+      warningDialog.style.backgroundColor = "#fff";
+      warningDialog.style.padding = "20px";
+      warningDialog.style.borderRadius = "10px";
+      warningDialog.style.boxShadow = "0 0 20px rgba(0,0,0,0.3)";
+      warningDialog.style.zIndex = "9999";
+      warningDialog.style.maxWidth = "400px";
+      warningDialog.style.maxHeight = "80vh";
+      warningDialog.style.overflow = "auto";
+
+      warningDialog.innerHTML = `
+        <div style="margin-bottom:15px;">${warning}</div>
+        <div style="text-align:center; margin-top:15px;">
+          <button id="continueBtn" style="padding:8px 15px; background:#4CAF50; color:white; border:none; border-radius:4px; margin-right:10px; cursor:pointer;">계속 진행</button>
+          <button id="cancelBtn" style="padding:8px 15px; background:#f44336; color:white; border:none; border-radius:4px; cursor:pointer;">취소</button>
+        </div>
+      `;
+
+      document.body.appendChild(warningDialog);
+
+      document
+        .getElementById("continueBtn")
+        .addEventListener("click", function () {
+          document.body.removeChild(warningDialog);
+          startOptimalCalculation();
+        });
+
+      document
+        .getElementById("cancelBtn")
+        .addEventListener("click", function () {
+          document.body.removeChild(warningDialog);
+        });
+
+      return;
+    }
+  }
+
+  startOptimalCalculation();
+}
+
+function startOptimalCalculation() {
   if (isProcessing) {
     alert("이미 조합을 계산 중입니다. 잠시만 기다려주세요.");
     return;
@@ -1820,13 +1723,6 @@ function findOptimalCombination() {
 
   setTimeout(() => {
     try {
-      console.log("window.onload: gradeSetEffects 확인:", gradeSetEffects);
-
-      // 테스트용 수호 전설 6개 조합 결과 다시 확인
-      const testGradeCounts = { 수호: { 전설: 6 } };
-      const testResult = calculateGradeSetEffects(testGradeCounts);
-      console.log("onload 테스트 결과:", testResult);
-
       const validSpirits = selectedSpirits
         .filter((spirit) => {
           const levelStats = spirit.stats?.find(
@@ -1876,7 +1772,7 @@ function findOptimalCombination() {
         }
       };
 
-      for (let size = 1; size <= maxCombinationSize; size++) {
+      for (let size = maxCombinationSize; size >= 1; size--) {
         const combinations = generateCombinations(validSpirits, size);
 
         for (let i = 0; i < combinations.length; i++) {
@@ -1895,6 +1791,20 @@ function findOptimalCombination() {
 
           if (!bestResult || result.score > bestResult.score) {
             bestResult = result;
+          } else if (result.score === bestResult.score) {
+            const currentImmortalCount = countGradeInResult(result, "불멸");
+            const bestImmortalCount = countGradeInResult(bestResult, "불멸");
+
+            if (currentImmortalCount > bestImmortalCount) {
+              bestResult = result;
+            } else if (currentImmortalCount === bestImmortalCount) {
+              const currentGradeTypes = countGradeTypesInResult(result);
+              const bestGradeTypes = countGradeTypesInResult(bestResult);
+
+              if (currentGradeTypes > bestGradeTypes) {
+                bestResult = result;
+              }
+            }
           }
         }
 
@@ -1905,17 +1815,6 @@ function findOptimalCombination() {
 
       if (bestResult) {
         const deepCopiedResult = JSON.parse(JSON.stringify(bestResult));
-
-        // 등급 효과가 손실되면 명시적으로 다시 계산
-        if (
-          !deepCopiedResult.gradeEffects ||
-          Object.keys(deepCopiedResult.gradeEffects).length === 0
-        ) {
-          deepCopiedResult.gradeEffects = calculateGradeSetEffects(
-            deepCopiedResult.gradeCounts || {}
-          );
-        }
-
         addNewOptimalCombination(deepCopiedResult);
         saveSavedOptimalCombinations();
         const category = bestResult.spirits[0]?.category || "수호";
@@ -1935,6 +1834,26 @@ function findOptimalCombination() {
       isProcessing = false;
     }
   }, 100);
+}
+
+function countGradeInResult(result, grade) {
+  let count = 0;
+  if (result && result.spirits) {
+    result.spirits.forEach((spirit) => {
+      if (spirit.grade === grade) count++;
+    });
+  }
+  return count;
+}
+
+function countGradeTypesInResult(result) {
+  const gradeTypes = new Set();
+  if (result && result.spirits) {
+    result.spirits.forEach((spirit) => {
+      gradeTypes.add(spirit.grade);
+    });
+  }
+  return gradeTypes.size;
 }
 
 function generateCombinations(array, size) {
@@ -1964,43 +1883,6 @@ function generateCombinations(array, size) {
   return result;
 }
 
-// function addNewOptimalCombination(result) {
-//   const timestamp = new Date().toLocaleString();
-//   const category = result.spirits[0]?.category || "수호";
-
-//   if (!savedOptimalCombinations[category]) {
-//     savedOptimalCombinations[category] = [];
-//   }
-
-//   if (combinationCounter[category] === undefined) {
-//     combinationCounter[category] = 0;
-//   }
-
-//   const MAX_COMBINATIONS = 5;
-
-//   combinationCounter[category]++;
-
-//   const index = (combinationCounter[category] - 1) % MAX_COMBINATIONS;
-
-//   // 결과 저장 전에 gradeEffects가 있는지 확인하고 없으면 재계산
-//   if (!result.gradeEffects || Object.keys(result.gradeEffects).length === 0) {
-//     result.gradeEffects = calculateGradeSetEffects(result.gradeCounts || {});
-//   }
-
-//   const resultWithTimestamp = {
-//     ...result,
-//     timestamp,
-//     combinationName: `조합 ${index + 1}`,
-//     addedAt: Date.now(),
-//   };
-
-//   if (savedOptimalCombinations[category].length < MAX_COMBINATIONS) {
-//     savedOptimalCombinations[category].push(resultWithTimestamp);
-//   } else {
-//     savedOptimalCombinations[category][index] = resultWithTimestamp;
-//   }
-// }
-
 function addNewOptimalCombination(result) {
   const timestamp = new Date().toLocaleString();
   const category = result.spirits[0]?.category || "수호";
@@ -2017,9 +1899,7 @@ function addNewOptimalCombination(result) {
   combinationCounter[category]++;
   const index = (combinationCounter[category] - 1) % MAX_COMBINATIONS;
 
-  // 저장 전에 결과의 효과가 비어있는지 확인하고 필요하면 재계산
   if (!result.gradeEffects || Object.keys(result.gradeEffects).length === 0) {
-    console.log("Recalculating grade effects before saving");
     result.gradeEffects = calculateGradeSetEffects(result.gradeCounts || {});
   }
 
@@ -2364,7 +2244,6 @@ function showSingleOptimalResult(result) {
     }
   }
 
-  // 결과 표시 전에 등급 효과 계산 확인
   let gradeEffects = result.gradeEffects;
   if (!gradeEffects || Object.keys(gradeEffects).length === 0) {
     gradeEffects = calculateGradeSetEffects(gradeCounts || {});
@@ -2372,6 +2251,35 @@ function showSingleOptimalResult(result) {
 
   let factionEffects = result.factionEffects || {};
   let combinedEffects = result.combinedEffects || {};
+
+  if (!combinedEffects || Object.keys(combinedEffects).length === 0) {
+    const registrationStats = {};
+    spirits.forEach((spirit) => {
+      const levelStats = spirit.stats?.find(
+        (s) => s.level === spirit.level
+      )?.registrationStat;
+      if (levelStats) {
+        Object.entries(levelStats).forEach(([stat, value]) => {
+          const numValue = parseFloat(String(value).replace(/,/g, ""));
+          if (!isNaN(numValue)) {
+            const normalizedStat = normalizeStatKey(stat);
+            registrationStats[normalizedStat] =
+              (registrationStats[normalizedStat] || 0) + numValue;
+          }
+        });
+      }
+    });
+
+    combinedEffects = { ...registrationStats };
+
+    Object.entries(gradeEffects).forEach(([stat, value]) => {
+      combinedEffects[stat] = (combinedEffects[stat] || 0) + value;
+    });
+
+    Object.entries(factionEffects).forEach(([stat, value]) => {
+      combinedEffects[stat] = (combinedEffects[stat] || 0) + value;
+    });
+  }
 
   document.getElementById("optimalGradeEffects").innerHTML = renderEffectsList(
     gradeEffects,
