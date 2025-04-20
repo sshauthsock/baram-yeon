@@ -16162,7 +16162,10 @@
             "magicPotionEnhancement": "167"
           }
         }
-      ]
+      ],
+      "influence": "고요",
+      "type": "수호",
+      "grade": "전설"
     },
     {
       "name": "청풍현 정령록",
@@ -16454,7 +16457,10 @@
             "magicPotionEnhancement": "157"
           }
         }
-      ]
+      ],
+      "influence": "의지",
+      "type": "수호",
+      "grade": "전설"
     },
     {
       "name": "복수의 불깨비",

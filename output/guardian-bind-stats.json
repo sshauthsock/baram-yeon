@@ -15681,7 +15681,10 @@
           "level": 25,
           "bindStat": {}
         }
-      ]
+      ],
+      "influence": "고요",
+      "type": "수호",
+      "grade": "전설"
     },
     {
       "name": "청풍현 정령록",
@@ -15791,7 +15794,10 @@
           "level": 25,
           "bindStat": {}
         }
-      ]
+      ],
+      "influence": "의지",
+      "type": "수호",
+      "grade": "전설"
     },
     {
       "name": "복수의 불깨비",

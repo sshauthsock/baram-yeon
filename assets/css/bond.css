@@ -177,7 +177,6 @@ body {
 }
 
 .apply-level-btn {
-
     background-color: #3498db;
     color: white;
 }
@@ -1024,7 +1023,6 @@ body {
     }
 
     .max-level-btn {
-
         background-color: red;
         padding: 4px 10px;
         font-size: 12px;
@@ -1201,7 +1199,7 @@ body {
     }
 
     .selected-spirit-header .spirit-info .spirit-name {
-        font-size: 12px;
+        font-size: 10px;
     }
 
     .spirit-level-control {
@@ -1293,7 +1291,6 @@ body {
     }
 
     .max-level-btn {
-
         background-color: red;
         margin-top: 5px;
     }
@@ -1304,6 +1301,7 @@ body {
 
     .spirit-name {
         max-height: 24px;
+        font-size: 10px;
     }
 
     .image-container {

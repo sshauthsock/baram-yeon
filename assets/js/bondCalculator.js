@@ -87,7 +87,6 @@ const statColorMap = {
   bossMonsterAdditionalDamage: "stat-boss-monster-additional-damage",
 };
 
-// 25레벨만 가능한 특수 환수 목록
 const fixedLevel25Spirits = [
   "결의의 탑승",
   "결의의 수호",
@@ -367,8 +366,8 @@ let cachedFirestoreDocuments = null;
 async function getFirestoreDocument(fileName) {
   try {
     const documentMap = {
-      "guardian-bind-stats": "data-1744895158504",
-      "guardian-registration-stats": "data-1744895164886",
+      "guardian-bind-stats": "data-1745154070398",
+      "guardian-registration-stats": "data-1745153953989",
       "ride-bind-stats": "data-1744895170256",
       "ride-registration-stats": "data-1744895175627",
       "transform-bind-stats": "data-1744895179894",

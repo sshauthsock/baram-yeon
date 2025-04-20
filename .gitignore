@@ -3,6 +3,8 @@ package*.json
 .env
 *.old.json
 output/encrypted/*
+output/*
 split-stats.mjs
 jsonUploader*
+firebaseHelper.html
 output/*.json

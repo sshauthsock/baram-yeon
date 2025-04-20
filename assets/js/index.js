@@ -140,8 +140,8 @@ async function getCachedData(key, fetchFunction, expiryHours = 24) {
 async function getFirestoreDocument(fileName) {
   try {
     const documentMap = {
-      "guardian-bind-stats.json": "data-1744895158504",
-      "guardian-registration-stats.json": "data-1744895164886",
+      "guardian-bind-stats.json": "data-1745154070398",
+      "guardian-registration-stats.json": "data-1745153953989",
       "ride-bind-stats.json": "data-1744895170256",
       "ride-registration-stats.json": "data-1744895175627",
       "transform-bind-stats.json": "data-1744895179894",
