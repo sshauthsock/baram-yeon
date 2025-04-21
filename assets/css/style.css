@@ -442,3 +442,89 @@ body {
         padding: 6px 8px;
     }
 }
+
+.report-container {
+    text-align: center;
+    margin: 20px 0;
+    padding: 0 15px;
+}
+
+.report-btn {
+    background: linear-gradient(135deg, #6e8efb, #4a6cf7);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(74, 108, 247, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-width: 180px;
+}
+
+.report-icon {
+    font-size: 18px;
+    margin-right: 10px;
+    display: inline-block;
+    transform: translateY(-1px);
+}
+
+.report-spark {
+    position: absolute;
+    right: 15px;
+    font-size: 14px;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.4s ease;
+}
+
+.report-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(74, 108, 247, 0.4);
+    background: linear-gradient(135deg, #5d7ff7, #3a5ce6);
+}
+
+.report-btn:hover .report-spark {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.report-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(74, 108, 247, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    .report-btn {
+        background: linear-gradient(135deg, #5d7ff7, #3a5ce6);
+        box-shadow: 0 4px 10px rgba(74, 108, 247, 0.4);
+    }
+
+    .report-btn:hover {
+        background: linear-gradient(135deg, #4a6cf7, #2a4cd6);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .report-btn {
+        padding: 10px 20px;
+        font-size: 15px;
+        min-width: 160px;
+    }
+
+    .report-icon {
+        font-size: 16px;
+    }
+}
+
+.report-btn:active .report-text {
+    transform: scale(0.97);
+    display: inline-block;
+}

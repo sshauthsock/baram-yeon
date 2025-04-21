@@ -1692,7 +1692,7 @@ function startOptimalCalculation() {
           <div id="optimalFactionEffects" class="effects-list"></div>
         </div>
         <div class="results-section">
-          <h4>총 결속 효과</h4>
+          <h4>총 결속 효과 (*장착효과 제외)</h4>
           <div id="optimalTotalEffects" class="effects-list"></div>
         </div>
       </div>
