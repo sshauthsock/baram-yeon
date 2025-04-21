@@ -189,3 +189,25 @@ body {
         border-top: 4px solid #1976d2;
     }
 }
+
+.ad-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .ad-container {
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ad-container {
+        padding: 0 8px;
+    }
+}
