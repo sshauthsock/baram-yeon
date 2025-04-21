@@ -1,3 +1,14 @@
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBWBbe8carOdeIzP6hQsarDOz5H0TuEj9A",
+  authDomain: "baram-yeon.firebaseapp.com",
+  projectId: "baram-yeon",
+  storageBucket: "baram-yeon.firebasestorage.app",
+  messagingSenderId: "924298156656",
+  appId: "1:924298156656:web:845c94e771625fbd24b2b5",
+  measurementId: "G-F2BT2T7HCL",
+};
+
 const parts = [
   "투구",
   "무기",
@@ -45,17 +56,6 @@ const PVP_STATS = [
   "대인피해%",
 ];
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBWBbe8carOdeIzP6hQsarDOz5H0TuEj9A",
-  authDomain: "baram-yeon.firebaseapp.com",
-  projectId: "baram-yeon",
-  storageBucket: "baram-yeon.firebasestorage.app",
-  messagingSenderId: "924298156656",
-  appId: "1:924298156656:web:845c94e771625fbd24b2b5",
-  measurementId: "G-F2BT2T7HCL",
-};
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
@@ -81,9 +81,9 @@ async function getCachedData(key, fetchFunction, expiryHours = 24) {
 async function getFirestoreDocument(fileName) {
   try {
     const documentMap = {
-      "chak.json": "data-1744943781291",
-      "factionSetEffects.json": "data-1744943824244",
-      "gradeSetEffects.json": "data-1744943824244",
+      "gradeSetEffects.json": "data-1745204079667",
+      "factionSetEffects.json": "data-1745204094503",
+      "chak.json": "data-1745204108850",
     };
 
     const docId = documentMap[fileName];

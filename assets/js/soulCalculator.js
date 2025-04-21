@@ -1,3 +1,14 @@
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBWBbe8carOdeIzP6hQsarDOz5H0TuEj9A",
+  authDomain: "baram-yeon.firebaseapp.com",
+  projectId: "baram-yeon",
+  storageBucket: "baram-yeon.firebasestorage.app",
+  messagingSenderId: "924298156656",
+  appId: "1:924298156656:web:845c94e771625fbd24b2b5",
+  measurementId: "G-F2BT2T7HCL",
+};
+
 const EXP_TABLE = {
   legend: [
     0, 717, 789, 867, 1302, 1431, 1575, 1732, 1905, 3239, 3563, 3919, 4312,
@@ -39,17 +50,6 @@ const TYPE_COLORS = {
     border: "#d4ac0d",
     text: "white",
   },
-};
-
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBWBbe8carOdeIzP6hQsarDOz5H0TuEj9A",
-  authDomain: "baram-yeon.firebaseapp.com",
-  projectId: "baram-yeon",
-  storageBucket: "baram-yeon.firebasestorage.app",
-  messagingSenderId: "924298156656",
-  appId: "1:924298156656:web:845c94e771625fbd24b2b5",
-  measurementId: "G-F2BT2T7HCL",
 };
 
 firebase.initializeApp(firebaseConfig);

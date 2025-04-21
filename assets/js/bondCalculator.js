@@ -1,3 +1,14 @@
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBWBbe8carOdeIzP6hQsarDOz5H0TuEj9A",
+  authDomain: "baram-yeon.firebaseapp.com",
+  projectId: "baram-yeon",
+  storageBucket: "baram-yeon.firebasestorage.app",
+  messagingSenderId: "924298156656",
+  appId: "1:924298156656:web:845c94e771625fbd24b2b5",
+  measurementId: "G-F2BT2T7HCL",
+};
+
 const statsMapping = {
   criticalPower: "치명위력",
   normalMonsterAdditionalDamage: "일반몬스터추가피해",
@@ -340,17 +351,6 @@ function debounce(func, wait) {
   };
 }
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBWBbe8carOdeIzP6hQsarDOz5H0TuEj9A",
-  authDomain: "baram-yeon.firebaseapp.com",
-  projectId: "baram-yeon",
-  storageBucket: "baram-yeon.firebasestorage.app",
-  messagingSenderId: "924298156656",
-  appId: "1:924298156656:web:845c94e771625fbd24b2b5",
-  measurementId: "G-F2BT2T7HCL",
-};
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
@@ -375,17 +375,18 @@ let cachedFirestoreDocuments = null;
 async function getFirestoreDocument(fileName) {
   try {
     const documentMap = {
-      "guardian-bind-stats": "data-1745191165859",
-      "guardian-registration-stats": "data-1745191061765",
-      "ride-bind-stats": "data-1744895170256",
-      "ride-registration-stats": "data-1744895175627",
-      "transform-bind-stats": "data-1744895179894",
-      "transform-registration-stats": "data-1744895184028",
-      gradeSetEffects: "data-1744943853697",
-      factionSetEffects: "data-1744943824244",
+      "guardian-bind-stats.json": "data-1745203971906",
+      "guardian-registration-stats.json": "data-1745203990701",
+      "ride-bind-stats.json": "data-1745204015994",
+      "ride-registration-stats.json": "data-1745204029836",
+      "transform-bind-stats.json": "data-1745204045512",
+      "transform-registration-stats.json": "data-1745204058405",
+      "gradeSetEffects.json": "data-1745204079667",
+      "factionSetEffects.json": "data-1745204094503",
+      "chak.json": "data-1745204108850",
     };
 
-    const docId = documentMap[fileName];
+    const docId = documentMap[fileName + ".json"];
 
     if (!docId) {
       throw new Error(`No mapping for ${fileName}`);

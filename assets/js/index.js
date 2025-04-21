@@ -1,3 +1,14 @@
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBWBbe8carOdeIzP6hQsarDOz5H0TuEj9A",
+  authDomain: "baram-yeon.firebaseapp.com",
+  projectId: "baram-yeon",
+  storageBucket: "baram-yeon.firebasestorage.app",
+  messagingSenderId: "924298156656",
+  appId: "1:924298156656:web:845c94e771625fbd24b2b5",
+  measurementId: "G-F2BT2T7HCL",
+};
+
 const statsMapping = {
   criticalPower: "치명위력",
   normalMonsterAdditionalDamage: "일반몬스터추가피해",
@@ -51,16 +62,38 @@ let currentLevel = 0;
 let currentName = "";
 let modalElement = null;
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBWBbe8carOdeIzP6hQsarDOz5H0TuEj9A",
-  authDomain: "baram-yeon.firebaseapp.com",
-  projectId: "baram-yeon",
-  storageBucket: "baram-yeon.firebasestorage.app",
-  messagingSenderId: "924298156656",
-  appId: "1:924298156656:web:845c94e771625fbd24b2b5",
-  measurementId: "G-F2BT2T7HCL",
-};
+function checkFirebaseConnection() {
+  console.log("Firebase 연결 확인 중...");
+  console.log("Firebase 설정:", firebaseConfig);
+
+  if (!firebase.apps.length) {
+    console.error("Firebase가 초기화되지 않았습니다!");
+    return false;
+  }
+
+  try {
+    return db
+      .collection("jsonData")
+      .doc("data-1745203971906")
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log("Firebase 연결 성공! 샘플 데이터:", doc.data());
+          return true;
+        } else {
+          console.error("Firebase에 연결되었으나 문서를 찾을 수 없습니다!");
+          return false;
+        }
+      })
+      .catch((error) => {
+        console.error("Firebase 연결 오류:", error);
+        return false;
+      });
+  } catch (e) {
+    console.error("Firebase 테스트 실패:", e);
+    return false;
+  }
+}
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
@@ -78,8 +111,30 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   createModal();
-  loadCategoryData();
+
+  testFirebaseConnectivity().then(() => {
+    loadCategoryData();
+  });
 });
+
+async function testFirebaseConnectivity() {
+  const isConnected = await checkFirebaseConnection();
+  console.log("Firebase 연결 테스트 결과:", isConnected);
+
+  if (!isConnected) {
+    console.log("경고: Firebase 연결 실패, 대신 로컬 파일을 사용합니다");
+  }
+
+  try {
+    const snapshot = await db.collection("jsonData").get();
+    console.log(`jsonData 컬렉션에서 ${snapshot.size}개의 문서를 찾았습니다`);
+    snapshot.forEach((doc) => {
+      console.log(`문서 ID: ${doc.id}, 데이터 있음: ${!!doc.data()}`);
+    });
+  } catch (e) {
+    console.error("문서 목록 조회 오류:", e);
+  }
+}
 
 const categoryFileMap = {
   수호: {
@@ -120,17 +175,14 @@ async function getCachedData(key, fetchFunction, expiryHours = 24) {
   const cachedTime = localStorage.getItem(`${key}_time`);
 
   const now = new Date().getTime();
-  const expiryTime = expiryHours * 60 * 60 * 1000; // 시간을 밀리초로 변환
+  const expiryTime = expiryHours * 60 * 60 * 1000;
 
-  // 캐시 데이터가 있고 만료되지 않았으면 사용
   if (cachedData && cachedTime && now - parseInt(cachedTime) < expiryTime) {
     return JSON.parse(cachedData);
   }
 
-  // 새 데이터 가져오기
   const freshData = await fetchFunction();
 
-  // 데이터 캐싱
   localStorage.setItem(key, JSON.stringify(freshData));
   localStorage.setItem(`${key}_time`, now.toString());
 
@@ -138,24 +190,25 @@ async function getCachedData(key, fetchFunction, expiryHours = 24) {
 }
 
 async function getFirestoreDocument(fileName) {
-  // "guardian-registration-stats.json": "data-1745153953989",
-  // "ride-bind-stats.json": "data-1744895170256",
-
+  console.log(`Firestore에서 ${fileName} 가져오기 시도 중...`);
   try {
     const documentMap = {
-      "guardian-bind-stats.json": "data-1745191165859",
-      "guardian-registration-stats.json": "data-1745191061765",
-      "ride-bind-stats.json": "data-1744895170256",
-      "ride-registration-stats.json": "data-1744895175627",
-      "transform-bind-stats.json": "data-1744895179894",
-      "transform-registration-stats.json": "data-1744895184028",
-      "gradeSetEffects.json": "data-1744943824244",
-      "factionSetEffects.json": "data-1744943824244",
+      "guardian-bind-stats.json": "data-1745203971906",
+      "guardian-registration-stats.json": "data-1745203990701",
+      "ride-bind-stats.json": "data-1745204015994",
+      "ride-registration-stats.json": "data-1745204029836",
+      "transform-bind-stats.json": "data-1745204045512",
+      "transform-registration-stats.json": "data-1745204058405",
+      "gradeSetEffects.json": "data-1745204079667",
+      "factionSetEffects.json": "data-1745204094503",
+      "chak.json": "data-1745204108850",
     };
 
     const docId = documentMap[fileName + ".json"];
+    console.log(`${fileName}의 문서 ID: ${docId}`);
 
     if (!docId) {
+      console.log(`${fileName}에 대한 문서 매핑이 없습니다. 로컬 파일 사용`);
       const response = await fetch(`output/${fileName}.json`);
       return await response.json();
     }
@@ -169,12 +222,18 @@ async function getFirestoreDocument(fileName) {
       cachedTime &&
       Date.now() - parseInt(cachedTime) < 24 * 60 * 60 * 1000
     ) {
+      console.log(`${fileName}에 대한 캐시된 데이터 사용`);
       return JSON.parse(cachedData);
     }
 
+    console.log(`Firestore에서 ${docId} 가져오는 중...`);
     const docRef = await db.collection("jsonData").doc(docId).get();
+    console.log(`문서 존재 여부: ${docRef.exists}`);
 
     if (!docRef.exists) {
+      console.warn(
+        `Firestore에서 ${docId} 문서를 찾을 수 없습니다. 로컬 파일 사용`
+      );
       const response = await fetch(`output/${fileName}.json`);
       const data = await response.json();
 
@@ -185,18 +244,19 @@ async function getFirestoreDocument(fileName) {
     }
 
     const data = docRef.data();
+    console.log(`${fileName}에 대한 데이터 검색:`, data ? "성공" : "비어있음");
 
     if (!data) {
-      throw new Error(`Document ${docId} exists but has no data`);
+      throw new Error(`문서 ${docId}는 존재하지만 데이터가 없습니다`);
     }
 
-    // Firestore 데이터 캐싱
     localStorage.setItem(cachedKey, JSON.stringify(data));
     localStorage.setItem(`${cachedKey}_time`, Date.now().toString());
 
     return data;
   } catch (error) {
-    console.error(`Firestore error for ${fileName}:`, error);
+    console.error(`${fileName}에 대한 Firestore 오류:`, error);
+    console.log(`${fileName}에 대한 로컬 파일로 대체`);
     const response = await fetch(`output/${fileName}.json`);
     return await response.json();
   }

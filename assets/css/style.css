@@ -17,6 +17,8 @@ body {
     box-sizing: border-box;
 }
 
+
+
 .image-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
