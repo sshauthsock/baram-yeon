@@ -63,8 +63,8 @@ let currentName = "";
 let modalElement = null;
 
 function checkFirebaseConnection() {
-  console.log("Firebase 연결 확인 중...");
-  console.log("Firebase 설정:", firebaseConfig);
+  // console.log("Firebase 연결 확인 중...");
+  // console.log("Firebase 설정:", firebaseConfig);
 
   if (!firebase.apps.length) {
     console.error("Firebase가 초기화되지 않았습니다!");
@@ -78,7 +78,7 @@ function checkFirebaseConnection() {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          console.log("Firebase 연결 성공! 샘플 데이터:", doc.data());
+          // console.log("Firebase 연결 성공! 샘플 데이터:", doc.data());
           return true;
         } else {
           console.error("Firebase에 연결되었으나 문서를 찾을 수 없습니다!");
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function testFirebaseConnectivity() {
   const isConnected = await checkFirebaseConnection();
-  console.log("Firebase 연결 테스트 결과:", isConnected);
+  // console.log("Firebase 연결 테스트 결과:", isConnected);
 
   if (!isConnected) {
     console.log("경고: Firebase 연결 실패, 대신 로컬 파일을 사용합니다");
@@ -127,9 +127,9 @@ async function testFirebaseConnectivity() {
 
   try {
     const snapshot = await db.collection("jsonData").get();
-    console.log(`jsonData 컬렉션에서 ${snapshot.size}개의 문서를 찾았습니다`);
+    // console.log(`jsonData 컬렉션에서 ${snapshot.size}개의 문서를 찾았습니다`);
     snapshot.forEach((doc) => {
-      console.log(`문서 ID: ${doc.id}, 데이터 있음: ${!!doc.data()}`);
+      // console.log(`문서 ID: ${doc.id}, 데이터 있음: ${!!doc.data()}`);
     });
   } catch (e) {
     console.error("문서 목록 조회 오류:", e);
@@ -190,7 +190,7 @@ async function getCachedData(key, fetchFunction, expiryHours = 24) {
 }
 
 async function getFirestoreDocument(fileName) {
-  console.log(`Firestore에서 ${fileName} 가져오기 시도 중...`);
+  // console.log(`Firestore에서 ${fileName} 가져오기 시도 중...`);
   try {
     const documentMap = {
       "guardian-bind-stats.json": "data-1745203971906",
@@ -205,10 +205,10 @@ async function getFirestoreDocument(fileName) {
     };
 
     const docId = documentMap[fileName + ".json"];
-    console.log(`${fileName}의 문서 ID: ${docId}`);
+    // console.log(`${fileName}의 문서 ID: ${docId}`);
 
     if (!docId) {
-      console.log(`${fileName}에 대한 문서 매핑이 없습니다. 로컬 파일 사용`);
+      // console.log(`${fileName}에 대한 문서 매핑이 없습니다. 로컬 파일 사용`);
       const response = await fetch(`output/${fileName}.json`);
       return await response.json();
     }
@@ -222,13 +222,13 @@ async function getFirestoreDocument(fileName) {
       cachedTime &&
       Date.now() - parseInt(cachedTime) < 24 * 60 * 60 * 1000
     ) {
-      console.log(`${fileName}에 대한 캐시된 데이터 사용`);
+      // console.log(`${fileName}에 대한 캐시된 데이터 사용`);
       return JSON.parse(cachedData);
     }
 
-    console.log(`Firestore에서 ${docId} 가져오는 중...`);
+    // console.log(`Firestore에서 ${docId} 가져오는 중...`);
     const docRef = await db.collection("jsonData").doc(docId).get();
-    console.log(`문서 존재 여부: ${docRef.exists}`);
+    // console.log(`문서 존재 여부: ${docRef.exists}`);
 
     if (!docRef.exists) {
       console.warn(
@@ -244,7 +244,7 @@ async function getFirestoreDocument(fileName) {
     }
 
     const data = docRef.data();
-    console.log(`${fileName}에 대한 데이터 검색:`, data ? "성공" : "비어있음");
+    // console.log(`${fileName}에 대한 데이터 검색:`, data ? "성공" : "비어있음");
 
     if (!data) {
       throw new Error(`문서 ${docId}는 존재하지만 데이터가 없습니다`);
@@ -256,7 +256,7 @@ async function getFirestoreDocument(fileName) {
     return data;
   } catch (error) {
     console.error(`${fileName}에 대한 Firestore 오류:`, error);
-    console.log(`${fileName}에 대한 로컬 파일로 대체`);
+    // console.log(`${fileName}에 대한 로컬 파일로 대체`);
     const response = await fetch(`output/${fileName}.json`);
     return await response.json();
   }
