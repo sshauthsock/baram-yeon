@@ -12,6 +12,19 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <style>
+        @media screen and (min-width: 769px) {
+            .mobile-ad {
+                display: none !important;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .desktop-ad {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -22,10 +35,19 @@
         <div class="tab active" onclick="location.assign('chak.html')">착 계산</div>
     </div>
 
-    <div class="ad-container">
+    <!-- 데스크톱 광고 -->
+    <div class="ad-container desktop-ad">
         <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-l6ShIzRdMfSOcB8v" data-ad-width="728"
             data-ad-height="90"></ins>
     </div>
+
+    <!-- 모바일 광고 -->
+    <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-UDsuae5QVIAxX2fS" data-ad-width="320"
+            data-ad-height="50"></ins>
+    </div>
+
+    <!-- 광고 스크립트는 한 번만 로드 -->
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
 
     <div class="layout-container">
@@ -157,7 +179,32 @@
                 });
             }
             document.getElementById('search-button').addEventListener('click', searchStats);
+            var isMobile = window.innerWidth <= 768;
+            localStorage.setItem('isMobileView', isMobile);
         });
+        // 디바운스 함수 구현
+        function debounce(func, wait) {
+            var timeout;
+            return function () {
+                var context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function () {
+                    func.apply(context, args);
+                }, wait);
+            };
+        }
+
+        // 화면 크기 변경 시 처리 (디바운스 적용)
+        window.addEventListener('resize', debounce(function () {
+            var wasMobile = localStorage.getItem('isMobileView') === 'true';
+            var isMobile = window.innerWidth <= 768;
+
+            // 모바일->데스크톱 또는 데스크톱->모바일로 전환된 경우에만 새로고침
+            if (wasMobile !== isMobile) {
+                localStorage.setItem('isMobileView', isMobile);
+                location.reload();
+            }
+        }, 250)); // 250ms 디바운스 적용
     </script>
 </body>
 
