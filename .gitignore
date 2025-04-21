@@ -8,3 +8,4 @@ split-stats.mjs
 jsonUploader*
 firebaseHelper.html
 output/*.json
+archive/*
