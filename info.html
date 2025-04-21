@@ -11,21 +11,13 @@
         rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/global.css" rel="stylesheet">
+    <link href="assets/css/components/ads.css" rel="stylesheet">
+    <link href="assets/css/components/footer.css" rel="stylesheet">
+
+
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-    <style>
-        @media screen and (min-width: 769px) {
-            .mobile-ad {
-                display: none !important;
-            }
-        }
 
-        @media screen and (max-width: 768px) {
-            .desktop-ad {
-                display: none !important;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -42,22 +34,27 @@
         <div class="tab" onclick="showCategory('변신')">변신</div>
     </div>
 
-    <!-- 데스크톱 광고 -->
-    <div class="ad-container desktop-ad">
-        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-l6ShIzRdMfSOcB8v" data-ad-width="728"
-            data-ad-height="90"></ins>
+    <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-XTAnZwWzQOT46c36" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+
+        <div class="ad-container-right">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-l6ShIzRdMfSOcB8v" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
     </div>
 
-    <!-- 모바일 광고 -->
     <div class="ad-container mobile-ad">
         <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-UDsuae5QVIAxX2fS" data-ad-width="320"
             data-ad-height="50"></ins>
     </div>
 
-    <!-- 광고 스크립트는 한 번만 로드 -->
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
 
     <div class="image-container" id="imageContainer"></div>
+
     <div class="report-container">
         <button class="report-btn" onclick="openReportSheet()">
             <span class="report-icon">📋</span>
@@ -65,17 +62,31 @@
             <span class="report-spark">✨</span>
         </button>
     </div>
+    <footer class="site-footer">
+        <div class="footer-desktop">
+            <div class="footer-links">
+                <a href="info.html">환수정보</a>
+                <a href="bondCalculator.html">환수 결속</a>
+                <a href="soulCalculator.html">환수혼 계산</a>
+                <a href="chak.html">착 계산</a>
+                <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2025 바연 정보 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
+        </div>
+    </footer>
+
+
+
     <script src="assets/js/index.js"></script>
 
     <script>
-        // 페이지 로드 시 현재 화면 크기를 기억
         document.addEventListener('DOMContentLoaded', function () {
-            // 로컬 스토리지에 현재 화면 상태(모바일/데스크톱) 저장
             var isMobile = window.innerWidth <= 768;
             localStorage.setItem('isMobileView', isMobile);
         });
 
-        // 디바운스 함수 구현
         function debounce(func, wait) {
             var timeout;
             return function () {
@@ -87,17 +98,15 @@
             };
         }
 
-        // 화면 크기 변경 시 처리 (디바운스 적용)
         window.addEventListener('resize', debounce(function () {
             var wasMobile = localStorage.getItem('isMobileView') === 'true';
             var isMobile = window.innerWidth <= 768;
 
-            // 모바일->데스크톱 또는 데스크톱->모바일로 전환된 경우에만 새로고침
             if (wasMobile !== isMobile) {
                 localStorage.setItem('isMobileView', isMobile);
                 location.reload();
             }
-        }, 250)); // 250ms 디바운스 적용
+        }, 250));
         function openReportSheet() {
             window.open('https://forms.gle/v1F41Dq2GxhbJKmBA', '_blank');
         }
