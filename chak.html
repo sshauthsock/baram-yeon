@@ -132,15 +132,15 @@
     <script src="assets/js/chak.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            if (!sessionStorage.getItem('authenticated')) {
-                window.location.href = 'login.html';
-                return;
-            }
+            // if (!sessionStorage.getItem('authenticated')) {
+            //     window.location.href = 'login.html';
+            //     return;
+            // }
 
-            const username = sessionStorage.getItem('username');
-            if (document.getElementById('userWelcome')) {
-                document.getElementById('userWelcome').textContent = `환영합니다, ${username}님!`;
-            }
+            // const username = sessionStorage.getItem('username');
+            // if (document.getElementById('userWelcome')) {
+            //     document.getElementById('userWelcome').textContent = `환영합니다, ${username}님!`;
+            // }
 
             const tutorialShown = localStorage.getItem('chakTutorialShown');
             if (!tutorialShown && document.getElementById('tutorial-tip')) {
