@@ -2519,6 +2519,16 @@ function startOptimalCalculation() {
   document.getElementById("optimalModalContent").innerHTML = `
     <h3 class="modal-title">최적 결속 조합 결과 (최대 6개)</h3>
     <div class="modal-content">
+      <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-sgK0ytXrL3f7EHRF"
+                data-ad-width="728" data-ad-height="90"></ins>
+        </div>
+      </div>
+      <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-TPesUrzJaxJ008Lm"
+            data-ad-width="320" data-ad-height="50"></ins>
+      </div>
       <div id="optimalHeader" class="optimal-header">
         <div class="optimal-score">
           <h4>환산합산: <span id="optimalScore">계산 중...</span></h4>
