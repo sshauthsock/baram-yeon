@@ -68,6 +68,7 @@ let combinationCounter = {
 let allStatNames = [];
 let selectedSearchStats = [];
 let lastActiveCategory = "수호";
+let currentScrollY = 0;
 
 const percentStats = [
   "healthIncreasePercent",
@@ -148,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
   loadSavedOptimalCombinations();
   initializeUIEvents();
   handleResponsiveLayout();
+  addCustomStyles();
 
   const images = document.querySelectorAll("img");
   if ("loading" in HTMLImageElement.prototype) {
@@ -184,6 +186,8 @@ document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("optimalScore").textContent = "0";
         }
       }
+
+      showCategory(category, false);
     });
   });
 
@@ -397,7 +401,6 @@ function handleResponsiveLayout() {
   }
 
   if (window.innerWidth <= 768) {
-    // 현재 카테고리에 맞는 환수 개수 계산
     const currentCategory = lastActiveCategory;
     const categorySpirits = selectedSpirits.filter(
       (spirit) => spirit.category === currentCategory
@@ -420,14 +423,12 @@ function handleResponsiveLayout() {
     }
   }
 
-  // 저장된 카테고리 유지
   document.querySelectorAll(".sub-tabs .tab").forEach((tab) => {
     tab.classList.toggle("active", tab.textContent === lastActiveCategory);
   });
 
-  // 올바른 환수 목록 보여주기
   updateSelectedCount();
-  showCategory(lastActiveCategory, false);
+  updateSelectedSpiritsPanel();
 }
 
 function initializeUIEvents() {
@@ -1094,7 +1095,9 @@ function showSearchResults() {
           ...spirit,
           category: currentCategory,
           stats: getSpiritStats(spirit),
-          isSelected: selectedSpirits.some((s) => s.image === spirit.image),
+          isSelected: selectedSpirits.some(
+            (s) => s.image === spirit.image && s.category === currentCategory
+          ),
         });
       }
     });
@@ -1120,6 +1123,7 @@ function showSearchResults() {
     }`;
     card.dataset.spiritName = spirit.name;
     card.dataset.spiritImage = spirit.image;
+    card.dataset.spiritCategory = spirit.category;
     card.onclick = () => selectSpiritFromSearch(spirit, card);
 
     const statsHtml = Object.entries(spirit.stats)
@@ -1149,13 +1153,82 @@ function selectSpiritFromSearch(spirit, cardElement) {
   const originalSpirit = mobData[category]?.find((s) => s.name === spirit.name);
 
   if (originalSpirit) {
-    toggleSpiritSelection(originalSpirit, category);
-  } else {
-    toggleSpiritSelection(spirit, category);
-  }
+    const isSelected = selectedSpirits.some(
+      (s) => s.image === spirit.image && s.category === category
+    );
 
-  if (cardElement) {
-    const isNowSelected = selectedSpirits.some((s) => s.image === spirit.image);
+    if (isSelected) {
+      const indexToRemove = selectedSpirits.findIndex(
+        (s) => s.image === spirit.image && s.category === category
+      );
+      if (indexToRemove !== -1) {
+        selectedSpirits.splice(indexToRemove, 1);
+      }
+
+      const imageElement = document.querySelector(
+        `img[data-image="${spirit.image}"][data-category="${category}"]`
+      );
+      if (imageElement) {
+        imageElement.classList.remove("selected");
+      }
+
+      if (cardElement) {
+        cardElement.classList.remove("selected-spirit-card");
+        const indicator = cardElement.querySelector(".selected-indicator");
+        if (indicator) {
+          indicator.remove();
+        }
+      }
+    } else {
+      const categorySpirits = selectedSpirits.filter(
+        (s) => s.category === category
+      );
+      if (categorySpirits.length >= 20) {
+        alert(`${category} 카테고리는 최대 20개까지만 선택할 수 있습니다.`);
+        return;
+      }
+
+      const faction =
+        originalSpirit.influence || originalSpirit.faction || "결의";
+      const isFixed = isFixedLevelSpirit(originalSpirit.name);
+      const spiritLevel = isFixed ? 25 : 0;
+
+      const spiritData = {
+        ...originalSpirit,
+        category,
+        level: spiritLevel,
+        grade: originalSpirit.grade || "전설",
+        faction: faction,
+        isFixedLevel: isFixed,
+      };
+      selectedSpirits.push(spiritData);
+
+      const imageElement = document.querySelector(
+        `img[data-image="${spirit.image}"][data-category="${category}"]`
+      );
+      if (imageElement) {
+        imageElement.classList.add("selected");
+      }
+
+      if (cardElement) {
+        cardElement.classList.add("selected-spirit-card");
+        if (!cardElement.querySelector(".selected-indicator")) {
+          const indicator = document.createElement("div");
+          indicator.className = "selected-indicator";
+          indicator.textContent = "✓";
+          cardElement.prepend(indicator);
+        }
+      }
+    }
+
+    updateSelectedCount();
+    updateSelectedSpiritsPanel();
+    updateMobilePanel();
+    saveSelectedSpiritsToStorage();
+  } else if (cardElement) {
+    const isNowSelected = selectedSpirits.some(
+      (s) => s.image === spirit.image && s.category === spirit.category
+    );
 
     if (isNowSelected) {
       cardElement.classList.add("selected-spirit-card");
@@ -1362,6 +1435,8 @@ function normalizeStatKey(key) {
 }
 
 function showCategory(category, resetSelection = false) {
+  currentScrollY = window.scrollY;
+
   lastActiveCategory = category;
   localStorage.setItem("lastActiveCategory", category);
 
@@ -1378,7 +1453,7 @@ function showCategory(category, resetSelection = false) {
       (spirit) => spirit.category !== category
     );
     updateSelectedCount();
-    renderSelectedSpirits();
+    updateSelectedSpiritsPanel();
     saveSelectedSpiritsToStorage();
   }
 
@@ -1420,6 +1495,7 @@ function showCategory(category, resetSelection = false) {
     img.dataset.category = category;
     img.dataset.name = item.name;
     img.dataset.image = item.image;
+    img.id = `spirit-img-${item.name.replace(/\s+/g, "-")}`;
 
     const isSelected = selectedSpirits.some(
       (s) => s.image === item.image && s.category === category
@@ -1429,7 +1505,54 @@ function showCategory(category, resetSelection = false) {
       img.classList.add("selected");
     }
 
-    img.onclick = () => toggleSpiritSelection(item, category);
+    img.onclick = function (e) {
+      e.preventDefault();
+      currentScrollY = window.scrollY;
+
+      const isCurrentlySelected = this.classList.contains("selected");
+      if (isCurrentlySelected) {
+        this.classList.remove("selected");
+        const indexToRemove = selectedSpirits.findIndex(
+          (s) => s.image === item.image && s.category === category
+        );
+        if (indexToRemove !== -1) {
+          selectedSpirits.splice(indexToRemove, 1);
+        }
+      } else {
+        const categorySpirits = selectedSpirits.filter(
+          (s) => s.category === category
+        );
+        if (categorySpirits.length >= 20) {
+          alert(`${category} 카테고리는 최대 20개까지만 선택할 수 있습니다.`);
+          return;
+        }
+
+        this.classList.add("selected");
+
+        const faction = item.influence || item.faction || "결의";
+        const isFixed = isFixedLevelSpirit(item.name);
+        const spiritLevel = isFixed ? 25 : 0;
+
+        const spiritData = {
+          ...item,
+          category,
+          level: spiritLevel,
+          grade: item.grade || "전설",
+          faction: faction,
+          isFixedLevel: isFixed,
+        };
+        selectedSpirits.push(spiritData);
+      }
+
+      updateSelectedCount();
+      updateSelectedSpiritsPanel();
+      updateMobilePanel();
+      saveSelectedSpiritsToStorage();
+
+      setTimeout(() => {
+        window.scrollTo(0, currentScrollY);
+      }, 10);
+    };
 
     const nameLabel = document.createElement("small");
     nameLabel.textContent = item.name;
@@ -1439,6 +1562,177 @@ function showCategory(category, resetSelection = false) {
     imgContainer.appendChild(nameLabel);
     container.appendChild(imgContainer);
   });
+
+  updateSelectedSpiritsPanel();
+
+  setTimeout(() => {
+    window.scrollTo(0, currentScrollY);
+  }, 10);
+}
+
+function updateSelectedSpiritsPanel() {
+  const containerSelectors = [
+    "#selectedSpirits",
+    "#panelToggleContainer .selected-spirits",
+  ];
+  const currentCategory = lastActiveCategory;
+
+  containerSelectors.forEach((selector) => {
+    const container = document.querySelector(selector);
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    const filteredSpirits = selectedSpirits.filter(
+      (spirit) => spirit.category === currentCategory
+    );
+
+    if (filteredSpirits.length === 0) {
+      container.innerHTML =
+        "<p>선택된 환수가 없습니다. 위에서 환수를 선택해주세요.</p>";
+      return;
+    }
+
+    filteredSpirits.forEach((spirit) => {
+      const originalIndex = selectedSpirits.findIndex(
+        (s) => s.image === spirit.image && s.category === spirit.category
+      );
+
+      const card = document.createElement("div");
+      card.className = `selected-spirit-card spirit-grade-${
+        spirit.grade === "불멸" ? "immortal" : "legend"
+      }`;
+      card.id = `selected-spirit-${spirit.name.replace(/\s+/g, "-")}`;
+
+      const isFixed = spirit.isFixedLevel;
+      const categoryBadge = `<div class="spirit-category-badge">${spirit.category}</div>`;
+
+      const levelControls = isFixed
+        ? `<div class="spirit-level-control">
+             <input type="number" value="25" readonly class="fixed-level" title="이 환수는 25레벨만 사용 가능합니다">
+           </div>`
+        : `<div class="spirit-level-control">
+             <button onclick="changeLevel(${originalIndex}, -1)">-</button>
+             <input type="number" min="0" max="25" value="${spirit.level || 0}"
+               onchange="updateSpiritLevel(${originalIndex}, this.value)" id="level-input-${originalIndex}">
+             <button onclick="changeLevel(${originalIndex}, 1)">+</button>
+             <button class="max-btn" onclick="setMaxLevel(${originalIndex})">M</button>
+           </div>`;
+
+      card.innerHTML = `
+        <button class="remove-spirit" onclick="removeSpirit(${originalIndex})">X</button>
+        ${categoryBadge}
+        <div class="selected-spirit-header">
+          <img src="${spirit.image}" alt="${spirit.name}" title="${
+        spirit.name
+      }">
+          <div class="spirit-info">
+            <div class="spirit-name">${spirit.name}</div>
+            ${isFixed ? '<div class="fixed-level-badge">고정 25</div>' : ""}
+          </div>
+        </div>
+         ${isFixed ? "" : levelControls}
+      `;
+
+      container.appendChild(card);
+    });
+  });
+}
+
+function updateMobilePanel() {
+  const toggleContainer = document.getElementById("panelToggleContainer");
+  if (!toggleContainer) return;
+
+  const currentCategory = lastActiveCategory;
+  const categorySpirits = selectedSpirits.filter(
+    (spirit) => spirit.category === currentCategory
+  );
+
+  if (window.innerWidth <= 768) {
+    if (categorySpirits.length === 0) {
+      toggleContainer.style.display = "none";
+    } else {
+      toggleContainer.style.display = "flex";
+    }
+  }
+}
+
+function addCustomStyles() {
+  const styleElement = document.createElement("style");
+  styleElement.textContent = `
+    .image-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+      gap: 10px;
+      width: 100%;
+      height: auto;
+      min-height: 100px;
+      overflow-x: hidden;
+      overflow-y: visible;
+    }
+
+    .img-wrapper {
+      text-align: center;
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+
+    .img-wrapper img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+      background-color: #f8f8f8;
+      padding: 3px;
+      display: block;
+      margin: 0 auto;
+    }
+    
+    .selected-spirits {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 8px;
+      max-height: calc(100vh - 300px);
+      overflow-y: auto;
+      margin-bottom: 10px;
+      padding: 5px;
+    }
+    
+    @media (max-width: 768px) {
+      .image-container {
+        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+      }
+      
+      .img-wrapper img {
+        width: 50px;
+        height: 50px;
+      }
+      
+      .selected-spirits {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .image-container {
+        grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+      }
+      
+      .img-wrapper img {
+        width: 45px;
+        height: 45px;
+      }
+      
+      .selected-spirits {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      }
+    }
+  `;
+  document.head.appendChild(styleElement);
 }
 
 function saveSelectedSpiritsToStorage() {
@@ -1451,21 +1745,19 @@ function loadSelectedSpiritsFromStorage() {
     try {
       selectedSpirits = JSON.parse(savedSpirits);
       updateSelectedCount();
-      renderSelectedSpirits();
 
-      // 현재 카테고리에 맞는 환수만 선택 표시
       const currentCategory = lastActiveCategory;
+
       const images = document.querySelectorAll("#imageContainer img");
       images.forEach((img) => {
         const isSelected = selectedSpirits.some(
-          (s) => s.image === img.dataset.image && s.category === currentCategory
+          (s) =>
+            s.image === img.dataset.image && s.category === img.dataset.category
         );
-        if (isSelected) {
-          img.classList.add("selected");
-        } else {
-          img.classList.remove("selected");
-        }
+        img.classList.toggle("selected", isSelected);
       });
+
+      updateSelectedSpiritsPanel();
     } catch (e) {
       console.error("저장된 환수 데이터를 불러오는 중 오류 발생:", e);
     }
@@ -1563,57 +1855,9 @@ function clearSavedOptimalCombinations() {
   }
 }
 
-function toggleSpiritSelection(spirit, category) {
-  const existingIndex = selectedSpirits.findIndex(
-    (s) => s.image === spirit.image && s.category === category
-  );
-
-  if (existingIndex !== -1) {
-    selectedSpirits.splice(existingIndex, 1);
-  } else {
-    if (selectedSpirits.length >= 20) {
-      alert("최대 20개의 환수만 선택할 수 있습니다.");
-      return;
-    }
-
-    const faction = spirit.influence || spirit.faction || "결의";
-    const isFixed = isFixedLevelSpirit(spirit.name);
-    const spiritLevel = isFixed ? 25 : 0;
-
-    const spiritData = {
-      ...spirit,
-      category,
-      level: spiritLevel,
-      grade: spirit.grade || "전설",
-      faction: faction,
-      isFixedLevel: isFixed,
-    };
-    selectedSpirits.push(spiritData);
-  }
-
-  updateSelectedCount();
-  updateSpiritSelectionUI(spirit.image, category);
-  renderSelectedSpirits();
-  handleResponsiveLayout();
-  saveSelectedSpiritsToStorage();
-}
-
-function updateSpiritSelectionUI(spiritImage, category) {
-  const images = document.querySelectorAll("#imageContainer img");
-  images.forEach((img) => {
-    if (
-      img.dataset.image === spiritImage &&
-      img.dataset.category === category
-    ) {
-      img.classList.toggle("selected");
-    }
-  });
-}
-
 function updateSelectedCount() {
   const currentCategory = lastActiveCategory;
 
-  // 현재 카테고리에 해당하는 환수 수만 계산
   const filteredCount = selectedSpirits.filter(
     (spirit) => spirit.category === currentCategory
   ).length;
@@ -1631,87 +1875,18 @@ function setMaxBatchLevel(inputId) {
   applyBatchLevel(inputId);
 }
 
-function renderSelectedSpirits() {
-  const containerSelectors = [
-    "#selectedSpirits",
-    "#panelToggleContainer .selected-spirits",
-  ];
-
-  const currentCategory = lastActiveCategory;
-
-  containerSelectors.forEach((selector) => {
-    const container = document.querySelector(selector);
-    if (!container) return;
-
-    container.innerHTML = "";
-
-    // 현재 카테고리에 맞는 환수만 필터링
-    const filteredSpirits = selectedSpirits.filter(
-      (spirit) => spirit.category === currentCategory
-    );
-
-    if (filteredSpirits.length === 0) {
-      container.innerHTML =
-        "<p>선택된 환수가 없습니다. 위에서 환수를 선택해주세요.</p>";
-      return;
-    }
-
-    const fragment = document.createDocumentFragment();
-
-    filteredSpirits.forEach((spirit) => {
-      // selectedSpirits 배열에서의 실제 인덱스 찾기
-      const originalIndex = selectedSpirits.findIndex(
-        (s) => s.image === spirit.image && s.category === spirit.category
-      );
-
-      const card = document.createElement("div");
-      card.className = `selected-spirit-card spirit-grade-${
-        spirit.grade === "불멸" ? "immortal" : "legend"
-      }`;
-
-      const isFixed = spirit.isFixedLevel;
-      const categoryBadge = `<div class="spirit-category-badge">${spirit.category}</div>`;
-
-      const levelControls = isFixed
-        ? `<div class="spirit-level-control">
-           <input type="number" value="25" readonly class="fixed-level" title="이 환수는 25레벨만 사용 가능합니다">
-         </div>`
-        : `<div class="spirit-level-control">
-           <button onclick="changeLevel(${originalIndex}, -1)">-</button>
-           <input type="number" min="0" max="25" value="${spirit.level || 0}"
-             onchange="updateSpiritLevel(${originalIndex}, this.value)">
-           <button onclick="changeLevel(${originalIndex}, 1)">+</button>
-           <button class="max-btn" onclick="setMaxLevel(${originalIndex})">M</button>
-         </div>`;
-
-      card.innerHTML = `
-        <button class="remove-spirit" onclick="removeSpirit(${originalIndex})">X</button>
-        ${categoryBadge}
-        <div class="selected-spirit-header">
-          <img src="${spirit.image}" alt="${spirit.name}" title="${
-        spirit.name
-      }">
-          <div class="spirit-info">
-            <div class="spirit-name">${spirit.name}</div>
-            ${isFixed ? '<div class="fixed-level-badge">고정 25</div>' : ""}
-          </div>
-        </div>
-         ${isFixed ? "" : levelControls}
-      `;
-
-      fragment.appendChild(card.cloneNode(true));
-    });
-
-    container.appendChild(fragment);
-  });
-}
-
 function updateSpiritLevel(index, value) {
+  currentScrollY = window.scrollY;
+
   const spirit = selectedSpirits[index];
 
   if (spirit.isFixedLevel) {
     alert(`${spirit.name}은(는) 25레벨만 사용 가능합니다.`);
-    renderSelectedSpirits();
+
+    const levelInput = document.getElementById(`level-input-${index}`);
+    if (levelInput) {
+      levelInput.value = 25;
+    }
     return;
   }
 
@@ -1719,26 +1894,65 @@ function updateSpiritLevel(index, value) {
   if (isNaN(level)) level = 0;
   if (level > 25) level = 25;
   if (level < 0) level = 0;
+
   spirit.level = level;
+
+  const levelInputs = document.querySelectorAll(`#level-input-${index}`);
+  levelInputs.forEach((input) => {
+    input.value = level;
+  });
+
   saveSelectedSpiritsToStorage();
+
+  setTimeout(() => {
+    window.scrollTo(0, currentScrollY);
+  }, 10);
 }
 
 function setMaxLevel(index) {
+  currentScrollY = window.scrollY;
+
   selectedSpirits[index].level = 25;
-  renderSelectedSpirits();
+
+  const levelInputs = document.querySelectorAll(`#level-input-${index}`);
+  levelInputs.forEach((input) => {
+    input.value = 25;
+  });
+
   saveSelectedSpiritsToStorage();
+
+  setTimeout(() => {
+    window.scrollTo(0, currentScrollY);
+  }, 10);
 }
 
 function removeSpirit(index) {
+  currentScrollY = window.scrollY;
+
+  const spirit = selectedSpirits[index];
+
+  const img = document.querySelector(
+    `img[data-image="${spirit.image}"][data-category="${spirit.category}"]`
+  );
+  if (img) {
+    img.classList.remove("selected");
+  }
+
   selectedSpirits.splice(index, 1);
+
   updateSelectedCount();
-  renderSelectedSpirits();
-  showCategory(lastActiveCategory, false);
-  handleResponsiveLayout();
+  updateSelectedSpiritsPanel();
+  updateMobilePanel();
   saveSelectedSpiritsToStorage();
+
+  setTimeout(() => {
+    window.scrollTo(0, currentScrollY);
+  }, 10);
 }
 
 function changeLevel(index, diff) {
+  currentScrollY = window.scrollY;
+
   const spirit = selectedSpirits[index];
 
   if (spirit.isFixedLevel) {
@@ -1752,11 +1966,22 @@ function changeLevel(index, diff) {
   if (newLevel > 25) newLevel = 25;
 
   spirit.level = newLevel;
-  renderSelectedSpirits();
+
+  const levelInputs = document.querySelectorAll(`#level-input-${index}`);
+  levelInputs.forEach((input) => {
+    input.value = newLevel;
+  });
+
   saveSelectedSpiritsToStorage();
+
+  setTimeout(() => {
+    window.scrollTo(0, currentScrollY);
+  }, 10);
 }
 
 function applyBatchLevel(inputId) {
+  currentScrollY = window.scrollY;
+
   const level = parseInt(document.getElementById(inputId).value);
   if (isNaN(level) || level < 0) {
     alert("올바른 레벨을 입력하세요.");
@@ -1769,9 +1994,9 @@ function applyBatchLevel(inputId) {
     return;
   }
 
-  // 현재 카테고리 환수만 레벨 변경
   const currentCategory = lastActiveCategory;
-  selectedSpirits.forEach((spirit) => {
+
+  selectedSpirits.forEach((spirit, index) => {
     if (!spirit.isFixedLevel && spirit.category === currentCategory) {
       spirit.level = level;
     }
@@ -1780,8 +2005,12 @@ function applyBatchLevel(inputId) {
   document.getElementById("batchLevel").value = level;
   document.getElementById("mobileBatchLevel").value = level;
 
-  renderSelectedSpirits();
+  updateSelectedSpiritsPanel();
   saveSelectedSpiritsToStorage();
+
+  setTimeout(() => {
+    window.scrollTo(0, currentScrollY);
+  }, 10);
 }
 
 const calculateBondEffects = debounce(function () {
@@ -2207,7 +2436,6 @@ function renderEffectsList(
 }
 
 function findOptimalCombination() {
-  // 현재 카테고리의 환수만 필터링
   const currentCategory = lastActiveCategory;
   const categorySpirits = selectedSpirits.filter(
     (spirit) => spirit.category === currentCategory
@@ -2280,7 +2508,6 @@ function startOptimalCalculation() {
 
   const currentCategory = lastActiveCategory;
 
-  // 현재 카테고리의 환수만 필터링
   const categorySpirits = selectedSpirits.filter(
     (spirit) => spirit.category === currentCategory
   );
@@ -3093,14 +3320,27 @@ function calculateScore(effects) {
 }
 
 function clearAllSelections() {
+  currentScrollY = window.scrollY;
+
   const currentCategory = lastActiveCategory;
+
+  const images = document.querySelectorAll(
+    `img[data-category="${currentCategory}"]`
+  );
+  images.forEach((img) => {
+    img.classList.remove("selected");
+  });
+
   selectedSpirits = selectedSpirits.filter(
     (spirit) => spirit.category !== currentCategory
   );
 
   updateSelectedCount();
-  renderSelectedSpirits();
-  showCategory(currentCategory, false);
-  handleResponsiveLayout();
+  updateSelectedSpiritsPanel();
+  updateMobilePanel();
   saveSelectedSpiritsToStorage();
+
+  setTimeout(() => {
+    window.scrollTo(0, currentScrollY);
+  }, 10);
 }
