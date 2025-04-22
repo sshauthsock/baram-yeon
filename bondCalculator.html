@@ -3,8 +3,16 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>환수 결속 계산기</title>
+    <title>바연화연 - 환수 결속</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="바람의나라: 연 환수정보, 환수 결속, 환수혼 계산기 등 게임 관련 도구 모음">
+
+    <link rel="icon" type="image/png" href="assets/img/BHY.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/BHY.png">
+    <link rel="manifest" href="assets/site.webmanifest">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
@@ -14,18 +22,25 @@
     <link href="assets/css/bond.css" rel="stylesheet">
     <link href="assets/css/components/ads.css" rel="stylesheet">
     <link href="assets/css/components/footer.css" rel="stylesheet">
+    <link href="assets/css/components/header.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
 </head>
 
 <body>
-    <div class="tabs">
-        <div class="tab" onclick="location.assign('info.html')">환수정보</div>
-        <div class="tab active" onclick="location.assign('bondCalculator.html')">환수 결속</div>
-        <div class="tab" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
-        <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
-    </div>
+    <header class="header">
+        <div class="logo-container">
+            <a href="info.html">
+                <img src="assets/img/BHY.png" alt="바연화연 로고" class="logo">
+            </a>
+        </div>
+        <nav class="tabs">
+            <div class="tab" onclick="location.assign('info.html')">환수정보</div>
+            <div class="tab active" onclick="location.assign('bondCalculator.html')">환수 결속</div>
+            <div class="tab" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
+            <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
+        </nav>
+    </header>
 
     <div class="sub-tabs" id="subTabs">
         <div class="tab active" onclick="showCategory('수호', true)">수호</div>

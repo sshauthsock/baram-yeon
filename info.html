@@ -3,8 +3,16 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>바연 정보</title>
+    <title>바연화연 - 환수정보</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="바람의나라: 연 환수정보, 환수 결속, 환수혼 계산기 등 게임 관련 도구 모음">
+
+    <link rel="icon" type="image/png" href="assets/img/BHY.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/BHY.png">
+    <link rel="manifest" href="assets/site.webmanifest">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
@@ -13,26 +21,32 @@
     <link href="assets/css/global.css" rel="stylesheet">
     <link href="assets/css/components/ads.css" rel="stylesheet">
     <link href="assets/css/components/footer.css" rel="stylesheet">
+    <link href="assets/css/components/header.css" rel="stylesheet">
 
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
 </head>
 
 <body>
-    <div class="tabs">
-        <div class="tab active" onclick="location.assign('info.html')">환수정보</div>
-        <div class="tab" onclick="location.assign('bondCalculator.html')">환수 결속</div>
-        <div class="tab" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
-        <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
-    </div>
+    <header class="header">
+        <div class="logo-container">
+            <a href="info.html">
+                <img src="assets/img/BHY.png" alt="바연화연 로고" class="logo">
+            </a>
+        </div>
+        <nav class="tabs">
+            <div class="tab active" onclick="location.assign('info.html')">환수정보</div>
+            <div class="tab" onclick="location.assign('bondCalculator.html')">환수 결속</div>
+            <div class="tab" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
+            <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
+        </nav>
+    </header>
 
     <div class="sub-tabs" id="subTabs">
         <div class="tab active" onclick="showCategory('수호')">수호</div>
         <div class="tab" onclick="showCategory('탑승')">탑승</div>
         <div class="tab" onclick="showCategory('변신')">변신</div>
     </div>
-
     <div class="ad-row">
         <div class="ad-container-left">
             <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-XTAnZwWzQOT46c36" data-ad-width="728"
@@ -78,6 +92,7 @@
             <span class="report-spark">✨</span>
         </button>
     </div>
+
     <footer class="site-footer">
         <div class="footer-desktop">
             <div class="footer-links">
@@ -93,10 +108,7 @@
         </div>
     </footer>
 
-
-
     <script src="assets/js/index.js"></script>
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var isMobile = window.innerWidth <= 768;

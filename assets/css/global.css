@@ -18,20 +18,6 @@ body {
 }
 
 
-.tabs {
-    display: flex;
-    justify-content: center;
-    background-color: #1a2a3a;
-    padding: 15px 0;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    width: 100%;
-    max-width: 100%;
-}
-
 .tab {
     padding: 14px 22px;
     margin: 0 10px;
@@ -47,16 +33,50 @@ body {
 }
 
 .tab:hover {
-    background-color: #2980b9;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 10px rgba(41, 128, 185, 0.3);
+    color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0.08);
 }
 
 .tab.active {
+    color: #ffffff;
+    font-weight: 500;
+    background-color: transparent;
+    position: relative;
+}
+
+/* Sleek indicator dot */
+.tab.active::before {
+    content: '';
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
     background-color: #3498db;
-    color: #fff;
-    font-weight: 700;
-    box-shadow: 0 5px 12px rgba(52, 152, 219, 0.4);
+    opacity: 1;
+}
+
+/* Subtle top glow effect */
+.tab.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    opacity: 0.85;
+}
+
+/* Subtle background highlight */
+.tab.active {
+    background-image: linear-gradient(to bottom,
+            rgba(52, 152, 219, 0.1),
+            rgba(52, 152, 219, 0.05) 60%,
+            transparent);
+    backdrop-filter: blur(4px);
 }
 
 .sub-tabs {
@@ -125,9 +145,7 @@ body {
 }
 
 @media (max-width: 768px) {
-    .tabs {
-        padding: 8px 5px;
-    }
+
 
     .tab {
         margin: 0 3px;
@@ -152,10 +170,7 @@ body {
 }
 
 @media (max-width: 480px) {
-    .tabs {
-        flex-wrap: wrap;
-        padding: 5px 2px;
-    }
+
 
     .tab {
         margin: 0 2px;
