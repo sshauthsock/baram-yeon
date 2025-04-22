@@ -56,6 +56,18 @@
     <div class="bond-container">
         <div class="main-content">
             <div class="left-panel">
+                <div class="search-container mobile-search-container">
+                    <div class="search-controls">
+                        <div class="search-input-wrapper">
+                            <input type="text" id="mobile-search-input" placeholder="능력치 검색 또는 선택..."
+                                autocomplete="off">
+                            <button id="mobile-search-button" onclick="searchSpirits()">검색</button>
+                        </div>
+                        <div id="mobile-stat-options" class="stat-options-dropdown"></div>
+                        <div id="mobile-selected-stats" class="selected-stats"></div>
+                    </div>
+                </div>
+
                 <div class="spirit-selection">
                     <div class="spirit-selection-header">
                         <h3>환수 선택 (<span id="selectedCount">0</span>/20)</h3>
@@ -67,6 +79,17 @@
 
             <div class="right-panel">
                 <div class="selected-spirits-container">
+                    <div class="search-container desktop-search-container">
+                        <div class="search-controls">
+                            <div class="search-input-wrapper">
+                                <input type="text" id="search-input" placeholder="능력치 검색 또는 선택..." autocomplete="off">
+                                <button id="search-button" onclick="searchSpirits()">검색</button>
+                            </div>
+                            <div id="stat-options" class="stat-options-dropdown"></div>
+                            <div id="selected-stats" class="selected-stats"></div>
+                        </div>
+                    </div>
+
                     <div class="selected-spirits-header">
                         <h3>선택된 환수</h3>
                         <div class="header-controls">

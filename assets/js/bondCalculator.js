@@ -1,4 +1,3 @@
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyBWBbe8carOdeIzP6hQsarDOz5H0TuEj9A",
   authDomain: "baram-yeon.firebaseapp.com",
@@ -66,6 +65,9 @@ let combinationCounter = {
   탑승: 0,
   변신: 0,
 };
+let allStatNames = [];
+let selectedSearchStats = [];
+let lastActiveCategory = "수호";
 
 const percentStats = [
   "healthIncreasePercent",
@@ -124,6 +126,14 @@ function isFixedLevelSpirit(spiritName) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  const savedCategory = localStorage.getItem("lastActiveCategory");
+  if (savedCategory) {
+    lastActiveCategory = savedCategory;
+    document.querySelectorAll(".sub-tabs .tab").forEach((tab) => {
+      tab.classList.toggle("active", tab.textContent === lastActiveCategory);
+    });
+  }
+
   if (window.innerWidth <= 768) {
     const mainRightPanel = document.querySelector(".main-content .right-panel");
     if (mainRightPanel) {
@@ -147,10 +157,12 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
+  syncSearchInputs();
   document.querySelectorAll(".sub-tabs .tab").forEach((tab) => {
     tab.addEventListener("click", function () {
       const category = this.textContent;
+      lastActiveCategory = category;
+      localStorage.setItem("lastActiveCategory", category);
 
       if (document.getElementById("optimalModal").style.display === "flex") {
         renderHistoryTabs(category);
@@ -175,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  window.addEventListener("resize", handleResponsiveLayout);
+  window.addEventListener("resize", debounce(handleResponsiveLayout, 250));
 
   const styleSheet = document.createElement("style");
   styleSheet.innerHTML = `
@@ -256,16 +268,142 @@ document.addEventListener("DOMContentLoaded", function () {
       display: inline-block;
       margin-top: 2px;
     }
+    
+    .mobile-search-container,
+    .desktop-search-container {
+        padding: 12px 0;
+        border-bottom: 1px solid #eaeaea;
+        margin-bottom: 15px;
+    }
+    
+    .mobile-search-container .search-header,
+    .desktop-search-container .search-header {
+        margin-bottom: 10px;
+    }
+    
+    .mobile-search-container .search-header h4,
+    .desktop-search-container .search-header h4 {
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+    }
+    
+    .mobile-search-container .search-controls,
+    .desktop-search-container .search-controls {
+        position: relative;
+        width: 100%;
+    }
+    
+    .mobile-search-container .search-input-wrapper,
+    .desktop-search-container .search-input-wrapper {
+        display: flex;
+        gap: 5px;
+        width: 100%;
+    }
+    
+    .mobile-search-container #mobile-search-input,
+    .desktop-search-container #search-input {
+        flex: 1;
+        padding: 8px 12px;
+        border: 1px solid #d1e7f8;
+        border-radius: 6px;
+        background-color: #f1f8fe;
+        font-size: 14px;
+    }
+    
+    .mobile-search-container #mobile-search-button,
+    .desktop-search-container #search-button {
+        padding: 8px 15px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+    
+    .mobile-search-container .stat-options-dropdown,
+    .desktop-search-container .stat-options-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        margin-top: 5px;
+    }
+    
+    .mobile-search-container .selected-stats,
+    .desktop-search-container .selected-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 10px;
+    }
   `;
   document.head.appendChild(styleSheet);
+
+  const searchInput = document.getElementById("search-input");
+  if (searchInput) {
+    searchInput.addEventListener("click", function (e) {
+      e.stopPropagation();
+      toggleStatOptions(true);
+    });
+
+    searchInput.addEventListener("focus", function () {
+      toggleStatOptions(true);
+    });
+
+    searchInput.addEventListener("input", function () {
+      filterStatOptions(this.value);
+    });
+
+    searchInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        searchSpirits();
+      }
+    });
+  }
+
+  document.addEventListener("click", function (e) {
+    const statOptions = document.getElementById("stat-options");
+    const searchInput = document.getElementById("search-input");
+
+    if (statOptions && searchInput) {
+      if (!searchInput.contains(e.target) && !statOptions.contains(e.target)) {
+        toggleStatOptions(false);
+      }
+    }
+  });
 });
 
 function handleResponsiveLayout() {
   const toggleContainer = document.getElementById("panelToggleContainer");
   const mainRightPanel = document.querySelector(".main-content .right-panel");
 
+  const activeTab = document.querySelector(".sub-tabs .tab.active");
+  if (activeTab) {
+    lastActiveCategory = activeTab.textContent;
+    localStorage.setItem("lastActiveCategory", lastActiveCategory);
+  }
+
   if (window.innerWidth <= 768) {
-    if (selectedSpirits.length === 0) {
+    // 현재 카테고리에 맞는 환수 개수 계산
+    const currentCategory = lastActiveCategory;
+    const categorySpirits = selectedSpirits.filter(
+      (spirit) => spirit.category === currentCategory
+    );
+
+    if (categorySpirits.length === 0) {
       toggleContainer.style.display = "none";
     } else {
       toggleContainer.style.display = "flex";
@@ -281,6 +419,15 @@ function handleResponsiveLayout() {
       mainRightPanel.style.display = "block";
     }
   }
+
+  // 저장된 카테고리 유지
+  document.querySelectorAll(".sub-tabs .tab").forEach((tab) => {
+    tab.classList.toggle("active", tab.textContent === lastActiveCategory);
+  });
+
+  // 올바른 환수 목록 보여주기
+  updateSelectedCount();
+  showCategory(lastActiveCategory, false);
 }
 
 function initializeUIEvents() {
@@ -596,7 +743,445 @@ async function loadAllData() {
     }
   }
 
-  showCategory("수호", false);
+  allStatNames = collectAllStatNames();
+  populateStatOptions();
+
+  showCategory(lastActiveCategory, false);
+}
+
+function collectAllStatNames() {
+  const stats = new Set();
+
+  for (const category in mobData) {
+    if (!mobData[category] || !Array.isArray(mobData[category])) continue;
+
+    mobData[category].forEach((spirit) => {
+      if (!spirit.stats || !Array.isArray(spirit.stats)) return;
+
+      spirit.stats.forEach((levelStat) => {
+        if (!levelStat.registrationStat) return;
+
+        Object.keys(levelStat.registrationStat).forEach((stat) => {
+          const normalizedStat = normalizeStatKey(stat);
+          stats.add(statsMapping[normalizedStat] || normalizedStat);
+        });
+      });
+    });
+  }
+
+  return Array.from(stats).sort();
+}
+
+function populateStatOptions() {
+  const containers = [
+    document.getElementById("stat-options"),
+    document.getElementById("mobile-stat-options"),
+  ];
+
+  containers.forEach((container) => {
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    allStatNames.forEach((stat) => {
+      const option = document.createElement("div");
+      option.className = "stat-option";
+      option.textContent = stat;
+      option.addEventListener("click", function (e) {
+        e.stopPropagation();
+        toggleStatSelection(stat);
+      });
+      container.appendChild(option);
+    });
+  });
+}
+
+function toggleStatSelection(stat) {
+  const index = selectedSearchStats.indexOf(stat);
+
+  if (index === -1) {
+    selectedSearchStats.push(stat);
+  } else {
+    selectedSearchStats.splice(index, 1);
+  }
+
+  updateSelectedStatsDisplay();
+  toggleStatOptions(false);
+  toggleStatOptions(false, true);
+}
+
+function updateSelectedStatsDisplay() {
+  const containers = [
+    document.getElementById("selected-stats"),
+    document.getElementById("mobile-selected-stats"),
+  ];
+
+  containers.forEach((container) => {
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    selectedSearchStats.forEach((stat) => {
+      const chip = document.createElement("div");
+      chip.className = "stat-chip";
+      chip.innerHTML = `${stat} <span class="remove-stat" onclick="removeSelectedStat('${stat}')">×</span>`;
+      container.appendChild(chip);
+    });
+  });
+}
+
+function removeSelectedStat(stat) {
+  const index = selectedSearchStats.indexOf(stat);
+  if (index !== -1) {
+    selectedSearchStats.splice(index, 1);
+  }
+  updateSelectedStatsDisplay();
+}
+
+function toggleStatOptions(show, isMobile = false) {
+  const statOptions = isMobile
+    ? document.getElementById("mobile-stat-options")
+    : document.getElementById("stat-options");
+
+  if (statOptions) {
+    statOptions.style.display = show ? "block" : "none";
+
+    if (show) {
+      statOptions.scrollTop = 0;
+    }
+  }
+}
+
+function filterStatOptions(filterText, isMobile = false) {
+  const statOptions = isMobile
+    ? document.getElementById("mobile-stat-options")
+    : document.getElementById("stat-options");
+  const options = statOptions.querySelectorAll(".stat-option");
+
+  filterText = filterText.toLowerCase();
+  let visibleCount = 0;
+
+  options.forEach((option) => {
+    const text = option.textContent.toLowerCase();
+    const isVisible = text.includes(filterText);
+
+    option.style.display = isVisible ? "block" : "none";
+    if (isVisible) visibleCount++;
+  });
+
+  const noMatches = statOptions.querySelector(".no-matches");
+  if (visibleCount === 0) {
+    if (!noMatches) {
+      const noMatchesElement = document.createElement("div");
+      noMatchesElement.className = "no-matches";
+      noMatchesElement.textContent = "일치하는 항목 없음";
+      statOptions.appendChild(noMatchesElement);
+    }
+  } else {
+    if (noMatches) noMatches.remove();
+  }
+
+  toggleStatOptions(true, isMobile);
+}
+
+function syncSearchInputs() {
+  const desktopInput = document.getElementById("search-input");
+  const mobileInput = document.getElementById("mobile-search-input");
+  const mobileSearchButton = document.getElementById("mobile-search-button");
+
+  if (desktopInput && mobileInput) {
+    desktopInput.addEventListener("input", function () {
+      mobileInput.value = this.value;
+    });
+
+    mobileInput.addEventListener("input", function () {
+      desktopInput.value = this.value;
+    });
+  }
+
+  if (mobileSearchButton) {
+    mobileSearchButton.onclick = function () {
+      searchSpirits(true);
+    };
+  }
+
+  if (mobileInput) {
+    mobileInput.addEventListener("click", function (e) {
+      e.stopPropagation();
+      toggleStatOptions(true, true);
+    });
+
+    mobileInput.addEventListener("focus", function () {
+      toggleStatOptions(true, true);
+    });
+
+    mobileInput.addEventListener("input", function () {
+      filterStatOptions(this.value, true);
+    });
+
+    mobileInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        searchSpirits(true);
+      }
+    });
+  }
+
+  document.addEventListener("click", function (e) {
+    const statOptions = [
+      document.getElementById("stat-options"),
+      document.getElementById("mobile-stat-options"),
+    ];
+    const searchInputs = [
+      document.getElementById("search-input"),
+      document.getElementById("mobile-search-input"),
+    ];
+
+    let clickedInsideInput = false;
+    let clickedInsideOptions = false;
+
+    searchInputs.forEach((input) => {
+      if (input && input.contains(e.target)) {
+        clickedInsideInput = true;
+      }
+    });
+
+    statOptions.forEach((options) => {
+      if (options && options.contains(e.target)) {
+        clickedInsideOptions = true;
+      }
+    });
+
+    if (!clickedInsideInput && !clickedInsideOptions) {
+      toggleStatOptions(false);
+      toggleStatOptions(false, true);
+    }
+  });
+}
+
+function searchSpirits(fromMobile) {
+  const input = fromMobile
+    ? document.getElementById("mobile-search-input")
+    : document.getElementById("search-input");
+
+  const searchText = input ? input.value.trim().toLowerCase() : "";
+
+  if (!searchText && selectedSearchStats.length === 0) {
+    alert("검색어를 입력하거나 능력치를 선택해주세요.");
+    return;
+  }
+
+  if (searchText) {
+    const matchingStats = allStatNames.filter((stat) =>
+      stat.toLowerCase().includes(searchText)
+    );
+
+    if (matchingStats.length === 0) {
+      alert("일치하는 능력치가 없습니다.");
+      return;
+    }
+
+    matchingStats.forEach((stat) => {
+      if (!selectedSearchStats.includes(stat)) {
+        selectedSearchStats.push(stat);
+      }
+    });
+
+    updateSelectedStatsDisplay();
+
+    const inputs = [
+      document.getElementById("search-input"),
+      document.getElementById("mobile-search-input"),
+    ];
+
+    inputs.forEach((input) => {
+      if (input) input.value = "";
+    });
+  }
+
+  showSearchResults();
+  toggleStatOptions(false);
+  toggleStatOptions(false, true);
+}
+
+function spiritHasStats(spirit, statNames) {
+  if (!spirit.stats || !Array.isArray(spirit.stats)) return false;
+
+  for (const levelStat of spirit.stats) {
+    if (!levelStat.registrationStat) continue;
+
+    for (const stat in levelStat.registrationStat) {
+      const normalizedStat = normalizeStatKey(stat);
+      const displayName = statsMapping[normalizedStat] || normalizedStat;
+
+      if (statNames.includes(displayName)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+function getSpiritStats(spirit) {
+  const stats = {};
+
+  if (!spirit.stats || !Array.isArray(spirit.stats)) return stats;
+
+  for (const levelStat of spirit.stats) {
+    if (!levelStat.registrationStat) continue;
+
+    for (const stat in levelStat.registrationStat) {
+      const normalizedStat = normalizeStatKey(stat);
+      const displayName = statsMapping[normalizedStat] || normalizedStat;
+      const value = levelStat.registrationStat[stat];
+
+      if (selectedSearchStats.includes(displayName)) {
+        stats[displayName] = stats[displayName] || {
+          value: value,
+          level: levelStat.level,
+        };
+      }
+    }
+  }
+
+  return stats;
+}
+
+function showSearchResults() {
+  if (selectedSearchStats.length === 0) {
+    alert("검색할 능력치를 선택해주세요.");
+    return;
+  }
+
+  const activeTab = document.querySelector(".sub-tabs .tab.active");
+  const currentCategory = activeTab
+    ? activeTab.textContent
+    : lastActiveCategory;
+
+  let modal = document.getElementById("search-results-modal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "search-results-modal";
+    modal.className = "search-results-modal";
+    modal.innerHTML = `
+      <div class="search-results-content">
+        <div class="search-results-header">
+          <h3 class="search-results-title">${currentCategory} 검색 결과</h3>
+          <div class="search-results-actions">
+            <button class="done-selecting-btn" onclick="closeSearchResults()">선택 완료</button>
+            <button class="close-search-results" onclick="closeSearchResults()">×</button>
+          </div>
+        </div>
+        <div id="search-results-list"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  } else {
+    const titleElement = modal.querySelector(".search-results-title");
+    if (titleElement) {
+      titleElement.textContent = `${currentCategory} 검색 결과`;
+    }
+  }
+
+  const resultsContainer = document.getElementById("search-results-list");
+  let matchedSpirits = [];
+
+  if (mobData[currentCategory] && Array.isArray(mobData[currentCategory])) {
+    mobData[currentCategory].forEach((spirit) => {
+      if (spiritHasStats(spirit, selectedSearchStats)) {
+        matchedSpirits.push({
+          ...spirit,
+          category: currentCategory,
+          stats: getSpiritStats(spirit),
+          isSelected: selectedSpirits.some((s) => s.image === spirit.image),
+        });
+      }
+    });
+  }
+
+  if (matchedSpirits.length === 0) {
+    resultsContainer.innerHTML = `<div class="no-results">선택한 능력치를 가진 ${currentCategory} 환수가 없습니다.</div>`;
+    modal.style.display = "block";
+    return;
+  }
+
+  resultsContainer.innerHTML = `
+    <p>총 ${matchedSpirits.length}개의 ${currentCategory} 환수가 검색되었습니다. (클릭하여 여러 환수 선택 가능)</p>
+    <div class="search-results-grid"></div>
+  `;
+
+  const grid = resultsContainer.querySelector(".search-results-grid");
+
+  matchedSpirits.forEach((spirit) => {
+    const card = document.createElement("div");
+    card.className = `search-result-card ${
+      spirit.isSelected ? "selected-spirit-card" : ""
+    }`;
+    card.dataset.spiritName = spirit.name;
+    card.dataset.spiritImage = spirit.image;
+    card.onclick = () => selectSpiritFromSearch(spirit, card);
+
+    const statsHtml = Object.entries(spirit.stats)
+      .map(
+        ([stat, data]) =>
+          `<div class="stat-match">${stat} ${data.value} (Lv.${data.level})</div>`
+      )
+      .join("");
+
+    card.innerHTML = `
+      ${spirit.isSelected ? '<div class="selected-indicator">✓</div>' : ""}
+      <img src="${spirit.image}" alt="${
+      spirit.name
+    }" class="search-result-image">
+      <div class="search-result-name">${spirit.name}</div>
+      <div class="search-result-stats">${statsHtml}</div>
+    `;
+
+    grid.appendChild(card);
+  });
+
+  modal.style.display = "block";
+}
+
+function selectSpiritFromSearch(spirit, cardElement) {
+  const category = spirit.category;
+  const originalSpirit = mobData[category]?.find((s) => s.name === spirit.name);
+
+  if (originalSpirit) {
+    toggleSpiritSelection(originalSpirit, category);
+  } else {
+    toggleSpiritSelection(spirit, category);
+  }
+
+  if (cardElement) {
+    const isNowSelected = selectedSpirits.some((s) => s.image === spirit.image);
+
+    if (isNowSelected) {
+      cardElement.classList.add("selected-spirit-card");
+
+      if (!cardElement.querySelector(".selected-indicator")) {
+        const indicator = document.createElement("div");
+        indicator.className = "selected-indicator";
+        indicator.textContent = "✓";
+        cardElement.prepend(indicator);
+      }
+    } else {
+      cardElement.classList.remove("selected-spirit-card");
+
+      const indicator = cardElement.querySelector(".selected-indicator");
+      if (indicator) {
+        indicator.remove();
+      }
+    }
+  }
+}
+
+function closeSearchResults() {
+  const modal = document.getElementById("search-results-modal");
+  if (modal) {
+    modal.style.display = "none";
+  }
 }
 
 function getDefaultGradeSetEffects() {
@@ -777,6 +1362,9 @@ function normalizeStatKey(key) {
 }
 
 function showCategory(category, resetSelection = false) {
+  lastActiveCategory = category;
+  localStorage.setItem("lastActiveCategory", category);
+
   const container = document.getElementById("imageContainer");
   container.innerHTML = "";
 
@@ -786,7 +1374,9 @@ function showCategory(category, resetSelection = false) {
   });
 
   if (resetSelection) {
-    selectedSpirits = [];
+    selectedSpirits = selectedSpirits.filter(
+      (spirit) => spirit.category !== category
+    );
     updateSelectedCount();
     renderSelectedSpirits();
     saveSelectedSpiritsToStorage();
@@ -831,7 +1421,10 @@ function showCategory(category, resetSelection = false) {
     img.dataset.name = item.name;
     img.dataset.image = item.image;
 
-    const isSelected = selectedSpirits.some((s) => s.image === item.image);
+    const isSelected = selectedSpirits.some(
+      (s) => s.image === item.image && s.category === category
+    );
+
     if (isSelected) {
       img.classList.add("selected");
     }
@@ -860,13 +1453,17 @@ function loadSelectedSpiritsFromStorage() {
       updateSelectedCount();
       renderSelectedSpirits();
 
+      // 현재 카테고리에 맞는 환수만 선택 표시
+      const currentCategory = lastActiveCategory;
       const images = document.querySelectorAll("#imageContainer img");
       images.forEach((img) => {
         const isSelected = selectedSpirits.some(
-          (s) => s.image === img.dataset.image
+          (s) => s.image === img.dataset.image && s.category === currentCategory
         );
         if (isSelected) {
           img.classList.add("selected");
+        } else {
+          img.classList.remove("selected");
         }
       });
     } catch (e) {
@@ -943,7 +1540,9 @@ function loadSavedOptimalCombinations() {
 
 function clearSavedOptimalCombinations() {
   const activeTab = document.querySelector(".sub-tabs .tab.active");
-  const currentCategory = activeTab ? activeTab.textContent : "수호";
+  const currentCategory = activeTab
+    ? activeTab.textContent
+    : lastActiveCategory;
 
   if (
     confirm(
@@ -966,7 +1565,7 @@ function clearSavedOptimalCombinations() {
 
 function toggleSpiritSelection(spirit, category) {
   const existingIndex = selectedSpirits.findIndex(
-    (s) => s.image === spirit.image
+    (s) => s.image === spirit.image && s.category === category
   );
 
   if (existingIndex !== -1) {
@@ -993,31 +1592,38 @@ function toggleSpiritSelection(spirit, category) {
   }
 
   updateSelectedCount();
-  updateSpiritSelectionUI(spirit.image);
+  updateSpiritSelectionUI(spirit.image, category);
   renderSelectedSpirits();
   handleResponsiveLayout();
   saveSelectedSpiritsToStorage();
 }
 
-function updateSpiritSelectionUI(spiritImage) {
+function updateSpiritSelectionUI(spiritImage, category) {
   const images = document.querySelectorAll("#imageContainer img");
   images.forEach((img) => {
-    if (img.dataset.image === spiritImage) {
+    if (
+      img.dataset.image === spiritImage &&
+      img.dataset.category === category
+    ) {
       img.classList.toggle("selected");
     }
   });
 }
 
 function updateSelectedCount() {
-  const count = selectedSpirits.length;
-  document.getElementById("selectedCount").textContent = count;
+  const currentCategory = lastActiveCategory;
+
+  // 현재 카테고리에 해당하는 환수 수만 계산
+  const filteredCount = selectedSpirits.filter(
+    (spirit) => spirit.category === currentCategory
+  ).length;
+
+  document.getElementById("selectedCount").textContent = filteredCount;
 
   const mobileCountElement = document.getElementById("mobileSelectedCount");
   if (mobileCountElement) {
-    mobileCountElement.textContent = count;
+    mobileCountElement.textContent = filteredCount;
   }
-
-  handleResponsiveLayout();
 }
 
 function setMaxBatchLevel(inputId) {
@@ -1031,13 +1637,20 @@ function renderSelectedSpirits() {
     "#panelToggleContainer .selected-spirits",
   ];
 
+  const currentCategory = lastActiveCategory;
+
   containerSelectors.forEach((selector) => {
     const container = document.querySelector(selector);
     if (!container) return;
 
     container.innerHTML = "";
 
-    if (selectedSpirits.length === 0) {
+    // 현재 카테고리에 맞는 환수만 필터링
+    const filteredSpirits = selectedSpirits.filter(
+      (spirit) => spirit.category === currentCategory
+    );
+
+    if (filteredSpirits.length === 0) {
       container.innerHTML =
         "<p>선택된 환수가 없습니다. 위에서 환수를 선택해주세요.</p>";
       return;
@@ -1045,7 +1658,12 @@ function renderSelectedSpirits() {
 
     const fragment = document.createDocumentFragment();
 
-    selectedSpirits.forEach((spirit, index) => {
+    filteredSpirits.forEach((spirit) => {
+      // selectedSpirits 배열에서의 실제 인덱스 찾기
+      const originalIndex = selectedSpirits.findIndex(
+        (s) => s.image === spirit.image && s.category === spirit.category
+      );
+
       const card = document.createElement("div");
       card.className = `selected-spirit-card spirit-grade-${
         spirit.grade === "불멸" ? "immortal" : "legend"
@@ -1059,15 +1677,15 @@ function renderSelectedSpirits() {
            <input type="number" value="25" readonly class="fixed-level" title="이 환수는 25레벨만 사용 가능합니다">
          </div>`
         : `<div class="spirit-level-control">
-           <button onclick="changeLevel(${index}, -1)">-</button>
+           <button onclick="changeLevel(${originalIndex}, -1)">-</button>
            <input type="number" min="0" max="25" value="${spirit.level || 0}"
-             onchange="updateSpiritLevel(${index}, this.value)">
-           <button onclick="changeLevel(${index}, 1)">+</button>
-           <button class="max-btn" onclick="setMaxLevel(${index})">M</button>
+             onchange="updateSpiritLevel(${originalIndex}, this.value)">
+           <button onclick="changeLevel(${originalIndex}, 1)">+</button>
+           <button class="max-btn" onclick="setMaxLevel(${originalIndex})">M</button>
          </div>`;
 
       card.innerHTML = `
-        <button class="remove-spirit" onclick="removeSpirit(${index})">X</button>
+        <button class="remove-spirit" onclick="removeSpirit(${originalIndex})">X</button>
         ${categoryBadge}
         <div class="selected-spirit-header">
           <img src="${spirit.image}" alt="${spirit.name}" title="${
@@ -1115,7 +1733,7 @@ function removeSpirit(index) {
   selectedSpirits.splice(index, 1);
   updateSelectedCount();
   renderSelectedSpirits();
-  showCategory(document.querySelector(".sub-tabs .tab.active").textContent);
+  showCategory(lastActiveCategory, false);
   handleResponsiveLayout();
   saveSelectedSpiritsToStorage();
 }
@@ -1151,8 +1769,10 @@ function applyBatchLevel(inputId) {
     return;
   }
 
+  // 현재 카테고리 환수만 레벨 변경
+  const currentCategory = lastActiveCategory;
   selectedSpirits.forEach((spirit) => {
-    if (!spirit.isFixedLevel) {
+    if (!spirit.isFixedLevel && spirit.category === currentCategory) {
       spirit.level = level;
     }
   });
@@ -1587,7 +2207,13 @@ function renderEffectsList(
 }
 
 function findOptimalCombination() {
-  if (selectedSpirits.length === 0) {
+  // 현재 카테고리의 환수만 필터링
+  const currentCategory = lastActiveCategory;
+  const categorySpirits = selectedSpirits.filter(
+    (spirit) => spirit.category === currentCategory
+  );
+
+  if (categorySpirits.length === 0) {
     alert("최적 조합을 찾으려면 환수를 선택하세요.");
     return;
   }
@@ -1652,8 +2278,12 @@ function startOptimalCalculation() {
   isProcessing = true;
   isCalculationCancelled = false;
 
-  const activeTab = document.querySelector(".sub-tabs .tab.active");
-  const currentCategory = activeTab ? activeTab.textContent : "수호";
+  const currentCategory = lastActiveCategory;
+
+  // 현재 카테고리의 환수만 필터링
+  const categorySpirits = selectedSpirits.filter(
+    (spirit) => spirit.category === currentCategory
+  );
 
   const optimalModal = document.getElementById("optimalModal");
   optimalModal.style.display = "flex";
@@ -1732,7 +2362,7 @@ function startOptimalCalculation() {
 
   setTimeout(() => {
     try {
-      const validSpirits = selectedSpirits
+      const validSpirits = categorySpirits
         .filter((spirit) => {
           const levelStats = spirit.stats?.find(
             (s) => s.level === spirit.level
@@ -1826,7 +2456,7 @@ function startOptimalCalculation() {
         const deepCopiedResult = JSON.parse(JSON.stringify(bestResult));
         addNewOptimalCombination(deepCopiedResult);
         saveSavedOptimalCombinations();
-        const category = bestResult.spirits[0]?.category || "수호";
+        const category = bestResult.spirits[0]?.category || currentCategory;
         currentActiveIndex = savedOptimalCombinations[category].length - 1;
         renderHistoryTabs(category);
         showSingleOptimalResult(bestResult);
@@ -1894,7 +2524,7 @@ function generateCombinations(array, size) {
 
 function addNewOptimalCombination(result) {
   const timestamp = new Date().toLocaleString();
-  const category = result.spirits[0]?.category || "수호";
+  const category = result.spirits[0]?.category || lastActiveCategory;
 
   if (!savedOptimalCombinations[category]) {
     savedOptimalCombinations[category] = [];
@@ -2463,13 +3093,14 @@ function calculateScore(effects) {
 }
 
 function clearAllSelections() {
-  selectedSpirits = [];
+  const currentCategory = lastActiveCategory;
+  selectedSpirits = selectedSpirits.filter(
+    (spirit) => spirit.category !== currentCategory
+  );
+
   updateSelectedCount();
   renderSelectedSpirits();
-  showCategory(
-    document.querySelector(".sub-tabs .tab.active").textContent,
-    false
-  );
+  showCategory(currentCategory, false);
   handleResponsiveLayout();
   saveSelectedSpiritsToStorage();
 }

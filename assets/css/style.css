@@ -1,24 +1,3 @@
-html,
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f7fa;
-    color: #333;
-    line-height: 1.6;
-    width: 100%;
-    overflow-x: hidden;
-    box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-    box-sizing: border-box;
-}
-
-
-
 .image-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
@@ -444,9 +423,16 @@ body {
 }
 
 .report-container {
-    text-align: center;
-    margin: 20px 0;
-    padding: 0 15px;
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .report-container {
+        display: block;
+        text-align: center;
+        margin: 20px 0;
+        padding: 0 15px;
+    }
 }
 
 .report-btn {

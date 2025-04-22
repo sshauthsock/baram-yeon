@@ -1,21 +1,22 @@
 html,
 body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
     padding: 0;
-    font-family: 'Noto Sans KR', sans-serif;
-    height: 100%;
-    -webkit-overflow-scrolling: touch;
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+    width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 *,
-*::before,
-*::after {
+*:before,
+*:after {
     box-sizing: border-box;
 }
+
 
 .tabs {
     display: flex;
@@ -187,27 +188,5 @@ body {
         border-left: 4px solid transparent;
         border-right: 4px solid transparent;
         border-top: 4px solid #1976d2;
-    }
-}
-
-.ad-container {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 15px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-}
-
-@media (max-width: 768px) {
-    .ad-container {
-        padding: 0 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .ad-container {
-        padding: 0 8px;
     }
 }
