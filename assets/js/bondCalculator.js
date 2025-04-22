@@ -2349,6 +2349,54 @@ function showResultsInModal(result) {
 
   modal.style.display = "flex";
   document.body.style.overflow = "hidden";
+
+  const isMobile = window.innerWidth <= 768;
+
+  if (isMobile) {
+    modal.querySelectorAll(".mobile-ad .kakao_ad_area").forEach((ad) => {
+      ad.style.display = "block";
+    });
+    modal
+      .querySelectorAll(
+        ".ad-container-left .kakao_ad_area, .ad-container-right .kakao_ad_area"
+      )
+      .forEach((ad) => {
+        ad.style.display = "none";
+      });
+  } else {
+    modal
+      .querySelectorAll(".ad-container-left .kakao_ad_area")
+      .forEach((ad) => {
+        ad.style.display = "block";
+      });
+    modal
+      .querySelectorAll(
+        ".mobile-ad .kakao_ad_area, .ad-container-right .kakao_ad_area"
+      )
+      .forEach((ad) => {
+        ad.style.display = "none";
+      });
+  }
+
+  if (window.adfit) {
+    window.adfit();
+  } else {
+    const existingScript = document.querySelector(
+      'script[src*="t1.daumcdn.net/kas/static/ba.min.js"]'
+    );
+
+    if (!existingScript) {
+      const adScript = document.createElement("script");
+      adScript.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+      adScript.async = true;
+      document.body.appendChild(adScript);
+    } else {
+      const newScript = document.createElement("script");
+      newScript.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+      newScript.async = true;
+      existingScript.parentNode.replaceChild(newScript, existingScript);
+    }
+  }
 }
 
 function closeResultModal() {
@@ -2595,6 +2643,43 @@ function startOptimalCalculation() {
     showSingleOptimalResult(
       savedOptimalCombinations[currentCategory][currentActiveIndex]
     );
+  }
+
+  const isMobile = window.innerWidth <= 768;
+
+  if (isMobile) {
+    optimalModal.querySelectorAll(".mobile-ad .kakao_ad_area").forEach((ad) => {
+      ad.style.display = "block";
+    });
+    optimalModal
+      .querySelectorAll(
+        ".ad-container-left .kakao_ad_area, .ad-container-right .kakao_ad_area"
+      )
+      .forEach((ad) => {
+        ad.style.display = "none";
+      });
+  } else {
+    optimalModal
+      .querySelectorAll(".ad-container-left .kakao_ad_area")
+      .forEach((ad) => {
+        ad.style.display = "block";
+      });
+    optimalModal
+      .querySelectorAll(
+        ".mobile-ad .kakao_ad_area, .ad-container-right .kakao_ad_area"
+      )
+      .forEach((ad) => {
+        ad.style.display = "none";
+      });
+  }
+
+  if (window.adfit) {
+    window.adfit();
+  } else {
+    const adScript = document.createElement("script");
+    adScript.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+    adScript.async = true;
+    document.body.appendChild(adScript);
   }
 
   setTimeout(() => {
@@ -3171,6 +3256,19 @@ function showSingleOptimalResult(result) {
   );
 
   renderSpiritDetailsTable(spirits);
+  const adElements = document.querySelectorAll("#optimalModal .kakao_ad_area");
+  adElements.forEach((ad) => {
+    ad.style.display = "block";
+  });
+
+  if (typeof window.adfit !== "undefined") {
+    window.adfit();
+  } else {
+    const reloadScript = document.createElement("script");
+    reloadScript.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+    reloadScript.async = true;
+    document.body.appendChild(reloadScript);
+  }
 }
 
 function renderSpiritDetailsTable(spirits) {

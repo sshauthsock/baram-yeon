@@ -1858,7 +1858,6 @@ async function loadChakData() {
       }</p>`;
     }
 
-    // Fallback to local file
     try {
       const response = await fetch("output/chak.json");
       const data = await response.json();

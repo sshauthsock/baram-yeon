@@ -52,3 +52,38 @@
         padding: 0 8px;
     }
 }
+
+/* 기본 CSS 설정 */
+.ad-container-left,
+.ad-container-right {
+    display: block;
+}
+
+.mobile-ad {
+    display: none;
+}
+
+/* 모바일에서의 광고 표시 설정 */
+@media (max-width: 768px) {
+
+    .ad-container-left,
+    .ad-container-right {
+        display: none;
+    }
+
+    .mobile-ad {
+        display: block;
+    }
+}
+
+.modal .ad-container-left,
+.modal .ad-container-right,
+.modal .mobile-ad {
+    width: 100%;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.modal .kakao_ad_area {
+    min-height: 50px;
+}
