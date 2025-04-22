@@ -46,7 +46,6 @@
     margin-left: 10px;
 }
 
-/* 모바일 대응 */
 @media screen and (max-width: 768px) {
     .footer-desktop {
         display: none;
