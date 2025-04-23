@@ -6,7 +6,8 @@ output/encrypted/*
 output/*
 split-stats.mjs
 jsonUploader*
-firebaseHelper.html
+firebaseHelper*.html
 output/*.json
 archive/*
 login.html
+admin/*
