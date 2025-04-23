@@ -47,7 +47,7 @@ const statsMapping = {
   lootAcquisitionIncrease: "전리품획득증가",
   experienceGainIncrease: "경험치획득증가",
 };
-
+let isModalOpen = false;
 let mobData = { 수호: [], 탑승: [], 변신: [] };
 let selectedSpirits = [];
 let gradeSetEffects = {};
@@ -1461,10 +1461,39 @@ function normalizeStatKey(key) {
 }
 
 function showCategory(category, resetSelection = false) {
-  currentScrollY = window.scrollY;
-
   lastActiveCategory = category;
   localStorage.setItem("lastActiveCategory", category);
+
+  document.querySelectorAll(".sub-tabs .tab").forEach((tab) => {
+    tab.classList.remove("active");
+    if (tab.innerText === category) tab.classList.add("active");
+  });
+
+  if (isModalOpen) {
+    if (document.getElementById("optimalModal").style.display === "flex") {
+      renderHistoryTabs(category);
+
+      if (
+        savedOptimalCombinations[category] &&
+        savedOptimalCombinations[category].length > 0
+      ) {
+        currentActiveIndex = savedOptimalCombinations[category].length - 1;
+        showSingleOptimalResult(
+          savedOptimalCombinations[category][currentActiveIndex]
+        );
+      } else {
+        document.getElementById("optimalGradeEffects").innerHTML = "";
+        document.getElementById("optimalFactionEffects").innerHTML = "";
+        document.getElementById("optimalTotalEffects").innerHTML = "";
+        document.getElementById("spiritStatsDetails").innerHTML = "";
+        document.getElementById("combinationResultsContainer").innerHTML = "";
+        document.getElementById("optimalScore").textContent = "0";
+      }
+    }
+    return;
+  }
+
+  currentScrollY = window.scrollY;
 
   const container = document.getElementById("imageContainer");
   container.innerHTML = "";
@@ -2433,6 +2462,7 @@ function closeResultModal() {
 function closeOptimalModal() {
   document.getElementById("optimalModal").style.display = "none";
   document.body.style.overflow = "auto";
+  isModalOpen = false;
 }
 
 function renderEffectsList(
@@ -2520,57 +2550,495 @@ function findOptimalCombination() {
     return;
   }
 
-  const { invalidSpirits, spiritsWithSuggestions } = checkSpiritLevelData();
-  if (invalidSpirits.length > 0) {
-    const warning = showLevelDataWarning(
-      invalidSpirits,
-      spiritsWithSuggestions
-    );
-    if (warning) {
-      const warningDialog = document.createElement("div");
-      warningDialog.style.position = "fixed";
-      warningDialog.style.top = "50%";
-      warningDialog.style.left = "50%";
-      warningDialog.style.transform = "translate(-50%, -50%)";
-      warningDialog.style.backgroundColor = "#fff";
-      warningDialog.style.padding = "20px";
-      warningDialog.style.borderRadius = "10px";
-      warningDialog.style.boxShadow = "0 0 20px rgba(0,0,0,0.3)";
-      warningDialog.style.zIndex = "9999";
-      warningDialog.style.maxWidth = "400px";
-      warningDialog.style.maxHeight = "80vh";
-      warningDialog.style.overflow = "auto";
+  isProcessing = true;
+  isCalculationCancelled = false;
 
-      warningDialog.innerHTML = `
-        <div style="margin-bottom:15px;">${warning}</div>
-        <div style="text-align:center; margin-top:15px;">
-          <button id="continueBtn" style="padding:8px 15px; background:#4CAF50; color:white; border:none; border-radius:4px; margin-right:10px; cursor:pointer;">계속 진행</button>
-          <button id="cancelBtn" style="padding:8px 15px; background:#f44336; color:white; border:none; border-radius:4px; cursor:pointer;">취소</button>
+  const optimalModal = document.getElementById("optimalModal");
+  optimalModal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+  isModalOpen = true;
+
+  document.getElementById("optimalModalContent").innerHTML = `
+    <div class="calculating-wrapper">
+      <div class="calculating-box">
+        <div class="calculating-spinner"></div>
+        <h3>최적 조합 계산 중...</h3>
+        <p>환수 조합을 계산하고 있습니다. 환수 수에 따라 시간이 걸릴 수 있습니다.</p>
+        <button id="cancelCalcBtn" class="cancel-calc-btn">계산 취소</button>
+      </div>
+    </div>
+  `;
+
+  document
+    .getElementById("cancelCalcBtn")
+    .addEventListener("click", function () {
+      isCalculationCancelled = true;
+      document.querySelector(".calculating-box h3").textContent =
+        "계산이 취소되었습니다";
+    });
+
+  const calcStyle = document.createElement("style");
+  calcStyle.id = "calc-style";
+  calcStyle.textContent = `
+    .calculating-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 300px;
+    }
+    .calculating-box {
+      text-align: center;
+      padding: 30px;
+      background: #f8f8f8;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+    }
+    .calculating-spinner {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .cancel-calc-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  `;
+  document.head.appendChild(calcStyle);
+
+  setTimeout(() => {
+    try {
+      const { invalidSpirits, spiritsWithSuggestions } = checkSpiritLevelData();
+      if (invalidSpirits.length > 0) {
+        const warning = showLevelDataWarning(
+          invalidSpirits,
+          spiritsWithSuggestions
+        );
+        if (warning) {
+          document.getElementById("optimalModalContent").innerHTML = `
+            <div class="warning-dialog">
+              <h3>데이터 경고</h3>
+              <div class="warning-content">${warning}</div>
+              <div class="warning-buttons">
+                <button id="continueBtn" class="continue-btn">계속 진행</button>
+                <button id="cancelBtn" class="cancel-btn">취소</button>
+              </div>
+            </div>
+          `;
+
+          const warningStyle = document.createElement("style");
+          warningStyle.textContent = `
+            .warning-dialog {
+              padding: 20px;
+              background: #fff;
+              border-radius: 10px;
+              max-width: 600px;
+              margin: 0 auto;
+            }
+            .warning-content {
+              margin: 20px 0;
+              padding: 15px;
+              background: #fff3cd;
+              border-left: 5px solid #ffc107;
+            }
+            .warning-buttons {
+              display: flex;
+              justify-content: center;
+              gap: 15px;
+            }
+            .continue-btn, .cancel-btn {
+              padding: 8px 16px;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              font-weight: bold;
+            }
+            .continue-btn {
+              background: #4caf50;
+              color: white;
+            }
+            .cancel-btn {
+              background: #f44336;
+              color: white;
+            }
+          `;
+          document.head.appendChild(warningStyle);
+
+          document
+            .getElementById("continueBtn")
+            .addEventListener("click", function () {
+              setTimeout(runActualCalculation, 100);
+            });
+
+          document
+            .getElementById("cancelBtn")
+            .addEventListener("click", function () {
+              closeOptimalModal();
+              isProcessing = false;
+            });
+        } else {
+          runActualCalculation();
+        }
+      } else {
+        runActualCalculation();
+      }
+    } catch (error) {
+      console.error("Error starting calculation:", error);
+      document.getElementById("optimalModalContent").innerHTML = `
+        <div class="error-message">
+          <h3>오류 발생</h3>
+          <p>계산 준비 중 오류가 발생했습니다: ${
+            error.message || "알 수 없는 오류"
+          }</p>
+          <button onclick="closeOptimalModal()" class="close-btn">닫기</button>
         </div>
       `;
-
-      document.body.appendChild(warningDialog);
-
-      document
-        .getElementById("continueBtn")
-        .addEventListener("click", function () {
-          document.body.removeChild(warningDialog);
-          startOptimalCalculation();
-        });
-
-      document
-        .getElementById("cancelBtn")
-        .addEventListener("click", function () {
-          document.body.removeChild(warningDialog);
-        });
-
-      return;
+      isProcessing = false;
     }
+  }, 100);
+}
+function runActualCalculation() {
+  const currentCategory = lastActiveCategory;
+  const categorySpirits = selectedSpirits.filter(
+    (spirit) => spirit.category === currentCategory
+  );
+
+  document.getElementById("optimalModalContent").innerHTML = `
+    <h3 class="modal-title">최적 결속 조합 결과 (최대 6개)</h3>
+    <div class="modal-content">
+      <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-sgK0ytXrL3f7EHRF"
+                data-ad-width="728" data-ad-height="90"></ins>
+        </div>
+      </div>
+      <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-TPesUrzJaxJ008Lm"
+            data-ad-width="320" data-ad-height="50"></ins>
+        </div>
+      <div id="optimalHeader" class="optimal-header">
+        <div class="optimal-score">
+          <h4>환산합산: <span id="optimalScore">계산 중...</span></h4>
+          <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small><br />
+          <small>환산 합산은 등급 결속 효과 + 세력 결속 효과 + 각 환수 능력치이며 장착효과는 포함하지 않습니다.</small>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button id="clearHistoryButton" class="clear-history-btn">${currentCategory} 기록 삭제</button>
+      </div>
+      
+      <div id="optimalSpiritsList" class="selected-spirits-info">
+        <div class='processing-message'>
+          <div class="calculating-spinner-small"></div>
+          최적 조합을 찾는 중입니다... (0%)
+          <div style="margin-top: 10px;">
+            <button id="cancelCalculationBtn" class="cancel-calculation-btn">계산 중단</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="results-container">
+        <div class="results-section">
+          <h4>등급 결속 효과</h4>
+          <div id="optimalGradeEffects" class="effects-list">
+            <div class="calculating">계산 중...</div>
+          </div>
+        </div>
+        <div class="results-section">
+          <h4>세력 결속 효과</h4>
+          <div id="optimalFactionEffects" class="effects-list">
+            <div class="calculating">계산 중...</div>
+          </div>
+        </div>
+        <div class="results-section">
+          <h4>총 결속 효과 (*장착효과 제외)</h4>
+          <div id="optimalTotalEffects" class="effects-list">
+            <div class="calculating">계산 중...</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="optimalSpiritsDetails" class="spirit-details-container">
+        <h4>선택된 환수 상세 스탯</h4>
+        <div id="spiritStatsDetails" class="spirit-stats-grid">
+          <div class="calculating">계산 중...</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const style = document.createElement("style");
+  style.textContent = `
+    .calculating {
+      padding: 10px;
+      background-color: #f1f8fe;
+      color: #3498db;
+      border-left: 3px solid #3498db;
+      font-style: italic;
+      text-align: center;
+      margin: 10px 0;
+    }
+    .processing-message {
+      text-align: center;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-weight: bold;
+      color: #3498db;
+    }
+    .calculating-spinner-small {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+  `;
+  document.head.appendChild(style);
+
+  document
+    .getElementById("cancelCalculationBtn")
+    .addEventListener("click", function () {
+      isCalculationCancelled = true;
+      document.getElementById("optimalSpiritsList").innerHTML =
+        "<div class='warning-message'>계산이 중단되었습니다. 현재까지 찾은 최적 조합을 표시합니다.</div>";
+    });
+
+  document
+    .getElementById("clearHistoryButton")
+    .addEventListener("click", function () {
+      clearSavedOptimalCombinations();
+    });
+
+  renderHistoryTabs(currentCategory);
+
+  if (
+    savedOptimalCombinations[currentCategory] &&
+    savedOptimalCombinations[currentCategory].length > 0
+  ) {
+    currentActiveIndex = savedOptimalCombinations[currentCategory].length - 1;
+    showSingleOptimalResult(
+      savedOptimalCombinations[currentCategory][currentActiveIndex]
+    );
   }
 
-  startOptimalCalculation();
-}
+  const isMobile = window.innerWidth <= 768;
 
+  if (isMobile) {
+    document
+      .querySelectorAll("#optimalModal .mobile-ad .kakao_ad_area")
+      .forEach((ad) => {
+        ad.style.display = "block";
+      });
+    document
+      .querySelectorAll(
+        "#optimalModal .ad-container-left .kakao_ad_area, #optimalModal .ad-container-right .kakao_ad_area"
+      )
+      .forEach((ad) => {
+        ad.style.display = "none";
+      });
+  } else {
+    document
+      .querySelectorAll("#optimalModal .ad-container-left .kakao_ad_area")
+      .forEach((ad) => {
+        ad.style.display = "block";
+      });
+    document
+      .querySelectorAll(
+        "#optimalModal .mobile-ad .kakao_ad_area, #optimalModal .ad-container-right .kakao_ad_area"
+      )
+      .forEach((ad) => {
+        ad.style.display = "none";
+      });
+  }
+
+  if (window.adfit) {
+    window.adfit();
+  } else {
+    const adScript = document.createElement("script");
+    adScript.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+    adScript.async = true;
+    document.body.appendChild(adScript);
+  }
+
+  setTimeout(() => {
+    try {
+      const validSpirits = categorySpirits
+        .filter((spirit) => {
+          const levelStats = spirit.stats?.find(
+            (s) => s.level === spirit.level
+          )?.registrationStat;
+          return levelStats !== undefined;
+        })
+        .map((spirit) => {
+          const copy = JSON.parse(JSON.stringify(spirit));
+          copy.category = spirit.category;
+          copy.grade = spirit.grade || "전설";
+          copy.faction = spirit.influence || spirit.faction || "결의";
+          return copy;
+        });
+
+      if (validSpirits.length === 0) {
+        throw new Error("유효한 환수 데이터가 없습니다.");
+      }
+
+      const maxCombinationSize = Math.min(6, validSpirits.length);
+      let totalCombinations = 0;
+      for (let size = 1; size <= maxCombinationSize; size++) {
+        totalCombinations += binomialCoefficient(validSpirits.length, size);
+      }
+
+      let processedCombinations = 0;
+      let bestResult = null;
+
+      const updateProgress = (progress) => {
+        if (!isCalculationCancelled) {
+          document.getElementById(
+            "optimalSpiritsList"
+          ).innerHTML = `<div class='processing-message'>
+              <div class="calculating-spinner-small"></div>
+              최적 조합을 찾는 중입니다... (${Math.round(progress * 100)}%)
+              <div style="margin-top: 10px;">
+                <button id="cancelCalculationBtn" class="cancel-calculation-btn">계산 중단</button>
+              </div>
+            </div>`;
+
+          document
+            .getElementById("cancelCalculationBtn")
+            .addEventListener("click", function () {
+              isCalculationCancelled = true;
+              document.getElementById("optimalSpiritsList").innerHTML =
+                "<div class='warning-message'>계산이 중단되었습니다. 현재까지 찾은 최적 조합을 표시합니다.</div>";
+            });
+        }
+      };
+
+      function processInBatches(
+        sizeIndex,
+        combinationIndex,
+        batchSize,
+        validSpirits,
+        sizes,
+        combinations
+      ) {
+        if (sizeIndex >= sizes.length || isCalculationCancelled) {
+          if (bestResult) {
+            const deepCopiedResult = JSON.parse(JSON.stringify(bestResult));
+            addNewOptimalCombination(deepCopiedResult);
+            saveSavedOptimalCombinations();
+            const category = bestResult.spirits[0]?.category || currentCategory;
+            currentActiveIndex = savedOptimalCombinations[category].length - 1;
+            renderHistoryTabs(category);
+            showSingleOptimalResult(bestResult);
+          } else {
+            document.getElementById("optimalSpiritsList").innerHTML =
+              "<div class='warning-message'>최적 조합을 찾을 수 없습니다.</div>";
+          }
+          isProcessing = false;
+          return;
+        }
+
+        const size = sizes[sizeIndex];
+        if (combinationIndex === 0) {
+          combinations = generateCombinations(validSpirits, size);
+        }
+
+        const endIndex = Math.min(
+          combinationIndex + batchSize,
+          combinations.length
+        );
+
+        for (let i = combinationIndex; i < endIndex; i++) {
+          const combination = combinations[i];
+          const result = calculateEffectsForSpirits(combination);
+
+          processedCombinations++;
+
+          if (processedCombinations % 20 === 0) {
+            updateProgress(processedCombinations / totalCombinations);
+          }
+
+          if (!bestResult || result.score > bestResult.score) {
+            bestResult = result;
+          } else if (result.score === bestResult.score) {
+            const currentImmortalCount = countGradeInResult(result, "불멸");
+            const bestImmortalCount = countGradeInResult(bestResult, "불멸");
+
+            if (currentImmortalCount > bestImmortalCount) {
+              bestResult = result;
+            } else if (currentImmortalCount === bestImmortalCount) {
+              const currentGradeTypes = countGradeTypesInResult(result);
+              const bestGradeTypes = countGradeTypesInResult(bestResult);
+
+              if (currentGradeTypes > bestGradeTypes) {
+                bestResult = result;
+              }
+            }
+          }
+        }
+
+        if (endIndex < combinations.length) {
+          setTimeout(() => {
+            processInBatches(
+              sizeIndex,
+              endIndex,
+              batchSize,
+              validSpirits,
+              sizes,
+              combinations
+            );
+          }, 0);
+        } else {
+          setTimeout(() => {
+            processInBatches(
+              sizeIndex + 1,
+              0,
+              batchSize,
+              validSpirits,
+              sizes,
+              null
+            );
+          }, 0);
+        }
+      }
+
+      const sizes = [];
+      for (let size = maxCombinationSize; size >= 1; size--) {
+        sizes.push(size);
+      }
+
+      const batchSize = 50;
+      processInBatches(0, 0, batchSize, validSpirits, sizes, null);
+    } catch (error) {
+      console.error("Error finding optimal combination:", error);
+      document.getElementById(
+        "optimalSpiritsList"
+      ).innerHTML = `<div class='warning-message'>${
+        error.message || "조합을 찾는 중 오류가 발생했습니다."
+      }</div>`;
+      document.getElementById("optimalScore").textContent = "오류";
+      isProcessing = false;
+    }
+  }, 100);
+}
 function startOptimalCalculation() {
   if (isProcessing) {
     alert("이미 조합을 계산 중입니다. 잠시만 기다려주세요.");
@@ -2581,7 +3049,6 @@ function startOptimalCalculation() {
   isCalculationCancelled = false;
 
   const currentCategory = lastActiveCategory;
-
   const categorySpirits = selectedSpirits.filter(
     (spirit) => spirit.category === currentCategory
   );
@@ -2626,24 +3093,55 @@ function startOptimalCalculation() {
       <div class="results-container">
         <div class="results-section">
           <h4>등급 결속 효과</h4>
-          <div id="optimalGradeEffects" class="effects-list"></div>
+          <div id="optimalGradeEffects" class="effects-list">
+            <div class="calculating-message">계산 중입니다...</div>
+          </div>
         </div>
         <div class="results-section">
           <h4>세력 결속 효과</h4>
-          <div id="optimalFactionEffects" class="effects-list"></div>
+          <div id="optimalFactionEffects" class="effects-list">
+            <div class="calculating-message">계산 중입니다...</div>
+          </div>
         </div>
         <div class="results-section">
           <h4>총 결속 효과 (*장착효과 제외)</h4>
-          <div id="optimalTotalEffects" class="effects-list"></div>
+          <div id="optimalTotalEffects" class="effects-list">
+            <div class="calculating-message">계산 중입니다...</div>
+          </div>
         </div>
       </div>
 
       <div id="optimalSpiritsDetails" class="spirit-details-container">
         <h4>선택된 환수 상세 스탯</h4>
-        <div id="spiritStatsDetails" class="spirit-stats-grid"></div>
+        <div id="spiritStatsDetails" class="spirit-stats-grid">
+          <div class="calculating-message">계산 중입니다...</div>
+        </div>
       </div>
     </div>
   `;
+
+  const style = document.createElement("style");
+  style.textContent = `
+    .calculating-message {
+      padding: 10px;
+      background-color: #f1f8fe;
+      color: #3498db;
+      border-left: 3px solid #3498db;
+      font-style: italic;
+      text-align: center;
+      margin: 10px 0;
+    }
+    .processing-message {
+      text-align: center;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-weight: bold;
+      color: #3498db;
+    }
+  `;
+  document.head.appendChild(style);
 
   document
     .getElementById("cancelCalculationBtn")
@@ -2740,14 +3238,39 @@ function startOptimalCalculation() {
 
       const updateProgress = (progress) => {
         if (!isCalculationCancelled) {
+          const percentage = Math.round(progress * 100);
           document.getElementById(
             "optimalSpiritsList"
           ).innerHTML = `<div class='processing-message'>
-              최적 조합을 찾는 중입니다... (${Math.round(progress * 100)}%)
+              <div class="progress-bar-container">
+                <div class="progress-bar" style="width: ${percentage}%"></div>
+              </div>
+              최적 조합을 찾는 중입니다... (${percentage}%)
               <div style="margin-top: 10px;">
                 <button id="cancelCalculationBtn" class="cancel-calculation-btn">계산 중단</button>
               </div>
             </div>`;
+
+          if (!document.getElementById("progress-bar-style")) {
+            const style = document.createElement("style");
+            style.id = "progress-bar-style";
+            style.textContent = `
+              .progress-bar-container {
+                width: 100%;
+                height: 10px;
+                background-color: #e0e0e0;
+                border-radius: 5px;
+                margin-bottom: 10px;
+              }
+              .progress-bar {
+                height: 100%;
+                background-color: #3498db;
+                border-radius: 5px;
+                transition: width 0.3s ease;
+              }
+            `;
+            document.head.appendChild(style);
+          }
 
           document
             .getElementById("cancelCalculationBtn")
