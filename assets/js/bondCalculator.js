@@ -1155,6 +1155,22 @@ function showSearchResults() {
     grid.appendChild(card);
   });
 
+  const adElements = document.querySelectorAll(
+    "#search-results-modal .kakao_ad_area"
+  );
+  adElements.forEach((ad) => {
+    ad.style.display = "block";
+  });
+
+  if (typeof window.adfit !== "undefined") {
+    window.adfit();
+  } else {
+    const reloadScript = document.createElement("script");
+    reloadScript.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+    reloadScript.async = true;
+    document.body.appendChild(reloadScript);
+  }
+
   modal.style.display = "block";
 }
 
