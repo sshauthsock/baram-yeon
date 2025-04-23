@@ -1074,6 +1074,16 @@ function showSearchResults() {
             <button class="close-search-results" onclick="closeSearchResults()">×</button>
           </div>
         </div>
+      <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-BpPJ5iZcTpecgtmc"
+                data-ad-width="728" data-ad-height="90"></ins>
+        </div>
+      </div>
+      <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-ds4FVmwpdYggDkDM"
+            data-ad-width="320" data-ad-height="50"></ins>
+      </div>
         <div id="search-results-list"></div>
       </div>
     `;
