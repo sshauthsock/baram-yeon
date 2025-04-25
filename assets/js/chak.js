@@ -703,53 +703,256 @@ function showSearchResults() {
   });
 
   let resultsHtml = "";
+  let groupIndex = 0;
+
   for (const [statName, statResults] of Object.entries(groupedResults)) {
+    groupIndex++;
+    const groupId = `search-stat-group-${groupIndex}`;
+
+    // 기본적으로 첫 번째 그룹은 펼쳐져 있고 나머지는 접혀있음
+    const isExpanded = groupIndex === 1;
+
     resultsHtml += `<div class="compact-group" data-stat="${statName}">
-      <h4 class="compact-stat-title">
-        ${statName} 
-        <span class="stat-info">
+      <div class="compact-stat-title" data-target="${groupId}">
+        <div class="stat-name-section">
+          <span class="toggle-icon">${isExpanded ? "▼" : "►"}</span>
+          ${statName}
           <span class="stat-count">(${statResults.length}곳)</span>
-          <span class="stat-total-value">최대 +${statTotalMaxValues[statName]}</span>
-        </span>
-      </h4>
-      <div class="compact-locations">`;
+        </div>
+        <div class="stat-info">
+          <span class="stat-total-value">최대 +${
+            statTotalMaxValues[statName]
+          }</span>
+        </div>
+      </div>
+      <div id="${groupId}" class="stat-group-content" ${
+      isExpanded ? "" : 'style="display:none;"'
+    }>`;
 
-    statResults.sort((a, b) => {
-      if (a.part !== b.part) {
-        return parts.indexOf(a.part) - parts.indexOf(b.part);
-      }
-      return (
-        parseInt(a.level.replace("+", "")) - parseInt(b.level.replace("+", ""))
+    const groupedByParts = Object.groupBy(statResults, (item) => item.part);
+    const sortedParts = Object.keys(groupedByParts).sort(
+      (a, b) => parts.indexOf(a) - parts.indexOf(b)
+    );
+
+    for (const part of sortedParts) {
+      const partItems = groupedByParts[part];
+
+      partItems.sort((a, b) => {
+        return (
+          parseInt(a.level.replace("+", "")) -
+          parseInt(b.level.replace("+", ""))
+        );
+      });
+
+      const partTotalValue = partItems.reduce(
+        (sum, item) => sum + item.maxValue,
+        0
       );
-    });
 
-    statResults.forEach((loc) => {
-      let statusClass = "location-unused";
-      let statusText = "미개방";
+      resultsHtml += `<div class="part-section">
+        <div class="part-header">
+          <span>${part}</span>
+          <span class="part-value">+${partTotalValue} (${partItems.length}개)</span>
+        </div>
+        <div class="compact-locations">`;
 
-      if (loc.isUnlocked) {
-        statusText = `${loc.currentLevel}/3`;
-        statusClass =
-          loc.currentLevel === 3 ? "location-complete" : "location-partial";
-      }
+      partItems.forEach((loc) => {
+        let statusClass = "location-unused";
+        let statusText = "미개방";
 
-      resultsHtml += `
-        <div class="compact-location ${statusClass}" 
-             onclick="selectStatFromSearch('${loc.part}', '${loc.level}')">
-          <div class="loc-header">
-            <span class="loc-part">${loc.part}</span>
-            <span class="loc-level">${loc.level}</span>
-          </div>
-          <div class="loc-details">
-            <span class="loc-max-value">+${loc.maxValue}</span>
-          </div>
-        </div>`;
-    });
+        if (loc.isUnlocked) {
+          statusText = `${loc.currentLevel}/3`;
+          statusClass =
+            loc.currentLevel === 3 ? "location-complete" : "location-partial";
+        }
+
+        resultsHtml += `
+          <div class="compact-location ${statusClass}" 
+              onclick="selectStatFromSearch('${loc.part}', '${loc.level}')">
+            <div class="loc-header">
+              <span class="loc-level">lv ${loc.level}</span>
+            </div>
+            <div class="loc-details">
+              <span class="loc-max-value">+${loc.maxValue}</span>
+            </div>
+          </div>`;
+      });
+
+      resultsHtml += `</div></div>`;
+    }
 
     resultsHtml += `</div></div>`;
   }
 
   resultsContainer.innerHTML = resultsHtml;
+
+  const styleElement = document.createElement("style");
+  if (!document.getElementById("search-collapse-styles")) {
+    styleElement.id = "search-collapse-styles";
+    styleElement.textContent = `
+      .compact-stat-title {
+        background-color: #3498db;
+        color: white;
+        margin: 0;
+        padding: 8px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+      }
+      
+      .compact-stat-title:hover {
+        background-color: #2980b9;
+      }
+      
+      .stat-name-section {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      
+      .toggle-icon {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        text-align: center;
+        line-height: 16px;
+        font-size: 10px;
+        transition: transform 0.3s;
+      }
+      
+      .stat-group-content {
+        transition: max-height 0.3s ease-out;
+        max-height: 1000px;
+        overflow: hidden;
+      }
+      
+      .part-section {
+        border-top: 1px solid #e0e0e0;
+      }
+      
+      .part-header {
+        background-color: #f5f5f5;
+        padding: 6px 15px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+      }
+      
+      .compact-locations {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 6px;
+        padding: 8px;
+      }
+      
+      .compact-location {
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        height: auto;
+        min-height: 48px;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+      }
+      
+      .compact-location:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      }
+      
+      .loc-header {
+        padding: 4px 6px;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.78rem;
+      }
+      
+      .highlight-group {
+        box-shadow: 0 0 10px #3498db;
+        animation: pulse 1.5s;
+      }
+      
+      @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
+      }
+      
+      @media (max-width: 480px) {
+        .compact-locations {
+          grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+          gap: 3px;
+          padding: 5px;
+        }
+      }
+    `;
+    document.head.appendChild(styleElement);
+  }
+
+  const toggleButtons = resultsContainer.querySelectorAll(
+    ".compact-stat-title"
+  );
+  toggleButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const targetId = this.getAttribute("data-target");
+      const content = document.getElementById(targetId);
+      const icon = this.querySelector(".toggle-icon");
+
+      if (content.style.display === "none") {
+        content.style.display = "block";
+        icon.textContent = "▼";
+
+        content.style.maxHeight = "0";
+        setTimeout(() => {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }, 10);
+      } else {
+        icon.textContent = "►";
+        content.style.maxHeight = "0";
+
+        setTimeout(() => {
+          content.style.display = "none";
+        }, 300);
+      }
+    });
+  });
+
+  window.highlightStatInResults = function (statName) {
+    const allGroups = resultsContainer.querySelectorAll(".compact-group");
+    allGroups.forEach((group) => {
+      if (group.getAttribute("data-stat") === statName) {
+        const groupId = group
+          .querySelector(".compact-stat-title")
+          .getAttribute("data-target");
+        const content = document.getElementById(groupId);
+        const icon = group.querySelector(".toggle-icon");
+
+        if (content.style.display === "none") {
+          content.style.display = "block";
+          icon.textContent = "▼";
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+
+        group.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        group.classList.add("highlight-group");
+        setTimeout(() => {
+          group.classList.remove("highlight-group");
+        }, 1500);
+      }
+    });
+  };
+
   modal.style.display = "block";
 }
 
@@ -1601,55 +1804,366 @@ function showPresetSearchResults(presetName, targetStats) {
 
   let html = `<div class="compact-results">`;
 
+  let groupIndex = 0;
   for (const [statName, statResults] of Object.entries(groupedByStats)) {
+    groupIndex++;
+    const groupId = `stat-group-${groupIndex}`;
+
+    const isExpanded = groupIndex === 1;
+
     html += `<div class="compact-group">
-      <h4 class="compact-stat-title">
-        ${statName} 
-        <span class="stat-info">
+      <div class="compact-stat-title" data-target="${groupId}">
+        <div class="stat-name-section">
+          <span class="toggle-icon">${isExpanded ? "▼" : "►"}</span>
+          ${statName}
           <span class="stat-count">(${statResults.length}곳)</span>
+        </div>
+        <div class="stat-info">
           <span class="stat-total-value">최대 +${statMaxValues[statName]}</span>
-        </span>
-      </h4>
-      <div class="compact-locations">`;
+        </div>
+      </div>
+      <div id="${groupId}" class="stat-group-content" ${
+      isExpanded ? "" : 'style="display:none;"'
+    }>`;
 
-    statResults.sort((a, b) => {
-      if (a.part !== b.part) {
-        return parts.indexOf(a.part) - parts.indexOf(b.part);
-      }
-      return (
-        parseInt(a.level.replace("+", "")) - parseInt(b.level.replace("+", ""))
+    const groupedByParts = Object.groupBy(statResults, (item) => item.part);
+
+    const sortedParts = Object.keys(groupedByParts).sort(
+      (a, b) => parts.indexOf(a) - parts.indexOf(b)
+    );
+
+    for (const part of sortedParts) {
+      const partItems = groupedByParts[part];
+
+      partItems.sort((a, b) => {
+        return (
+          parseInt(a.level.replace("+", "")) -
+          parseInt(b.level.replace("+", ""))
+        );
+      });
+
+      const partTotalValue = partItems.reduce(
+        (sum, item) => sum + item.maxValue,
+        0
       );
-    });
 
-    statResults.forEach((loc) => {
-      let statusClass = "location-unused";
-      let statusText = "미개방";
+      html += `<div class="part-section">
+        <div class="part-header">
+          <span>${part}</span>
+          <span class="part-value">+${partTotalValue} (${partItems.length}개)</span>
+        </div>
+        <div class="compact-locations">`;
 
-      if (loc.isUnlocked) {
-        statusText = `${loc.currentLevel}/3`;
-        statusClass =
-          loc.currentLevel === 3 ? "location-complete" : "location-partial";
-      }
+      partItems.forEach((loc) => {
+        let statusClass = "location-unused";
+        let statusText = "미개방";
 
-      html += `
-        <div class="compact-location ${statusClass}" 
-            onclick="selectStatFromPreset('${loc.part}', '${loc.level}')">
-          <div class="loc-header">
-            <span class="loc-part">${loc.part}</span>
-            <span class="loc-level">${loc.level}</span>
-          </div>
-          <div class="loc-details">
-            <span class="loc-max-value">+${loc.maxValue}</span>
-          </div>
-        </div>`;
-    });
+        if (loc.isUnlocked) {
+          statusText = `${loc.currentLevel}/3`;
+          statusClass =
+            loc.currentLevel === 3 ? "location-complete" : "location-partial";
+        }
+
+        html += `
+          <div class="compact-location ${statusClass}" 
+              onclick="selectStatFromPreset('${loc.part}', '${loc.level}')">
+            <div class="loc-header">
+              <span class="loc-level">lv ${loc.level}</span>
+            </div>
+            <div class="loc-details">
+              <span class="loc-max-value">+${loc.maxValue}</span>
+            </div>
+          </div>`;
+      });
+
+      html += `</div></div>`;
+    }
 
     html += `</div></div>`;
   }
 
   html += `</div>`;
 
+  html += `
+    <style>
+      .compact-results {
+        font-size: 0.95rem;
+        width: 100%;
+      }
+      
+      .compact-group {
+        margin-bottom: 8px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      
+      .compact-stat-title {
+        background-color: #3498db;
+        color: white;
+        margin: 0;
+        padding: 8px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+      }
+      
+      .compact-stat-title:hover {
+        background-color: #2980b9;
+      }
+      
+      .stat-name-section {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      
+      .toggle-icon {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        text-align: center;
+        line-height: 16px;
+        font-size: 10px;
+        transition: transform 0.3s;
+      }
+      
+      .stat-group-content {
+        transition: max-height 0.3s ease-out;
+        max-height: 1000px;
+        overflow: hidden;
+      }
+      
+      .stat-count {
+        font-size: 0.85em;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: normal;
+      }
+      
+      .part-section {
+        border-top: 1px solid #e0e0e0;
+      }
+      
+      .part-header {
+        background-color: #f5f5f5;
+        padding: 6px 15px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+      }
+      
+      .compact-locations {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 6px;
+        padding: 8px;
+      }
+      
+      .compact-location {
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        height: auto;
+        min-height: 48px;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+      }
+      
+      .compact-location:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      }
+      
+      .loc-header {
+        padding: 4px 6px;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.78rem;
+      }
+      
+      .loc-level {
+        font-weight: 600;
+        color: #2563eb;
+      }
+      
+      .loc-status {
+        font-size: 0.7rem;
+        color: #666;
+      }
+      
+      .loc-details {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4px;
+        background-color: #ecfdf5;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+      
+      .loc-max-value {
+        font-weight: bold;
+        color: #10b981;
+      }
+      
+      .stat-info, .part-value {
+        font-size: 0.85rem;
+        white-space: nowrap;
+      }
+      
+      .stat-total-value {
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+      }
+      
+      /* 상태별 스타일 */
+      .location-unused {
+        opacity: 0.75;
+      }
+      
+      .location-unused .loc-details {
+        background-color: #f5f5f5;
+      }
+      
+      .location-unused .loc-max-value {
+        color: #64748b;
+      }
+      
+      .location-partial .loc-details {
+        background-color: #e3f2fd;
+      }
+      
+      .location-partial .loc-max-value {
+        color: #2563eb;
+      }
+      
+      .location-complete .loc-details {
+        background-color: #e8f5e9;
+      }
+
+      /* 반응형 레이아웃 (chak.css 참고) */
+      @media (min-width: 1600px) {
+        .compact-locations {
+          grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        }
+      }
+      
+      @media (max-width: 1024px) {
+        .compact-locations {
+          grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        }
+        
+        .loc-max-value {
+          font-size: 0.85rem;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .compact-locations {
+          grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+          gap: 4px;
+          padding: 6px;
+        }
+        
+        .compact-location {
+          min-height: 42px;
+        }
+        
+        .loc-header {
+          padding: 3px 4px;
+          font-size: 0.7rem;
+        }
+        
+        .loc-details {
+          padding: 3px;
+        }
+        
+        .loc-max-value {
+          font-size: 0.8rem;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .compact-locations {
+          grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+          gap: 3px;
+          padding: 5px;
+        }
+        
+        .compact-stat-title {
+          padding: 6px 10px;
+          font-size: 0.85rem;
+        }
+        
+        .part-header {
+          padding: 4px 10px;
+          font-size: 0.75rem;
+        }
+        
+        .loc-header {
+          padding: 2px 3px;
+          font-size: 0.65rem;
+        }
+        
+        .loc-status {
+          font-size: 0.6rem;
+        }
+        
+        .loc-max-value {
+          font-size: 0.75rem;
+        }
+        
+        .compact-location {
+          min-height: 38px;
+        }
+      }
+    </style>
+  `;
+
   resultsContainer.innerHTML = html;
+
+  const toggleButtons = resultsContainer.querySelectorAll(
+    ".compact-stat-title"
+  );
+  toggleButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const targetId = this.getAttribute("data-target");
+      const content = document.getElementById(targetId);
+      const icon = this.querySelector(".toggle-icon");
+
+      if (content.style.display === "none") {
+        content.style.display = "block";
+        icon.textContent = "▼";
+
+        content.style.maxHeight = "0";
+        setTimeout(() => {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }, 10);
+      } else {
+        icon.textContent = "►";
+        content.style.maxHeight = "0";
+
+        setTimeout(() => {
+          content.style.display = "none";
+        }, 300);
+      }
+    });
+  });
 
   const applyBtn = document.querySelector(".apply-btn");
   if (applyBtn) {
