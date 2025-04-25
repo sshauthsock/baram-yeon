@@ -600,6 +600,9 @@ function updateStatsInModal(stat) {
   registrationList.innerHTML = "";
   bindList.innerHTML = "";
 
+  const existingNotices = document.querySelectorAll(".level25-notice");
+  existingNotices.forEach((notice) => notice.remove());
+
   if (!stat) {
     const level25Stat = currentStats.find((s) => s.level === 25);
 
