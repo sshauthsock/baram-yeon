@@ -21,7 +21,6 @@
 
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
 </head>
 
 <body>
@@ -39,7 +38,6 @@
         </nav>
     </header>
 
-
     <div class="ad-row">
         <div class="ad-container-left">
             <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-XTAnZwWzQOT46c36" data-ad-width="728"
@@ -56,8 +54,6 @@
         <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-UDsuae5QVIAxX2fS" data-ad-width="320"
             data-ad-height="50"></ins>
     </div>
-
-    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
 
     <div class="layout-container">
         <div class="equipment-section">
@@ -81,8 +77,8 @@
         <div class="panel summary-panel">
             <div class="tool-section">
                 <div class="preset-section">
-                    <button onclick="optimizeStats('boss')" class="preset-btn boss-btn">보스용 조합</button>
-                    <button onclick="optimizeStats('pvp')" class="preset-btn pvp-btn">피빕용 조합</button>
+                    <button onclick="ChakApp.optimizeStats('boss')" class="preset-btn boss-btn">보스용 조합</button>
+                    <button onclick="ChakApp.optimizeStats('pvp')" class="preset-btn pvp-btn">피빕용 조합</button>
                 </div>
                 <div class="search-section">
                     <div class="search-input-container">
@@ -121,7 +117,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>검색 결과</h3>
-                <span class="close-modal" onclick="closeSearchResults()">&times;</span>
+                <span class="close-modal" onclick="ChakApp.closeSearchResults()">&times;</span>
             </div>
             <div class="search-results-container">
                 <div class="search-results-wrapper">
@@ -142,7 +138,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="optimize-title">최적 조합</h3>
-                <span class="close-modal" onclick="closeOptimizeResults()">&times;</span>
+                <span class="close-modal" onclick="ChakApp.closeOptimizeResults()">&times;</span>
             </div>
             <div class="optimize-container">
                 <div id="optimize-description" class="optimize-description"></div>
@@ -151,7 +147,7 @@
                 </div>
             </div>
             <div class="optimize-buttons">
-                <button onclick="closeOptimizeResults()" class="apply-btn">창 닫기</button>
+                <button onclick="ChakApp.closeOptimizeResults()" class="apply-btn">창 닫기</button>
             </div>
         </div>
     </div>
@@ -197,43 +193,10 @@
             <p>&copy; 2025 바연 화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
         </div>
     </footer>
+
+    <script src="assets/js/firebaseConfig.js"></script>
     <script src="assets/js/chak.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const tutorialShown = localStorage.getItem('chakTutorialShown');
-            if (!tutorialShown && document.getElementById('tutorial-tip')) {
-                document.getElementById('tutorial-tip').style.display = 'flex';
-                document.getElementById('close-tip').addEventListener('click', function () {
-                    document.getElementById('tutorial-tip').style.display = 'none';
-                    localStorage.setItem('chakTutorialShown', 'true');
-                });
-            }
-            document.getElementById('search-button').addEventListener('click', searchStats);
-            var isMobile = window.innerWidth <= 768;
-            localStorage.setItem('isMobileView', isMobile);
-        });
-
-        function debounce(func, wait) {
-            var timeout;
-            return function () {
-                var context = this, args = arguments;
-                clearTimeout(timeout);
-                timeout = setTimeout(function () {
-                    func.apply(context, args);
-                }, wait);
-            };
-        }
-
-        window.addEventListener('resize', debounce(function () {
-            var wasMobile = localStorage.getItem('isMobileView') === 'true';
-            var isMobile = window.innerWidth <= 768;
-
-            if (wasMobile !== isMobile) {
-                localStorage.setItem('isMobileView', isMobile);
-                location.reload();
-            }
-        }, 250));
-    </script>
+    <script src="assets/js/chakInit.js"></script>
 </body>
 
 </html>

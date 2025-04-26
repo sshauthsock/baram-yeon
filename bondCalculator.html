@@ -16,7 +16,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
         rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/global.css" rel="stylesheet">
     <link href="assets/css/bond.css" rel="stylesheet">
     <link href="assets/css/components/ads.css" rel="stylesheet">
@@ -42,11 +41,10 @@
     </header>
 
     <div class="sub-tabs" id="subTabs">
-        <div class="tab active" onclick="showCategory('수호', true)">수호</div>
-        <div class="tab" onclick="showCategory('탑승', true)">탑승</div>
-        <div class="tab" onclick="showCategory('변신', true)">변신</div>
+        <div class="tab active" onclick="BondCalculatorApp.showCategory('수호', true)">수호</div>
+        <div class="tab" onclick="BondCalculatorApp.showCategory('탑승', true)">탑승</div>
+        <div class="tab" onclick="BondCalculatorApp.showCategory('변신', true)">변신</div>
     </div>
-
 
     <div class="ad-row">
         <div class="ad-container-left">
@@ -75,7 +73,8 @@
                         <div class="search-input-wrapper">
                             <input type="text" id="mobile-search-input" placeholder="능력치 검색 또는 선택..."
                                 autocomplete="off">
-                            <button id="mobile-search-button" onclick="searchSpirits()">검색</button>
+                            <button id="mobile-search-button"
+                                onclick="BondCalculatorApp.searchSpirits(true)">검색</button>
                         </div>
                         <div id="mobile-stat-options" class="stat-options-dropdown"></div>
                         <div id="mobile-selected-stats" class="selected-stats"></div>
@@ -85,7 +84,8 @@
                 <div class="spirit-selection">
                     <div class="spirit-selection-header">
                         <h3>환수 선택 (<span id="selectedCount">0</span>/20)</h3>
-                        <button class="clear-selection-btn" onclick="clearAllSelections()">선택해제</button>
+                        <button class="clear-selection-btn"
+                            onclick="BondCalculatorApp.clearAllSelections()">선택해제</button>
                     </div>
                     <div class="image-container" id="imageContainer"></div>
                 </div>
@@ -97,7 +97,7 @@
                         <div class="search-controls">
                             <div class="search-input-wrapper">
                                 <input type="text" id="search-input" placeholder="능력치 검색 또는 선택..." autocomplete="off">
-                                <button id="search-button" onclick="searchSpirits()">검색</button>
+                                <button id="search-button" onclick="BondCalculatorApp.searchSpirits()">검색</button>
                             </div>
                             <div id="stat-options" class="stat-options-dropdown"></div>
                             <div id="selected-stats" class="selected-stats"></div>
@@ -110,11 +110,12 @@
                             <div class="level-batch-control">
                                 <label>일괄 레벨 설정:</label>
                                 <input type="number" id="batchLevel" min="0" max="25" value="0">
-                                <button onclick="applyBatchLevel('batchLevel')">적용</button>
+                                <button onclick="BondCalculatorApp.applyBatchLevel('batchLevel')">적용</button>
                                 <button onclick="setMaxBatchLevel('batchLevel')" class="max-level-btn">Max</button>
                             </div>
                             <div class="calculate-btn-small">
-                                <button id="findOptimalBtn" onclick="findOptimalCombination()">최적 조합 찾기</button>
+                                <button id="findOptimalBtn" onclick="BondCalculatorApp.findOptimalCombination()">최적 조합
+                                    찾기</button>
                             </div>
                         </div>
                     </div>
@@ -136,11 +137,12 @@
                         <div class="level-batch-control">
                             <label>일괄 레벨 설정:</label>
                             <input type="number" id="mobileBatchLevel" min="0" max="25" value="0">
-                            <button onclick="applyBatchLevel('mobileBatchLevel')" class="apply-level-btn">적용</button>
+                            <button onclick="BondCalculatorApp.applyBatchLevel('mobileBatchLevel')"
+                                class="apply-level-btn">적용</button>
                             <button onclick="setMaxBatchLevel('mobileBatchLevel')" class="max-level-btn">Max</button>
                         </div>
                         <div class="calculate-btn-small">
-                            <button id="findOptimalBtn" onclick="findOptimalCombination()">찾기</button>
+                            <button id="findOptimalBtn" onclick="BondCalculatorApp.findOptimalCombination()">찾기</button>
                         </div>
                     </div>
                 </div>
@@ -151,7 +153,7 @@
 
     <div class="modal-overlay" id="resultModal">
         <div class="modal">
-            <button class="modal-close" onclick="closeResultModal()">✕</button>
+            <button class="modal-close" onclick="BondCalculatorApp.closeResultModal()">✕</button>
             <h3 class="modal-title">결속 효과 계산 결과</h3>
             <div id="selectedSpiritsInfo" class="selected-spirits-info">
                 <h4>선택된 환수 정보</h4>
@@ -176,17 +178,15 @@
             <div class="weighted-score">
                 <h4>환산합산: <span id="weightedScore">0</span></h4>
                 <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small>
-
             </div>
 
             <div id="missingDataWarning" class="warning-message"></div>
         </div>
     </div>
-    </div>
 
     <div class="modal-overlay" id="optimalModal">
         <div class="modal">
-            <button class="modal-close" onclick="closeOptimalModal()">✕</button>
+            <button class="modal-close" onclick="BondCalculatorApp.closeOptimalModal()">✕</button>
             <div id="optimalModalContent">
             </div>
         </div>
@@ -223,40 +223,10 @@
             <p>&copy; 2025 바연 화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
         </div>
     </footer>
+
+    <script src="assets/js/firebaseConfig.js"></script>
     <script src="assets/js/bondCalculator.js"></script>
-    <script>
-
-
-        function setMaxBatchLevel(inputId) {
-            document.getElementById(inputId).value = 25;
-            applyBatchLevel(inputId);
-        }
-        document.addEventListener('DOMContentLoaded', function () {
-            var isMobile = window.innerWidth <= 768;
-            localStorage.setItem('isMobileView', isMobile);
-        });
-
-        function debounce(func, wait) {
-            var timeout;
-            return function () {
-                var context = this, args = arguments;
-                clearTimeout(timeout);
-                timeout = setTimeout(function () {
-                    func.apply(context, args);
-                }, wait);
-            };
-        }
-
-        window.addEventListener('resize', debounce(function () {
-            var wasMobile = localStorage.getItem('isMobileView') === 'true';
-            var isMobile = window.innerWidth <= 768;
-
-            if (wasMobile !== isMobile) {
-                localStorage.setItem('isMobileView', isMobile);
-                location.reload();
-            }
-        }, 250));
-    </script>
+    <script src="assets/js/bondCalculatorInit.js"></script>
 </body>
 
 </html>

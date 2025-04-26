@@ -1364,7 +1364,6 @@ h3 {
 .stat-total-value {
     font-weight: 700;
     font-size: 0.9em;
-    background-color: #d1fae5;
     padding: 2px 6px;
     border-radius: 4px;
 }
@@ -1406,7 +1405,7 @@ h3 {
 .loc-header {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     box-sizing: border-box;
 }
@@ -1499,6 +1498,114 @@ h3 {
 .close-tip-btn:active {
     background-color: #1e40af;
     transform: scale(0.98);
+}
+
+/* 모달 결과 스타일 */
+.compact-results {
+    font-size: 0.95rem;
+    width: 100%;
+}
+
+.compact-group {
+    margin-bottom: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.compact-stat-title {
+    background-color: #3498db;
+    color: white;
+    margin: 0;
+    padding: 8px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.compact-stat-title:hover {
+    background-color: #2980b9;
+}
+
+.stat-name-section {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.toggle-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    line-height: 16px;
+    font-size: 10px;
+    transition: transform 0.3s;
+}
+
+.stat-group-content {
+    transition: max-height 0.3s ease-out;
+    max-height: 1000px;
+    overflow: hidden;
+}
+
+.part-section {
+    border-top: 1px solid #e0e0e0;
+}
+
+.part-header {
+    background-color: #f5f5f5;
+    padding: 6px 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+}
+
+.location-unused .loc-details {
+    background-color: #f5f5f5;
+}
+
+.location-unused .loc-max-value {
+    color: #64748b;
+}
+
+.location-partial .loc-details {
+    background-color: #e3f2fd;
+}
+
+.location-partial .loc-max-value {
+    color: #2563eb;
+}
+
+.location-complete .loc-details {
+    background-color: #e8f5e9;
+}
+
+.highlight-group {
+    box-shadow: 0 0 10px #3498db;
+    animation: pulse 1.5s;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+    }
 }
 
 @media (min-width: 1600px) {
@@ -1706,7 +1813,6 @@ h3 {
     .optimize-results-container {
         max-height: 60vh;
     }
-
 }
 
 @media (max-width: 480px) {
@@ -1896,5 +2002,4 @@ h3 {
         min-width: 20px;
         min-height: 20px;
     }
-
 }
