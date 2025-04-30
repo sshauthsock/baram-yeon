@@ -24,45 +24,23 @@
     justify-content: center;
 }
 
+.mobile-ad {
+    display: none;
+}
+
 @media screen and (min-width: 769px) {
 
     .ad-container-left,
     .ad-container-right {
         width: 49%;
-    }
-
-    .mobile-ad {
-        display: none !important;
+        display: block;
     }
 }
 
 @media screen and (max-width: 768px) {
     .ad-row {
         display: none;
-
     }
-
-    .desktop-ad {
-        display: none !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .ad-container {
-        padding: 0 8px;
-    }
-}
-
-.ad-container-left,
-.ad-container-right {
-    display: block;
-}
-
-.mobile-ad {
-    display: none;
-}
-
-@media (max-width: 768px) {
 
     .ad-container-left,
     .ad-container-right {
@@ -71,6 +49,12 @@
 
     .mobile-ad {
         display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .ad-container {
+        padding: 0 8px;
     }
 }
 
