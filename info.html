@@ -41,6 +41,7 @@
         </nav>
     </header>
 
+
     <div class="sub-tabs" id="subTabs">
         <div class="tab active" data-category="수호">수호</div>
         <div class="tab" data-category="탑승">탑승</div>
@@ -88,7 +89,23 @@
             <span class="report-spark">✨</span>
         </button>
     </div>
-
+    <div class="help-container">
+        <button class="help-btn" id="helpBtn" aria-label="도움말">
+            <span class="help-icon">?</span>
+        </button>
+        <div class="help-tooltip" id="helpTooltip">
+            <div class="help-content">
+                <div class="help-header">
+                    <h3>리본 표시 안내</h3>
+                    <button class="close-help" id="closeHelp">&times;</button>
+                </div>
+                <ul class="help-list">
+                    <li><span class="ribbon ribbon-r">R</span> 환수 등록 정보가 0~25 레벨 전부 있는 경우 왼쪽 상단에 표시</li>
+                    <li><span class="ribbon ribbon-b">B</span> 환수 결속 정보가 0~25 레벨 전부 있는 경우 오른쪽 상단에 표시</li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <footer class="site-footer">
         <div class="footer-desktop">
             <div class="footer-links">
@@ -104,6 +121,7 @@
         </div>
     </footer>
 
+    <script src="assets/js/common.js"></script>
     <script src="assets/js/firebaseConfig.js"></script>
     <script src="assets/js/info.js"></script>
     <script src="assets/js/infoInit.js"></script>

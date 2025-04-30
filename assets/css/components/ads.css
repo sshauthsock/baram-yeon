@@ -53,7 +53,6 @@
     }
 }
 
-/* 기본 CSS 설정 */
 .ad-container-left,
 .ad-container-right {
     display: block;
@@ -63,7 +62,6 @@
     display: none;
 }
 
-/* 모바일에서의 광고 표시 설정 */
 @media (max-width: 768px) {
 
     .ad-container-left,

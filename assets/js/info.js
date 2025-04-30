@@ -1,66 +1,7 @@
 const InfoApp = (function () {
-  const STATS_MAPPING = {
-    criticalPower: "치명위력",
-    normalMonsterAdditionalDamage: "일반몬스터추가피해",
-    normalMonsterPenetration: "일반몬스터관통",
-    healthIncrease: "체력증가",
-    healthIncreasePercent: "체력증가%",
-    strength: "힘",
-    agility: "민첩",
-    intelligence: "지력",
-    damageAbsorption: "피해흡수",
-    damageResistancePenetration: "피해저항관통",
-    magicIncrease: "마력증가",
-    magicIncreasePercent: "마력증가%",
-    damageResistance: "피해저항",
-    healthPotionEnhancement: "체력시약향상",
-    healthRecoveryImprovement: "체력회복향상",
-    damageIncrease: "피해증가",
-    magicRecoveryImprovement: "마나회복향상",
-    criticalChance: "치명확률",
-    bossMonsterAdditionalDamage: "보스몬스터추가피해",
-    bossMonsterPenetration: "보스몬스터관통",
-    power: "위력",
-    magicPotionEnhancement: "마력시약향상",
-    magicRecoveryImprovement: "마력회복향상",
-    pvpDamage: "대인피해",
-    pvpDefense: "대인방어",
-    statusEffectAccuracy: "상태이상적중",
-    statusEffectResistance: "상태이상저항",
-    criticalPowerPercent: "치명위력%",
-    pvpDamagePercent: "대인피해%",
-    pvpDefensePercent: "대인방어%",
-    criticalDamageResistance: "치명피해저항",
-    criticalResistance: "치명저항",
-    movementSpeed: "이동속도",
-    destructionPowerIncrease: "파괴력증가",
-    destructionPowerPercent: "파괴력증가%",
-    armorStrength: "무장도",
-    lootAcquisitionIncrease: "전리품획득증가",
-    experienceGainIncrease: "경험치획득증가",
-  };
-
-  const SPECIAL_STAT_CLASSES = {
-    피해저항: "stat-damage-resistance",
-    피해저항관통: "stat-damage-resistance-penetration",
-    "대인방어%": "stat-pvp-defense-percent",
-    "대인피해%": "stat-pvp-damage-percent",
-  };
-
-  const CATEGORY_FILE_MAP = {
-    수호: {
-      registration: "guardian-registration-stats",
-      bind: "guardian-bind-stats",
-    },
-    탑승: {
-      registration: "ride-registration-stats",
-      bind: "ride-bind-stats",
-    },
-    변신: {
-      registration: "transform-registration-stats",
-      bind: "transform-bind-stats",
-    },
-  };
+  const STATS_MAPPING = window.CommonData.STATS_MAPPING;
+  const SPECIAL_STAT_CLASSES = window.CommonData.SPECIAL_STAT_CLASSES;
+  const CATEGORY_FILE_MAP = window.CommonData.CATEGORY_FILE_MAP;
 
   let mobData = { 수호: [], 탑승: [], 변신: [] };
   let currentStats = [];
@@ -141,17 +82,7 @@ const InfoApp = (function () {
 
   async function getFirestoreDocument(fileName) {
     try {
-      const documentMap = {
-        "guardian-bind-stats.json": "data-1745203971906",
-        "guardian-registration-stats.json": "data-1745203990701",
-        "ride-bind-stats.json": "data-1745204015994",
-        "ride-registration-stats.json": "data-1745204029836",
-        "transform-bind-stats.json": "data-1745204045512",
-        "transform-registration-stats.json": "data-1745204058405",
-        "gradeSetEffects.json": "data-1745204079667",
-        "factionSetEffects.json": "data-1745204094503",
-        "chak.json": "data-1745204108850",
-      };
+      const documentMap = window.CommonData.DOCUMENT_MAP;
 
       const docId = documentMap[fileName + ".json"];
 
@@ -316,6 +247,39 @@ const InfoApp = (function () {
     });
   }
 
+  function checkAllLevelsHaveEffect(stats, effectType) {
+    if (!stats || !Array.isArray(stats) || stats.length === 0) {
+      return false;
+    }
+
+    const levels = new Set(stats.map((stat) => stat.level));
+    if (levels.size !== 26) {
+      return false;
+    }
+
+    for (let i = 0; i <= 25; i++) {
+      const levelStat = stats.find((s) => s.level === i);
+      if (
+        !levelStat ||
+        !levelStat[effectType] ||
+        Object.keys(levelStat[effectType]).length === 0
+      ) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+  function checkSpiritStats(spirit) {
+    const hasFullRegistration = checkAllLevelsHaveEffect(
+      spirit.stats,
+      "registrationStat"
+    );
+    const hasFullBind = checkAllLevelsHaveEffect(spirit.stats, "bindStat");
+
+    return { hasFullRegistration, hasFullBind };
+  }
+
   function showCategory(category) {
     const container = document.getElementById("imageContainer");
     container.innerHTML = "";
@@ -336,6 +300,22 @@ const InfoApp = (function () {
       const imgContainer = document.createElement("div");
       imgContainer.className = "img-wrapper";
 
+      const { hasFullRegistration, hasFullBind } = checkSpiritStats(item);
+      if (hasFullRegistration) {
+        const ribbonLeft = document.createElement("div");
+        ribbonLeft.className = "ribbon-left";
+        ribbonLeft.innerHTML = "<span>R</span>";
+        ribbonLeft.title = "등록 효과 있음";
+        imgContainer.appendChild(ribbonLeft);
+      }
+
+      if (hasFullBind) {
+        const ribbonRight = document.createElement("div");
+        ribbonRight.className = "ribbon-right";
+        ribbonRight.innerHTML = "<span>B</span>";
+        ribbonRight.title = "결속 효과 있음";
+        imgContainer.appendChild(ribbonRight);
+      }
       const img = document.createElement("img");
       img.src = item.image;
       img.alt = item.name;
@@ -586,56 +566,105 @@ const InfoApp = (function () {
       return;
     }
 
-    Object.entries(stat.registrationStat || {}).forEach(([key, val]) => {
-      const statName = STATS_MAPPING[key] || key;
-      const li = document.createElement("li");
-
-      if (SPECIAL_STAT_CLASSES[statName]) {
-        li.innerHTML = `<span class="${SPECIAL_STAT_CLASSES[statName]}">${statName}: ${val}</span>`;
+    if (
+      stat.registrationStat &&
+      Object.keys(stat.registrationStat).length > 0
+    ) {
+      displayStatsInOrder(registrationList, stat.registrationStat);
+    } else {
+      const level25Stat = currentStats.find((s) => s.level === 25);
+      if (
+        currentLevel !== 25 &&
+        level25Stat &&
+        level25Stat.registrationStat &&
+        Object.keys(level25Stat.registrationStat).length > 0
+      ) {
+        registrationList.innerHTML = `<li>레벨 ${currentLevel}에는 등록 효과가 없습니다</li>`;
+        const regNoticeDiv = document.createElement("div");
+        regNoticeDiv.className = "level25-notice";
+        regNoticeDiv.textContent = "※ 등록 효과는 25레벨에 있습니다";
+        registrationList.parentNode.appendChild(regNoticeDiv);
       } else {
-        li.textContent = `${statName}: ${val}`;
+        registrationList.innerHTML = `<li>레벨 ${currentLevel} 등록 효과 없음</li>`;
       }
-
-      registrationList.appendChild(li);
-    });
-
-    Object.entries(stat.bindStat || {}).forEach(([key, val]) => {
-      const statName = STATS_MAPPING[key] || key;
-      const li = document.createElement("li");
-
-      if (SPECIAL_STAT_CLASSES[statName]) {
-        li.innerHTML = `<span class="${SPECIAL_STAT_CLASSES[statName]}">${statName}: ${val}</span>`;
-      } else {
-        li.textContent = `${statName}: ${val}`;
-      }
-
-      bindList.appendChild(li);
-    });
-
-    if (!registrationList.children.length) {
-      registrationList.innerHTML = `<li>등록 효과 정보 없음</li>`;
     }
 
-    if (!bindList.children.length) {
-      if (currentLevel < 25) {
-        const level25Stat = currentStats.find((s) => s.level === 25);
+    if (stat.bindStat && Object.keys(stat.bindStat).length > 0) {
+      displayStatsInOrder(bindList, stat.bindStat);
+    } else {
+      const level25Stat = currentStats.find((s) => s.level === 25);
+      if (
+        currentLevel !== 25 &&
+        level25Stat &&
+        level25Stat.bindStat &&
+        Object.keys(level25Stat.bindStat).length > 0
+      ) {
+        bindList.innerHTML = `<li>레벨 ${currentLevel}에는 결속 효과가 없습니다</li>`;
+        const bindNoticeDiv = document.createElement("div");
+        bindNoticeDiv.className = "level25-notice";
+        bindNoticeDiv.textContent = "※ 결속 효과는 25레벨에 있습니다";
+        bindList.parentNode.appendChild(bindNoticeDiv);
+      } else {
+        bindList.innerHTML = `<li>레벨 ${currentLevel} 결속 효과 없음</li>`;
+      }
+    }
+  }
+
+  function displayStatsInOrder(listElement, statsObj) {
+    if (!statsObj || Object.keys(statsObj).length === 0) return;
+
+    const STATS_ORDER = window.CommonData.STATS_ORDER || [];
+
+    const groupedStats = {};
+    Object.entries(statsObj).forEach(([key, val]) => {
+      const statName = STATS_MAPPING[key] || key;
+
+      if (groupedStats[statName]) {
         if (
-          level25Stat &&
-          level25Stat.bindStat &&
-          Object.keys(level25Stat.bindStat).length > 0
+          !isNaN(parseFloat(val)) &&
+          !isNaN(parseFloat(groupedStats[statName].val))
         ) {
-          const noticeDiv = document.createElement("div");
-          noticeDiv.className = "level25-notice";
-          noticeDiv.textContent = "※ 결속 효과는 25레벨에 있습니다";
-          bindList.innerHTML = `<li>현재 레벨에는 결속 효과가 없습니다</li>`;
-          bindList.parentNode.appendChild(noticeDiv);
+          groupedStats[statName].val = (
+            parseFloat(groupedStats[statName].val) + parseFloat(val)
+          ).toString();
         } else {
-          bindList.innerHTML = `<li>결속 효과 정보 없음</li>`;
+          groupedStats[statName].val = val;
         }
       } else {
-        bindList.innerHTML = `<li>결속 효과 정보 없음</li>`;
+        groupedStats[statName] = {
+          key: key,
+          val: val,
+          order: STATS_ORDER.indexOf(key),
+        };
       }
-    }
+    });
+
+    const sortedStats = Object.entries(groupedStats).sort((a, b) => {
+      const orderA = a[1].order;
+      const orderB = b[1].order;
+
+      if (orderA >= 0 && orderB >= 0) {
+        return orderA - orderB;
+      } else if (orderA >= 0) {
+        return -1;
+      } else if (orderB >= 0) {
+        return 1;
+      }
+
+      return a[0].localeCompare(b[0]);
+    });
+
+    sortedStats.forEach(([statName, info]) => {
+      const li = document.createElement("li");
+
+      if (SPECIAL_STAT_CLASSES[statName]) {
+        li.innerHTML = `<span class="${SPECIAL_STAT_CLASSES[statName]}">${statName}: ${info.val}</span>`;
+      } else {
+        li.textContent = `${statName}: ${info.val}`;
+      }
+
+      listElement.appendChild(li);
+    });
   }
 
   function initialize() {
@@ -650,3 +679,26 @@ const InfoApp = (function () {
     closeModal,
   };
 })();
+
+document.addEventListener("DOMContentLoaded", function () {
+  const helpBtn = document.getElementById("helpBtn");
+  const helpTooltip = document.getElementById("helpTooltip");
+  const closeHelp = document.getElementById("closeHelp");
+
+  helpBtn.addEventListener("click", function () {
+    helpTooltip.style.display =
+      helpTooltip.style.display === "block" ? "none" : "block";
+  });
+
+  closeHelp.addEventListener("click", function () {
+    helpTooltip.style.display = "none";
+  });
+
+  document.addEventListener("click", function (event) {
+    const isClickInsideHelp =
+      helpTooltip.contains(event.target) || helpBtn.contains(event.target);
+    if (!isClickInsideHelp && helpTooltip.style.display === "block") {
+      helpTooltip.style.display = "none";
+    }
+  });
+});

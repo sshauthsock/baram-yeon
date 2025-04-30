@@ -83,7 +83,7 @@
 
                 <div class="spirit-selection">
                     <div class="spirit-selection-header">
-                        <h3>환수 선택 (<span id="selectedCount">0</span>/20)</h3>
+                        <h3>환수 선택 (<span id="selectedCount">0</span>/40)</h3>
                         <button class="clear-selection-btn"
                             onclick="BondCalculatorApp.clearAllSelections()">선택해제</button>
                     </div>
@@ -105,7 +105,8 @@
                     </div>
 
                     <div class="selected-spirits-header">
-                        <h3>선택된 환수</h3>
+                        <h3>선택된 환수 (<span id="selectedCountPanel">0</span>/40)</h3>
+
                         <div class="header-controls">
                             <div class="level-batch-control">
                                 <label>일괄 레벨 설정:</label>
@@ -208,7 +209,25 @@
         <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Xtg9TanJcnXcaIaY" data-ad-width="320"
             data-ad-height="50"></ins>
     </div>
-
+    <div class="help-container">
+        <button class="help-btn" id="helpBtn" aria-label="도움말">
+            <span class="help-icon">?</span>
+        </button>
+        <div class="help-tooltip" id="helpTooltip">
+            <div class="help-content">
+                <div class="help-header">
+                    <h3>리본 표시 및 검색 방법 안내</h3>
+                    <button class="close-help" id="closeHelp">&times;</button>
+                </div>
+                <ul class="help-list">
+                    <li> 환수 등록 정보가 0~25 레벨 전부 있는 경우 왼쪽 상단에 표시</li>
+                    <li> 환수 결속 정보가 0~25 레벨 전부 있는 경우 오른쪽 상단에 표시</li>
+                    <li> 환수 20개 이하 선택시 탐색 방식으로 검색</li>
+                    <li> 환수 20개 초과 선택시 사용시 스마트 필터링 방법으로 검색</li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <footer class="site-footer">
         <div class="footer-desktop">
             <div class="footer-links">
@@ -224,6 +243,7 @@
         </div>
     </footer>
 
+    <script src="assets/js/common.js"></script>
     <script src="assets/js/firebaseConfig.js"></script>
     <script src="assets/js/bondCalculator.js"></script>
     <script src="assets/js/bondCalculatorInit.js"></script>

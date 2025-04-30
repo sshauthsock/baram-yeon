@@ -14,7 +14,26 @@ document.addEventListener("DOMContentLoaded", function () {
       }, wait);
     };
   }
+  const helpBtn = document.getElementById("helpBtn");
+  const helpTooltip = document.getElementById("helpTooltip");
+  const closeHelp = document.getElementById("closeHelp");
 
+  helpBtn.addEventListener("click", function () {
+    helpTooltip.style.display =
+      helpTooltip.style.display === "block" ? "none" : "block";
+  });
+
+  closeHelp.addEventListener("click", function () {
+    helpTooltip.style.display = "none";
+  });
+
+  document.addEventListener("click", function (event) {
+    const isClickInsideHelp =
+      helpTooltip.contains(event.target) || helpBtn.contains(event.target);
+    if (!isClickInsideHelp && helpTooltip.style.display === "block") {
+      helpTooltip.style.display = "none";
+    }
+  });
   window.addEventListener(
     "resize",
     debounce(function () {

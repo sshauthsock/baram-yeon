@@ -76,11 +76,8 @@ const ChakApp = (() => {
 
   async function getFirestoreDocument(fileName) {
     try {
-      const documentMap = {
-        "gradeSetEffects.json": "data-1745204079667",
-        "factionSetEffects.json": "data-1745204094503",
-        "chak.json": "data-1745204108850",
-      };
+      const documentMap = window.CommonData.DOCUMENT_MAP;
+      console.log("documentMap = ", documentMap);
 
       const docId = documentMap[fileName];
 
