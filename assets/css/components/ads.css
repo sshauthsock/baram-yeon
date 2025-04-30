@@ -22,33 +22,38 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 90px;
+    width: 49%;
 }
 
 .mobile-ad {
-    display: none;
+    min-height: 50px;
+    width: 100%;
+    text-align: center;
 }
 
 @media screen and (min-width: 769px) {
+    .mobile-ad {
+        display: none !important;
+    }
 
-    .ad-container-left,
-    .ad-container-right {
-        width: 49%;
-        display: block;
+    .ad-row {
+        display: flex;
     }
 }
 
 @media screen and (max-width: 768px) {
     .ad-row {
-        display: none;
+        display: none !important;
     }
 
     .ad-container-left,
     .ad-container-right {
-        display: none;
+        display: none !important;
     }
 
-    .mobile-ad {
-        display: block;
+    .desktop-ad {
+        display: none !important;
     }
 }
 
@@ -68,4 +73,8 @@
 
 .modal .kakao_ad_area {
     min-height: 50px;
+}
+
+.kakao_ad_area {
+    min-height: 30px;
 }

@@ -29,18 +29,17 @@
 <body>
     <header class="header">
         <div class="logo-container">
-            <a href="info.html">
+            <a href="index.html">
                 <img src="assets/img/BHY.png" alt="바연화연 로고" class="logo">
             </a>
         </div>
         <nav class="tabs">
-            <div class="tab active" onclick="location.assign('info.html')">환수정보</div>
-            <div class="tab" onclick="location.assign('bondCalculator.html')">환수 결속</div>
-            <div class="tab" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
-            <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
+            <div class="tab active" onclick="location.href='info.html'">환수정보</div>
+            <div class="tab" onclick="location.href='bondCalculator.html'">환수 결속</div>
+            <div class="tab" onclick="location.href='soulCalculator.html'">환수혼 계산</div>
+            <div class="tab" onclick="location.href='chak.html'">착 계산</div>
         </nav>
     </header>
-
 
     <div class="sub-tabs" id="subTabs">
         <div class="tab active" data-category="수호">수호</div>
@@ -126,6 +125,58 @@
     <script src="assets/js/info.js"></script>
     <script src="assets/js/infoInit.js"></script>
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    <script>
+        (function () {
+            let adRetries = 0;
+            const maxRetries = 5;
+
+            function checkAdsVisibility() {
+                let adElements = document.querySelectorAll('.kakao_ad_area');
+                let anyVisible = false;
+
+                adElements.forEach(function (ad) {
+                    if (ad.offsetHeight > 1 && ad.innerHTML !== '') {
+                        anyVisible = true;
+                    }
+                });
+
+                if (!anyVisible && adRetries < maxRetries) {
+                    console.log(`광고가 로드되지 않았습니다. 재시도 ${adRetries + 1}/${maxRetries}`);
+                    reloadKakaoAdScript();
+                    adRetries++;
+                    setTimeout(checkAdsVisibility, 2000);
+                }
+            }
+
+            function reloadKakaoAdScript() {
+                const script = document.createElement('script');
+                script.src = '//t1.daumcdn.net/kas/static/ba.min.js';
+                script.async = true;
+                document.body.appendChild(script);
+            }
+
+            function handleVisibilityChange() {
+                if (document.visibilityState === 'visible') {
+                    reloadKakaoAdScript();
+                    setTimeout(checkAdsVisibility, 1000);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(checkAdsVisibility, 2000);
+            });
+
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+
+            window.addEventListener('load', function () {
+                setTimeout(checkAdsVisibility, 1000);
+            });
+
+            window.addEventListener('focus', function () {
+                reloadKakaoAdScript();
+            });
+        })();
+    </script>
 </body>
 
 </html>
