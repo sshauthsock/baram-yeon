@@ -1,14 +1,9 @@
 const BondCalculatorApp = (function () {
   const STATS_MAPPING = window.CommonData.STATS_MAPPING;
-
   const STAT_COLOR_MAP = window.CommonData.STAT_COLOR_MAP;
-
   const PERCENT_STATS = window.CommonData.PERCENT_STATS;
-
   const FACTION_ICONS = window.CommonData.FACTION_ICONS;
-
   const FIXED_LEVEL25_SPIRITS = window.CommonData.FIXED_LEVEL25_SPIRITS;
-
   const CATEGORY_FILE_MAP = window.CommonData.CATEGORY_FILE_MAP;
 
   let mobData = { 수호: [], 탑승: [], 변신: [] };
@@ -26,6 +21,7 @@ const BondCalculatorApp = (function () {
   let lastActiveCategory = "수호";
   let currentScrollY = 0;
   let db = null;
+  let groupByInfluence = false;
 
   function initFirebase() {
     if (!firebase.apps.length) {
@@ -462,7 +458,9 @@ const BondCalculatorApp = (function () {
 
     document.querySelectorAll(".sub-tabs .tab").forEach((tab) => {
       tab.classList.remove("active");
-      if (tab.innerText === category) tab.classList.add("active");
+      if (tab.getAttribute("data-category") === category) {
+        tab.classList.add("active");
+      }
     });
 
     if (isModalOpen) {
@@ -507,6 +505,22 @@ const BondCalculatorApp = (function () {
       container.innerHTML = `<p>이미지 데이터가 없습니다.</p>`;
       return;
     }
+
+    if (groupByInfluence) {
+      displaySpiritsByInfluence(category, container);
+    } else {
+      displayAllSpirits(category, container);
+    }
+
+    updateSelectedSpiritsPanel();
+
+    setTimeout(() => {
+      window.scrollTo(0, currentScrollY);
+    }, 10);
+  }
+
+  function displayAllSpirits(category, container) {
+    container.className = "image-container-grid";
 
     mobData[category].forEach((item) => {
       const imgContainer = document.createElement("div");
@@ -604,12 +618,191 @@ const BondCalculatorApp = (function () {
       imgContainer.appendChild(nameLabel);
       container.appendChild(imgContainer);
     });
+  }
 
-    updateSelectedSpiritsPanel();
+  function displaySpiritsByInfluence(category, container) {
+    container.className = "image-container-grouped";
 
-    setTimeout(() => {
-      window.scrollTo(0, currentScrollY);
-    }, 10);
+    const firstRowInfluences = ["결의", "고요", "의지"];
+    const secondRowInfluences = ["침착", "냉정", "활력"];
+
+    const firstRowDiv = document.createElement("div");
+    firstRowDiv.className = "influence-row";
+    const secondRowDiv = document.createElement("div");
+    secondRowDiv.className = "influence-row";
+
+    const groupItemsContainers = {};
+
+    const createInfluenceGroupStructure = (influence) => {
+      const groupDiv = document.createElement("div");
+      groupDiv.className = "influence-group";
+      groupDiv.dataset.influence = influence;
+
+      const headerWrapper = document.createElement("div");
+      headerWrapper.className = "header-wrapper";
+
+      const influenceIcon = document.createElement("img");
+      const iconSrc = FACTION_ICONS[influence];
+
+      try {
+        influenceIcon.src = iconSrc;
+        influenceIcon.alt = `${influence} 아이콘`;
+        influenceIcon.className = "influence-icon";
+        headerWrapper.appendChild(influenceIcon);
+      } catch (e) {
+        console.warn(`Could not get icon for influence: ${influence}`, e);
+        const iconPlaceholder = document.createElement("span");
+        iconPlaceholder.textContent = influence[0];
+        iconPlaceholder.style.fontWeight = "bold";
+        headerWrapper.appendChild(iconPlaceholder);
+      }
+
+      const titleSpan = document.createElement("span");
+      titleSpan.textContent = influence;
+      headerWrapper.appendChild(titleSpan);
+
+      const itemsDiv = document.createElement("div");
+      itemsDiv.className = "influence-items";
+
+      groupDiv.appendChild(headerWrapper);
+      groupDiv.appendChild(itemsDiv);
+
+      groupItemsContainers[influence] = itemsDiv;
+
+      return groupDiv;
+    };
+
+    firstRowInfluences.forEach((inf) => {
+      const groupStructure = createInfluenceGroupStructure(inf);
+      firstRowDiv.appendChild(groupStructure);
+    });
+
+    secondRowInfluences.forEach((inf) => {
+      const groupStructure = createInfluenceGroupStructure(inf);
+      secondRowDiv.appendChild(groupStructure);
+    });
+
+    container.appendChild(firstRowDiv);
+    container.appendChild(secondRowDiv);
+
+    mobData[category].forEach((item) => {
+      const imgContainer = document.createElement("div");
+      imgContainer.className = "img-wrapper";
+
+      const img = document.createElement("img");
+      img.src = item.image;
+      img.alt = item.name;
+      img.title = item.name;
+      img.loading = "lazy";
+      img.dataset.category = category;
+      img.dataset.name = item.name;
+      img.dataset.image = item.image;
+      img.id = `spirit-img-${item.name.replace(/\s+/g, "-")}`;
+
+      const isSelected = selectedSpirits.some(
+        (s) => s.image === item.image && s.category === category
+      );
+
+      if (isSelected) {
+        img.classList.add("selected");
+      }
+
+      const { hasFullRegistration, hasFullBind } = checkSpiritStats(item);
+      if (hasFullRegistration) {
+        const ribbonLeft = document.createElement("div");
+        ribbonLeft.className = "ribbon-left";
+        ribbonLeft.innerHTML = "<span>R</span>";
+        ribbonLeft.title = "등록 효과 있음";
+        imgContainer.appendChild(ribbonLeft);
+      }
+
+      if (hasFullBind) {
+        const ribbonRight = document.createElement("div");
+        ribbonRight.className = "ribbon-right";
+        ribbonRight.innerHTML = "<span>B</span>";
+        ribbonRight.title = "결속 효과 있음";
+        imgContainer.appendChild(ribbonRight);
+      }
+
+      img.onclick = function (e) {
+        e.preventDefault();
+        currentScrollY = window.scrollY;
+
+        const isCurrentlySelected = this.classList.contains("selected");
+        if (isCurrentlySelected) {
+          this.classList.remove("selected");
+          const indexToRemove = selectedSpirits.findIndex(
+            (s) => s.image === item.image && s.category === category
+          );
+          if (indexToRemove !== -1) {
+            selectedSpirits.splice(indexToRemove, 1);
+          }
+        } else {
+          const categorySpirits = selectedSpirits.filter(
+            (s) => s.category === category
+          );
+          if (categorySpirits.length >= 40) {
+            alert(`${category} 카테고리는 최대 40개까지만 선택할 수 있습니다.`);
+            return;
+          }
+
+          this.classList.add("selected");
+
+          const faction = item.influence || item.faction || "결의";
+          const isFixed = isFixedLevelSpirit(item.name);
+          const spiritLevel = isFixed ? 25 : 0;
+
+          const spiritData = {
+            ...item,
+            category,
+            level: spiritLevel,
+            grade: item.grade || "전설",
+            faction: faction,
+            isFixedLevel: isFixed,
+          };
+          selectedSpirits.push(spiritData);
+        }
+
+        updateSelectedCount();
+        updateSelectedSpiritsPanel();
+        updateMobilePanel();
+        saveSelectedSpiritsToStorage();
+
+        setTimeout(() => {
+          window.scrollTo(0, currentScrollY);
+        }, 10);
+      };
+
+      const nameLabel = document.createElement("small");
+      nameLabel.textContent = item.name;
+      nameLabel.className = "img-name";
+
+      imgContainer.appendChild(img);
+      imgContainer.appendChild(nameLabel);
+
+      const influence = item.influence || item.faction || "결의";
+      const targetItemsContainer = groupItemsContainers[influence];
+
+      if (targetItemsContainer) {
+        targetItemsContainer.appendChild(imgContainer);
+      } else {
+        console.warn(
+          `Item ${item.name} has unhandled influence: ${influence}. Cannot place in predefined structure.`
+        );
+      }
+    });
+  }
+
+  function getFactionIcon(influenceName) {
+    const iconMap = {
+      결의: "images/icons/faction_determination.png",
+      고요: "images/icons/faction_serenity.png",
+      의지: "images/icons/faction_will.png",
+      침착: "images/icons/faction_calmness.png",
+      냉정: "images/icons/faction_composure.png",
+      활력: "images/icons/faction_vitality.png",
+    };
+    return iconMap[influenceName] || "images/icons/default_faction.png";
   }
 
   function updateSelectedSpiritsPanel() {
@@ -708,7 +901,6 @@ const BondCalculatorApp = (function () {
       (spirit) => spirit.category === currentCategory
     ).length;
 
-    document.getElementById("selectedCount").textContent = filteredCount;
     const rightPanelCountElement =
       document.getElementById("selectedCountPanel");
 
@@ -4893,6 +5085,24 @@ const BondCalculatorApp = (function () {
       rightPanel.addEventListener("click", function (e) {
         e.stopPropagation();
       });
+    }
+
+    const influenceToggle = document.getElementById("influenceToggle");
+    if (influenceToggle) {
+      influenceToggle.addEventListener("change", function () {
+        groupByInfluence = this.checked;
+        localStorage.setItem(
+          "groupByInfluence",
+          groupByInfluence ? "true" : "false"
+        );
+        showCategory(lastActiveCategory);
+      });
+
+      const savedGroupPreference = localStorage.getItem("groupByInfluence");
+      if (savedGroupPreference === "true") {
+        influenceToggle.checked = true;
+        groupByInfluence = true;
+      }
     }
 
     document

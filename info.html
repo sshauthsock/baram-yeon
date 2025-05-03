@@ -29,7 +29,7 @@
 <body>
     <header class="header">
         <div class="logo-container">
-            <a href="index.html">
+            <a href="info.html">
                 <img src="assets/img/BHY.png" alt="바연화연 로고" class="logo">
             </a>
         </div>
@@ -62,8 +62,15 @@
         <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-UDsuae5QVIAxX2fS" data-ad-width="320"
             data-ad-height="50"></ins>
     </div>
-
-    <div class="image-container" id="imageContainer"></div>
+    <div class="view-toggle-container">
+        <label class="toggle-switch">
+            <input type="checkbox" id="influenceToggle">
+            <span class="slider round"></span>
+        </label>
+        <span class="toggle-label">세력별 보기</span>
+    </div>
+    <div class="image-container" id="imageContainer">
+    </div>
 
     <div class="ad-row">
         <div class="ad-container-left">
@@ -121,7 +128,12 @@
     </footer>
 
     <script src="assets/js/common.js"></script>
+    <script src="assets/js/firebaseHandler.js"></script>
     <script src="assets/js/firebaseConfig.js"></script>
+    <script src="assets/js/dataManager.js"></script>
+    <script src="assets/js/modalHandler.js"></script>
+    <script src="assets/js/uiRenderer.js"></script>
+    <script src="assets/js/imageHandler.js"></script>
     <script src="assets/js/info.js"></script>
     <script src="assets/js/infoInit.js"></script>
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>

@@ -63,8 +63,13 @@
             data-ad-height="50"></ins>
     </div>
 
-
-
+    <div class="view-toggle-container">
+        <label class="toggle-switch">
+            <input type="checkbox" id="influenceToggle">
+            <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label">세력별 보기</span>
+    </div>
     <div class="bond-container">
         <div class="main-content">
             <div class="left-panel">
@@ -81,14 +86,21 @@
                     </div>
                 </div>
 
+                <div class="mobile-clear-button-container">
+                    <button class="clear-selection-btn mobile-clear-btn"
+                        onclick="BondCalculatorApp.clearAllSelections()">선택해제</button>
+                </div>
+
                 <div class="spirit-selection">
-                    <div class="spirit-selection-header">
+                    <!-- <div class="spirit-selection-header">
                         <h3>환수 선택 (<span id="selectedCount">0</span>/40)</h3>
                         <button class="clear-selection-btn"
                             onclick="BondCalculatorApp.clearAllSelections()">선택해제</button>
-                    </div>
+                    </div> -->
                     <div class="image-container" id="imageContainer"></div>
                 </div>
+
+
             </div>
 
             <div class="right-panel">
@@ -105,8 +117,11 @@
                     </div>
 
                     <div class="selected-spirits-header">
-                        <h3>선택된 환수 (<span id="selectedCountPanel">0</span>/40)</h3>
-
+                        <div class="header-title-area">
+                            <h3>선택된 환수 (<span id="selectedCountPanel">0</span>/40)</h3>
+                            <button class="clear-selection-btn"
+                                onclick="BondCalculatorApp.clearAllSelections()">선택해제</button>
+                        </div>
                         <div class="header-controls">
                             <div class="level-batch-control">
                                 <label>일괄 레벨 설정:</label>
@@ -115,11 +130,14 @@
                                 <button onclick="setMaxBatchLevel('batchLevel')" class="max-level-btn">Max</button>
                             </div>
                             <div class="calculate-btn-small">
-                                <button id="findOptimalBtn" onclick="BondCalculatorApp.findOptimalCombination()">최적 조합
+                                <button id="findOptimalBtn" onclick="BondCalculatorApp.findOptimalCombination()">최적
+                                    조합
                                     찾기</button>
                             </div>
                         </div>
                     </div>
+
+
                     <div id="selectedSpirits" class="selected-spirits"></div>
                 </div>
             </div>
@@ -150,6 +168,7 @@
                 <div id="selectedSpirits" class="selected-spirits"></div>
             </div>
         </div>
+
     </div>
 
     <div class="modal-overlay" id="resultModal">
@@ -244,7 +263,12 @@
     </footer>
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
     <script src="assets/js/common.js"></script>
+    <script src="assets/js/firebaseHandler.js"></script>
     <script src="assets/js/firebaseConfig.js"></script>
+    <!-- <script src="assets/js/dataManager.js"></script>
+    <script src="assets/js/modalHandler.js"></script>
+    <script src="assets/js/uiRenderer.js"></script>
+    <script src="assets/js/imageHandler.js"></script> -->
     <script src="assets/js/bondCalculator.js"></script>
     <script src="assets/js/bondCalculatorInit.js"></script>
 </body>
