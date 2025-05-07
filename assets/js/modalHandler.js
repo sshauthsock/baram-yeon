@@ -1,4 +1,3 @@
-// modalHandler.js
 const ModalHandler = (function () {
   let modalElement = null;
   let currentStats = [];
@@ -386,5 +385,4 @@ const ModalHandler = (function () {
   };
 })();
 
-// 전역 스코프에 노출
 window.ModalHandler = ModalHandler;

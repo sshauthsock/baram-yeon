@@ -29,7 +29,11 @@ const InfoApp = (function () {
 
     FirebaseHandler.testFirebaseConnectivity().finally(() => {
       console.log("Firebase check finished. Loading category data...");
-      ImageHandler.loadCategoryData();
+
+      window.DataManager.loadCategoryData().then(() => {
+        window.UIRenderer.initUIEvents();
+        window.UIRenderer.showCategory("수호");
+      });
     });
   }
 

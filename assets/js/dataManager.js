@@ -1,4 +1,3 @@
-// dataManager.js
 const DataManager = (function () {
   const CATEGORY_FILE_MAP = window.CommonData.CATEGORY_FILE_MAP;
   const FACTION_ICONS = window.CommonData.FACTION_ICONS;
@@ -8,11 +7,9 @@ const DataManager = (function () {
   let mobData = { 수호: [], 탑승: [], 변신: [] };
 
   async function loadCategoryData() {
-    // console.log("Loading category data...");
     let allLoaded = true;
 
     for (const [category, files] of Object.entries(CATEGORY_FILE_MAP)) {
-      // console.log(`Processing category: ${category}`);
       try {
         let registrationData = await FirebaseHandler.getFirestoreDocument(
           files.registration
@@ -49,10 +46,6 @@ const DataManager = (function () {
 
         const mergedData = mergeData(registrationArray, bindArray);
         mobData[category] = mergedData;
-
-        // console.log(
-        //   `Finished processing category: ${category}. Merged ${mergedData.length} items.`
-        // );
       } catch (err) {
         console.error(
           `Failed to load or process data for category ${category}:`,
@@ -137,6 +130,17 @@ const DataManager = (function () {
     return true;
   }
 
+  function hasLevel25BindStats(item) {
+    if (!item || !Array.isArray(item.stats)) return false;
+    const level25Stat = item.stats.find((s) => s && s.level === 25);
+    return (
+      level25Stat &&
+      level25Stat.bindStat &&
+      typeof level25Stat.bindStat === "object" &&
+      Object.keys(level25Stat.bindStat).length > 0
+    );
+  }
+
   function getData(category) {
     return mobData[category] || [];
   }
@@ -150,6 +154,8 @@ const DataManager = (function () {
     getData,
     getAllData,
     checkSpiritStats,
+    checkAllLevelsHaveEffect,
+    hasLevel25BindStats,
     FACTION_ICONS,
     STATS_MAPPING,
     STATS_ORDER,

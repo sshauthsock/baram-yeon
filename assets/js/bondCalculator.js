@@ -100,7 +100,7 @@ const BondCalculatorApp = (function () {
           grade: spirit.grade || "전설",
           faction: faction,
           isFixedLevel: isFixed,
-          hasLevel25Bind: ImageHandler.hasLevel25BindStats(spirit),
+          hasLevel25Bind: window.ImageHandler.hasLevel25BindStats(spirit),
         };
         selectedSpirits.push(spiritData);
       }
@@ -1163,7 +1163,7 @@ const BondCalculatorApp = (function () {
   }
 
   function findOptimalCombination() {
-    console.log("selectedSpirits = ", selectedSpirits);
+    // console.log("selectedSpirits = ", selectedSpirits);
     const currentCategory = lastActiveCategory;
     const categorySpirits = selectedSpirits.filter(
       (spirit) => spirit.category === currentCategory
