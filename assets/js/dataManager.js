@@ -8,11 +8,11 @@ const DataManager = (function () {
   let mobData = { 수호: [], 탑승: [], 변신: [] };
 
   async function loadCategoryData() {
-    console.log("Loading category data...");
+    // console.log("Loading category data...");
     let allLoaded = true;
 
     for (const [category, files] of Object.entries(CATEGORY_FILE_MAP)) {
-      console.log(`Processing category: ${category}`);
+      // console.log(`Processing category: ${category}`);
       try {
         let registrationData = await FirebaseHandler.getFirestoreDocument(
           files.registration
@@ -50,9 +50,9 @@ const DataManager = (function () {
         const mergedData = mergeData(registrationArray, bindArray);
         mobData[category] = mergedData;
 
-        console.log(
-          `Finished processing category: ${category}. Merged ${mergedData.length} items.`
-        );
+        // console.log(
+        //   `Finished processing category: ${category}. Merged ${mergedData.length} items.`
+        // );
       } catch (err) {
         console.error(
           `Failed to load or process data for category ${category}:`,
@@ -157,5 +157,4 @@ const DataManager = (function () {
   };
 })();
 
-// 전역 스코프에 노출
 window.DataManager = DataManager;

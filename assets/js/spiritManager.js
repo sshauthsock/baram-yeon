@@ -1,133 +1,79 @@
-const ImageHandler = (function () {
-  const CATEGORY_FILE_MAP = window.CommonData.CATEGORY_FILE_MAP;
-  let mobData = { 수호: [], 탑승: [], 변신: [] };
-  const FACTION_ICONS = window.CommonData.FACTION_ICONS;
-  let groupByInfluence = false;
+const SpiritManager = (function () {
   let currentCategory = "수호";
-  const STATS_MAPPING = window.CommonData.STATS_MAPPING;
-  const STATS_ORDER = window.CommonData.STATS_ORDER || [];
-  const SPECIAL_STAT_CLASSES = window.CommonData.SPECIAL_STAT_CLASSES;
+  let groupByInfluence = false;
+  let selectionMode = false;
+  let selectionCallback = null;
+  let modalElement = null;
+  let currentStats = [];
+  let currentLevel = 0;
+  let currentName = "";
+  let currentInfluence = "";
 
-  async function loadCategoryData() {
-    console.log("Loading category data...");
-    let allLoaded = true;
-    for (const [category, files] of Object.entries(CATEGORY_FILE_MAP)) {
-      console.log(`Processing category: ${category}`);
-      try {
-        let registrationData = await FirebaseHandler.getFirestoreDocument(
-          files.registration
-        );
-        let bindData = await FirebaseHandler.getFirestoreDocument(files.bind);
-
-        let registrationArray = Array.isArray(registrationData)
-          ? registrationData
-          : registrationData?.data || [];
-        let bindArray = Array.isArray(bindData)
-          ? bindData
-          : bindData?.data || [];
-
-        if (!Array.isArray(registrationArray)) {
-          console.error(
-            `Invalid registration data format for ${category}: Expected array, got ${typeof registrationArray}. Using empty array.`
-          );
-          registrationArray = [];
-          allLoaded = false;
-        }
-        if (!Array.isArray(bindArray)) {
-          console.error(
-            `Invalid bind data format for ${category}: Expected array, got ${typeof bindArray}. Using empty array.`
-          );
-          bindArray = [];
-          allLoaded = false;
-        }
-
-        if (registrationArray.length === 0 && files.registration) {
-          console.warn(
-            `No registration data loaded for category: ${category} from file ${files.registration}.json`
-          );
-        }
-
-        const mergedData = registrationArray
-          .map((regItem) => {
-            if (!regItem || typeof regItem !== "object" || !regItem.name) {
-              return null;
-            }
-
-            const bindItem = bindArray.find(
-              (b) => b && b.name === regItem.name
-            );
-            const regStats = Array.isArray(regItem.stats) ? regItem.stats : [];
-            const bindStats =
-              bindItem && Array.isArray(bindItem.stats) ? bindItem.stats : [];
-
-            const mergedStats = Array.from({ length: 26 }, (_, i) => {
-              const level = i;
-              const regLevelStat = regStats.find((s) => s && s.level === level);
-              const bindLevelStat = bindStats.find(
-                (s) => s && s.level === level
-              );
-
-              return {
-                level: level,
-                registrationStat: regLevelStat?.registrationStat || {},
-                bindStat: bindLevelStat?.bindStat || {},
-              };
-            });
-
-            return {
-              ...regItem,
-              stats: mergedStats,
-              influence: regItem.influence || "정보없음",
-            };
-          })
-          .filter((item) => item !== null);
-
-        mobData[category] = mergedData;
-        console.log(
-          `Finished processing category: ${category}. Merged ${mergedData.length} items.`
-        );
-      } catch (err) {
-        console.error(
-          `Failed to load or process data for category ${category}:`,
-          err
-        );
-        mobData[category] = [];
-        allLoaded = false;
-      }
-    }
-
-    if (!allLoaded) {
-      console.error("One or more categories failed to load data properly.");
-    }
-
-    if (!FACTION_ICONS) {
-      console.error("FACTION_ICONS data is missing from CommonData!");
+  async function initialize() {
+    console.log("Initializing SpiritManager...");
+    if (window.DataManager) {
+      await window.DataManager.loadCategoryData();
+    } else {
+      console.error("DataManager not available!");
+      return;
     }
 
     initUIEvents();
     showCategory(currentCategory);
-    console.log("Category data loading process complete.");
+    console.log("SpiritManager initialization complete.");
   }
+
   function initUIEvents() {
     const subTabs = document.querySelectorAll(".sub-tabs .tab");
     subTabs.forEach((tab) => {
       tab.addEventListener("click", function () {
-        currentCategory = this.getAttribute("data-category");
+        const newCategory = this.getAttribute("data-category");
+        currentCategory = newCategory;
         showCategory(currentCategory);
+
+        if (window.BondCalculatorApp) {
+          if (typeof window.BondCalculatorApp.showCategory === "function") {
+            window.BondCalculatorApp.showCategory(currentCategory, false);
+          }
+          if (
+            typeof window.BondCalculatorApp.updateSelectedCount === "function"
+          ) {
+            setTimeout(
+              () =>
+                window.BondCalculatorApp.updateSelectedCount(currentCategory),
+              50
+            );
+          }
+        }
       });
     });
 
     const toggle = document.getElementById("influenceToggle");
     if (toggle) {
       toggle.addEventListener("change", function () {
-        groupByInfluence = this.checked;
-        showCategory(currentCategory);
+        groupByInfluence = toggle.checked;
+
+        showCategory(currentCategory, {
+          selectMode: selectionMode,
+          onSelect: selectionCallback,
+        });
+
+        if (
+          window.BondCalculatorApp &&
+          typeof window.BondCalculatorApp.applySelectedState === "function"
+        ) {
+          setTimeout(() => window.BondCalculatorApp.applySelectedState(), 100);
+        }
       });
       toggle.checked = groupByInfluence;
     } else {
       console.warn("Influence toggle switch not found in the DOM.");
     }
 
+    initHelpTooltip();
+  }
+
+  function initHelpTooltip() {
     const helpBtn = document.getElementById("helpBtn");
     const helpTooltip = document.getElementById("helpTooltip");
     const closeHelpBtn = document.getElementById("closeHelp");
@@ -138,9 +84,11 @@ const ImageHandler = (function () {
         helpTooltip.style.display =
           helpTooltip.style.display === "block" ? "none" : "block";
       });
+
       closeHelpBtn.addEventListener("click", () => {
         helpTooltip.style.display = "none";
       });
+
       document.addEventListener("click", (event) => {
         if (
           helpTooltip.style.display === "block" &&
@@ -153,8 +101,18 @@ const ImageHandler = (function () {
     }
   }
 
-  function showCategory(category) {
+  function showCategory(category, options = {}) {
+    const prevCategory = currentCategory;
     currentCategory = category;
+
+    if (options.selectMode !== undefined) {
+      selectionMode = options.selectMode;
+    }
+
+    if (typeof options.onSelect === "function") {
+      selectionCallback = options.onSelect;
+    }
+
     const container = document.getElementById("imageContainer");
     if (!container) {
       console.error("Image container not found!");
@@ -174,23 +132,24 @@ const ImageHandler = (function () {
     } else {
       displayAllPets(category, container);
     }
-  }
 
-  function hasLevel25BindStats(item) {
-    if (!item || !Array.isArray(item.stats)) return false;
-    const level25Stat = item.stats.find((s) => s && s.level === 25);
-    return (
-      level25Stat &&
-      level25Stat.bindStat &&
-      typeof level25Stat.bindStat === "object" &&
-      Object.keys(level25Stat.bindStat).length > 0
-    );
+    if (
+      prevCategory !== category &&
+      window.BondCalculatorApp &&
+      typeof window.BondCalculatorApp.updateSelectedCount === "function"
+    ) {
+      setTimeout(
+        () => window.BondCalculatorApp.updateSelectedCount(category),
+        0
+      );
+    }
   }
 
   function displayAllPets(category, container) {
     container.className = "image-container-grid";
 
-    const itemsInCategory = mobData[category];
+    const itemsInCategory = window.DataManager.getData(category);
+
     if (
       !itemsInCategory ||
       !Array.isArray(itemsInCategory) ||
@@ -201,54 +160,18 @@ const ImageHandler = (function () {
     }
 
     itemsInCategory.forEach((item) => {
-      if (!item || !item.image || !item.name) {
-        return;
-      }
-      const imgWrapper = document.createElement("div");
-      imgWrapper.className = "img-wrapper";
-
-      const { hasFullRegistration, hasFullBind } = checkSpiritStats(item);
-      if (hasFullRegistration) {
-        const ribbonLeft = document.createElement("div");
-        ribbonLeft.className = "ribbon-left";
-        ribbonLeft.innerHTML = "<span>R</span>";
-        ribbonLeft.title = "등록 효과 전체 보유";
-        imgWrapper.appendChild(ribbonLeft);
-      }
-      if (hasFullBind) {
-        const ribbonRight = document.createElement("div");
-        ribbonRight.className = "ribbon-right";
-        ribbonRight.innerHTML = "<span>B</span>";
-        ribbonRight.title = "결속 효과 전체 보유";
-        imgWrapper.appendChild(ribbonRight);
-      }
-
-      const img = document.createElement("img");
-      img.src = item.image;
-      img.alt = item.name;
-      img.title = item.name;
-      img.loading = "lazy";
-      img.addEventListener("click", () =>
-        showInfo(category, item.image, item.influence)
-      );
-
-      imgWrapper.appendChild(img);
-
-      if (hasLevel25BindStats(item)) {
-        const level25Indicator = document.createElement("div");
-        level25Indicator.className = "level25-indicator";
-        level25Indicator.innerHTML = "<span>25</span>";
-        level25Indicator.title = "25레벨 결속 효과 보유";
-        imgWrapper.appendChild(level25Indicator);
-      }
-
-      const nameLabel = document.createElement("small");
-      nameLabel.className = "img-name";
-      nameLabel.textContent = item.name;
-
-      imgWrapper.appendChild(nameLabel);
+      if (!item || !item.image || !item.name) return;
+      const imgWrapper = createImageWrapper(item, category);
       container.appendChild(imgWrapper);
     });
+
+    if (
+      selectionMode &&
+      window.BondCalculatorApp &&
+      typeof window.BondCalculatorApp.applySelectedState === "function"
+    ) {
+      setTimeout(() => window.BondCalculatorApp.applySelectedState(), 50);
+    }
   }
 
   function displayPetsByInfluence(category, container) {
@@ -257,7 +180,8 @@ const ImageHandler = (function () {
     const firstRowInfluences = ["결의", "고요", "의지"];
     const secondRowInfluences = ["침착", "냉정", "활력"];
 
-    const itemsInCategory = mobData[category];
+    const itemsInCategory = window.DataManager.getData(category);
+
     if (
       !itemsInCategory ||
       !Array.isArray(itemsInCategory) ||
@@ -270,6 +194,7 @@ const ImageHandler = (function () {
     const firstRow = document.createElement("div");
     firstRow.className = "influence-row";
     let firstRowHasContent = false;
+
     firstRowInfluences.forEach((influence) => {
       const groupWrapper = createInfluenceGroup(
         category,
@@ -281,11 +206,13 @@ const ImageHandler = (function () {
         firstRowHasContent = true;
       }
     });
+
     if (firstRowHasContent) container.appendChild(firstRow);
 
     const secondRow = document.createElement("div");
     secondRow.className = "influence-row";
     let secondRowHasContent = false;
+
     secondRowInfluences.forEach((influence) => {
       const groupWrapper = createInfluenceGroup(
         category,
@@ -297,6 +224,7 @@ const ImageHandler = (function () {
         secondRowHasContent = true;
       }
     });
+
     if (secondRowHasContent) container.appendChild(secondRow);
 
     if (
@@ -308,10 +236,20 @@ const ImageHandler = (function () {
     } else if (!firstRowHasContent && !secondRowHasContent) {
       container.innerHTML = `<p>표시할 ${category} 환수 정보가 없습니다.</p>`;
     }
+
+    if (
+      selectionMode &&
+      window.BondCalculatorApp &&
+      typeof window.BondCalculatorApp.applySelectedState === "function"
+    ) {
+      setTimeout(() => window.BondCalculatorApp.applySelectedState(), 100);
+    }
   }
 
   function createInfluenceGroup(category, influence, itemsInCategory) {
-    if (!FACTION_ICONS) {
+    const factionIcons = window.DataManager.FACTION_ICONS;
+
+    if (!factionIcons) {
       console.error("FACTION_ICONS is not available!");
       return null;
     }
@@ -329,8 +267,9 @@ const ImageHandler = (function () {
 
     const headerWrapper = document.createElement("div");
     headerWrapper.className = "header-wrapper";
+
     const influenceIcon = document.createElement("img");
-    const iconSrc = FACTION_ICONS[influence];
+    const iconSrc = factionIcons[influence];
     if (iconSrc) {
       influenceIcon.src = iconSrc;
       influenceIcon.alt = `${influence} 아이콘`;
@@ -339,6 +278,7 @@ const ImageHandler = (function () {
     } else {
       console.warn(`Icon not found for influence: ${influence}.`);
     }
+
     const header = document.createElement("h3");
     header.className = "influence-header";
     header.textContent = influence;
@@ -351,50 +291,10 @@ const ImageHandler = (function () {
 
     const itemsWrapper = document.createElement("div");
     itemsWrapper.className = "influence-items";
+
     itemsForInfluence.forEach((item) => {
       if (!item || !item.image || !item.name) return;
-      const imgWrapper = document.createElement("div");
-      imgWrapper.className = "img-wrapper";
-
-      const { hasFullRegistration, hasFullBind } = checkSpiritStats(item);
-      if (hasFullRegistration) {
-        const ribbonLeft = document.createElement("div");
-        ribbonLeft.className = "ribbon-left";
-        ribbonLeft.innerHTML = "<span>R</span>";
-        ribbonLeft.title = "등록 효과 전체 보유";
-        imgWrapper.appendChild(ribbonLeft);
-      }
-      if (hasFullBind) {
-        const ribbonRight = document.createElement("div");
-        ribbonRight.className = "ribbon-right";
-        ribbonRight.innerHTML = "<span>B</span>";
-        ribbonRight.title = "결속 효과 전체 보유";
-        imgWrapper.appendChild(ribbonRight);
-      }
-
-      const img = document.createElement("img");
-      img.src = item.image;
-      img.alt = item.name;
-      img.title = item.name;
-      img.loading = "lazy";
-      img.addEventListener("click", () =>
-        showInfo(category, item.image, item.influence)
-      );
-
-      imgWrapper.appendChild(img);
-
-      if (hasLevel25BindStats(item)) {
-        const level25Indicator = document.createElement("div");
-        level25Indicator.className = "level25-indicator";
-        level25Indicator.innerHTML = "<span>25</span>";
-        level25Indicator.title = "25레벨 결속 효과 보유";
-        img.appendChild(level25Indicator);
-      }
-      const nameLabel = document.createElement("small");
-      nameLabel.className = "img-name";
-      nameLabel.textContent = item.name;
-
-      imgWrapper.appendChild(nameLabel);
+      const imgWrapper = createImageWrapper(item, category);
       itemsWrapper.appendChild(imgWrapper);
     });
 
@@ -402,33 +302,90 @@ const ImageHandler = (function () {
     return groupWrapper;
   }
 
-  function checkSpiritStats(spirit) {
-    if (!spirit || !spirit.stats)
-      return { hasFullRegistration: false, hasFullBind: false };
-    const hasFullRegistration = checkAllLevelsHaveEffect(
-      spirit.stats,
-      "registrationStat"
-    );
-    const hasFullBind = checkAllLevelsHaveEffect(spirit.stats, "bindStat");
-    return { hasFullRegistration, hasFullBind };
-  }
-  function checkAllLevelsHaveEffect(stats, effectType) {
-    if (!stats || !Array.isArray(stats) || stats.length === 0) return false;
-    for (let i = 0; i <= 25; i++) {
-      const levelStat = stats.find((s) => s && s.level === i);
-      if (
-        !levelStat ||
-        !levelStat[effectType] ||
-        typeof levelStat[effectType] !== "object" ||
-        Object.keys(levelStat[effectType]).length === 0
-      ) {
-        return false;
-      }
+  function createImageWrapper(item, category) {
+    const imgWrapper = document.createElement("div");
+    imgWrapper.className = "img-wrapper";
+
+    const { hasFullRegistration, hasFullBind } =
+      window.DataManager.checkSpiritStats(item);
+
+    if (hasFullRegistration) {
+      const ribbonLeft = document.createElement("div");
+      ribbonLeft.className = "ribbon-left";
+      ribbonLeft.innerHTML = "<span>R</span>";
+      ribbonLeft.title = "등록 효과 전체 보유";
+      imgWrapper.appendChild(ribbonLeft);
     }
-    return true;
+
+    if (hasFullBind) {
+      const ribbonRight = document.createElement("div");
+      ribbonRight.className = "ribbon-right";
+      ribbonRight.innerHTML = "<span>B</span>";
+      ribbonRight.title = "결속 효과 전체 보유";
+      imgWrapper.appendChild(ribbonRight);
+    }
+
+    const img = document.createElement("img");
+    img.src = item.image;
+    img.alt = item.name;
+    img.title = item.name;
+    img.loading = "lazy";
+    img.dataset.category = category;
+    img.dataset.image = item.image;
+
+    imgWrapper.appendChild(img);
+
+    if (hasLevel25BindStats(item)) {
+      const level25Indicator = document.createElement("div");
+      level25Indicator.className = "level25-indicator";
+      level25Indicator.innerHTML = "<span>25</span>";
+      level25Indicator.title = "25레벨 결속 효과 보유";
+      imgWrapper.appendChild(level25Indicator);
+    }
+
+    if (selectionMode && selectionCallback) {
+      img.addEventListener("click", function () {
+        selectionCallback(item, category);
+      });
+      img.style.cursor = "pointer";
+    } else {
+      img.addEventListener("click", () => {
+        if (window.ModalHandler) {
+          window.ModalHandler.showInfo(category, item.image, item.influence);
+        } else {
+          showInfo(category, item.image, item.influence);
+        }
+      });
+    }
+
+    const nameLabel = document.createElement("small");
+    nameLabel.className = "img-name";
+    nameLabel.textContent = item.name;
+    imgWrapper.appendChild(nameLabel);
+
+    return imgWrapper;
   }
+
+  function hasLevel25BindStats(item) {
+    if (!item || !Array.isArray(item.stats)) return false;
+    const level25Stat = item.stats.find((s) => s && s.level === 25);
+    return (
+      level25Stat &&
+      level25Stat.bindStat &&
+      typeof level25Stat.bindStat === "object" &&
+      Object.keys(level25Stat.bindStat).length > 0
+    );
+  }
+
   function showInfo(category, imagePath, influence) {
-    showInfoInModal(category, imagePath, influence);
+    if (
+      window.ModalHandler &&
+      typeof window.ModalHandler.showInfo === "function"
+    ) {
+      window.ModalHandler.showInfo(category, imagePath, influence);
+    } else {
+      showInfoInModal(category, imagePath, influence);
+    }
   }
 
   function showInfoInModal(category, imagePath, influence) {
@@ -445,17 +402,18 @@ const ImageHandler = (function () {
     closeButton.onclick = closeModal;
     modal.appendChild(closeButton);
 
-    const categoryData = mobData[category];
+    const categoryData = window.DataManager.getData(category);
+
     if (!categoryData || !Array.isArray(categoryData)) {
       modal.innerHTML += "<p>정보를 표시할 수 없습니다.</p>";
       modalOverlay.style.display = "flex";
       document.body.style.overflow = "hidden";
       return;
     }
+
     const matched = categoryData.find(
       (item) => item && item.image === imagePath
     );
-
     if (!matched) {
       modal.innerHTML += "<p>선택한 환수 정보를 찾을 수 없습니다.</p>";
       modalOverlay.style.display = "flex";
@@ -479,9 +437,13 @@ const ImageHandler = (function () {
     const title = document.createElement("h3");
     title.textContent = currentName + " ";
 
-    if (currentInfluence && FACTION_ICONS && FACTION_ICONS[currentInfluence]) {
+    if (
+      currentInfluence &&
+      window.DataManager.FACTION_ICONS &&
+      window.DataManager.FACTION_ICONS[currentInfluence]
+    ) {
       const influenceIcon = document.createElement("img");
-      influenceIcon.src = FACTION_ICONS[currentInfluence];
+      influenceIcon.src = window.DataManager.FACTION_ICONS[currentInfluence];
       influenceIcon.alt = `${currentInfluence} 아이콘`;
       influenceIcon.title = currentInfluence;
       influenceIcon.className = "influence-icon";
@@ -500,6 +462,7 @@ const ImageHandler = (function () {
     levelMinusButton.innerText = "-";
     levelMinusButton.setAttribute("aria-label", "레벨 감소");
     levelMinusButton.addEventListener("click", () => changeLevel(-1));
+
     const levelInput = document.createElement("input");
     levelInput.type = "number";
     levelInput.min = "0";
@@ -520,10 +483,12 @@ const ImageHandler = (function () {
     levelInput.addEventListener("keypress", (e) => {
       if (!/\d/.test(e.key)) e.preventDefault();
     });
+
     const levelPlusButton = document.createElement("button");
     levelPlusButton.innerText = "+";
     levelPlusButton.setAttribute("aria-label", "레벨 증가");
     levelPlusButton.addEventListener("click", () => changeLevel(1));
+
     const maxButton = document.createElement("button");
     maxButton.innerText = "MAX";
     maxButton.classList.add("max-button");
@@ -535,6 +500,7 @@ const ImageHandler = (function () {
         currentStats.find((s) => s && s.level === currentLevel) || null;
       updateStatsInModal(statForLevel);
     });
+
     levelControls.appendChild(levelMinusButton);
     levelControls.appendChild(levelInput);
     levelControls.appendChild(levelPlusButton);
@@ -555,6 +521,7 @@ const ImageHandler = (function () {
     registrationList.id = "registrationList";
     leftColumn.appendChild(registrationHeader);
     leftColumn.appendChild(registrationList);
+
     const rightColumn = document.createElement("div");
     rightColumn.className = "stats-column";
     const bindHeader = document.createElement("b");
@@ -563,6 +530,7 @@ const ImageHandler = (function () {
     bindList.id = "bindList";
     rightColumn.appendChild(bindHeader);
     rightColumn.appendChild(bindList);
+
     statsContainer.appendChild(leftColumn);
     statsContainer.appendChild(rightColumn);
 
@@ -576,6 +544,7 @@ const ImageHandler = (function () {
     modalOverlay.style.display = "flex";
     document.body.style.overflow = "hidden";
   }
+
   function changeLevel(diff) {
     const newLevel = currentLevel + diff;
     if (newLevel < 0 || newLevel > 25) return;
@@ -649,6 +618,10 @@ const ImageHandler = (function () {
       return;
     }
 
+    const STATS_MAPPING = window.DataManager.STATS_MAPPING;
+    const STATS_ORDER = window.DataManager.STATS_ORDER;
+    const SPECIAL_STAT_CLASSES = window.DataManager.SPECIAL_STAT_CLASSES;
+
     const groupedStats = {};
     Object.entries(statsObj).forEach(([key, val]) => {
       if (
@@ -689,6 +662,7 @@ const ImageHandler = (function () {
       listElement.innerHTML = "<li>표시할 능력치 없음</li>";
       return;
     }
+
     sortedStats.forEach(([statName, info]) => {
       const li = document.createElement("li");
       const displayValue = info.val;
@@ -701,6 +675,7 @@ const ImageHandler = (function () {
       listElement.appendChild(li);
     });
   }
+
   function createModal() {
     let modalOverlay = document.querySelector(".modal-overlay");
     if (modalOverlay) {
@@ -761,15 +736,34 @@ const ImageHandler = (function () {
       document.body.style.overflow = "auto";
     }
   }
+
+  function setSelectionMode(isEnabled, callback) {
+    selectionMode = isEnabled === true;
+    selectionCallback = typeof callback === "function" ? callback : null;
+
+    showCategory(currentCategory, {
+      selectMode: selectionMode,
+      onSelect: selectionCallback,
+    });
+
+    return selectionMode;
+  }
+
+  function getCurrentCategory() {
+    return currentCategory;
+  }
+
   return {
-    loadCategoryData,
+    initialize,
     initUIEvents,
     showCategory,
     displayAllPets,
     displayPetsByInfluence,
     createInfluenceGroup,
-    checkSpiritStats,
-    checkAllLevelsHaveEffect,
     hasLevel25BindStats,
+    setSelectionMode,
+    getCurrentCategory,
   };
 })();
+
+window.SpiritManager = SpiritManager;

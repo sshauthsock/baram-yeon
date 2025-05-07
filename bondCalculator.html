@@ -17,6 +17,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <link href="assets/css/global.css" rel="stylesheet">
+    <link href="assets/css/imageCategory.css" rel="stylesheet">
+
     <link href="assets/css/bondCalculator.css" rel="stylesheet">
     <link href="assets/css/components/ads.css" rel="stylesheet">
     <link href="assets/css/components/footer.css" rel="stylesheet">
@@ -41,9 +43,9 @@
     </header>
 
     <div class="sub-tabs" id="subTabs">
-        <div class="tab active" onclick="BondCalculatorApp.showCategory('수호', true)">수호</div>
-        <div class="tab" onclick="BondCalculatorApp.showCategory('탑승', true)">탑승</div>
-        <div class="tab" onclick="BondCalculatorApp.showCategory('변신', true)">변신</div>
+        <div class="tab active" data-category="수호">수호</div>
+        <div class="tab" data-category="탑승">탑승</div>
+        <div class="tab" data-category="변신">변신</div>
     </div>
 
     <div class="ad-row">
@@ -66,7 +68,7 @@
     <div class="view-toggle-container">
         <label class="toggle-switch">
             <input type="checkbox" id="influenceToggle">
-            <span class="toggle-slider"></span>
+            <span class="slider round"></span>
         </label>
         <span class="toggle-label">세력별 보기</span>
     </div>
@@ -265,10 +267,10 @@
     <script src="assets/js/common.js"></script>
     <script src="assets/js/firebaseHandler.js"></script>
     <script src="assets/js/firebaseConfig.js"></script>
-    <!-- <script src="assets/js/dataManager.js"></script>
+    <script src="assets/js/dataManager.js"></script>
     <script src="assets/js/modalHandler.js"></script>
     <script src="assets/js/uiRenderer.js"></script>
-    <script src="assets/js/imageHandler.js"></script> -->
+    <script src="assets/js/imageHandler.js"></script>
     <script src="assets/js/bondCalculator.js"></script>
     <script src="assets/js/bondCalculatorInit.js"></script>
 </body>

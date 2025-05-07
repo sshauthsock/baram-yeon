@@ -4,16 +4,16 @@ const FirebaseHandler = (function () {
 
   function initFirebase() {
     if (typeof firebase === "undefined" || !firebase.app) {
-      console.error("Firebase SDK not loaded or initialized.");
+      // console.error("Firebase SDK not loaded or initialized.");
       return;
     }
     if (!firebase.apps.length) {
       try {
         firebase.initializeApp(firebaseConfig);
         db = firebase.firestore();
-        console.log("Firebase initialized successfully.");
+        // console.log("Firebase initialized successfully.");
       } catch (e) {
-        console.error("Firebase initialization error:", e);
+        // console.error("Firebase initialization error:", e);
         db = null;
       }
     } else {
@@ -23,30 +23,30 @@ const FirebaseHandler = (function () {
 
   async function checkFirebaseConnection() {
     if (!db) {
-      console.warn("Firestore not available, skipping connection check.");
+      // console.warn("Firestore not available, skipping connection check.");
       return false;
     }
     if (Object.keys(DOCUMENT_MAP).length === 0) {
-      console.warn(
-        "DOCUMENT_MAP is empty, cannot test Firebase connection effectively."
-      );
+      // console.warn(
+      //   "DOCUMENT_MAP is empty, cannot test Firebase connection effectively."
+      // );
       return false;
     }
     try {
       const testDocId = Object.values(DOCUMENT_MAP)[0];
       if (!testDocId) {
-        console.warn(
-          "No document ID found in DOCUMENT_MAP for connection test."
-        );
+        // console.warn(
+        //   "No document ID found in DOCUMENT_MAP for connection test."
+        // );
         return false;
       }
       const docSnap = await db
         .collection("jsonData")
         .doc(testDocId)
         .get({ source: "server" });
-      console.log(
-        `Firebase connection test to doc ${testDocId}: Exists = ${docSnap.exists}`
-      );
+      // console.log(
+      //   `Firebase connection test to doc ${testDocId}: Exists = ${docSnap.exists}`
+      // );
       return true;
     } catch (error) {
       console.error("Firebase connection test failed:", error);
@@ -79,10 +79,10 @@ const FirebaseHandler = (function () {
       try {
         return JSON.parse(cachedData);
       } catch (e) {
-        console.warn(
-          `Failed to parse cached data for ${fileName}. Removing cache.`,
-          e
-        );
+        // console.warn(
+        //   `Failed to parse cached data for ${fileName}. Removing cache.`,
+        //   e
+        // );
         localStorage.removeItem(cachedKey);
         localStorage.removeItem(cachedTimeKey);
       }
@@ -98,18 +98,18 @@ const FirebaseHandler = (function () {
             localStorage.setItem(cachedTimeKey, Date.now().toString());
             return data;
           } else {
-            console.warn(`Firestore document ${docId} exists but has no data.`);
+            // console.warn(`Firestore document ${docId} exists but has no data.`);
           }
         } else {
-          console.warn(
-            `Firestore document ${docId} (${fileName}.json) not found.`
-          );
+          // console.warn(
+          //   `Firestore document ${docId} (${fileName}.json) not found.`
+          // );
         }
       } catch (error) {
-        console.error(
-          `Error fetching ${fileName} from Firestore (Doc ID: ${docId}):`,
-          error
-        );
+        // console.error(
+        //   `Error fetching ${fileName} from Firestore (Doc ID: ${docId}):`,
+        //   error
+        // );
       }
     } else if (!db) {
       // console.log(`Firestore not available, skipping fetch for ${fileName}.`);
@@ -128,10 +128,10 @@ const FirebaseHandler = (function () {
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error(
-        `Critical error: Failed to load data for ${fileName}.json from all sources:`,
-        error
-      );
+      // console.error(
+      //   `Critical error: Failed to load data for ${fileName}.json from all sources:`,
+      //   error
+      // );
       return { data: [] };
     }
   }
