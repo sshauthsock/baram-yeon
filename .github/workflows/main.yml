@@ -11,54 +11,78 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Debug - Show repository structure
+        run: |
+          echo "===== REPOSITORY STRUCTURE ====="
+          find . -type f | grep -E '\.(js|html)$' | sort
+          echo "================================"
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "16"
 
       - name: Install JavaScript-Obfuscator
-        run: npm install -g javascript-obfuscator
+        run: npm install -g javascript-obfuscator uglify-js
 
-      - name: Create dist directory and copy files
+      - name: Create clean dist directory
         run: |
+          rm -rf dist
           mkdir -p dist
-          cp -r * dist/ || true
 
-          # GitHub Pages looks for index.html by default, so create a redirect if it doesn't exist
-          if [ ! -f dist/index.html ] && [ -f dist/info.html ]; then
-            echo '<meta http-equiv="refresh" content="0; url=info.html">' > dist/index.html
-            echo "Created redirect from index.html to info.html"
-          fi
-
-      - name: Show JS files to be obfuscated
-        run: find dist -name "*.js" -type f | sort
-
-      - name: Obfuscate JS files with stronger settings
+      - name: Copy all files to dist
         run: |
-          find dist -name "*.js" -type f -exec sh -c '
-            echo "Obfuscating $0"
-            javascript-obfuscator "$0" --output "$0" \
+          cp -r * dist/ || true
+          find dist -type d -name ".git*" -exec rm -rf {} + || true
+
+      - name: Create comparison samples (before obfuscation)
+        run: |
+          mkdir -p samples
+          find dist -name "*.js" -type f | head -3 | xargs -I{} cp {} samples/
+          ls -la samples/
+
+      - name: Double obfuscation approach
+        run: |
+          find dist -name "*.js" -type f -print | while read jsfile; do
+            echo "Processing: $jsfile"
+            # Step 1: First obfuscation with javascript-obfuscator
+            javascript-obfuscator "$jsfile" --output "$jsfile.temp" \
               --compact true \
               --control-flow-flattening true \
-              --control-flow-flattening-threshold 0.7 \
               --dead-code-injection true \
               --string-array true \
-              --rotate-string-array true \
               --self-defending true
-          ' {} \;
+              
+            # Step 2: Second pass with UglifyJS for extra minification  
+            uglifyjs "$jsfile.temp" --compress --mangle --output "$jsfile"
+            
+            # Remove temp file
+            rm "$jsfile.temp"
+            
+            # Show file size difference
+            original_size=$(wc -c < samples/$(basename "$jsfile") 2>/dev/null || echo "N/A")
+            new_size=$(wc -c < "$jsfile")
+            echo "Size: $original_size → $new_size bytes"
+          done
 
-      - name: Show sample of obfuscated files
+      - name: Compare before and after (sample)
         run: |
-          echo "===== SAMPLE OF OBFUSCATED FILES ====="
-          find dist -name "*.js" -type f | head -3 | xargs -I{} sh -c 'echo "\n>>> {}" && head -10 {}'
-          echo "===================================="
+          echo "===== BEFORE OBFUSCATION ====="
+          head -10 samples/*.js || true
+          echo "===== AFTER OBFUSCATION ====="
+          find dist -name "*.js" -type f | head -3 | xargs -I{} head -10 {}
+          echo "============================="
 
-      - name: Add cache-busting version to HTML files
+      - name: Add verification marker to HTML files
         run: |
-          VERSION=$(date +%s)
           find dist -name "*.html" -type f -exec sh -c '
-            echo "Adding cache-busting to $0"
-            sed -i "s/\.js/\.js?v='$VERSION'/g" "$0"
+            echo "Adding verification marker to $0"
+            MARKER="<!-- JS files obfuscated on: $(date) -->"
+            sed -i "1s|^|$MARKER\n|" "$0"
+            
+            # Add cache busting to all script tags
+            TIMESTAMP=$(date +%s)
+            sed -i "s/\.js/\.js?v=$TIMESTAMP/g" "$0"
           ' {} \;
 
       - name: Deploy to GitHub Pages
