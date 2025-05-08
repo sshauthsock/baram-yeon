@@ -117,7 +117,7 @@ const FirebaseHandler = (function () {
       // console.log(`No Firestore mapping for ${fileName}.json.`);
     }
 
-    console.log(`Falling back to local fetch for ${fileName}.json`);
+    // console.log(`Falling back to local fetch for ${fileName}.json`);
     try {
       const response = await fetch(`output/${fileName}.json`);
       if (!response.ok) {

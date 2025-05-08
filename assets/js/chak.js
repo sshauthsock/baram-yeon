@@ -77,7 +77,7 @@ const ChakApp = (() => {
   async function getFirestoreDocument(fileName) {
     try {
       const documentMap = window.CommonData.DOCUMENT_MAP;
-      console.log("documentMap = ", documentMap);
+      // console.log("documentMap = ", documentMap);
 
       const docId = documentMap[fileName];
 
@@ -99,7 +99,7 @@ const ChakApp = (() => {
 
       return data;
     } catch (error) {
-      console.error(`Firestore error for ${fileName}:`, error);
+      // console.error(`Firestore error for ${fileName}:`, error);
       const response = await fetch(`output/${fileName}`);
       return await response.json();
     }

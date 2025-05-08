@@ -6,7 +6,7 @@ const InfoApp = (function () {
   const DOCUMENT_MAP = window.CommonData.DOCUMENT_MAP || {};
 
   function initialize() {
-    console.log("Initializing InfoApp...");
+    // console.log("Initializing InfoApp...");
     if (
       typeof window.CommonData === "undefined" ||
       !FACTION_ICONS ||
@@ -28,7 +28,7 @@ const InfoApp = (function () {
     FirebaseHandler.initFirebase();
 
     FirebaseHandler.testFirebaseConnectivity().finally(() => {
-      console.log("Firebase check finished. Loading category data...");
+      // console.log("Firebase check finished. Loading category data...");
 
       window.DataManager.loadCategoryData().then(() => {
         window.UIRenderer.initUIEvents();
