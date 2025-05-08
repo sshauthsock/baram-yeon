@@ -1,0 +1,51 @@
+name: Obfuscate JS Files
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  obfuscate-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install JavaScript-Obfuscator
+        run: npm install -g javascript-obfuscator
+
+      - name: Create dist directory
+        run: |
+          mkdir -p dist
+          cp -r * dist/ || true
+
+      - name: Obfuscate JS files
+        run: |
+          find dist -type f -name "*.js" | while read file; do
+            echo "Obfuscating: $file"
+            javascript-obfuscator "$file" --output "$file.obf" \
+              --compact true \
+              --control-flow-flattening true \
+              --dead-code-injection true \
+              --string-array true \
+              --self-defending true
+              
+            if [ -f "$file.obf" ]; then
+              mv "$file.obf" "$file"
+              echo "✅ Successfully obfuscated: $file"
+            else
+              echo "❌ Failed to obfuscate: $file"
+            fi
+          done
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: dist
+          clean: true
