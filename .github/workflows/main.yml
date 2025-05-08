@@ -25,6 +25,12 @@ jobs:
       - name: Install JavaScript-Obfuscator
         run: npm install -g javascript-obfuscator
 
+      - name: Check obfuscator version and options
+        run: |
+          javascript-obfuscator --version
+          echo "Available options (first few lines):"
+          javascript-obfuscator --help | head -20
+
       - name: Create clean dist directory
         run: |
           rm -rf dist
@@ -35,21 +41,19 @@ jobs:
           cp -r * dist/ || true
           find dist -type d -name ".git*" -exec rm -rf {} + || true
 
-      - name: Obfuscate JS files securely
+      - name: Obfuscate JS files with compatible options
         run: |
           find dist -type f -name "*.js" | while read file; do
             echo "Obfuscating: $file"
-            # Create a temporary filename that won't conflict with directories
+            # Create a temporary filename
             temp_file="${file}.obfuscated_temp"
             
-            # Obfuscate to the temporary file
+            # Obfuscate using only widely supported options
             javascript-obfuscator "$file" --output "$temp_file" \
               --compact true \
               --control-flow-flattening true \
-              --control-flow-flattening-threshold 0.7 \
               --dead-code-injection true \
               --string-array true \
-              --rotate-string-array true \
               --self-defending true
               
             # Only if the obfuscation was successful, replace the original file
