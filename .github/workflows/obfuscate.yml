@@ -16,32 +16,94 @@ jobs:
         with:
           node-version: "16"
 
-      - name: Install JavaScript-Obfuscator
+      - name: Install tools
         run: npm install -g javascript-obfuscator
+
+      - name: Show repository structure
+        run: |
+          echo "===== JS FILES IN REPOSITORY ====="
+          find . -type f -name "*.js" | sort
+          echo "=================================="
 
       - name: Create dist directory
         run: |
+          rm -rf dist
           mkdir -p dist
           cp -r * dist/ || true
+          find dist -name ".git*" -exec rm -rf {} + 2>/dev/null || true
 
-      - name: Obfuscate JS files
+      - name: Create obfuscated JS files with new names
         run: |
+          timestamp=$(date +%s)
+          echo "# JS file mapping" > mapping.txt
+
           find dist -type f -name "*.js" | while read file; do
-            echo "Obfuscating: $file"
-            javascript-obfuscator "$file" --output "$file.obf" \
+            echo "Processing: $file"
+            
+            # Create new filename with timestamp
+            dir_path=$(dirname "$file")
+            base_name=$(basename "$file" .js)
+            new_file="${dir_path}/${base_name}.obf.${timestamp}.js"
+            
+            # Obfuscate to the new file
+            javascript-obfuscator "$file" --output "$new_file" \
               --compact true \
               --control-flow-flattening true \
               --dead-code-injection true \
               --string-array true \
               --self-defending true
+            
+            if [ -f "$new_file" ]; then
+              orig_size=$(wc -c < "$file")
+              new_size=$(wc -c < "$new_file")
+              echo "  ✅ ${file}: ${orig_size} → ${new_size} bytes"
               
-            if [ -f "$file.obf" ]; then
-              mv "$file.obf" "$file"
-              echo "✅ Successfully obfuscated: $file"
+              # Store mapping for replacement
+              echo "${file#dist/},${new_file#dist/}" >> mapping.txt
             else
-              echo "❌ Failed to obfuscate: $file"
+              echo "  ❌ Failed to obfuscate: $file"
             fi
           done
+
+          cat mapping.txt
+
+      - name: Update HTML files to use obfuscated JS
+        run: |
+          find dist -type f -name "*.html" | while read html_file; do
+            echo "Updating references in: $html_file"
+            cp "$html_file" "${html_file}.bak"
+            
+            # For each JS file mapping
+            tail -n +2 mapping.txt | while IFS=, read -r old_path new_path; do
+              echo "  Replacing: $old_path → $new_path"
+              
+              # Escape special characters for sed
+              escaped_old_path=$(echo "$old_path" | sed 's/\./\\./g' | sed 's/\//\\\//g')
+              escaped_new_path=$(echo "$new_path" | sed 's/\./\\./g' | sed 's/\//\\\//g')
+              
+              # Replace in HTML file
+              sed -i "s/${escaped_old_path}/${escaped_new_path}/g" "$html_file"
+            done
+            
+            # Add comment at the top
+            sed -i "1s|^|<!-- JS files obfuscated: $(date) -->\n|" "$html_file"
+            
+            # Check if changes were made
+            if diff -q "${html_file}.bak" "$html_file" >/dev/null; then
+              echo "  ⚠️ No changes made to: $html_file"
+            else
+              echo "  ✅ Updated JS references in: $html_file"
+            fi
+            
+            rm "${html_file}.bak"
+          done
+
+      - name: Create index.html if needed
+        run: |
+          if [ ! -f "dist/index.html" ] && [ -f "dist/info.html" ]; then
+            echo "Creating index.html redirect to info.html"
+            echo '<meta http-equiv="refresh" content="0; url=info.html">' > dist/index.html
+          fi
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
