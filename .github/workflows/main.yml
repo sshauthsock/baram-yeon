@@ -19,24 +19,28 @@ jobs:
       - name: Install Terser
         run: npm install -g terser
 
-      - name: Obfuscate JS files
+      - name: Create dist directory
+        run: mkdir -p dist
+
+      - name: Copy files to dist
         run: |
-          mkdir -p dist
           cp -r assets dist/
-          find dist/assets/js -name "*.js" -type f -exec sh -c 'terser "$0" --compress --mangle --output "$0.min" && cat "$0.min" > "$0" && rm "$0.min"' {} \;
-
-      - name: Verify obfuscation
-        run: |
-          echo "===== VERIFYING OBFUSCATION ====="
-          ls -la dist/assets/js/
-          head -n 5 dist/assets/js/*.js
-          echo "================================="
-
-      - name: Copy other files
-        run: |
           cp index.html dist/ || true
           cp -r images dist/ || true
           cp -r css dist/ || true
+
+      - name: Debug - Show files
+        run: find dist -type f -name "*.js" | sort
+
+      - name: Obfuscate JS files
+        run: |
+          find dist -name "*.js" -type f -exec sh -c 'echo "Obfuscating $0"; terser "$0" --compress --mangle --output "$0.min" && mv "$0.min" "$0"' {} \;
+
+      - name: Debug - Show obfuscated files
+        run: |
+          echo "===== VERIFYING OBFUSCATION ====="
+          find dist -name "*.js" -type f -exec sh -c 'echo "$0"; head -n 3 "$0"' {} \;
+          echo "================================="
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
