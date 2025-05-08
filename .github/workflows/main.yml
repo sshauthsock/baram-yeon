@@ -16,31 +16,50 @@ jobs:
         with:
           node-version: "16"
 
-      - name: Install Terser
-        run: npm install -g terser
+      - name: Install JavaScript-Obfuscator
+        run: npm install -g javascript-obfuscator
 
-      - name: Create dist directory
-        run: mkdir -p dist
-
-      - name: Copy files to dist
+      - name: Create dist directory and copy files
         run: |
-          cp -r assets dist/
-          cp index.html dist/ || true
-          cp -r images dist/ || true
-          cp -r css dist/ || true
+          mkdir -p dist
+          cp -r * dist/ || true
 
-      - name: Debug - Show files
-        run: find dist -type f -name "*.js" | sort
+          # GitHub Pages looks for index.html by default, so create a redirect if it doesn't exist
+          if [ ! -f dist/index.html ] && [ -f dist/info.html ]; then
+            echo '<meta http-equiv="refresh" content="0; url=info.html">' > dist/index.html
+            echo "Created redirect from index.html to info.html"
+          fi
 
-      - name: Obfuscate JS files
+      - name: Show JS files to be obfuscated
+        run: find dist -name "*.js" -type f | sort
+
+      - name: Obfuscate JS files with stronger settings
         run: |
-          find dist -name "*.js" -type f -exec sh -c 'echo "Obfuscating $0"; terser "$0" --compress --mangle --output "$0.min" && mv "$0.min" "$0"' {} \;
+          find dist -name "*.js" -type f -exec sh -c '
+            echo "Obfuscating $0"
+            javascript-obfuscator "$0" --output "$0" \
+              --compact true \
+              --control-flow-flattening true \
+              --control-flow-flattening-threshold 0.7 \
+              --dead-code-injection true \
+              --string-array true \
+              --rotate-string-array true \
+              --self-defending true
+          ' {} \;
 
-      - name: Debug - Show obfuscated files
+      - name: Show sample of obfuscated files
         run: |
-          echo "===== VERIFYING OBFUSCATION ====="
-          find dist -name "*.js" -type f -exec sh -c 'echo "$0"; head -n 3 "$0"' {} \;
-          echo "================================="
+          echo "===== SAMPLE OF OBFUSCATED FILES ====="
+          find dist -name "*.js" -type f | head -3 | xargs -I{} sh -c 'echo "\n>>> {}" && head -10 {}'
+          echo "===================================="
+
+      - name: Add cache-busting version to HTML files
+        run: |
+          VERSION=$(date +%s)
+          find dist -name "*.html" -type f -exec sh -c '
+            echo "Adding cache-busting to $0"
+            sed -i "s/\.js/\.js?v='$VERSION'/g" "$0"
+          ' {} \;
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
