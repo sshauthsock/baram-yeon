@@ -2,19 +2,19 @@ name: Obfuscate JS Files
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   obfuscate-and-deploy:
     runs-on: ubuntu-latest
-
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: "16"
 
       - name: Install Terser
         run: npm install -g terser
@@ -24,7 +24,7 @@ jobs:
           mkdir -p dist
           cp -r assets dist/
           find dist/assets/js -name "*.js" -type f -exec sh -c 'terser "$0" -c -m -o "$0.min.js" && mv "$0.min.js" "$0"' {} \;
-          
+
       - name: Copy other files
         run: |
           cp index.html dist/ 2>/dev/null || :
