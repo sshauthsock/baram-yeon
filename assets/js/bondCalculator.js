@@ -4722,6 +4722,12 @@ const BondCalculatorApp = (function () {
   }
 
   function initialize() {
+    const container = document.getElementById("imageContainer");
+    if (container) {
+      container.innerHTML =
+        '<div class="loading-indicator">데이터 로딩 중...</div>';
+    }
+
     const savedCategory = localStorage.getItem("lastActiveCategory");
     if (savedCategory) {
       lastActiveCategory = savedCategory;
@@ -4759,16 +4765,20 @@ const BondCalculatorApp = (function () {
       window.DataManager &&
       typeof window.DataManager.loadCategoryData === "function"
     ) {
-      window.DataManager.loadCategoryData().then(() => {
-        allStatNames = collectAllStatNames();
-        populateStatOptions();
-        loadSelectedSpiritsFromStorage();
-        showCategory(lastActiveCategory, false);
-      });
-    } else {
-      console.error(
-        "DataManager not available or loadCategoryData method missing"
-      );
+      window.DataManager.loadCategoryData()
+        .then(() => {
+          allStatNames = collectAllStatNames();
+          populateStatOptions();
+          loadSelectedSpiritsFromStorage();
+          showCategory(lastActiveCategory, false);
+        })
+        .catch((error) => {
+          console.error("Failed to load category data:", error);
+          if (container) {
+            container.innerHTML =
+              '<div class="error-message">데이터를 불러오는 데 실패했습니다. 페이지를 새로고침하거나 나중에 다시 시도해주세요.</div>';
+          }
+        });
     }
 
     loadSavedOptimalCombinations();

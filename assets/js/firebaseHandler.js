@@ -79,10 +79,6 @@ const FirebaseHandler = (function () {
       try {
         return JSON.parse(cachedData);
       } catch (e) {
-        // console.warn(
-        //   `Failed to parse cached data for ${fileName}. Removing cache.`,
-        //   e
-        // );
         localStorage.removeItem(cachedKey);
         localStorage.removeItem(cachedTimeKey);
       }
@@ -97,26 +93,12 @@ const FirebaseHandler = (function () {
             localStorage.setItem(cachedKey, JSON.stringify(data));
             localStorage.setItem(cachedTimeKey, Date.now().toString());
             return data;
-          } else {
-            // console.warn(`Firestore document ${docId} exists but has no data.`);
           }
-        } else {
-          // console.warn(
-          //   `Firestore document ${docId} (${fileName}.json) not found.`
-          // );
         }
       } catch (error) {
-        // console.error(
-        //   `Error fetching ${fileName} from Firestore (Doc ID: ${docId}):`,
-        //   error
-        // );
+        console.error(`Error fetching ${fileName} from Firestore:`, error);
       }
-    } else if (!db) {
-      // console.log(`Firestore not available, skipping fetch for ${fileName}.`);
-    } else if (!docId) {
-      // console.log(`No Firestore mapping for ${fileName}.json.`);
     }
-
     // console.log(`Falling back to local fetch for ${fileName}.json`);
     try {
       const response = await fetch(`output/${fileName}.json`);

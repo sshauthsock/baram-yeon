@@ -1,5 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-  BondCalculatorApp.initialize();
+  if (
+    typeof FirebaseHandler !== "undefined" &&
+    typeof FirebaseHandler.initFirebase === "function"
+  ) {
+    FirebaseHandler.initFirebase();
+    FirebaseHandler.testFirebaseConnectivity().then(() => {
+      BondCalculatorApp.initialize();
+    });
+  } else {
+    BondCalculatorApp.initialize();
+  }
 
   var isMobile = window.innerWidth <= 768;
   localStorage.setItem("isMobileView", isMobile);
