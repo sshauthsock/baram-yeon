@@ -1,4 +1,3 @@
-/* === 공통 변수 === */
 :root {
     --primary-color: #3498db;
     --primary-dark: #2980b9;
@@ -27,7 +26,6 @@
     --transition-slow: all 0.3s ease;
 }
 
-/* === 레이아웃 === */
 .bond-container {
     max-width: 100%;
     margin: 0 auto;
@@ -55,7 +53,6 @@
     flex: 2;
 }
 
-/* === 이미지 컨테이너 공통 === */
 .image-container,
 .image-container-grid,
 .image-container-grouped {
@@ -91,7 +88,6 @@
     margin-bottom: 30px;
 }
 
-/* === 환수 이미지 래퍼 === */
 .img-wrapper {
     display: flex;
     flex-direction: column;
@@ -138,7 +134,6 @@
     justify-content: center;
 }
 
-/* === 영향력/세력 그룹 === */
 .influence-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -192,7 +187,6 @@
     grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
 }
 
-/* === 선택된 환수 스타일 === */
 .selected-spirits-container {
     background-color: var(--bg-white);
     border-radius: var(--radius-lg);
@@ -237,7 +231,6 @@
     border-top: 2px solid #ffa000;
 }
 
-/* === 리본 스타일 === */
 .ribbon-left,
 .ribbon-right {
     position: absolute;
@@ -297,7 +290,6 @@
     top: 3px;
 }
 
-/* === 모달 공통 === */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -352,7 +344,6 @@
     color: #222;
 }
 
-/* === 통계 및 효과 === */
 .effects-list {
     margin-top: 10px;
 }
@@ -373,7 +364,6 @@
     background-color: var(--primary-light);
 }
 
-/* === 스탯 색상 === */
 .stat-damage-resistance {
     color: #e74c3c;
     font-weight: 600;
@@ -409,7 +399,6 @@
     font-weight: 600;
 }
 
-/* === 토글 컨트롤 === */
 .view-toggle-container {
     display: flex;
     align-items: center;
@@ -482,7 +471,6 @@ input:checked+.toggle-slider:before {
     transform: translateX(24px);
 }
 
-/* === 애니메이션 === */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -545,7 +533,6 @@ input:checked+.toggle-slider:before {
     }
 }
 
-/* === 검색 기능 === */
 .search-container,
 .mobile-search-container,
 .desktop-search-container {
@@ -609,7 +596,6 @@ input:checked+.toggle-slider:before {
     background-color: #f5f5f5;
 }
 
-/* === 미디어 쿼리 최적화 === */
 @media screen and (max-width: 1024px) {
     .influence-row {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -777,15 +763,15 @@ input:checked+.toggle-slider:before {
     position: absolute;
     right: 5px;
     bottom: 5px;
-    width: 14px;
-    height: 14px;
-    background-color: #eee585;
+    width: 16px;
+    height: 16px;
+    background-color: #ece37d;
     color: #5D4037;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 8px;
+    font-size: 10px;
     font-weight: bold;
     z-index: 5;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
