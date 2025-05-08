@@ -14,7 +14,7 @@ jobs:
       - name: Debug - Show repository structure
         run: |
           echo "===== REPOSITORY STRUCTURE ====="
-          find . -type f | grep -E '\.(js|html)$' | sort
+          find . -type f -name "*.js" | sort
           echo "================================"
 
       - name: Setup Node.js
@@ -23,7 +23,7 @@ jobs:
           node-version: "16"
 
       - name: Install JavaScript-Obfuscator
-        run: npm install -g javascript-obfuscator uglify-js
+        run: npm install -g javascript-obfuscator
 
       - name: Create clean dist directory
         run: |
@@ -35,55 +35,70 @@ jobs:
           cp -r * dist/ || true
           find dist -type d -name ".git*" -exec rm -rf {} + || true
 
-      - name: Create comparison samples (before obfuscation)
+      - name: Obfuscate JS files securely
         run: |
-          mkdir -p samples
-          find dist -name "*.js" -type f | head -3 | xargs -I{} cp {} samples/
-          ls -la samples/
-
-      - name: Double obfuscation approach
-        run: |
-          find dist -name "*.js" -type f -print | while read jsfile; do
-            echo "Processing: $jsfile"
-            # Step 1: First obfuscation with javascript-obfuscator
-            javascript-obfuscator "$jsfile" --output "$jsfile.temp" \
+          find dist -type f -name "*.js" | while read file; do
+            echo "Obfuscating: $file"
+            # Create a temporary filename that won't conflict with directories
+            temp_file="${file}.obfuscated_temp"
+            
+            # Obfuscate to the temporary file
+            javascript-obfuscator "$file" --output "$temp_file" \
               --compact true \
               --control-flow-flattening true \
+              --control-flow-flattening-threshold 0.7 \
               --dead-code-injection true \
               --string-array true \
+              --rotate-string-array true \
               --self-defending true
               
-            # Step 2: Second pass with UglifyJS for extra minification  
-            uglifyjs "$jsfile.temp" --compress --mangle --output "$jsfile"
-            
-            # Remove temp file
-            rm "$jsfile.temp"
-            
-            # Show file size difference
-            original_size=$(wc -c < samples/$(basename "$jsfile") 2>/dev/null || echo "N/A")
-            new_size=$(wc -c < "$jsfile")
-            echo "Size: $original_size → $new_size bytes"
+            # Only if the obfuscation was successful, replace the original file
+            if [ -f "$temp_file" ]; then
+              original_size=$(wc -c < "$file")
+              new_size=$(wc -c < "$temp_file")
+              echo "  Size: $original_size → $new_size bytes"
+              
+              # Replace original with obfuscated version
+              mv "$temp_file" "$file"
+            else
+              echo "  ⚠️ Failed to obfuscate: $file"
+            fi
           done
 
-      - name: Compare before and after (sample)
+      - name: Show obfuscated samples
         run: |
-          echo "===== BEFORE OBFUSCATION ====="
-          head -10 samples/*.js || true
-          echo "===== AFTER OBFUSCATION ====="
-          find dist -name "*.js" -type f | head -3 | xargs -I{} head -10 {}
-          echo "============================="
+          echo "===== OBFUSCATED JS SAMPLES ====="
+          find dist -type f -name "*.js" | head -3 | while read file; do
+            echo -e "\n>>> $file"
+            head -10 "$file"
+          done
+          echo "================================="
 
-      - name: Add verification marker to HTML files
+      - name: Add cache busting to HTML files
         run: |
-          find dist -name "*.html" -type f -exec sh -c '
-            echo "Adding verification marker to $0"
-            MARKER="<!-- JS files obfuscated on: $(date) -->"
-            sed -i "1s|^|$MARKER\n|" "$0"
+          find dist -type f -name "*.html" | while read file; do
+            echo "Adding cache busting to: $file"
+            timestamp=$(date +%s)
+            sed -i "s/\.js/\.js?v=$timestamp/g" "$file"
             
-            # Add cache busting to all script tags
-            TIMESTAMP=$(date +%s)
-            sed -i "s/\.js/\.js?v=$TIMESTAMP/g" "$0"
-          ' {} \;
+            # Add verification marker
+            sed -i "1s|^|<!-- JS obfuscated: $(date) -->\n|" "$file"
+          done
+
+      - name: Verify info.html exists
+        run: |
+          if [ -f "dist/info.html" ]; then
+            echo "✅ info.html exists in dist folder"
+          else
+            echo "⚠️ info.html not found!"
+            find dist -name "*.html" | sort
+          fi
+
+          # Create index.html redirect if needed
+          if [ ! -f "dist/index.html" ] && [ -f "dist/info.html" ]; then
+            echo '<meta http-equiv="refresh" content="0; url=info.html">' > dist/index.html
+            echo "Created redirect from index.html to info.html"
+          fi
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
