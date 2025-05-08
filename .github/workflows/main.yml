@@ -23,11 +23,20 @@ jobs:
         run: |
           mkdir -p dist
           cp -r assets dist/
-          find dist/assets/js -name "*.js" -type f -exec sh -c 'terser "$0" -c -m -o "$0.min.js" && mv "$0.min.js" "$0"' {} \;
+          find dist/assets/js -name "*.js" -type f -exec sh -c 'terser "$0" --compress --mangle --output "$0.min" && cat "$0.min" > "$0" && rm "$0.min"' {} \;
+
+      - name: Verify obfuscation
+        run: |
+          echo "===== VERIFYING OBFUSCATION ====="
+          ls -la dist/assets/js/
+          head -n 5 dist/assets/js/*.js
+          echo "================================="
 
       - name: Copy other files
         run: |
-          cp index.html dist/ 2>/dev/null || :
+          cp index.html dist/ || true
+          cp -r images dist/ || true
+          cp -r css dist/ || true
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
@@ -35,3 +44,4 @@ jobs:
           branch: gh-pages
           folder: dist
           clean: true
+          token: ${{ secrets.GITHUB_TOKEN }}
