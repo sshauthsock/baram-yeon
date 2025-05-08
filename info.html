@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <link href="assets/css/global.css" rel="stylesheet">
+    <link href="assets/css/imageCategory.css" rel="stylesheet">
     <link href="assets/css/info.css" rel="stylesheet">
     <link href="assets/css/components/ads.css" rel="stylesheet">
     <link href="assets/css/components/footer.css" rel="stylesheet">
@@ -29,7 +30,7 @@
 <body>
     <header class="header">
         <div class="logo-container">
-            <a href="index.html">
+            <a href="info.html">
                 <img src="assets/img/BHY.png" alt="바연화연 로고" class="logo">
             </a>
         </div>
@@ -62,8 +63,15 @@
         <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-UDsuae5QVIAxX2fS" data-ad-width="320"
             data-ad-height="50"></ins>
     </div>
-
-    <div class="image-container" id="imageContainer"></div>
+    <div class="view-toggle-container">
+        <label class="toggle-switch">
+            <input type="checkbox" id="influenceToggle">
+            <span class="slider round"></span>
+        </label>
+        <span class="toggle-label">세력별 보기</span>
+    </div>
+    <div class="image-container" id="imageContainer">
+    </div>
 
     <div class="ad-row">
         <div class="ad-container-left">
@@ -100,7 +108,8 @@
                 </div>
                 <ul class="help-list">
                     <li><span class="ribbon ribbon-r">R</span> 환수 등록 정보가 0~25 레벨 전부 있는 경우 왼쪽 상단에 표시</li>
-                    <li><span class="ribbon ribbon-b">B</span> 환수 결속 정보가 0~25 레벨 전부 있는 경우 오른쪽 상단에 표시</li>
+                    <li><span class="ribbon ribbon-b">B</span> 환수 장착 정보가 0~25 레벨 전부 있는 경우 오른쪽 상단에 표시</li>
+                    <li><span class="level25-indicator">25</span>환수 장착 정보에 25레벨이 존재하는 경우 오른쪽 하단에 표시</li>
                 </ul>
             </div>
         </div>
@@ -121,7 +130,12 @@
     </footer>
 
     <script src="assets/js/common.js"></script>
+    <script src="assets/js/firebaseHandler.js"></script>
     <script src="assets/js/firebaseConfig.js"></script>
+    <script src="assets/js/dataManager.js"></script>
+    <script src="assets/js/uiRenderer.js"></script>
+    <script src="assets/js/modalHandler.js"></script>
+    <script src="assets/js/imageHandler-compat.js"></script>
     <script src="assets/js/info.js"></script>
     <script src="assets/js/infoInit.js"></script>
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
