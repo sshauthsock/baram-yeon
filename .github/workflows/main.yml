@@ -28,7 +28,6 @@ jobs:
       - name: Copy other files
         run: |
           cp index.html dist/ 2>/dev/null || :
-          # 필요한 다른 파일들도 여기에 복사 명령 추가
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
