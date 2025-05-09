@@ -24,6 +24,9 @@ jobs:
           echo "===== JS FILES IN REPOSITORY ====="
           find . -type f -name "*.js" | sort
           echo "=================================="
+          echo "===== HTML FILES IN REPOSITORY ====="
+          find . -type f -name "*.html" | sort
+          echo "=================================="
 
       - name: Create dist directory
         run: |
@@ -32,12 +35,12 @@ jobs:
           cp -r * dist/ || true
           find dist -name ".git*" -exec rm -rf {} + 2>/dev/null || true
 
-      - name: Create obfuscated JS files with new names
+      - name: Create obfuscated JS files
         run: |
           timestamp=$(date +%s)
           echo "# JS file mapping" > mapping.txt
 
-          find dist -type f -name "*.js" | while read file; do
+          find dist/assets/js -type f -name "*.js" | while read file; do
             echo "Processing: $file"
             
             # Create new filename with timestamp
@@ -58,44 +61,44 @@ jobs:
               new_size=$(wc -c < "$new_file")
               echo "  ✅ ${file}: ${orig_size} → ${new_size} bytes"
               
-              # Store mapping for replacement
-              echo "${file#dist/},${new_file#dist/}" >> mapping.txt
+              # Store mapping - get paths relative to dist
+              orig_relative=${file#dist/}
+              new_relative=${new_file#dist/}
+              echo "$orig_relative,$new_relative" >> mapping.txt
             else
               echo "  ❌ Failed to obfuscate: $file"
             fi
           done
 
+          echo "=== JS FILE MAPPING ==="
           cat mapping.txt
+          echo "======================="
 
       - name: Update HTML files to use obfuscated JS
         run: |
           find dist -type f -name "*.html" | while read html_file; do
             echo "Updating references in: $html_file"
-            cp "$html_file" "${html_file}.bak"
+            echo "Original HTML content (first few lines):"
+            head -n 10 "$html_file"
             
             # For each JS file mapping
             tail -n +2 mapping.txt | while IFS=, read -r old_path new_path; do
               echo "  Replacing: $old_path → $new_path"
               
-              # Escape special characters for sed
-              escaped_old_path=$(echo "$old_path" | sed 's/\./\\./g' | sed 's/\//\\\//g')
-              escaped_new_path=$(echo "$new_path" | sed 's/\./\\./g' | sed 's/\//\\\//g')
-              
-              # Replace in HTML file
-              sed -i "s/${escaped_old_path}/${escaped_new_path}/g" "$html_file"
+              # Construct proper regex for script tags
+              # This handles variations like src="assets/js/file.js", src='assets/js/file.js', or src=assets/js/file.js
+              sed -i "s|src=[\"']\\{0,1\\}${old_path}[\"']\\{0,1\\}|src=\"${new_path}\"|g" "$html_file"
             done
             
             # Add comment at the top
             sed -i "1s|^|<!-- JS files obfuscated: $(date) -->\n|" "$html_file"
             
-            # Check if changes were made
-            if diff -q "${html_file}.bak" "$html_file" >/dev/null; then
-              echo "  ⚠️ No changes made to: $html_file"
-            else
-              echo "  ✅ Updated JS references in: $html_file"
-            fi
+            echo "Updated HTML content (first few lines):"
+            head -n 10 "$html_file"
             
-            rm "${html_file}.bak"
+            # Check for script tags to verify changes
+            echo "Script tags in updated file:"
+            grep -o '<script.*src=[^>]*>' "$html_file" || echo "No script tags found"
           done
 
       - name: Create index.html if needed
