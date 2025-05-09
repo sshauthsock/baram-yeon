@@ -108,9 +108,16 @@ jobs:
             echo '<meta http-equiv="refresh" content="0; url=info.html">' > dist/index.html
           fi
 
+      # 배포 전 gh-pages 브랜치 상태 확인 및 정리
+      - name: Check gh-pages branch status
+        run: |
+          git fetch origin gh-pages || echo "Branch gh-pages doesn't exist yet"
+          git branch -D gh-pages || echo "No local gh-pages branch to delete"
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: dist
           clean: true
+          force: true # 충돌 시 강제로 푸시
