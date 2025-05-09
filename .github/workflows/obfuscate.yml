@@ -1,4 +1,4 @@
-name: Obfuscate JS Files
+name: Obfuscate JS and CSS Files
 
 on:
   push:
@@ -17,12 +17,17 @@ jobs:
           node-version: "16"
 
       - name: Install tools
-        run: npm install -g javascript-obfuscator
+        run: |
+          npm install -g javascript-obfuscator
+          npm install -g clean-css-cli
 
       - name: Show repository structure
         run: |
           echo "===== JS FILES IN REPOSITORY ====="
           find . -type f -name "*.js" | sort
+          echo "=================================="
+          echo "===== CSS FILES IN REPOSITORY ====="
+          find . -type f -name "*.css" | sort
           echo "=================================="
           echo "===== HTML FILES IN REPOSITORY ====="
           find . -type f -name "*.html" | sort
@@ -38,10 +43,10 @@ jobs:
       - name: Create obfuscated JS files
         run: |
           timestamp=$(date +%s)
-          echo "# JS file mapping" > mapping.txt
+          echo "# JS file mapping" > js_mapping.txt
 
           find dist/assets/js -type f -name "*.js" | while read file; do
-            echo "Processing: $file"
+            echo "Processing JS: $file"
             
             # Create new filename with timestamp
             dir_path=$(dirname "$file")
@@ -64,41 +69,77 @@ jobs:
               # Store mapping - get paths relative to dist
               orig_relative=${file#dist/}
               new_relative=${new_file#dist/}
-              echo "$orig_relative,$new_relative" >> mapping.txt
+              echo "$orig_relative,$new_relative" >> js_mapping.txt
             else
               echo "  ❌ Failed to obfuscate: $file"
             fi
           done
 
           echo "=== JS FILE MAPPING ==="
-          cat mapping.txt
+          cat js_mapping.txt
           echo "======================="
 
-      - name: Update HTML files to use obfuscated JS
+      - name: Minify and obfuscate CSS files
+        run: |
+          timestamp=$(date +%s)
+          echo "# CSS file mapping" > css_mapping.txt
+
+          find dist/assets/css -type f -name "*.css" | while read file; do
+            echo "Processing CSS: $file"
+            
+            # Create new filename with timestamp
+            dir_path=$(dirname "$file")
+            base_name=$(basename "$file" .css)
+            new_file="${dir_path}/${base_name}.min.${timestamp}.css"
+            
+            # Minify and obfuscate CSS
+            cleancss -o "$new_file" "$file"
+            
+            if [ -f "$new_file" ]; then
+              orig_size=$(wc -c < "$file")
+              new_size=$(wc -c < "$new_file")
+              echo "  ✅ ${file}: ${orig_size} → ${new_size} bytes"
+              
+              # Store mapping - get paths relative to dist
+              orig_relative=${file#dist/}
+              new_relative=${new_file#dist/}
+              echo "$orig_relative,$new_relative" >> css_mapping.txt
+            else
+              echo "  ❌ Failed to minify: $file"
+            fi
+          done
+
+          echo "=== CSS FILE MAPPING ==="
+          cat css_mapping.txt
+          echo "======================="
+
+      - name: Update HTML files to use obfuscated JS and CSS
         run: |
           find dist -type f -name "*.html" | while read html_file; do
             echo "Updating references in: $html_file"
-            echo "Original HTML content (first few lines):"
-            head -n 10 "$html_file"
             
             # For each JS file mapping
-            tail -n +2 mapping.txt | while IFS=, read -r old_path new_path; do
-              echo "  Replacing: $old_path → $new_path"
-              
-              # Construct proper regex for script tags
-              # This handles variations like src="assets/js/file.js", src='assets/js/file.js', or src=assets/js/file.js
+            tail -n +2 js_mapping.txt 2>/dev/null | while IFS=, read -r old_path new_path; do
+              echo "  Replacing JS: $old_path → $new_path"
+              # Handle script tags
               sed -i "s|src=[\"']\\{0,1\\}${old_path}[\"']\\{0,1\\}|src=\"${new_path}\"|g" "$html_file"
             done
             
+            # For each CSS file mapping
+            tail -n +2 css_mapping.txt 2>/dev/null | while IFS=, read -r old_path new_path; do
+              echo "  Replacing CSS: $old_path → $new_path"
+              # Handle link tags
+              sed -i "s|href=[\"']\\{0,1\\}${old_path}[\"']\\{0,1\\}|href=\"${new_path}\"|g" "$html_file"
+            done
+            
             # Add comment at the top
-            sed -i "1s|^|<!-- JS files obfuscated: $(date) -->\n|" "$html_file"
+            sed -i "1s|^|<!-- Files obfuscated: $(date) -->\n|" "$html_file"
             
-            echo "Updated HTML content (first few lines):"
-            head -n 10 "$html_file"
-            
-            # Check for script tags to verify changes
+            # Check for script and CSS tags to verify changes
             echo "Script tags in updated file:"
             grep -o '<script.*src=[^>]*>' "$html_file" || echo "No script tags found"
+            echo "CSS links in updated file:"
+            grep -o '<link.*href=[^>]*\.css[^>]*>' "$html_file" || echo "No CSS links found"
           done
 
       - name: Create index.html if needed
