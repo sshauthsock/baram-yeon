@@ -17,8 +17,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <link href="assets/css/global.css" rel="stylesheet">
-    <link href="assets/css/imageCategory.css" rel="stylesheet">
-
     <link href="assets/css/bondCalculator.css" rel="stylesheet">
     <link href="assets/css/components/ads.css" rel="stylesheet">
     <link href="assets/css/components/footer.css" rel="stylesheet">
@@ -43,9 +41,9 @@
     </header>
 
     <div class="sub-tabs" id="subTabs">
-        <div class="tab active" data-category="수호">수호</div>
-        <div class="tab" data-category="탑승">탑승</div>
-        <div class="tab" data-category="변신">변신</div>
+        <div class="tab active" onclick="BondCalculatorApp.showCategory('수호', true)">수호</div>
+        <div class="tab" onclick="BondCalculatorApp.showCategory('탑승', true)">탑승</div>
+        <div class="tab" onclick="BondCalculatorApp.showCategory('변신', true)">변신</div>
     </div>
 
     <div class="ad-row">
@@ -65,13 +63,8 @@
             data-ad-height="50"></ins>
     </div>
 
-    <div class="view-toggle-container">
-        <label class="toggle-switch">
-            <input type="checkbox" id="influenceToggle">
-            <span class="slider round"></span>
-        </label>
-        <span class="toggle-label">세력별 보기</span>
-    </div>
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+
     <div class="bond-container">
         <div class="main-content">
             <div class="left-panel">
@@ -88,14 +81,16 @@
                     </div>
                 </div>
 
-                <div class="mobile-clear-button-container">
-                    <button class="clear-selection-btn mobile-clear-btn"
-                        onclick="BondCalculatorApp.clearAllSelections()">선택해제</button>
-                </div>
                 <div class="spirit-selection">
+                    <div class="spirit-selection-header">
+                        <h3>환수 선택 (<span id="selectedCount">0</span>/40)</h3>
+                        <button class="clear-selection-btn"
+                            onclick="BondCalculatorApp.clearAllSelections()">선택해제</button>
+                    </div>
                     <div class="image-container" id="imageContainer"></div>
                 </div>
             </div>
+
             <div class="right-panel">
                 <div class="selected-spirits-container">
                     <div class="search-container desktop-search-container">
@@ -110,11 +105,7 @@
                     </div>
 
                     <div class="selected-spirits-header">
-                        <div class="header-title-area">
-                            <h3>선택된 환수 (<span id="selectedCountPanel">0</span>/40)</h3>
-                            <button class="clear-selection-btn"
-                                onclick="BondCalculatorApp.clearAllSelections()">선택해제</button>
-                        </div>
+                        <h3>선택된 환수 (<span id="selectedCountPanel">0</span>/40)</h3>
                         <div class="header-controls">
                             <div class="level-batch-control">
                                 <label>일괄 레벨 설정:</label>
@@ -123,14 +114,11 @@
                                 <button onclick="setMaxBatchLevel('batchLevel')" class="max-level-btn">Max</button>
                             </div>
                             <div class="calculate-btn-small">
-                                <button id="findOptimalBtn" onclick="BondCalculatorApp.findOptimalCombination()">최적
-                                    조합
+                                <button id="findOptimalBtn" onclick="BondCalculatorApp.findOptimalCombination()">최적 조합
                                     찾기</button>
                             </div>
                         </div>
                     </div>
-
-
                     <div id="selectedSpirits" class="selected-spirits"></div>
                 </div>
             </div>
@@ -139,7 +127,7 @@
 
     <div class="panel-toggle-container" id="panelToggleContainer">
         <button class="panel-toggle-button" id="panelToggleBtn">
-            선택된 환수 <span id="mobileSelectedCount">0</span>개 <span class="toggle-icon">▲</span>
+            선택된 환수 <span id="mobileSelectedCount">0</span>개 <span class="toggle-icon">▼</span>
         </button>
         <div class="right-panel collapsed">
             <div class="selected-spirits-container">
@@ -158,10 +146,9 @@
                         </div>
                     </div>
                 </div>
-                <div id="selectedSpirits" class="selected-spirits"></div>
+                <div class="selected-spirits"></div>
             </div>
         </div>
-
     </div>
 
     <div class="modal-overlay" id="resultModal">
@@ -221,27 +208,7 @@
         <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Xtg9TanJcnXcaIaY" data-ad-width="320"
             data-ad-height="50"></ins>
     </div>
-    <div class="help-container">
-        <button class="help-btn" id="helpBtn" aria-label="도움말">
-            <span class="help-icon">?</span>
-        </button>
-        <div class="help-tooltip" id="helpTooltip">
-            <div class="help-content">
-                <div class="help-header">
-                    <h3>리본 표시 및 검색 방법 안내</h3>
-                    <button class="close-help" id="closeHelp">&times;</button>
-                </div>
-                <ul class="help-list">
-                    <li> 환수 등록 정보가 0~25 레벨 전부 있는 경우 왼쪽에 표시</li>
-                    <li>환수 장착 정보가 0~25 레벨 전부 있는 경우 오른쪽에 표시</li>
-                    <li>환수 장착 정보에 25레벨이 존재하는 경우 오른쪽 상단에 표시</li>
 
-                    <li> 환수 20개 이하 선택시 탐색 방식으로 검색</li>
-                    <li> 환수 20개 초과 선택시 사용시 스마트 필터링 방법으로 검색</li>
-                </ul>
-            </div>
-        </div>
-    </div>
     <footer class="site-footer">
         <div class="footer-desktop">
             <div class="footer-links">
@@ -253,41 +220,16 @@
             </div>
         </div>
         <div class="footer-copyright">
-            <p>&copy; 2025 바연화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
+            <p>&copy; 2025 바연 화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
         </div>
     </footer>
-    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-    <script src="assets/js/common.js"></script>
-    <script src="assets/js/firebaseHandler.js"></script>
+
     <script src="assets/js/firebaseConfig.js"></script>
-    <script src="assets/js/dataManager.js"></script>
-    <script src="assets/js/uiRenderer.js"></script>
-    <script src="assets/js/modalHandler.js"></script>
-    <script src="assets/js/imageHandler-compat.js"></script>
-
-    <script src="assets/js/bondCalculator.js"></script>
-    <script src="assets/js/bondCalculatorInit.js"></script>
-
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script>
-
-        firebase.initializeApp(firebaseCountConfig);
-
-        const pageUrl = window.location.pathname;
-        const sanitizedPath = pageUrl.replace(/[.#$[\]]/g, '_');
-        const visitsRef = firebase.database().ref('pageviews/' + sanitizedPath);
-
-        visitsRef.transaction(function (currentCount) {
-            return (currentCount || 0) + 1;
-        });
-
-        visitsRef.on('value', function (snapshot) {
-            // console.log('현재 페이지 방문수: ' + snapshot.val());
-
-        });
-    </script>
+    <script src="assets/js/constants.js"></script>
+    <script src="assets/js/data-service.js"></script>
+    <script src="assets/js/calculator.js"></script>
+    <script src="assets/js/ui-controller.js"></script>
+    <script src="assets/js/app.js"></script>
 </body>
 
 </html>
