@@ -6,6 +6,7 @@ window.UIRenderer =
     let selectionMode = false;
     let selectionCallback = null;
     let isAdjusting = false;
+    let currentStatFilter = "";
 
     function initUIEvents() {
       const subTabs = document.querySelectorAll(".sub-tabs .tab");
@@ -65,6 +66,7 @@ window.UIRenderer =
       }
 
       initHelpTooltip();
+      initStatFilter();
 
       window.addEventListener("resize", function () {
         if (!isAdjusting) {
@@ -76,6 +78,99 @@ window.UIRenderer =
       setTimeout(adjustIndicatorSize, 200);
     }
     initUIEvents.resizeTimer = null;
+
+    function initStatFilter() {
+      const viewToggleContainer = document.querySelector(
+        ".view-toggle-container"
+      );
+      if (!viewToggleContainer) {
+        console.error("View toggle container not found");
+        return;
+      }
+
+      const existingFilter = document.querySelector(".stat-filter-container");
+      if (existingFilter) {
+        existingFilter.remove();
+      }
+
+      const filterContainer = document.createElement("div");
+      filterContainer.className = "stat-filter-container";
+
+      const statFilter = document.createElement("select");
+      statFilter.id = "statFilter";
+      statFilter.className = "stat-filter";
+
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "";
+      defaultOption.textContent = "능력치 필터";
+      statFilter.appendChild(defaultOption);
+
+      const clearBtn = document.createElement("button");
+      clearBtn.id = "clearFilter";
+      clearBtn.className = "clear-filter-btn";
+      clearBtn.textContent = "초기화";
+      clearBtn.style.display = "none";
+
+      filterContainer.appendChild(statFilter);
+      filterContainer.appendChild(clearBtn);
+      viewToggleContainer.appendChild(filterContainer);
+
+      populateStatOptions(statFilter);
+
+      statFilter.addEventListener("change", function () {
+        const selectedStat = this.value;
+        currentStatFilter = selectedStat;
+
+        clearBtn.style.display = selectedStat ? "block" : "none";
+
+        showCategory(currentCategory, {
+          selectMode: selectionMode,
+          onSelect: selectionCallback,
+          statFilter: selectedStat,
+        });
+      });
+
+      clearBtn.addEventListener("click", function () {
+        statFilter.value = "";
+        currentStatFilter = "";
+        this.style.display = "none";
+
+        showCategory(currentCategory, {
+          selectMode: selectionMode,
+          onSelect: selectionCallback,
+        });
+      });
+    }
+
+    function populateStatOptions(selectElement) {
+      const statsMapping = window.CommonData.STATS_MAPPING;
+      const statsOrder = window.CommonData.STATS_ORDER || [];
+
+      if (!statsMapping || typeof statsMapping !== "object") {
+        console.error("STATS_MAPPING is not available or not an object");
+        return;
+      }
+
+      const statNames = new Set();
+
+      if (Array.isArray(statsOrder)) {
+        statsOrder.forEach((statKey) => {
+          if (statsMapping[statKey]) {
+            statNames.add(statKey);
+          }
+        });
+      }
+      Object.keys(statsMapping).forEach((statKey) => {
+        statNames.add(statKey);
+      });
+
+      statNames.forEach((statKey) => {
+        const option = document.createElement("option");
+        option.value = statKey;
+        option.textContent = statsMapping[statKey] || statKey;
+        selectElement.appendChild(option);
+      });
+    }
 
     function initHelpTooltip() {
       const helpBtn = document.getElementById("helpBtn");
@@ -137,6 +232,10 @@ window.UIRenderer =
         displayAllPets(category, container);
       }
 
+      if (options.statFilter || currentStatFilter) {
+        filterItemsByStat(options.statFilter || currentStatFilter);
+      }
+
       if (
         prevCategory !== category &&
         window.BondCalculatorApp &&
@@ -149,6 +248,75 @@ window.UIRenderer =
       }
 
       setTimeout(adjustIndicatorSize, 50);
+    }
+
+    function filterItemsByStat(statKey) {
+      if (!statKey) return;
+
+      const category = currentCategory;
+      const allItems = window.DataManager.getData(category);
+
+      const imgWrappers = document.querySelectorAll(".img-wrapper");
+
+      imgWrappers.forEach((wrapper) => {
+        const img = wrapper.querySelector("img");
+        if (!img) return;
+
+        const itemName = img.alt;
+        const item = allItems.find((i) => i && i.name === itemName);
+
+        if (!item) {
+          wrapper.style.display = "none";
+          return;
+        }
+
+        let hasStatEffect = false;
+
+        if (item.stats && Array.isArray(item.stats)) {
+          for (const stat of item.stats) {
+            if (
+              stat &&
+              stat.registrationStat &&
+              stat.registrationStat[statKey]
+            ) {
+              hasStatEffect = true;
+              break;
+            }
+            if (stat && stat.bindStat && stat.bindStat[statKey]) {
+              hasStatEffect = true;
+              break;
+            }
+          }
+        }
+
+        wrapper.style.display = hasStatEffect ? "" : "none";
+      });
+
+      if (groupByInfluence) {
+        const influenceGroups = document.querySelectorAll(".influence-group");
+        influenceGroups.forEach((group) => {
+          const visibleItems = group.querySelectorAll(
+            '.img-wrapper[style="display: ;"], .img-wrapper:not([style*="display"])'
+          );
+          if (visibleItems.length === 0) {
+            group.style.display = "none";
+          } else {
+            group.style.display = "";
+          }
+        });
+
+        const rows = document.querySelectorAll(".influence-row");
+        rows.forEach((row) => {
+          const visibleGroups = row.querySelectorAll(
+            '.influence-group[style="display: ;"], .influence-group:not([style*="display"])'
+          );
+          if (visibleGroups.length === 0) {
+            row.style.display = "none";
+          } else {
+            row.style.display = "";
+          }
+        });
+      }
     }
 
     function adjustIndicatorSize() {

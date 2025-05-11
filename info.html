@@ -69,6 +69,12 @@
             <span class="slider round"></span>
         </label>
         <span class="toggle-label">세력별 보기</span>
+        <div class="stat-filter-container">
+            <select id="statFilter" class="stat-filter">
+                <option value="">능력치 필터</option>
+            </select>
+            <button id="clearFilter" class="clear-filter-btn" style="display: none;">초기화</button>
+        </div>
     </div>
     <div class="image-container" id="imageContainer">
     </div>
@@ -155,7 +161,7 @@
                 });
 
                 if (!anyVisible && adRetries < maxRetries) {
-                    console.log(`광고가 로드되지 않았습니다. 재시도 ${adRetries + 1}/${maxRetries}`);
+                    // console.log(`광고가 로드되지 않았습니다. 재시도 ${adRetries + 1}/${maxRetries}`);
                     reloadKakaoAdScript();
                     adRetries++;
                     setTimeout(checkAdsVisibility, 2000);

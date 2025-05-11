@@ -786,15 +786,137 @@ input:checked+.toggle-slider:before {
 }
 
 .img-box.registration-completed img {
-    border-left: 3px solid #00b8d4;
+    border-left: 4px solid #cdb4db;
 
 }
 
 .img-box.bond-completed img {
-    border-right: 3px solid #7e57c2;
+    border-right: 4px solid #b5ead7;
 }
 
 .img-box.fully-completed img {
     border: 2px solid gold;
     animation: glow 2s infinite;
+}
+
+
+
+.view-toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    margin-bottom: 15px;
+    gap: 15px;
+    flex-wrap: nowrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.toggle-label {
+    white-space: nowrap;
+}
+
+.stat-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.stat-filter {
+    padding: 6px 12px;
+    border: 1px solid #c2dcf3;
+    border-radius: 18px;
+    background-color: #f1f8fe;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #1a2a3a;
+    min-width: 0;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-overflow: ellipsis;
+}
+
+.stat-filter:hover {
+    border-color: #3498db;
+    background-color: #e3f2fd;
+}
+
+.stat-filter:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.25);
+}
+
+.clear-filter-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.clear-filter-btn:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+@media screen and (max-width: 768px) {
+    .view-toggle-container {
+        padding: 0 10px;
+        gap: 8px;
+    }
+
+    .toggle-switch {
+        width: 45px;
+        height: 24px;
+    }
+
+    .toggle-switch .slider:before {
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+    }
+
+    input:checked+.slider:before {
+        transform: translateX(21px);
+    }
+
+    .toggle-label {
+        font-size: 13px;
+    }
+
+    .stat-filter {
+        padding: 5px 10px;
+        font-size: 13px;
+    }
+
+    .clear-filter-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .view-toggle-container {
+        gap: 5px;
+    }
+
+    .toggle-label {
+        font-size: 12px;
+    }
+
+    .stat-filter {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
 }
