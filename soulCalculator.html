@@ -184,23 +184,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script>
+    <script src="assets/js/firebaseVisitCounter.js"></script>
 
-        firebase.initializeApp(firebaseCountConfig);
-
-        const pageUrl = window.location.pathname;
-        const sanitizedPath = pageUrl.replace(/[.#$[\]]/g, '_');
-        const visitsRef = firebase.database().ref('pageviews/' + sanitizedPath);
-
-        visitsRef.transaction(function (currentCount) {
-            return (currentCount || 0) + 1;
-        });
-
-        visitsRef.on('value', function (snapshot) {
-            // console.log('현재 페이지 방문수: ' + snapshot.val());
-
-        });
-    </script>
 </body>
 
 </html>
