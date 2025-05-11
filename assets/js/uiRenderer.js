@@ -186,7 +186,7 @@ window.UIRenderer =
         const imgWidth = img.offsetWidth;
         const indicatorSize = Math.max(
           10,
-          Math.min(Math.round(imgWidth * 0.22), 26)
+          Math.min(Math.round(imgWidth * 0.28), 30)
         );
         const fontSize = Math.max(6, Math.round(indicatorSize * 0.65));
 
@@ -199,7 +199,7 @@ window.UIRenderer =
         }
 
         const margin = Math.max(3, Math.min(Math.round(imgWidth * 0.02), 6));
-        indicator.style.right = margin + "px";
+        indicator.style.right = margin + 2 + "px";
         indicator.style.bottom = margin + "px";
 
         indicator.style.opacity = "1";
@@ -371,21 +371,6 @@ window.UIRenderer =
 
       const { hasFullRegistration, hasFullBind } =
         window.DataManager.checkSpiritStats(item);
-      if (hasFullRegistration) {
-        const ribbonLeft = document.createElement("div");
-        ribbonLeft.className = "ribbon-left";
-        ribbonLeft.innerHTML = "<span>R</span>";
-        ribbonLeft.title = "등록 효과 전체 보유";
-        imgBox.appendChild(ribbonLeft);
-      }
-
-      if (hasFullBind) {
-        const ribbonRight = document.createElement("div");
-        ribbonRight.className = "ribbon-right";
-        ribbonRight.innerHTML = "<span>B</span>";
-        ribbonRight.title = "결속 효과 전체 보유";
-        imgBox.appendChild(ribbonRight);
-      }
 
       const img = document.createElement("img");
       img.src = item.image;
@@ -398,12 +383,18 @@ window.UIRenderer =
 
       imgBox.appendChild(img);
 
+      if (hasFullRegistration) {
+        imgBox.classList.add("registration-completed");
+      }
+      if (hasFullBind) {
+        imgBox.classList.add("bond-completed");
+      }
+
       if (window.DataManager.hasLevel25BindStats(item)) {
         const level25Indicator = document.createElement("div");
         level25Indicator.className = "level25-indicator";
         level25Indicator.innerHTML = "<span>25</span>";
         level25Indicator.title = "25레벨 결속 효과 보유";
-        level25Indicator.style.opacity = "0";
         imgBox.appendChild(level25Indicator);
       }
 

@@ -761,12 +761,13 @@ input:checked+.toggle-slider:before {
 
 .level25-indicator {
     position: absolute;
-    right: 5px;
-    bottom: 5px;
-    width: 30px;
-    height: 30px;
-    background-color: #ece37d;
-    color: #5D4037;
+    right: 10px;
+    top: 5px;
+    width: 35px;
+    height: 35px;
+
+    background: #000000;
+    color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -775,7 +776,6 @@ input:checked+.toggle-slider:before {
     font-weight: bold;
     z-index: 5;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-    border: 1px solid #996600;
     opacity: 0;
     transition: opacity 0.2s ease-in;
 }
@@ -783,4 +783,18 @@ input:checked+.toggle-slider:before {
 .level25-indicator span {
     line-height: 1;
     display: block;
+}
+
+.img-box.registration-completed img {
+    border-left: 3px solid #00b8d4;
+
+}
+
+.img-box.bond-completed img {
+    border-right: 3px solid #7e57c2;
+}
+
+.img-box.fully-completed img {
+    border: 2px solid gold;
+    animation: glow 2s infinite;
 }
