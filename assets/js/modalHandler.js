@@ -5,6 +5,20 @@ const ModalHandler = (function () {
   let currentName = "";
   let currentInfluence = "";
 
+  function calculateStat(statObj) {
+    if (!statObj || typeof statObj !== "object") return 0;
+
+    const resistance = parseFloat(statObj.damageResistance) || 0;
+
+    const penetration = parseFloat(statObj.damageResistancePenetration) || 0;
+
+    const pvpDamage = parseFloat(statObj.pvpDamagePercent) || 0;
+
+    const pvpDefense = parseFloat(statObj.pvpDefensePercent) || 0;
+
+    return resistance + penetration + pvpDamage * 10 + pvpDefense * 10;
+  }
+
   function showInfo(category, imagePath, influence) {
     showInfoInModal(category, imagePath, influence);
   }
@@ -93,8 +107,9 @@ const ModalHandler = (function () {
       title.appendChild(influenceText);
     }
 
-    const levelControls = createLevelControls();
     titleArea.appendChild(title);
+
+    const levelControls = createLevelControls();
     titleArea.appendChild(levelControls);
     modalHeader.appendChild(imgPreview);
     modalHeader.appendChild(titleArea);
@@ -105,6 +120,19 @@ const ModalHandler = (function () {
   function createLevelControls() {
     const levelControls = document.createElement("div");
     levelControls.classList.add("level-controls");
+
+    const minButton = document.createElement("button");
+    minButton.innerText = "최소";
+    minButton.classList.add("min-button");
+    minButton.setAttribute("aria-label", "최소 레벨 설정");
+    minButton.addEventListener("click", () => {
+      currentLevel = 0;
+      const levelInput = document.querySelector(".level-input");
+      if (levelInput) levelInput.value = currentLevel;
+      const statForLevel =
+        currentStats.find((s) => s && s.level === currentLevel) || null;
+      updateStatsInModal(statForLevel);
+    });
 
     const levelMinusButton = document.createElement("button");
     levelMinusButton.innerText = "-";
@@ -138,7 +166,7 @@ const ModalHandler = (function () {
     levelPlusButton.addEventListener("click", () => changeLevel(1));
 
     const maxButton = document.createElement("button");
-    maxButton.innerText = "MAX";
+    maxButton.innerText = "최대";
     maxButton.classList.add("max-button");
     maxButton.setAttribute("aria-label", "최대 레벨 설정");
     maxButton.addEventListener("click", () => {
@@ -149,6 +177,7 @@ const ModalHandler = (function () {
       updateStatsInModal(statForLevel);
     });
 
+    levelControls.appendChild(minButton);
     levelControls.appendChild(levelMinusButton);
     levelControls.appendChild(levelInput);
     levelControls.appendChild(levelPlusButton);
@@ -163,20 +192,46 @@ const ModalHandler = (function () {
 
     const leftColumn = document.createElement("div");
     leftColumn.className = "stats-column";
+
+    const registrationHeaderContainer = document.createElement("div");
+    registrationHeaderContainer.className = "stats-header-container";
+
     const registrationHeader = document.createElement("b");
-    registrationHeader.innerText = "📌 등록 효과:";
+    registrationHeader.innerText = "📌 등록 효과";
+    registrationHeaderContainer.appendChild(registrationHeader);
+
+    const regSumContainer = document.createElement("div");
+    regSumContainer.className = "sum-container registration-sum";
+    regSumContainer.innerHTML =
+      '<span class="sum-label">합:</span> <span class="reg-sum-value">0</span>';
+    registrationHeaderContainer.appendChild(regSumContainer);
+
+    leftColumn.appendChild(registrationHeaderContainer);
+
     const registrationList = document.createElement("ul");
     registrationList.id = "registrationList";
-    leftColumn.appendChild(registrationHeader);
     leftColumn.appendChild(registrationList);
 
     const rightColumn = document.createElement("div");
     rightColumn.className = "stats-column";
+
+    const bindHeaderContainer = document.createElement("div");
+    bindHeaderContainer.className = "stats-header-container";
+
     const bindHeader = document.createElement("b");
-    bindHeader.innerText = "🧷 결속 효과:";
+    bindHeader.innerText = "🧷 장착 효과";
+    bindHeaderContainer.appendChild(bindHeader);
+
+    const bindSumContainer = document.createElement("div");
+    bindSumContainer.className = "sum-container bind-sum";
+    bindSumContainer.innerHTML =
+      '<span class="sum-label">합:</span> <span class="bind-sum-value">0</span>';
+    bindHeaderContainer.appendChild(bindSumContainer);
+
+    rightColumn.appendChild(bindHeaderContainer);
+
     const bindList = document.createElement("ul");
     bindList.id = "bindList";
-    rightColumn.appendChild(bindHeader);
     rightColumn.appendChild(bindList);
 
     statsContainer.appendChild(leftColumn);
@@ -199,6 +254,23 @@ const ModalHandler = (function () {
     const registrationList = document.getElementById("registrationList");
     const bindList = document.getElementById("bindList");
     if (!registrationList || !bindList) return;
+
+    const regSumValue = document.querySelector(".reg-sum-value");
+    const bindSumValue = document.querySelector(".bind-sum-value");
+
+    if (regSumValue && stat?.registrationStat) {
+      const regSum = calculateStat(stat.registrationStat);
+      regSumValue.textContent = regSum;
+    } else if (regSumValue) {
+      regSumValue.textContent = "0";
+    }
+
+    if (bindSumValue && stat?.bindStat) {
+      const bindSum = calculateStat(stat.bindStat);
+      bindSumValue.textContent = bindSum;
+    } else if (bindSumValue) {
+      bindSumValue.textContent = "0";
+    }
 
     registrationList.innerHTML = "";
     bindList.innerHTML = "";
@@ -238,13 +310,13 @@ const ModalHandler = (function () {
       displayStatsInOrder(bindList, stat.bindStat);
     } else {
       if (currentLevel !== 25 && hasBindEffectAt25) {
-        bindList.innerHTML = `<li>현재 레벨(${currentLevel})에는 결속 효과가 없습니다.</li>`;
+        bindList.innerHTML = `<li>현재 레벨(${currentLevel})에는 장착 효과가 없습니다.</li>`;
         const notice = document.createElement("div");
         notice.className = "level25-notice";
-        notice.textContent = "※ 결속 효과는 25레벨 달성 시 적용됩니다.";
+        notice.textContent = "※ 장착 효과는 25레벨 달성 시 적용됩니다.";
         bindColumn?.appendChild(notice);
       } else {
-        bindList.innerHTML = `<li>레벨 ${currentLevel}: 결속 효과 정보 없음</li>`;
+        bindList.innerHTML = `<li>레벨 ${currentLevel}: 장착 효과 정보 없음</li>`;
       }
     }
   }

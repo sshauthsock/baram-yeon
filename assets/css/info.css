@@ -382,3 +382,104 @@
         font-size: 11px;
     }
 }
+
+.min-button {
+    border-radius: 17px !important;
+    width: auto !important;
+    height: 34px !important;
+    padding: 0 14px !important;
+    margin-right: 10px !important;
+    font-size: 14px !important;
+    font-weight: bold;
+    background-color: #74db34 !important;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 7px rgba(52, 152, 219, 0.3) !important;
+    line-height: 34px;
+}
+
+.min-button:hover {
+    background-color: #2980b9 !important;
+    box-shadow: 0 5px 10px rgba(52, 152, 219, 0.4) !important;
+    transform: translateY(-2px) scale(1.05);
+}
+
+.min-button:active {
+    transform: translateY(0px) scale(1);
+    box-shadow: 0 1px 3px rgba(52, 152, 219, 0.3) !important;
+}
+
+.stats-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.sum-container {
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 13px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.sum-label {
+    color: #555;
+    margin-right: 4px;
+    font-weight: 500;
+}
+
+.reg-sum-value,
+.bind-sum-value {
+    font-weight: 700;
+    color: #e74c3c;
+    min-width: 30px;
+    text-align: right;
+}
+
+.registration-sum .sum-label {
+    color: #16a085;
+}
+
+.bind-sum .sum-label {
+    color: #9b59b6;
+}
+
+@media screen and (max-width: 768px) {
+    .sum-container {
+        padding: 2px 6px;
+        font-size: 12px;
+    }
+
+    .stats-header-container {
+        margin-bottom: 6px;
+    }
+
+    .min-button {
+        height: 30px !important;
+        font-size: 12px !important;
+        padding: 0 10px !important;
+        margin-right: 6px !important;
+        line-height: 30px;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .sum-container {
+        padding: 2px 5px;
+        font-size: 11px;
+        border-radius: 10px;
+    }
+
+    .min-button {
+        height: 30px !important;
+        font-size: 12px !important;
+        padding: 0 8px !important;
+        margin-right: 4px !important;
+        line-height: 28px;
+    }
+}
