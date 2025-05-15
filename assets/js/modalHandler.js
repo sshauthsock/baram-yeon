@@ -4,24 +4,40 @@ const ModalHandler = (function () {
   let currentLevel = 0;
   let currentName = "";
   let currentInfluence = "";
+  let adScriptLoaded = false;
 
   function calculateStat(statObj) {
     if (!statObj || typeof statObj !== "object") return 0;
-
     const resistance = parseFloat(statObj.damageResistance) || 0;
-
     const penetration = parseFloat(statObj.damageResistancePenetration) || 0;
-
     const pvpDamage = parseFloat(statObj.pvpDamagePercent) || 0;
-
     const pvpDefense = parseFloat(statObj.pvpDefensePercent) || 0;
-
     return resistance + penetration + pvpDamage * 10 + pvpDefense * 10;
   }
 
   function showInfo(category, imagePath, influence) {
     showInfoInModal(category, imagePath, influence);
   }
+
+  function loadAdScript() {
+    if (
+      !adScriptLoaded &&
+      !document.querySelector(
+        'script[src="//t1.daumcdn.net/kas/static/ba.min.js"]'
+      )
+    ) {
+      const adScript = document.createElement("script");
+      adScript.type = "text/javascript";
+      adScript.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+      adScript.async = true;
+      adScript.onload = function () {
+        adScriptLoaded = true;
+      };
+      document.body.appendChild(adScript);
+    }
+  }
+
+  loadAdScript();
 
   function showInfoInModal(category, imagePath, influence) {
     modalElement = createModal();
@@ -61,9 +77,11 @@ const ModalHandler = (function () {
     currentInfluence = influence || matched.influence || "";
 
     const modalHeader = createModalHeader(imagePath);
+    const adContainer = createAdContainer();
     const statsContainer = createStatsContainer();
 
     modal.appendChild(modalHeader);
+    modal.appendChild(adContainer);
     modal.appendChild(statsContainer);
 
     const initialStat =
@@ -72,6 +90,43 @@ const ModalHandler = (function () {
 
     modalOverlay.style.display = "flex";
     document.body.style.overflow = "hidden";
+  }
+
+  function createAdContainer() {
+    const adContainer = document.createElement("div");
+    adContainer.className = "ad-container";
+
+    const adRow = document.createElement("div");
+    adRow.className = "ad-row desktop-ad";
+
+    const desktopAdContainer = document.createElement("div");
+    desktopAdContainer.className = "ad-container-left";
+
+    const desktopAd = document.createElement("ins");
+    desktopAd.className = "kakao_ad_area";
+    desktopAd.setAttribute("data-ad-unit", "DAN-dtjbatu14Xhl18NY");
+    desktopAd.setAttribute("data-ad-width", "728");
+    desktopAd.setAttribute("data-ad-height", "90");
+
+    desktopAdContainer.appendChild(desktopAd);
+    adRow.appendChild(desktopAdContainer);
+    adContainer.appendChild(adRow);
+
+    const mobileAdContainer = document.createElement("div");
+    mobileAdContainer.className = "mobile-ad";
+
+    const mobileAd = document.createElement("ins");
+    mobileAd.className = "kakao_ad_area";
+    mobileAd.setAttribute("data-ad-unit", "DAN-Gn6ntfFuQg1qkaa4");
+    mobileAd.setAttribute("data-ad-width", "320");
+    mobileAd.setAttribute("data-ad-height", "50");
+
+    mobileAdContainer.appendChild(mobileAd);
+    adContainer.appendChild(mobileAdContainer);
+
+    loadAdScript();
+
+    return adContainer;
   }
 
   function createModalHeader(imagePath) {

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>바연화연 - 환수 랭킹</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="바람의나라: 연 환수 랭킹, 최적 환수 조합과 능력치별 환수 순위">
+
+    <link rel="icon" type="image/png" href="assets/img/BHY.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/BHY.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="assets/css/global.css" rel="stylesheet">
+    <link href="assets/css/info.css" rel="stylesheet">
+    <link href="assets/css/bondCalculator.css" rel="stylesheet">
+    <link href="assets/css/components/ads.css" rel="stylesheet">
+    <link href="assets/css/components/footer.css" rel="stylesheet">
+    <link href="assets/css/components/header.css" rel="stylesheet">
+    <link href="assets/css/rankingManager.css" rel="stylesheet">
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="info.html">
+                <img src="assets/img/BHY.png" alt="바연화연 로고" class="logo">
+            </a>
+        </div>
+        <nav class="tabs">
+            <div class="tab" onclick="location.assign('info.html')">환수정보</div>
+            <div class="tab" onclick="location.assign('bondCalculator.html')">환수 결속</div>
+            <div class="tab active" onclick="location.assign('rankingManager.html')">환수 랭킹</div>
+            <div class="tab" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
+            <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
+        </nav>
+    </header>
+
+    <div class="sub-tabs" id="subTabs">
+        <div class="tab active" data-category="수호">수호</div>
+        <div class="tab" data-category="탑승">탑승</div>
+        <div class="tab" data-category="변신">변신</div>
+    </div>
+
+    <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-XTAnZwWzQOT46c36" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+
+        <div class="ad-container-right">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-l6ShIzRdMfSOcB8v" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+    </div>
+
+    <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-UDsuae5QVIAxX2fS" data-ad-width="320"
+            data-ad-height="50"></ins>
+    </div>
+
+    <div class="filters-container">
+        <div class="filter-section">
+            <div class="filter-label">랭킹 종류:</div>
+            <div class="filter-buttons ranking-type-selector">
+                <button class="filter-btn active" data-type="bond">결속 랭킹</button>
+                <button class="filter-btn" data-type="stat">능력치 랭킹</button>
+            </div>
+        </div>
+
+        <div class="filter-section filter-section-placeholder" id="gradeFilterPlaceholder">
+            <div class="filter-section" id="gradeFilterContainer">
+                <div class="filter-label">환수 필터:</div>
+                <div class="filter-buttons grade-filter-group">
+                    <button class="filter-btn active" data-grade="all">전체 환수</button>
+                    <button class="filter-btn" data-grade="legendary">전설 환수만</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ranking-container">
+        <div class="ranking-header">
+            <h1 class="ranking-title">환수 <span id="rankingCategoryTitle">수호</span> <span id="rankingTypeTitle">결속</span>
+                랭킹</h1>
+            <div class="last-updated">마지막 업데이트: <span id="lastUpdated">로딩 중...</span></div>
+
+            <div id="statSelectorContainer" class="stat-selector-container" style="display: none;">
+                <label for="statSelector">능력치 선택:</label>
+                <select id="statSelector">
+                    <option value="damageResistancePenetration">피해저항관통</option>
+                    <option value="damageResistance">피해저항</option>
+                    <option value="pvpDamagePercent">대인피해%</option>
+                    <option value="pvpDefensePercent">대인방어%</option>
+                    <option value="healthIncreasePercent">체력증가%</option>
+                    <option value="magicIncreasePercent">마력증가%</option>
+                    <option value="bossMonsterAdditionalDamage">보스몬스터추가피해</option>
+                    <option value="bossMonsterPenetration">보스몬스터관통</option>
+                    <option value="statusEffectAccuracy">상태이상적중</option>
+                    <option value="statusEffectResistance">상태이상저항</option>
+                    <option value="criticalPowerPercent">치명위력%</option>
+                    <option value="movementSpeed">이동속도</option>
+                    <option value="pvpDamage">대인피해</option>
+                    <option value="pvpDefense">대인방어</option>
+                    <option value="experienceGainIncrease">경험치획득증가</option>
+                    <option value="lootAcquisitionIncrease">전리품획득증가</option>
+                    <option value="normalMonsterAdditionalDamage">일반몬스터추가피해</option>
+                    <option value="normalMonsterPenetration">일반몬스터관통</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="rankingNotice" class="ranking-notice">
+            <p>랭킹 데이터를 불러오는 중입니다...</p>
+        </div>
+
+        <div id="bondRankingsContainer" class="rankings-list">
+        </div>
+
+        <div id="statRankingsContainer" class="rankings-list" style="display: none;">
+        </div>
+
+        <div class="pagination" id="pagination">
+        </div>
+    </div>
+    <div class="modal-overlay" id="rankingDetailModal">
+        <div class="modal">
+            <button class="modal-close">✕</button>
+            <h3 class="modal-title"><span id="detailModalTitle">환수 결속 랭킹 상세정보</span></h3>
+            <div id="selectedSpiritsInfo" class="selected-spirits-info">
+                <h4>조합 환수 정보</h4>
+                <div id="spiritsInfoList" class="spirits-info-list"></div>
+            </div>
+
+            <div class="results-container">
+                <div class="results-section">
+                    <h4>등급 결속 효과</h4>
+                    <div id="gradeEffects" class="effects-list"></div>
+                </div>
+                <div class="results-section">
+                    <h4>세력 결속 효과</h4>
+                    <div id="factionEffects" class="effects-list"></div>
+                </div>
+                <div class="results-section">
+                    <h4>장착 효과</h4>
+                    <div id="bindEffects" class="effects-list"></div>
+                </div>
+            </div>
+
+            <div class="weighted-score">
+                <h4>환산합산: <span id="weightedScore">0</span></h4>
+                <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-3TYDe2ScVF7pn7fU" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+
+        <div class="ad-container-right">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Sxen5zACA7yhBeet" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+    </div>
+
+    <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Xtg9TanJcnXcaIaY" data-ad-width="320"
+            data-ad-height="50"></ins>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-desktop">
+            <div class="footer-links">
+                <a href="info.html">환수정보</a>
+                <a href="bondCalculator.html">환수 결속</a>
+                <a href="rankingManager.html">환수 랭킹</a>
+                <a href="soulCalculator.html">환수혼 계산</a>
+                <a href="chak.html">착 계산</a>
+                <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2025 바연화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/firebaseConfig.js"></script>
+    <script src="assets/js/firebaseHandler.js"></script>
+    <script src="assets/js/dataManager.js"></script>
+    <script src="assets/js/bondUtils.js"></script>
+    <script src="assets/js/modalHandler.js"></script>
+    <script src="assets/js/rankingManager.js"></script>
+    <script src="assets/js/rankingViewer.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="assets/js/firebaseVisitCounter.js"></script>
+
+
+</body>
+
+</html>

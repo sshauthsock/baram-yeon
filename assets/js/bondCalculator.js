@@ -4204,11 +4204,15 @@ const BondCalculatorApp = (function () {
               bindPenResist + bindResist + bindPvpDmg + bindPvpDef;
 
             if (bindScore > 0) {
-              scoreCell.innerHTML = `${Math.round(
-                totalScore
-              )}<br><span style="color:#e67e22; font-size:0.85em;">(+${Math.round(
+              // scoreCell.innerHTML = `${Math.round(
+              //   totalScore
+              // )}<br><span style="color:#e67e22; font-size:0.85em;">(+${Math.round(
+              //   bindScore
+              // )})</span>`;
+
+              scoreCell.innerHTML = `<span style="color:#e67e22; font-size:0.85em;">${Math.round(
                 bindScore
-              )})</span>`;
+              )}</span>`;
               scoreRow.appendChild(scoreCell);
               return;
             }
@@ -4320,9 +4324,12 @@ const BondCalculatorApp = (function () {
           Array.isArray(PERCENT_STATS) && PERCENT_STATS.includes(statKey);
 
         if (bindValue > 0) {
+          // statCell.innerHTML = isPercentStat
+          //   ? `${statValue}%<br><span style="color:#e67e22; font-size:0.85em;">(+${bindValue}%)</span>`
+          //   : `${statValue}<br><span style="color:#e67e22; font-size:0.85em;">(+${bindValue})</span>`;
           statCell.innerHTML = isPercentStat
-            ? `${statValue}%<br><span style="color:#e67e22; font-size:0.85em;">(+${bindValue}%)</span>`
-            : `${statValue}<br><span style="color:#e67e22; font-size:0.85em;">(+${bindValue})</span>`;
+            ? `<span style="color:#e67e22; font-size:0.85em;">${bindValue}%</span>`
+            : `<span style="color:#e67e22; font-size:0.85em;">${bindValue}</span>`;
         } else {
           statCell.textContent = isPercentStat ? `${statValue}%` : statValue;
         }

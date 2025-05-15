@@ -65,6 +65,7 @@ const FirebaseHandler = (function () {
 
   async function getFirestoreDocument(fileName) {
     const docId = DOCUMENT_MAP[fileName + ".json"];
+    // console.log(`Fetching document ID for ${fileName}: ${docId}`);
     const cachedKey = `firestore_${fileName}`;
     const cachedTimeKey = `${cachedKey}_time`;
     const cacheExpiry = 24 * 60 * 60 * 1000;
@@ -77,6 +78,7 @@ const FirebaseHandler = (function () {
       Date.now() - parseInt(cachedTime) < cacheExpiry
     ) {
       try {
+        // console.log(`Using cached data for ${fileName}`);
         return JSON.parse(cachedData);
       } catch (e) {
         localStorage.removeItem(cachedKey);
@@ -84,38 +86,33 @@ const FirebaseHandler = (function () {
       }
     }
 
+    // console.log("Firestore is available:", db);
+    // console.log("Document ID:", docId);
+
     if (db && docId) {
       try {
+        // console.log(`Fetching ${fileName} from Firestore (docId: ${docId})`);
         const docRef = await db.collection("jsonData").doc(docId).get();
+
         if (docRef.exists) {
           const data = docRef.data();
           if (data) {
+            // console.log(`Successfully loaded ${fileName} from Firestore`);
             localStorage.setItem(cachedKey, JSON.stringify(data));
             localStorage.setItem(cachedTimeKey, Date.now().toString());
             return data;
           }
         }
+
+        console.warn(`Document ${docId} not found or empty`);
       } catch (error) {
-        console.error(`Error fetching ${fileName} from Firestore:`, error);
+        console.error(`Firestore error for ${fileName}:`, error);
       }
     }
-    // console.log(`Falling back to local fetch for ${fileName}.json`);
-    try {
-      const response = await fetch(`output/${fileName}.json`);
-      if (!response.ok) {
-        throw new Error(
-          `Local fetch failed for ${fileName}.json: ${response.statusText} (${response.status})`
-        );
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      // console.error(
-      //   `Critical error: Failed to load data for ${fileName}.json from all sources:`,
-      //   error
-      // );
-      return { data: [] };
-    }
+
+    // Firebase에서 실패하면 빈 데이터 반환
+    console.warn(`Failed to load ${fileName} from all sources`);
+    return { data: [] };
   }
 
   return {
