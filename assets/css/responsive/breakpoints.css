@@ -1,0 +1,36 @@
+/* Mobile First Approach */
+/* Small devices (landscape phones) */
+@media (min-width: 576px) {
+    /* Small device specific styles */
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 768px) {
+    /* Tablet specific styles */
+}
+
+/* Large devices (desktops) */
+@media (min-width: 992px) {
+    /* Desktop specific styles */
+}
+
+/* Extra large devices */
+@media (min-width: 1200px) {
+    /* Large desktop specific styles */
+}
+
+/* For special cases where desktop-first is needed */
+/* Medium devices and down */
+@media (max-width: 991.98px) {
+    /* Medium and smaller device styles */
+}
+
+/* Small devices and down */
+@media (max-width: 767.98px) {
+    /* Small and smaller device styles */
+}
+
+/* Extra small devices */
+@media (max-width: 575.98px) {
+    /* Mobile only styles */
+}

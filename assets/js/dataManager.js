@@ -11,40 +11,18 @@ const DataManager = (function () {
 
     for (const [category, files] of Object.entries(CATEGORY_FILE_MAP)) {
       try {
-        let registrationData = await FirebaseHandler.getFirestoreDocument(
-          files.registration
-        );
-        let bindData = await FirebaseHandler.getFirestoreDocument(files.bind);
+        const registrationData = await loadRegistrationData(files.registration);
+        const bindData = await loadBindData(files.bind);
 
-        let registrationArray = Array.isArray(registrationData)
-          ? registrationData
-          : registrationData?.data || [];
-        let bindArray = Array.isArray(bindData)
-          ? bindData
-          : bindData?.data || [];
-
-        if (!Array.isArray(registrationArray)) {
-          console.error(
-            `Invalid registration data format for ${category}: Expected array, got ${typeof registrationArray}. Using empty array.`
-          );
-          registrationArray = [];
+        if (
+          !validateData(registrationData, "registration", category) ||
+          !validateData(bindData, "bind", category)
+        ) {
           allLoaded = false;
-        }
-        if (!Array.isArray(bindArray)) {
-          console.error(
-            `Invalid bind data format for ${category}: Expected array, got ${typeof bindArray}. Using empty array.`
-          );
-          bindArray = [];
-          allLoaded = false;
+          continue;
         }
 
-        if (registrationArray.length === 0 && files.registration) {
-          console.warn(
-            `No registration data loaded for category: ${category} from file ${files.registration}.json`
-          );
-        }
-
-        const mergedData = mergeData(registrationArray, bindArray);
+        const mergedData = mergeData(registrationData, bindData);
         mobData[category] = mergedData;
       } catch (err) {
         console.error(
@@ -56,40 +34,55 @@ const DataManager = (function () {
       }
     }
 
-    if (!allLoaded) {
-      console.error("One or more categories failed to load data properly.");
-    }
-
-    if (!FACTION_ICONS) {
-      console.error("FACTION_ICONS data is missing from CommonData!");
-    }
-
     return mobData;
+  }
+
+  async function loadRegistrationData(fileName) {
+    if (!fileName) return [];
+    const data = await FirebaseHandler.getFirestoreDocument(fileName);
+    return processRegistrationData(data);
+  }
+
+  async function loadBindData(fileName) {
+    if (!fileName) return [];
+    const data = await FirebaseHandler.getFirestoreDocument(fileName);
+    return processBindData(data);
+  }
+
+  function processRegistrationData(data) {
+    return Array.isArray(data) ? data : data?.data || [];
+  }
+
+  function processBindData(data) {
+    return Array.isArray(data) ? data : data?.data || [];
+  }
+
+  function validateData(data, type, category) {
+    if (!Array.isArray(data)) {
+      console.error(
+        `Invalid ${type} data format for ${category}: Expected array, got ${typeof data}. Using empty array.`
+      );
+      return false;
+    }
+
+    if (data.length === 0) {
+      console.warn(`No ${type} data loaded for category: ${category}`);
+    }
+
+    return true;
   }
 
   function mergeData(registrationArray, bindArray) {
     return registrationArray
       .map((regItem) => {
-        if (!regItem || typeof regItem !== "object" || !regItem.name) {
-          return null;
-        }
+        if (!isValidItem(regItem)) return null;
 
         const bindItem = bindArray.find((b) => b && b.name === regItem.name);
         const regStats = Array.isArray(regItem.stats) ? regItem.stats : [];
         const bindStats =
           bindItem && Array.isArray(bindItem.stats) ? bindItem.stats : [];
 
-        const mergedStats = Array.from({ length: 26 }, (_, i) => {
-          const level = i;
-          const regLevelStat = regStats.find((s) => s && s.level === level);
-          const bindLevelStat = bindStats.find((s) => s && s.level === level);
-
-          return {
-            level: level,
-            registrationStat: regLevelStat?.registrationStat || {},
-            bindStat: bindLevelStat?.bindStat || {},
-          };
-        });
+        const mergedStats = createMergedStats(regStats, bindStats);
 
         return {
           ...regItem,
@@ -98,6 +91,24 @@ const DataManager = (function () {
         };
       })
       .filter((item) => item !== null);
+  }
+
+  function isValidItem(item) {
+    return item && typeof item === "object" && item.name;
+  }
+
+  function createMergedStats(regStats, bindStats) {
+    return Array.from({ length: 26 }, (_, i) => {
+      const level = i;
+      const regLevelStat = regStats.find((s) => s && s.level === level);
+      const bindLevelStat = bindStats.find((s) => s && s.level === level);
+
+      return {
+        level: level,
+        registrationStat: regLevelStat?.registrationStat || {},
+        bindStat: bindLevelStat?.bindStat || {},
+      };
+    });
   }
 
   function checkSpiritStats(spirit) {
@@ -118,27 +129,37 @@ const DataManager = (function () {
 
     for (let i = 0; i <= 25; i++) {
       const levelStat = stats.find((s) => s && s.level === i);
-      if (
-        !levelStat ||
-        !levelStat[effectType] ||
-        typeof levelStat[effectType] !== "object" ||
-        Object.keys(levelStat[effectType]).length === 0
-      ) {
+      if (!hasEffectAtLevel(levelStat, effectType)) {
         return false;
       }
     }
     return true;
   }
 
+  function hasEffectAtLevel(levelStat, effectType) {
+    return (
+      levelStat &&
+      levelStat[effectType] &&
+      typeof levelStat[effectType] === "object" &&
+      Object.keys(levelStat[effectType]).length > 0
+    );
+  }
+
   function hasLevel25BindStats(item) {
     if (!item || !Array.isArray(item.stats)) return false;
-    const level25Stat = item.stats.find((s) => s && s.level === 25);
-    return (
-      level25Stat &&
-      level25Stat.bindStat &&
-      typeof level25Stat.bindStat === "object" &&
-      Object.keys(level25Stat.bindStat).length > 0
-    );
+
+    const level25Stat = getLevelStat(item, 25);
+    return hasEffectAtLevel(level25Stat, "bindStat");
+  }
+
+  function getLevelStat(item, level) {
+    if (!item || !Array.isArray(item.stats)) return null;
+    return item.stats.find((s) => s && s.level === level);
+  }
+
+  function getItemByName(category, name) {
+    const items = mobData[category] || [];
+    return items.find((item) => item && item.name === name) || null;
   }
 
   function getData(category) {
@@ -156,6 +177,8 @@ const DataManager = (function () {
     checkSpiritStats,
     checkAllLevelsHaveEffect,
     hasLevel25BindStats,
+    getLevelStat,
+    getItemByName,
     FACTION_ICONS,
     STATS_MAPPING,
     STATS_ORDER,

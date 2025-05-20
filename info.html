@@ -16,13 +16,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
         rel="stylesheet">
-    <link href="assets/css/global.css" rel="stylesheet">
-    <link href="assets/css/imageCategory.css" rel="stylesheet">
-    <link href="assets/css/info.css" rel="stylesheet">
-    <link href="assets/css/components/ads.css" rel="stylesheet">
-    <link href="assets/css/components/footer.css" rel="stylesheet">
-    <link href="assets/css/components/header.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="/assets/css/main.css">
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 </head>
@@ -64,6 +59,7 @@
         <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-UDsuae5QVIAxX2fS" data-ad-width="320"
             data-ad-height="50"></ins>
     </div>
+
     <div class="view-toggle-container">
         <label class="toggle-switch">
             <input type="checkbox" id="influenceToggle">
@@ -77,7 +73,11 @@
             <button id="clearFilter" class="clear-filter-btn" style="display: none;">초기화</button>
         </div>
     </div>
+
     <div class="image-container" id="imageContainer">
+        <div class="loading-indicator">
+            <span>데이터를 불러오는 중입니다...</span>
+        </div>
     </div>
 
     <div class="ad-row">
@@ -96,6 +96,7 @@
             data-ad-height="50"></ins>
     </div>
 
+
     <div class="report-container">
         <button class="report-btn" onclick="openReportSheet()">
             <span class="report-icon">📋</span>
@@ -103,6 +104,7 @@
             <span class="report-spark">✨</span>
         </button>
     </div>
+
     <div class="help-container">
         <button class="help-btn" id="helpBtn" aria-label="도움말">
             <span class="help-icon">?</span>
@@ -121,6 +123,7 @@
             </div>
         </div>
     </div>
+
     <footer class="site-footer">
         <div class="footer-desktop">
             <div class="footer-links">
@@ -137,14 +140,21 @@
     </footer>
 
     <script src="assets/js/common.js"></script>
-    <script src="assets/js/firebaseHandler.js"></script>
     <script src="assets/js/firebaseConfig.js"></script>
-    <script src="assets/js/dataManager.js"></script>
+    <script src="assets/js/AdInitializer.js"></script>
+    <script src="assets/js/utils.js"></script>
     <script src="assets/js/uiRenderer.js"></script>
+    <script src="assets/js/configManager.js"></script>
+    <script src="assets/js/eventBus.js"></script>
+
+    <script src="assets/js/firebaseHandler.js"></script>
+    <script src="assets/js/dataManager.js"></script>
     <script src="assets/js/modalHandler.js"></script>
     <script src="assets/js/imageHandler-compat.js"></script>
+
     <script src="assets/js/info.js"></script>
     <script src="assets/js/infoInit.js"></script>
+    <script src="assets/js/loadingIndicator.js"></script>
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
     <script>
         (function () {
@@ -162,7 +172,6 @@
                 });
 
                 if (!anyVisible && adRetries < maxRetries) {
-                    // console.log(`광고가 로드되지 않았습니다. 재시도 ${adRetries + 1}/${maxRetries}`);
                     reloadKakaoAdScript();
                     adRetries++;
                     setTimeout(checkAdsVisibility, 2000);
@@ -197,9 +206,6 @@
                 reloadKakaoAdScript();
             });
         })();
-    </script>
-    <script>
-        console.log("Deployment timestamp: " + new Date().toISOString());
     </script>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>

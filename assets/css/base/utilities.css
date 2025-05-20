@@ -1,0 +1,566 @@
+/* 여백 유틸리티 */
+.m-0 {
+    margin: 0 !important;
+}
+
+.m-xs {
+    margin: var(--space-xs) !important;
+}
+
+.m-sm {
+    margin: var(--space-sm) !important;
+}
+
+.m-md {
+    margin: var(--space-md) !important;
+}
+
+.m-lg {
+    margin: var(--space-lg) !important;
+}
+
+.m-xl {
+    margin: var(--space-xl) !important;
+}
+
+.mt-0 {
+    margin-top: 0 !important;
+}
+
+.mt-xs {
+    margin-top: var(--space-xs) !important;
+}
+
+.mt-sm {
+    margin-top: var(--space-sm) !important;
+}
+
+.mt-md {
+    margin-top: var(--space-md) !important;
+}
+
+.mt-lg {
+    margin-top: var(--space-lg) !important;
+}
+
+.mt-xl {
+    margin-top: var(--space-xl) !important;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.mb-xs {
+    margin-bottom: var(--space-xs) !important;
+}
+
+.mb-sm {
+    margin-bottom: var(--space-sm) !important;
+}
+
+.mb-md {
+    margin-bottom: var(--space-md) !important;
+}
+
+.mb-lg {
+    margin-bottom: var(--space-lg) !important;
+}
+
+.mb-xl {
+    margin-bottom: var(--space-xl) !important;
+}
+
+.ml-0 {
+    margin-left: 0 !important;
+}
+
+.ml-xs {
+    margin-left: var(--space-xs) !important;
+}
+
+.ml-sm {
+    margin-left: var(--space-sm) !important;
+}
+
+.ml-md {
+    margin-left: var(--space-md) !important;
+}
+
+.ml-lg {
+    margin-left: var(--space-lg) !important;
+}
+
+.ml-xl {
+    margin-left: var(--space-xl) !important;
+}
+
+.mr-0 {
+    margin-right: 0 !important;
+}
+
+.mr-xs {
+    margin-right: var(--space-xs) !important;
+}
+
+.mr-sm {
+    margin-right: var(--space-sm) !important;
+}
+
+.mr-md {
+    margin-right: var(--space-md) !important;
+}
+
+.mr-lg {
+    margin-right: var(--space-lg) !important;
+}
+
+.mr-xl {
+    margin-right: var(--space-xl) !important;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.p-xs {
+    padding: var(--space-xs) !important;
+}
+
+.p-sm {
+    padding: var(--space-sm) !important;
+}
+
+.p-md {
+    padding: var(--space-md) !important;
+}
+
+.p-lg {
+    padding: var(--space-lg) !important;
+}
+
+.p-xl {
+    padding: var(--space-xl) !important;
+}
+
+.pt-0 {
+    padding-top: 0 !important;
+}
+
+.pt-xs {
+    padding-top: var(--space-xs) !important;
+}
+
+.pt-sm {
+    padding-top: var(--space-sm) !important;
+}
+
+.pt-md {
+    padding-top: var(--space-md) !important;
+}
+
+.pt-lg {
+    padding-top: var(--space-lg) !important;
+}
+
+.pt-xl {
+    padding-top: var(--space-xl) !important;
+}
+
+.pb-0 {
+    padding-bottom: 0 !important;
+}
+
+.pb-xs {
+    padding-bottom: var(--space-xs) !important;
+}
+
+.pb-sm {
+    padding-bottom: var(--space-sm) !important;
+}
+
+.pb-md {
+    padding-bottom: var(--space-md) !important;
+}
+
+.pb-lg {
+    padding-bottom: var(--space-lg) !important;
+}
+
+.pb-xl {
+    padding-bottom: var(--space-xl) !important;
+}
+
+.pl-0 {
+    padding-left: 0 !important;
+}
+
+.pl-xs {
+    padding-left: var(--space-xs) !important;
+}
+
+.pl-sm {
+    padding-left: var(--space-sm) !important;
+}
+
+.pl-md {
+    padding-left: var(--space-md) !important;
+}
+
+.pl-lg {
+    padding-left: var(--space-lg) !important;
+}
+
+.pl-xl {
+    padding-left: var(--space-xl) !important;
+}
+
+.pr-0 {
+    padding-right: 0 !important;
+}
+
+.pr-xs {
+    padding-right: var(--space-xs) !important;
+}
+
+.pr-sm {
+    padding-right: var(--space-sm) !important;
+}
+
+.pr-md {
+    padding-right: var(--space-md) !important;
+}
+
+.pr-lg {
+    padding-right: var(--space-lg) !important;
+}
+
+.pr-xl {
+    padding-right: var(--space-xl) !important;
+}
+
+/* 디스플레이 유틸리티 */
+.d-flex {
+    display: flex !important;
+}
+
+.d-block {
+    display: block !important;
+}
+
+.d-inline-block {
+    display: inline-block !important;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.d-grid {
+    display: grid !important;
+}
+
+/* 플렉스 유틸리티 */
+.flex-row {
+    flex-direction: row !important;
+}
+
+.flex-column {
+    flex-direction: column !important;
+}
+
+.flex-wrap {
+    flex-wrap: wrap !important;
+}
+
+.flex-nowrap {
+    flex-wrap: nowrap !important;
+}
+
+.justify-content-start {
+    justify-content: flex-start !important;
+}
+
+.justify-content-end {
+    justify-content: flex-end !important;
+}
+
+.justify-content-center {
+    justify-content: center !important;
+}
+
+.justify-content-between {
+    justify-content: space-between !important;
+}
+
+.justify-content-around {
+    justify-content: space-around !important;
+}
+
+.align-items-start {
+    align-items: flex-start !important;
+}
+
+.align-items-end {
+    align-items: flex-end !important;
+}
+
+.align-items-center {
+    align-items: center !important;
+}
+
+.align-items-baseline {
+    align-items: baseline !important;
+}
+
+.align-items-stretch {
+    align-items: stretch !important;
+}
+
+.flex-grow-0 {
+    flex-grow: 0 !important;
+}
+
+.flex-grow-1 {
+    flex-grow: 1 !important;
+}
+
+.flex-shrink-0 {
+    flex-shrink: 0 !important;
+}
+
+.flex-shrink-1 {
+    flex-shrink: 1 !important;
+}
+
+/* 위치 유틸리티 */
+.position-static {
+    position: static !important;
+}
+
+.position-relative {
+    position: relative !important;
+}
+
+.position-absolute {
+    position: absolute !important;
+}
+
+.position-fixed {
+    position: fixed !important;
+}
+
+.position-sticky {
+    position: sticky !important;
+}
+
+.top-0 {
+    top: 0 !important;
+}
+
+.right-0 {
+    right: 0 !important;
+}
+
+.bottom-0 {
+    bottom: 0 !important;
+}
+
+.left-0 {
+    left: 0 !important;
+}
+
+/* 테두리 유틸리티 */
+.border {
+    border: 1px solid var(--border-light) !important;
+}
+
+.border-top {
+    border-top: 1px solid var(--border-light) !important;
+}
+
+.border-right {
+    border-right: 1px solid var(--border-light) !important;
+}
+
+.border-bottom {
+    border-bottom: 1px solid var(--border-light) !important;
+}
+
+.border-left {
+    border-left: 1px solid var(--border-light) !important;
+}
+
+.border-0 {
+    border: 0 !important;
+}
+
+/* 색상 유틸리티 */
+.bg-primary {
+    background-color: var(--color-primary) !important;
+}
+
+.bg-secondary {
+    background-color: var(--color-secondary) !important;
+}
+
+.bg-success {
+    background-color: var(--color-success) !important;
+}
+
+.bg-danger {
+    background-color: var(--color-danger) !important;
+}
+
+.bg-warning {
+    background-color: var(--color-warning) !important;
+}
+
+.bg-white {
+    background-color: var(--bg-white) !important;
+}
+
+.bg-light {
+    background-color: var(--bg-light) !important;
+}
+
+/* 테두리 반경 유틸리티 */
+.rounded {
+    border-radius: var(--radius-md) !important;
+}
+
+.rounded-sm {
+    border-radius: var(--radius-sm) !important;
+}
+
+.rounded-lg {
+    border-radius: var(--radius-lg) !important;
+}
+
+.rounded-xl {
+    border-radius: var(--radius-xl) !important;
+}
+
+.rounded-circle {
+    border-radius: var(--radius-round) !important;
+}
+
+.rounded-0 {
+    border-radius: 0 !important;
+}
+
+/* 그림자 유틸리티 */
+.shadow-none {
+    box-shadow: none !important;
+}
+
+.shadow-sm {
+    box-shadow: var(--shadow-sm) !important;
+}
+
+.shadow-md {
+    box-shadow: var(--shadow-md) !important;
+}
+
+.shadow-lg {
+    box-shadow: var(--shadow-lg) !important;
+}
+
+/* 크기 유틸리티 */
+.w-25 {
+    width: 25% !important;
+}
+
+.w-50 {
+    width: 50% !important;
+}
+
+.w-75 {
+    width: 75% !important;
+}
+
+.w-100 {
+    width: 100% !important;
+}
+
+.h-25 {
+    height: 25% !important;
+}
+
+.h-50 {
+    height: 50% !important;
+}
+
+.h-75 {
+    height: 75% !important;
+}
+
+.h-100 {
+    height: 100% !important;
+}
+
+/* 오버플로우 유틸리티 */
+.overflow-auto {
+    overflow: auto !important;
+}
+
+.overflow-hidden {
+    overflow: hidden !important;
+}
+
+.overflow-scroll {
+    overflow: scroll !important;
+}
+
+.overflow-x-auto {
+    overflow-x: auto !important;
+}
+
+.overflow-y-auto {
+    overflow-y: auto !important;
+}
+
+.overflow-x-hidden {
+    overflow-x: hidden !important;
+}
+
+.overflow-y-hidden {
+    overflow-y: hidden !important;
+}
+
+/* 반응형 유틸리티 */
+@media (max-width: 768px) {
+    .d-md-none {
+        display: none !important;
+    }
+
+    .d-md-block {
+        display: block !important;
+    }
+
+    .d-md-flex {
+        display: flex !important;
+    }
+
+    .w-md-100 {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .d-sm-none {
+        display: none !important;
+    }
+
+    .d-sm-block {
+        display: block !important;
+    }
+
+    .d-sm-flex {
+        display: flex !important;
+    }
+
+    .w-sm-100 {
+        width: 100% !important;
+    }
+}

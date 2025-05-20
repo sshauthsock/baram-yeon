@@ -1,14 +1,59 @@
 document.addEventListener("DOMContentLoaded", function () {
+  function initializeApp() {
+    if (
+      typeof FirebaseHandler !== "undefined" &&
+      typeof FirebaseHandler.initFirebase === "function"
+    ) {
+      FirebaseHandler.initFirebase();
+      FirebaseHandler.testFirebaseConnectivity().then(() => {
+        if (
+          typeof BondCalculatorApp !== "undefined" &&
+          BondCalculatorApp.initialize
+        ) {
+          BondCalculatorApp.initialize();
+        } else {
+          console.error(
+            "BondCalculatorApp is not available after Firebase initialization"
+          );
+        }
+      });
+    } else {
+      if (
+        typeof BondCalculatorApp !== "undefined" &&
+        BondCalculatorApp.initialize
+      ) {
+        BondCalculatorApp.initialize();
+      } else {
+        console.error("BondCalculatorApp is not available");
+      }
+    }
+  }
+
+  // BondCalculatorApp이 로드될 때까지 기다리기
   if (
-    typeof FirebaseHandler !== "undefined" &&
-    typeof FirebaseHandler.initFirebase === "function"
+    typeof BondCalculatorApp !== "undefined" &&
+    BondCalculatorApp.initialize
   ) {
-    FirebaseHandler.initFirebase();
-    FirebaseHandler.testFirebaseConnectivity().then(() => {
-      BondCalculatorApp.initialize();
-    });
+    initializeApp();
   } else {
-    BondCalculatorApp.initialize();
+    // 일정 시간마다 BondCalculatorApp이 로드됐는지 확인
+    let attempts = 0;
+    const maxAttempts = 50; // 최대 5초(50 * 100ms) 동안 시도
+
+    const checkInterval = setInterval(function () {
+      attempts++;
+      if (
+        typeof BondCalculatorApp !== "undefined" &&
+        BondCalculatorApp.initialize
+      ) {
+        clearInterval(checkInterval);
+        console.log("BondCalculatorApp loaded successfully");
+        initializeApp();
+      } else if (attempts >= maxAttempts) {
+        clearInterval(checkInterval);
+        console.error("BondCalculatorApp failed to load within timeout period");
+      }
+    }, 100);
   }
 
   var isMobile = window.innerWidth <= 768;
@@ -69,5 +114,10 @@ function openReportSheet() {
 
 function setMaxBatchLevel(inputId) {
   document.getElementById(inputId).value = 25;
-  BondCalculatorApp.applyBatchLevel(inputId);
+  if (
+    typeof BondCalculatorApp !== "undefined" &&
+    BondCalculatorApp.applyBatchLevel
+  ) {
+    BondCalculatorApp.applyBatchLevel(inputId);
+  }
 }

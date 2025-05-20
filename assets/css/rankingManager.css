@@ -1,6 +1,4 @@
-/* rankingManager.css - 랭킹 목록 표시 관련 스타일만 포함 */
-
-.ranking-container {
+/* .ranking-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -249,7 +247,6 @@
     font-size: 12px;
 }
 
-/* 상세 보기 버튼 */
 .view-details-btn {
     background-color: #3498db;
     color: white;
@@ -452,7 +449,6 @@
     color: white;
 }
 
-/* 개선된 필터 컨테이너 스타일 */
 .filters-container {
     display: flex;
     flex-wrap: wrap;
@@ -472,10 +468,8 @@
     gap: 10px;
 }
 
-/* 자리 유지를 위한 플레이스홀더 */
 .filter-section-placeholder {
     min-height: 40px;
-    /* 필터의 높이만큼 공간 확보 */
 }
 
 .filter-label {
@@ -521,7 +515,6 @@
     background-color: #e67e22;
 }
 
-/* 미디어 쿼리 - 모바일 화면 대응 */
 @media (max-width: 768px) {
     .filters-container {
         flex-direction: column;
@@ -543,5 +536,758 @@
         font-size: 12px;
         padding: 8px 10px;
         text-align: center;
+    }
+} */
+
+.ranking-container {
+    margin: 20px auto;
+    max-width: 1200px;
+    padding: 0 15px;
+}
+
+.ranking-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.ranking-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.last-updated {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.stat-selector-container {
+    margin-top: 10px;
+}
+
+.ranking-notice {
+    margin-bottom: 15px;
+}
+
+.filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.filter-label {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.filter-btn {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.filter-btn.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #2980b9;
+    font-weight: bold;
+}
+
+.rankings-list {
+    margin-bottom: 20px;
+}
+
+.info-message {
+    padding: 15px;
+    background-color: #e3f2fd;
+    border-radius: 5px;
+    border-left: 5px solid #2196f3;
+}
+
+.info-message h3 {
+    margin-top: 0;
+    color: #1565c0;
+}
+
+.filter-notice {
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #fff3e0;
+    border-left: 4px solid #e67e22;
+    border-radius: 3px;
+}
+
+.filter-notice p {
+    margin: 0;
+    color: #333;
+    font-size: 14px;
+}
+
+.no-data-message {
+    padding: 20px;
+    text-align: center;
+    background: #f8f8f8;
+    border-radius: 5px;
+    margin: 15px 0;
+}
+
+.ranking-table-container {
+    overflow-x: auto;
+}
+
+.ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e0e0e0;
+}
+
+.ranking-table th,
+.ranking-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.ranking-table thead tr {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.ranking-table th {
+    border-bottom: 2px solid #ddd;
+}
+
+.ranking-row {
+    background-color: #ffffff;
+}
+
+.ranking-row.top-1 {
+    background-color: #fffde7;
+}
+
+.ranking-row.top-2 {
+    background-color: #f5f5f5;
+}
+
+.ranking-row.top-3 {
+    background-color: #fff3e0;
+}
+
+.rank-badge {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #3498db;
+    color: white;
+    line-height: 36px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.rank-badge.rank-1 {
+    background-color: #ffd700;
+    color: #333;
+}
+
+.rank-badge.rank-2 {
+    background-color: #c0c0c0;
+    color: #333;
+}
+
+.rank-badge.rank-3 {
+    background-color: #cd7f32;
+}
+
+.spirits-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+
+.spirit-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+    border: 1px solid #eee;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+.spirit-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    transition: all 0.2s ease;
+}
+
+.spirit-image.top-rank {
+    border-color: #ffd700;
+}
+
+.faction-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+}
+
+.grade-tag {
+    display: inline-block;
+    margin: 2px;
+    padding: 3px 6px;
+    background: #f1f1f1;
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+.grade-tag-legend {
+    background-color: #fff8e1;
+    border: 1px solid #ffd54f;
+}
+
+.grade-tag-immortal {
+    background-color: #e8f5e9;
+    border: 1px solid #81c784;
+}
+
+.faction-tag {
+    display: inline-block;
+    margin: 2px;
+    padding: 3px 6px;
+    background: #f1f1f1;
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+.faction-icon {
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+    margin-right: 3px;
+}
+
+.total-score {
+    font-size: 16px;
+    font-weight: bold;
+    color: #e67e22;
+}
+
+.score-breakdown {
+    font-size: 11px;
+    color: #777;
+}
+
+.detail-button {
+    padding: 5px 10px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.detail-button:hover {
+    background: #2980b9;
+}
+
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+    background: #f8f8f8;
+    border-radius: 5px;
+}
+
+.pagination-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.pagination-button {
+    padding: 5px 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.pagination-button.active {
+    background: #3498db;
+    color: #fff;
+    font-weight: bold;
+}
+
+.pagination-button.disabled {
+    background: #f8f9fa;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+.items-per-page {
+    display: flex;
+    align-items: center;
+}
+
+.items-per-page label {
+    margin-right: 8px;
+    color: #333;
+    font-size: 14px;
+}
+
+.items-per-page select {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.stat-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 6px;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.stat-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    z-index: 1;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+}
+
+.stat-card.top-1 {
+    background: linear-gradient(to bottom, #fff9c4, #fff);
+    border: 1px solid #ffd700;
+}
+
+.stat-card.top-2 {
+    background: linear-gradient(to bottom, #f5f5f5, #fff);
+    border: 1px solid #c0c0c0;
+}
+
+.stat-card.top-3 {
+    background: linear-gradient(to bottom, #ffe0b2, #fff);
+    border: 1px solid #cd7f32;
+}
+
+.rank-number {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #3498db;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card.top-1 .rank-number {
+    background-color: #ffd700;
+    color: #333;
+}
+
+.stat-card.top-2 .rank-number {
+    background-color: #c0c0c0;
+    color: #333;
+}
+
+.stat-card.top-3 .rank-number {
+    background-color: #cd7f32;
+    color: white;
+}
+
+.spirit-image-container {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.spirit-name {
+    font-weight: bold;
+    text-align: center;
+    margin: 4px 0;
+    font-size: 10px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    line-height: 1.2;
+}
+
+.spirit-stat {
+    font-size: 9px;
+    text-align: center;
+    color: #e67e22;
+    font-weight: bold;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.modal {
+    background-color: #fff;
+    border-radius: 8px;
+    max-width: 90%;
+    width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 20px;
+    margin: 20px auto;
+}
+
+.modal-close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+}
+
+.modal-title {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+    font-size: 1.4em;
+}
+
+.calculating-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+}
+
+.calculating-box {
+    text-align: center;
+    padding: 30px;
+    background: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+}
+
+.calculating-spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.optimal-header {
+    margin-bottom: 15px;
+}
+
+.optimal-score {
+    text-align: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.selected-spirits-info {
+    margin-bottom: 20px;
+}
+
+.spirits-info-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.spirit-info-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.spirit-info-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.spirit-info-details {
+    flex-grow: 1;
+}
+
+.spirit-info-name {
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+
+.spirit-info-level {
+    font-size: 11px;
+    color: #666;
+}
+
+.results-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.results-section {
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.results-section h4 {
+    margin-top: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.section-score {
+    color: #e67e22;
+    font-weight: bold;
+}
+
+.effects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.effect-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.effect-item-percent {
+    background-color: #ebf5fb;
+}
+
+.set-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #3498db;
+    color: white;
+    font-size: 11px;
+    cursor: pointer;
+    margin-left: 5px;
+    font-weight: bold;
+    vertical-align: middle;
+    position: relative;
+}
+
+.info-icon:hover::after,
+.info-icon.show-tooltip::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 10px;
+    background-color: #2c3e50;
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.spirit-details-container {
+    margin-top: 20px;
+}
+
+.spirits-stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 0.85rem;
+}
+
+.spirits-stats-table th,
+.spirits-stats-table td {
+    padding: 6px 4px;
+    text-align: center;
+    border: 1px solid #dee2e6;
+}
+
+.spirits-stats-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.spirits-stats-table .spirit-thumbnail {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    margin-bottom: 2px;
+    cursor: pointer;
+}
+
+.bind-score {
+    font-size: 0.85em;
+    color: #e67e22;
+    margin-left: 5px;
+}
+
+@media (max-width: 768px) {
+    .filters-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .filter-section {
+        width: 100%;
+        margin-right: 0;
+        justify-content: space-between;
+    }
+
+    .filter-label {
+        margin-right: 5px;
+    }
+
+    .filter-buttons {
+        flex-grow: 1;
+        justify-content: space-around;
+    }
+
+    .pagination {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .items-per-page {
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .spirits-info-list {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+
+    .results-container {
+        grid-template-columns: 1fr;
+    }
+
+    .spirits-stats-table {
+        font-size: 0.75rem;
+    }
+
+    .spirits-stats-table th,
+    .spirits-stats-table td {
+        padding: 4px 2px;
+    }
+
+    .spirits-stats-table .spirit-thumbnail {
+        width: 25px;
+        height: 25px;
     }
 }

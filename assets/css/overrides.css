@@ -1,0 +1,119 @@
+/* 글로벌 오버라이드 - 원래 디자인을 정확히 유지하기 위함 */
+h3 {
+    font-size: 16px !important;
+    margin-top: 0 !important;
+    margin-bottom: 15px !important;
+    padding-bottom: 10px !important;
+    border-bottom: 2px solid #3498db !important;
+    color: #1a2a3a !important;
+}
+
+/* chak.css 오버라이드 */
+.layout-container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    max-width: 1200px !important;
+    margin: 15px auto !important;
+    gap: 20px !important;
+    padding: 0 20px !important;
+    width: 100% !important;
+}
+
+.equipment-section {
+    flex: 0.45 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.level-info-section {
+    flex: 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+}
+
+.panel h3 {
+    color: #1a2a3a !important;
+    margin-top: 0 !important;
+    margin-bottom: 15px !important;
+    padding-bottom: 10px !important;
+    border-bottom: 2px solid #3498db !important;
+    font-size: 18px !important;
+}
+
+/* soul-calculator.css 오버라이드 */
+.container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    max-width: 1200px !important;
+    margin: 20px auto !important;
+    gap: 15px !important;
+    padding: 0 15px !important;
+    width: 100% !important;
+}
+
+.left {
+    flex: 1 !important;
+    min-width: 280px !important;
+    background-color: #fff !important;
+    border-radius: 10px !important;
+    padding: 12px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+    overflow-y: auto !important;
+}
+
+.right {
+    flex: 1 !important;
+    min-width: 300px !important;
+    background-color: #fff !important;
+    border-radius: 10px !important;
+    padding: 15px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+}
+
+.left h3,
+.right h2 {
+    color: #1a2a3a !important;
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+    padding-bottom: 8px !important;
+    border-bottom: 2px solid #3498db !important;
+    font-size: 16px !important;
+}
+
+/* 모바일 반응형 오버라이드 */
+@media (max-width: 1024px) {
+    h3 {
+        font-size: 14px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .panel h3 {
+        font-size: 14px !important;
+    }
+
+    .layout-container {
+        padding: 0 10px !important;
+    }
+
+    .panel {
+        padding: 10px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .panel h3 {
+        font-size: 12px !important;
+        margin-bottom: 8px !important;
+        padding-bottom: 6px !important;
+    }
+
+    .layout-container {
+        padding: 0 6px !important;
+    }
+
+    .panel {
+        padding: 8px !important;
+    }
+}

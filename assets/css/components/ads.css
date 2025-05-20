@@ -1,3 +1,4 @@
+/* 광고 컨테이너 스타일 */
 .ad-container {
     width: 100%;
     max-width: 1400px;
@@ -33,6 +34,31 @@
     text-align: center;
 }
 
+.modal .ad-container-left,
+.modal .ad-container-right,
+.modal .mobile-ad {
+    width: 100%;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.modal .kakao_ad_area {
+    min-height: 50px;
+}
+
+.kakao_ad_area {
+    min-height: 30px;
+}
+
+.modal .kakao_ad_area:empty::before {
+    content: '광고 로드 중...';
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    padding: 10px 0;
+}
+
 @media screen and (min-width: 769px) {
     .mobile-ad {
         display: none !important;
@@ -62,29 +88,4 @@
     .ad-container {
         padding: 0 8px;
     }
-}
-
-.modal .ad-container-left,
-.modal .ad-container-right,
-.modal .mobile-ad {
-    width: 100%;
-    margin: 10px auto;
-    text-align: center;
-}
-
-.modal .kakao_ad_area {
-    min-height: 50px;
-}
-
-.kakao_ad_area {
-    min-height: 30px;
-}
-
-.modal .kakao_ad_area:empty::before {
-    content: '광고 로드 중...';
-    display: block;
-    text-align: center;
-    font-size: 12px;
-    color: #999;
-    padding: 10px 0;
 }

@@ -1,0 +1,370 @@
+/* 카드 기본 스타일 */
+.card {
+    background-color: var(--bg-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.card-header {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.card-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.card-body {
+    margin-bottom: 15px;
+}
+
+.card-footer {
+    padding-top: 10px;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* BondCalculator 스피릿 카드 */
+.selected-spirit-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    padding: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+    height: 115px;
+}
+
+.selected-spirit-card:hover {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.selected-spirit-header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.selected-spirit-header img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 2px;
+    border: 1px solid #eaeaea;
+}
+
+.spirit-info {
+    width: 100%;
+    text-align: center;
+    margin-top: 3px;
+}
+
+.spirit-name {
+    font-size: 11px;
+    font-weight: 600;
+    margin: 2px 0;
+    line-height: 1.2;
+    max-height: 26px;
+    overflow: hidden;
+    padding: 0 2px;
+    color: #333;
+}
+
+.remove-spirit {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 16px;
+    height: 16px;
+    font-size: 9px;
+    line-height: 1;
+    background-color: var(--color-danger);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.spirit-level-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 4px;
+    height: 24px;
+}
+
+.spirit-level-control button {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 11px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.spirit-level-control .max-btn {
+    font-size: 9px !important;
+    background-color: #e74c3c !important;
+    border-radius: 3px !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-left: 2px;
+}
+
+.spirit-level-control .min-btn {
+    font-size: 9px !important;
+    background-color: #4CAF50 !important;
+    border-radius: 3px !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-left: 2px;
+}
+
+
+.spirit-level-control input {
+    width: 28px;
+    height: 18px;
+    text-align: center;
+    margin: 0 2px;
+    font-weight: bold;
+    font-size: 11px;
+    padding: 0;
+    border-radius: 3px;
+    border: 1px solid var(--border-primary);
+    background-color: #f1f8fe;
+}
+
+.fixed-level {
+    background-color: var(--color-secondary-light);
+    border: 1px solid var(--color-secondary);
+    color: var(--color-secondary-dark);
+    font-weight: bold;
+    text-align: center;
+    width: 28px;
+    height: 18px;
+    border-radius: 3px;
+    cursor: not-allowed;
+    font-size: 11px;
+}
+
+.fixed-level-badge {
+    font-size: 8px;
+    background-color: var(--color-secondary);
+    color: white;
+    padding: 1px 3px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-top: 2px;
+}
+
+/* 등급 표시 */
+.spirit-grade-legend {
+    border-top: 2px solid var(--color-danger);
+}
+
+.spirit-grade-immortal {
+    border-top: 2px solid var(--color-warning);
+}
+
+.spirit-category-badge {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    font-size: 8px;
+    padding: 1px 3px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border-radius: 2px;
+}
+
+/* Chak 스탯 카드 */
+.stat-card {
+    background-color: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    padding: 12px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    border-color: var(--border-primary);
+}
+
+.stat-card h3 {
+    color: var(--color-info);
+    margin: 0 0 2px 0;
+    padding: 0;
+    border: none;
+    font-size: 14px;
+}
+
+.stat-card p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.stat-item {
+    padding: 10px 12px;
+    background-color: var(--bg-white);
+    border-radius: 6px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-left: 3px solid var(--color-primary);
+}
+
+/* 리본 스타일 */
+.ribbon-left,
+.ribbon-right {
+    position: absolute;
+    top: 1px;
+    z-index: 3;
+    overflow: hidden;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+
+.ribbon-left {
+    left: 3px;
+}
+
+.ribbon-right {
+    right: 3px;
+}
+
+.ribbon-left::before,
+.ribbon-left::after,
+.ribbon-right::before,
+.ribbon-right::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    display: block;
+}
+
+.ribbon-left span,
+.ribbon-right span {
+    position: absolute;
+    display: block;
+    width: 30px;
+    padding: 0;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-size: 5px;
+    line-height: 1.5;
+    font-weight: bold;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.ribbon-left span {
+    background-color: #a8c7e5;
+    transform: rotate(-45deg);
+    left: -10px;
+    top: 3px;
+}
+
+.ribbon-right span {
+    background-color: #e5bcbc;
+    transform: rotate(45deg);
+    right: -10px;
+    top: 3px;
+}
+
+.selected-spirit-card .ribbon-left,
+.selected-spirit-card .ribbon-right {
+    top: -5px;
+}
+
+.selected-spirit-card .ribbon-left {
+    left: -5px;
+}
+
+.selected-spirit-card .ribbon-right {
+    right: -5px;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .card {
+        padding: 12px;
+    }
+
+    .selected-spirit-card {
+        padding: 5px;
+        height: 105px;
+    }
+
+    .selected-spirit-header img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .selected-spirit-header .spirit-info .spirit-name {
+        font-size: 10px;
+    }
+
+    .spirit-level-control {
+        margin: 5px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        padding: 10px;
+    }
+
+    .selected-spirit-card {
+        height: 100px;
+    }
+
+    .spirit-name {
+        max-height: 24px;
+        font-size: 10px;
+    }
+
+    .spirit-level-control input {
+        width: 25px;
+    }
+}

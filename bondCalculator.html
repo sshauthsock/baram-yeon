@@ -16,13 +16,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
         rel="stylesheet">
-    <link href="assets/css/global.css" rel="stylesheet">
-    <link href="assets/css/imageCategory.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/main.css">
 
-    <link href="assets/css/bondCalculator.css" rel="stylesheet">
-    <link href="assets/css/components/ads.css" rel="stylesheet">
-    <link href="assets/css/components/footer.css" rel="stylesheet">
-    <link href="assets/css/components/header.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 </head>
@@ -76,19 +71,6 @@
     <div class="bond-container">
         <div class="main-content">
             <div class="left-panel">
-                <!-- <div class="search-container mobile-search-container">
-                    <div class="search-controls">
-                        <div class="search-input-wrapper">
-                            <input type="text" id="mobile-search-input" placeholder="능력치 검색 또는 선택..."
-                                autocomplete="off">
-                            <button id="mobile-search-button"
-                                onclick="BondCalculatorApp.searchSpirits(true)">검색</button>
-                        </div>
-                        <div id="mobile-stat-options" class="stat-options-dropdown"></div>
-                        <div id="mobile-selected-stats" class="selected-stats"></div>
-                    </div>
-                </div> -->
-
                 <div class="mobile-clear-button-container">
                     <button class="clear-selection-btn mobile-clear-btn"
                         onclick="BondCalculatorApp.clearAllSelections()">선택해제</button>
@@ -99,16 +81,6 @@
             </div>
             <div class="right-panel">
                 <div class="selected-spirits-container">
-                    <!-- <div class="search-container desktop-search-container">
-                        <div class="search-controls">
-                            <div class="search-input-wrapper">
-                                <input type="text" id="search-input" placeholder="능력치 검색 또는 선택..." autocomplete="off">
-                                <button id="search-button" onclick="BondCalculatorApp.searchSpirits()">검색</button>
-                            </div>
-                            <div id="stat-options" class="stat-options-dropdown"></div>
-                            <div id="selected-stats" class="selected-stats"></div>
-                        </div>
-                    </div> -->
                     <div class="selected-spirits-header">
                         <div class="header-title-area">
                             <h3>선택된 환수 (<span id="selectedCountPanel">0</span>/40)</h3>
@@ -165,47 +137,6 @@
 
     </div>
 
-    <div class="modal-overlay" id="resultModal">
-        <div class="modal">
-            <button class="modal-close" onclick="BondCalculatorApp.closeResultModal()">✕</button>
-            <h3 class="modal-title">결속 효과 계산 결과</h3>
-            <div id="selectedSpiritsInfo" class="selected-spirits-info">
-                <h4>선택된 환수 정보</h4>
-                <div id="spiritsInfoList" class="spirits-info-list"></div>
-            </div>
-
-            <div class="results-container">
-                <div class="results-section">
-                    <h4>등급 결속 효과</h4>
-                    <div id="gradeEffects" class="effects-list"></div>
-                </div>
-                <div class="results-section">
-                    <h4>세력 결속 효과</h4>
-                    <div id="factionEffects" class="effects-list"></div>
-                </div>
-                <div class="results-section">
-                    <h4>총 결속 효과</h4>
-                    <div id="totalEffects" class="effects-list"></div>
-                </div>
-            </div>
-
-            <div class="weighted-score">
-                <h4>환산합산: <span id="weightedScore">0</span></h4>
-                <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small>
-            </div>
-
-            <div id="missingDataWarning" class="warning-message"></div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="optimalModal">
-        <div class="modal">
-            <button class="modal-close" onclick="BondCalculatorApp.closeOptimalModal()">✕</button>
-            <div id="optimalModalContent">
-            </div>
-        </div>
-    </div>
-
     <div class="ad-row">
         <div class="ad-container-left">
             <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-3TYDe2ScVF7pn7fU" data-ad-width="728"
@@ -258,16 +189,29 @@
         </div>
     </footer>
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+
     <script src="assets/js/common.js"></script>
-    <script src="assets/js/firebaseHandler.js"></script>
     <script src="assets/js/firebaseConfig.js"></script>
+    <script src="assets/js/adInitializer.js"></script>
+    <script src="assets/js/firebaseHandler.js"></script>
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/configManager.js"></script>
+    <script src="assets/js/eventBus.js"></script>
+
     <script src="assets/js/dataManager.js"></script>
     <script src="assets/js/uiRenderer.js"></script>
     <script src="assets/js/modalHandler.js"></script>
     <script src="assets/js/imageHandler-compat.js"></script>
 
-    <script src="assets/js/bondCalculator.js"></script>
+    <script src="assets/js/spiritUtils.js"></script>
+    <script src="assets/js/calculationUtils.js"></script>
+    <script src="assets/js/historyManager.js"></script>
+    <script src="assets/js/optimalResultModal.js"></script>
+    <script src="assets/js/searchManager.js"></script>
+    <script src="assets/js/optimalCombinationFinder.js"></script>
+    <script src="assets/js/bondCalculatorApp.js"></script>
     <script src="assets/js/bondCalculatorInit.js"></script>
+    <script src="assets/js/loadingIndicator.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>

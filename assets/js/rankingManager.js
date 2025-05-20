@@ -8,40 +8,35 @@ window.RankingManager = (function () {
   async function loadMetadata() {
     try {
       if (
-        typeof firebase !== "undefined" &&
-        firebase.apps &&
-        firebase.apps.length
+        typeof FirebaseHandler !== "undefined" &&
+        FirebaseHandler.checkFirebaseConnection
       ) {
-        try {
-          const db = firebase.firestore();
-          const doc = await db
-            .collection("mobRankingData")
-            .doc("rankings-meta")
-            .get();
+        const isConnected = await FirebaseHandler.checkFirebaseConnection();
+        if (isConnected) {
+          try {
+            const db = firebase.firestore();
+            const doc = await db
+              .collection("mobRankingData")
+              .doc("rankings-meta")
+              .get();
 
-          if (doc.exists) {
-            metadata = doc.data();
-            // console.log("Loaded ranking metadata from Firebase");
-            return metadata;
+            if (doc.exists) {
+              metadata = doc.data();
+              return metadata;
+            }
+          } catch (firebaseError) {
+            console.warn("Firebase 메타데이터 접근 실패:", firebaseError);
           }
-        } catch (firebaseError) {
-          console.warn("Firebase access failed:", firebaseError);
         }
       }
 
       const response = await fetch(`${getBaseUrl()}output/rankings-meta.json`);
-
       if (!response.ok) {
-        console.warn(
-          `Metadata file not found or server returned error: ${response.status}`
-        );
         return createDefaultMetadata();
       }
 
       const text = await response.text();
-
       if (!text || text.trim() === "") {
-        console.warn("Metadata file is empty");
         return createDefaultMetadata();
       }
 
@@ -49,11 +44,11 @@ window.RankingManager = (function () {
         metadata = JSON.parse(text);
         return metadata;
       } catch (parseError) {
-        console.error("Error parsing metadata JSON:", parseError);
+        console.error("메타데이터 파싱 오류:", parseError);
         return createDefaultMetadata();
       }
     } catch (error) {
-      console.error("Error loading ranking metadata:", error);
+      console.error("랭킹 메타데이터 로드 오류:", error);
       return createDefaultMetadata();
     }
   }
@@ -85,23 +80,14 @@ window.RankingManager = (function () {
     const fileName = `bond-rankings-${categoryMap[category]}`;
 
     try {
-      if (
-        typeof firebase !== "undefined" &&
-        firebase.apps &&
-        firebase.apps.length
-      ) {
+      if (typeof FirebaseHandler !== "undefined") {
         try {
-          const db = firebase.firestore();
-          const doc = await db.collection("mobRankingData").doc(fileName).get();
-
-          if (doc.exists) {
-            return doc.data();
+          const data = await FirebaseHandler.getFirestoreDocument(fileName);
+          if (data && (data.rankings || data.data)) {
+            return data;
           }
         } catch (firebaseError) {
-          console.warn(
-            `Firebase access failed for ${fileName}:`,
-            firebaseError
-          );
+          console.warn(`Firebase ${fileName} 데이터 접근 실패:`, firebaseError);
         }
       }
 
@@ -112,7 +98,7 @@ window.RankingManager = (function () {
 
       return await response.json();
     } catch (error) {
-      console.error(`Error loading bond rankings for ${category}:`, error);
+      console.error(`${category} 결속 랭킹 로드 오류:`, error);
       return {
         category: category,
         updatedAt: null,
@@ -131,23 +117,14 @@ window.RankingManager = (function () {
     const fileName = `stat-rankings-${categoryMap[category]}`;
 
     try {
-      if (
-        typeof firebase !== "undefined" &&
-        firebase.apps &&
-        firebase.apps.length
-      ) {
+      if (typeof FirebaseHandler !== "undefined") {
         try {
-          const db = firebase.firestore();
-          const doc = await db.collection("mobRankingData").doc(fileName).get();
-
-          if (doc.exists) {
-            return doc.data();
+          const data = await FirebaseHandler.getFirestoreDocument(fileName);
+          if (data && (data.rankings || data.data)) {
+            return data;
           }
         } catch (firebaseError) {
-          console.warn(
-            `Firebase access failed for ${fileName}:`,
-            firebaseError
-          );
+          console.warn(`Firebase ${fileName} 데이터 접근 실패:`, firebaseError);
         }
       }
 
@@ -158,7 +135,7 @@ window.RankingManager = (function () {
 
       return await response.json();
     } catch (error) {
-      console.error(`Error loading stat rankings for ${category}:`, error);
+      console.error(`${category} 능력치 랭킹 로드 오류:`, error);
       return {
         category: category,
         updatedAt: null,
@@ -169,41 +146,40 @@ window.RankingManager = (function () {
 
   async function getBondRankingsByRange(category, start, count) {
     const data = await loadBondRankings(category);
+    const rankings = data?.rankings || data?.data?.rankings || [];
 
-    if (!data || !data.rankings || !Array.isArray(data.rankings)) {
+    if (!Array.isArray(rankings)) {
       return [];
     }
 
-    const end = Math.min(start + count, data.rankings.length);
-    return data.rankings.slice(start, end);
+    const end = Math.min(start + count, rankings.length);
+    return rankings.slice(start, end);
   }
 
   async function getStatRankingsByRange(category, statKey, start, count) {
     const data = await loadStatRankings(category);
+    const rankings =
+      data?.rankings?.[statKey] || data?.data?.rankings?.[statKey] || [];
 
-    if (
-      !data ||
-      !data.rankings ||
-      !data.rankings[statKey] ||
-      !Array.isArray(data.rankings[statKey])
-    ) {
+    if (!Array.isArray(rankings)) {
       return [];
     }
 
-    const end = Math.min(start + count, data.rankings[statKey].length);
-    return data.rankings[statKey].slice(start, end);
+    const end = Math.min(start + count, rankings.length);
+    return rankings.slice(start, end);
   }
 
   async function getBondRankingsCount(category) {
     const data = await loadBondRankings(category);
-    return data && data.rankings ? data.rankings.length : 0;
+    const rankings = data?.rankings || data?.data?.rankings || [];
+    return Array.isArray(rankings) ? rankings.length : 0;
   }
 
   async function getStatRankingsCount(category, statKey) {
     const data = await loadStatRankings(category);
-    return data && data.rankings && data.rankings[statKey]
-      ? data.rankings[statKey].length
-      : 0;
+    const rankings =
+      data?.rankings?.[statKey] || data?.data?.rankings?.[statKey] || [];
+    return Array.isArray(rankings) ? rankings.length : 0;
   }
 
   async function getLastUpdateTime(category, type) {
@@ -241,5 +217,3 @@ window.RankingManager = (function () {
     getLastUpdateTime,
   };
 })();
-
-// console.log("RankingManager loaded successfully");
