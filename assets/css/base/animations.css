@@ -111,6 +111,16 @@
     }
 }
 
+@keyframes rotate-border {
+    0% {
+        --angle: 0deg;
+    }
+
+    100% {
+        --angle: 360deg;
+    }
+}
+
 .fade-in {
     animation: fadeIn 0.3s ease;
 }
@@ -137,4 +147,11 @@
 
 .spin {
     animation: spin 1s linear infinite;
+}
+
+/* 애니메이션 속성 */
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
 }

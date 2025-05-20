@@ -97,3 +97,13 @@ table {
 ::-webkit-scrollbar-thumb:hover {
     background: #a3c2d6;
 }
+
+/* 포커스 스타일 개선 */
+:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.keyboard-focus:focus {
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
+}

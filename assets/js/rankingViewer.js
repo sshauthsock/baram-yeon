@@ -15,43 +15,124 @@ const RankingViewer = (function () {
   let statSelectorContainer;
   let paginationContainer;
   let rankingNotice;
+  let initStarted = false;
+  let initComplete = false;
 
-  function initialize() {
+  async function waitForDependencies() {
+    console.log("RankingViewer: 의존성 로드 대기 시작");
+    const requiredDeps = [
+      "FirebaseHandler",
+      "DataManager",
+      "RankingManager",
+      "SpiritUtils",
+    ];
+    let attempts = 0;
+    const maxAttempts = 50; // 5초 (100ms × 50)
+
+    return new Promise((resolve) => {
+      function checkDependencies() {
+        const missingDeps = requiredDeps.filter(
+          (dep) => typeof window[dep] === "undefined"
+        );
+
+        if (missingDeps.length === 0) {
+          console.log("RankingViewer: 모든 의존성 로드 완료");
+          return resolve(true);
+        }
+
+        attempts++;
+        if (attempts >= maxAttempts) {
+          console.warn(
+            `RankingViewer: 의존성 로드 시간 초과. 누락된 의존성: ${missingDeps.join(
+              ", "
+            )}`
+          );
+          return resolve(false);
+        }
+
+        console.log(
+          `RankingViewer: 의존성 대기 중... (${attempts}/${maxAttempts}), 누락: ${missingDeps.join(
+            ", "
+          )}`
+        );
+        setTimeout(checkDependencies, 100);
+      }
+
+      checkDependencies();
+    });
+  }
+
+  async function initialize() {
+    // 이중 초기화 방지
+    if (initStarted) {
+      console.log("RankingViewer: 이미 초기화 진행 중");
+      return;
+    }
+
+    initStarted = true;
+    console.log("RankingViewer: 초기화 시작");
+
+    // DOM 요소 참조 가져오기
     bondRankingsContainer = document.getElementById("bondRankingsContainer");
     statRankingsContainer = document.getElementById("statRankingsContainer");
     statSelectorContainer = document.getElementById("statSelectorContainer");
     paginationContainer = document.getElementById("pagination");
     rankingNotice = document.getElementById("rankingNotice");
 
-    if (!bondRankingsContainer) {
-      console.error("필수 DOM 요소를 찾을 수 없습니다");
+    if (!bondRankingsContainer || !rankingNotice) {
+      console.error("RankingViewer: 필수 DOM 요소를 찾을 수 없습니다");
+      showError("페이지 요소를 찾을 수 없습니다. 페이지를 새로고침하세요.");
       return;
     }
 
+    // 의존성이 로드될 때까지 대기
+    const depsLoaded = await waitForDependencies();
+    if (!depsLoaded) {
+      showError(
+        "필요한 모듈을 로드할 수 없습니다. 페이지를 새로고침해 주세요."
+      );
+      return;
+    }
+
+    // 이벤트 리스너 설정
     setupModalEvents();
     setupEventListeners();
-    initStyles();
 
+    // Firebase 초기화
     if (
       typeof FirebaseHandler !== "undefined" &&
       FirebaseHandler.initFirebase
     ) {
-      FirebaseHandler.initFirebase();
-      FirebaseHandler.testFirebaseConnectivity().then(() => {
-        if (DataManager && typeof DataManager.loadCategoryData === "function") {
-          DataManager.loadCategoryData()
-            .then(() => {
-              loadRankingData();
-            })
-            .catch(() => loadRankingData());
-        } else {
-          loadRankingData();
-        }
-      });
+      try {
+        console.log("RankingViewer: Firebase 초기화 중");
+        FirebaseHandler.initFirebase();
+        await FirebaseHandler.testFirebaseConnectivity();
+        console.log("RankingViewer: Firebase 연결 확인됨");
+      } catch (err) {
+        console.warn("RankingViewer: Firebase 연결 테스트 실패", err);
+      }
     } else {
-      loadRankingData();
+      console.warn(
+        "RankingViewer: FirebaseHandler를 찾을 수 없거나 initFirebase 메소드가 없습니다"
+      );
     }
 
+    // 데이터 로드
+    if (typeof DataManager !== "undefined" && DataManager.loadCategoryData) {
+      try {
+        console.log("RankingViewer: 카테고리 데이터 로드 중");
+        await DataManager.loadCategoryData();
+        console.log("RankingViewer: 카테고리 데이터 로드 완료");
+      } catch (err) {
+        console.warn("RankingViewer: 카테고리 데이터 로드 실패", err);
+      }
+    } else {
+      console.warn(
+        "RankingViewer: DataManager를 찾을 수 없거나, loadCategoryData 메소드가 없습니다"
+      );
+    }
+
+    // 환수 이미지 클릭 이벤트 대리자(delegate) 설정
     document.addEventListener("click", function (e) {
       if (e.target.classList.contains("spirit-image")) {
         if (!e.target.hasAttribute("data-image")) {
@@ -59,185 +140,16 @@ const RankingViewer = (function () {
           const imgUrl = img.getAttribute("src");
           const category = currentCategory;
           const spiritName = img.getAttribute("alt") || null;
-
-          console.log("이미지 직접 클릭 감지:", imgUrl);
           showSpiritModal(imgUrl, category, "", spiritName);
         }
       }
     });
-  }
 
-  function initStyles() {
-    const styleElement = document.createElement("style");
-    styleElement.id = "ranking-viewer-styles";
-    styleElement.textContent = `
-      .calculating-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 300px;
-      }
-      .calculating-box {
-        text-align: center;
-        padding: 30px;
-        background: #f8f8f8;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        max-width: 400px;
-      }
-      .calculating-spinner {
-        border: 5px solid #f3f3f3;
-        border-top: 5px solid #3498db;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 20px;
-      }
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-      
-      .section-title {
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: #333;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 5px;
-      }
-      .section-score {
-        color: #e67e22;
-        font-weight: bold;
-      }
-      .info-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background-color: #3498db;
-        color: white;
-        font-size: 11px;
-        cursor: pointer;
-        margin-left: 5px;
-        font-weight: bold;
-        vertical-align: middle;
-        position: relative;
-      }
-      
-      .data-warning-box {
-        margin: 10px 0 20px;
-        padding: 15px;
-        background-color: #fff3cd;
-        border-left: 5px solid #ffc107;
-        border-radius: 4px;
-        font-size: 0.9em;
-      }
-      
-      .data-warning-box h4 {
-        margin-top: 0;
-        color: #856404;
-      }
-      
-      .data-warning-box p {
-        margin: 5px 0;
-      }
-      
-      .data-submission-request {
-        margin: 15px 0;
-        padding: 12px 15px;
-        background-color: #e8f4f8;
-        border: 2px solid #3498db;
-        border-radius: 5px;
-        font-style: italic;
-        font-size: 12px;
-        color: #333;
-        text-align: center;
-        font-weight: bold;
-      }
-      
-      .spirits-grid-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 6px;
-        margin-top: 12px;
-      }
-      
-      .spirit-info-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 5px;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-        border: 1px solid #eee;
-        height: 100%;
-      }
-      
-      .spirit-info-item img {
-        width: 45px;
-        height: 45px;
-        object-fit: contain;
-        margin-bottom: 3px;
-      }
-      
-      .spirit-info-details {
-        width: 100%;
-        text-align: center;
-      }
-      
-      .spirit-info-name {
-        font-weight: bold;
-        font-size: 11px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      
-      .spirit-info-level {
-        font-size: 9px;
-        color: #666;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      
-      .spirits-stats-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 15px 0;
-        font-size: 0.85rem;
-      }
-      
-      .spirits-stats-table th, .spirits-stats-table td {
-        padding: 6px 4px;
-        text-align: center;
-        border: 1px solid #dee2e6;
-      }
-      
-      .spirits-stats-table th {
-        background-color: #f8f9fa;
-        font-weight: bold;
-      }
-      
-      .spirits-stats-table .spirit-thumbnail {
-        width: 30px;
-        height: 30px;
-        object-fit: contain;
-        margin-bottom: 2px;
-      }
-      
-      .stat-highlight {
-        background-color: #fff3cd !important;
-        font-weight: bold !important;
-        box-shadow: 0 0 5px rgba(230, 126, 34, 0.5) !important;
-        border-left: 3px solid #e67e22 !important;
-        padding-left: 5px !important;
-      }
-    `;
-    document.head.appendChild(styleElement);
+    // 랭킹 데이터 로드
+    loadRankingData();
+
+    initComplete = true;
+    console.log("RankingViewer: 초기화 완료");
   }
 
   function setupModalEvents() {
@@ -385,6 +297,14 @@ const RankingViewer = (function () {
   }
 
   function loadRankingData() {
+    if (!initComplete && !initStarted) {
+      console.log(
+        "RankingViewer: 초기화 완료 전에 loadRankingData 호출됨, 초기화 시작"
+      );
+      initialize();
+      return;
+    }
+
     showLoading();
 
     const savedItemsPerPage = localStorage.getItem("rankingItemsPerPage");
@@ -394,6 +314,12 @@ const RankingViewer = (function () {
       } else {
         itemsPerPage = parseInt(savedItemsPerPage);
       }
+    }
+
+    // RankingManager 의존성 체크
+    if (typeof window.RankingManager === "undefined") {
+      showError("RankingManager 모듈을 찾을 수 없습니다");
+      return;
     }
 
     try {
@@ -422,11 +348,17 @@ const RankingViewer = (function () {
 
     function continueLoading() {
       if (currentRankingType === "bond") {
-        loadBondRankings().then(() => {
-          attachSpiritImageClickEvents();
-        });
+        loadBondRankings()
+          .then(() => {
+            attachSpiritImageClickEvents();
+          })
+          .catch((err) => {
+            showError("결속 랭킹 로드 중 오류: " + err.message);
+          });
       } else {
-        loadStatRankings();
+        loadStatRankings().catch((err) => {
+          showError("능력치 랭킹 로드 중 오류: " + err.message);
+        });
       }
     }
   }
@@ -548,6 +480,10 @@ const RankingViewer = (function () {
   async function loadStatRankings() {
     try {
       showLoading();
+
+      if (typeof window.DataManager === "undefined") {
+        throw new Error("DataManager를 찾을 수 없습니다");
+      }
 
       const allSpirits = window.DataManager.getData(currentCategory);
 
@@ -800,18 +736,6 @@ const RankingViewer = (function () {
     bondRankingsContainer.innerHTML = tableHtml;
 
     attachSpiritImageClickEvents();
-
-    const mobileStyle = document.getElementById("bond-rankings-mobile-style");
-    if (mobileStyle) mobileStyle.remove();
-
-    const newMobileStyle = document.createElement("style");
-    newMobileStyle.id = "bond-rankings-mobile-style";
-    newMobileStyle.innerHTML = `
-      @media (max-width: 768px) {
-        .ranking-table .faction-column { display: none; }
-      }
-    `;
-    document.head.appendChild(newMobileStyle);
   }
 
   function attachSpiritImageClickEvents() {
@@ -931,95 +855,6 @@ const RankingViewer = (function () {
       card.removeEventListener("click", handleStatCardClick);
       card.addEventListener("click", handleStatCardClick);
     });
-
-    const existingStyle = document.getElementById("stat-grid-style");
-    if (existingStyle) existingStyle.remove();
-
-    const gridStyle = document.createElement("style");
-    gridStyle.id = "stat-grid-style";
-    gridStyle.textContent = `
-        .stat-grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 6px;
-            margin-top: 10px;
-        }
-        
-        .stat-card {
-            padding: 8px 5px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            text-align: center;
-            position: relative;
-            background: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-            height: auto;
-            min-height: 130px;
-            cursor: pointer;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        .spirit-image-container {
-            position: relative;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 5px;
-            height: 60px;
-            overflow: hidden;
-        }
-        
-        .spirit-image {
-            max-width: 80%;
-            max-height: 55px;
-            object-fit: contain;
-        }
-        
-        .spirit-name {
-            font-size: 12px;
-            font-weight: bold;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin: 4px 0;
-        }
-        
-        .spirit-stat {
-            font-size: 11px;
-            color: #3498db;
-        }
-        
-        .rank-number {
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: #3498db;
-            color: white;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 2px 5px;
-            border-radius: 3px 0 3px 0;
-        }
-        
-        .top-1 .rank-number {
-            background-color: #f39c12;
-        }
-        
-        .top-2 .rank-number {
-            background-color: #95a5a6;
-        }
-        
-        .top-3 .rank-number {
-            background-color: #d35400;
-        }
-    `;
-    document.head.appendChild(gridStyle);
   }
 
   function handleStatCardClick(e) {
@@ -1143,6 +978,33 @@ const RankingViewer = (function () {
     }
   }
 
+  function findSpiritNameInRankings(imageUrl) {
+    if (!rankings || !imageUrl) return null;
+
+    // 결속 랭킹에서 검색
+    if (currentRankingType === "bond") {
+      for (const ranking of rankings) {
+        if (ranking.spirits) {
+          for (const spirit of ranking.spirits) {
+            if (spirit.image === imageUrl) {
+              return spirit.name;
+            }
+          }
+        }
+      }
+    }
+    // 능력치 랭킹에서 검색
+    else {
+      for (const ranking of rankings) {
+        if (ranking.image === imageUrl) {
+          return ranking.name;
+        }
+      }
+    }
+
+    return null;
+  }
+
   function showSpiritModal(imageUrl, category, influence, spiritName = null) {
     console.log("랭킹 뷰어: 환수 모달 표시 요청", {
       imageUrl,
@@ -1163,22 +1025,21 @@ const RankingViewer = (function () {
     // 로딩 표시
     const loadingOverlay = document.createElement("div");
     loadingOverlay.className = "temp-loading-overlay";
-    loadingOverlay.style = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-    `;
+    loadingOverlay.style.position = "fixed";
+    loadingOverlay.style.top = "0";
+    loadingOverlay.style.left = "0";
+    loadingOverlay.style.width = "100%";
+    loadingOverlay.style.height = "100%";
+    loadingOverlay.style.backgroundColor = "rgba(0,0,0,0.5)";
+    loadingOverlay.style.display = "flex";
+    loadingOverlay.style.alignItems = "center";
+    loadingOverlay.style.justifyContent = "center";
+    loadingOverlay.style.zIndex = "9999";
+
     loadingOverlay.innerHTML = `
       <div style="background: white; padding: 20px; border-radius: 5px;">
         <div style="text-align: center;">
-          <div class="calculating-spinner-small" style="margin: 0 auto 10px;"></div>
+          <div class="calculating-spinner-small"></div>
           환수 정보 로딩 중...
         </div>
       </div>
@@ -1199,72 +1060,48 @@ const RankingViewer = (function () {
     }
 
     // 데이터 로드 후 모달 표시
-    window.DataManager.loadCategoryData()
-      .then(() => {
-        removeLoadingOverlay();
+    if (
+      window.DataManager &&
+      typeof window.DataManager.loadCategoryData === "function"
+    ) {
+      window.DataManager.loadCategoryData()
+        .then(() => {
+          removeLoadingOverlay();
 
-        if (window.ModalHandler) {
-          try {
-            window.ModalHandler.showRankingSpiritInfo(
-              imageUrl,
-              category,
-              influence,
-              highlightStat,
-              spiritName
+          if (window.ModalHandler) {
+            try {
+              window.ModalHandler.showRankingSpiritInfo(
+                imageUrl,
+                category,
+                influence,
+                highlightStat,
+                spiritName
+              );
+            } catch (error) {
+              console.error("모달 표시 중 오류 발생:", error);
+              alert("환수 정보를 표시하는 중 오류가 발생했습니다.");
+            }
+          } else {
+            alert(
+              "환수 정보를 표시할 수 없습니다. ModalHandler를 찾을 수 없습니다."
             );
-          } catch (error) {
-            console.error("모달 표시 중 오류 발생:", error);
-            alert("환수 정보를 표시하는 중 오류가 발생했습니다.");
           }
-        } else {
-          alert(
-            "환수 정보를 표시할 수 없습니다. ModalHandler를 찾을 수 없습니다."
-          );
-        }
-      })
-      .catch((err) => {
-        removeLoadingOverlay();
-        console.error("데이터 로드 중 오류:", err);
-        alert("환수 정보를 불러오는데 실패했습니다.");
-      });
+        })
+        .catch((err) => {
+          removeLoadingOverlay();
+          console.error("데이터 로드 중 오류:", err);
+          alert("환수 정보를 불러오는데 실패했습니다.");
+        });
+    } else {
+      removeLoadingOverlay();
+      alert("데이터를 로드할 수 없습니다. DataManager를 찾을 수 없습니다.");
+    }
 
     function removeLoadingOverlay() {
       if (loadingOverlay && loadingOverlay.parentNode) {
         loadingOverlay.parentNode.removeChild(loadingOverlay);
       }
     }
-  }
-
-  function closeRankingModal() {
-    if (typeof window.ModalHandler !== "undefined") {
-      if (typeof window.ModalHandler.removeAllModals === "function") {
-        window.ModalHandler.removeAllModals();
-      } else if (typeof window.ModalHandler.closeModal === "function") {
-        window.ModalHandler.closeModal();
-      }
-    }
-  }
-
-  function setupModalEvents() {
-    const modal = document.getElementById("rankingDetailModal");
-    if (modal) {
-      const closeBtn = modal.querySelector(".modal-close");
-      if (closeBtn) {
-        closeBtn.addEventListener("click", closeRankingModal);
-      }
-
-      modal.addEventListener("click", function (e) {
-        if (e.target === this) {
-          closeRankingModal();
-        }
-      });
-    }
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") {
-        closeRankingModal();
-      }
-    });
   }
 
   function showDetailModal(index) {
@@ -1287,53 +1124,6 @@ const RankingViewer = (function () {
       alert(
         "상세 정보를 표시할 수 없습니다. OptimalResultModal을 찾을 수 없습니다."
       );
-    }
-  }
-
-  function filterStatOptions(filterText, isMobile = false) {
-    const statOptions = isMobile
-      ? document.getElementById("mobile-stat-options")
-      : document.getElementById("stat-options");
-
-    const options = statOptions.querySelectorAll(".stat-option");
-
-    filterText = filterText.toLowerCase();
-    let visibleCount = 0;
-
-    options.forEach((option) => {
-      const text = option.textContent.toLowerCase();
-      const isVisible = text.includes(filterText);
-
-      option.style.display = isVisible ? "block" : "none";
-      if (isVisible) visibleCount++;
-    });
-
-    const noMatches = statOptions.querySelector(".no-matches");
-    if (visibleCount === 0) {
-      if (!noMatches) {
-        const noMatchesElement = document.createElement("div");
-        noMatchesElement.className = "no-matches";
-        noMatchesElement.textContent = "일치하는 항목 없음";
-        statOptions.appendChild(noMatchesElement);
-      }
-    } else {
-      if (noMatches) noMatches.remove();
-    }
-
-    toggleStatOptions(true, isMobile);
-  }
-
-  function toggleStatOptions(show, isMobile = false) {
-    const statOptions = isMobile
-      ? document.getElementById("mobile-stat-options")
-      : document.getElementById("stat-options");
-
-    if (statOptions) {
-      statOptions.style.display = show ? "block" : "none";
-
-      if (show) {
-        statOptions.scrollTop = 0;
-      }
     }
   }
 
@@ -1372,33 +1162,50 @@ const RankingViewer = (function () {
   }
 
   function showLoading() {
-    rankingNotice.style.display = "block";
+    if (rankingNotice) {
+      rankingNotice.style.display = "block";
+    }
   }
 
   function hideLoading() {
-    rankingNotice.style.display = "none";
+    if (rankingNotice) {
+      rankingNotice.style.display = "none";
+    }
   }
 
   function showError(message) {
-    rankingNotice.style.display = "block";
-    rankingNotice.innerHTML = `
-      <div class="calculating-wrapper">
-        <div class="calculating-box" style="background-color: #fff3cd; border-left: 5px solid #ffc107;">
-          <h3 style="color: #856404;">오류 발생</h3>
-          <p>${message}</p>
+    if (rankingNotice) {
+      rankingNotice.style.display = "block";
+      rankingNotice.innerHTML = `
+        <div class="calculating-wrapper">
+          <div class="calculating-box" style="background-color: #fff3cd; border-left: 5px solid #ffc107;">
+            <h3 style="color: #856404;">오류 발생</h3>
+            <p>${message}</p>
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    } else {
+      console.error("rankingNotice 요소를 찾을 수 없음");
+      alert(message);
+    }
   }
 
-  document.addEventListener("DOMContentLoaded", initialize);
+  // DOMContentLoaded 이벤트에서 초기화 시작
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("RankingViewer: DOMContentLoaded 이벤트 발생");
+    // 약간의 지연을 두고 초기화 시작 - 다른 스크립트의 로딩 시간 확보
+    setTimeout(initialize, 10);
+  });
 
+  // 외부에 노출할 메소드들
   return {
     changePage,
     loadRankingData,
     showDetailModal,
     showSpiritModal,
+    initialize,
   };
 })();
 
+// 전역 객체에 등록
 window.RankingViewer = RankingViewer;

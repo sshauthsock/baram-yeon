@@ -276,9 +276,32 @@ const ModalHandler = (function () {
     header.appendChild(titleSection);
     container.appendChild(header);
 
-    // 광고 영역
+    // 광고 영역 추가 - 카카오 애드핏
     const adContainer = document.createElement("div");
     adContainer.className = "ad-container";
+
+    // 데스크톱용 광고
+    const desktopAd = document.createElement("div");
+    desktopAd.className = "desktop-ad";
+    desktopAd.innerHTML = `
+      <ins class="kakao_ad_area" style="display:none;"
+      data-ad-unit = "DAN-dtjbatu14Xhl18NY"
+      data-ad-width = "728"
+      data-ad-height = "90"></ins>
+    `;
+
+    // 모바일용 광고 - 새로운 유닛 ID로 변경
+    const mobileAd = document.createElement("div");
+    mobileAd.className = "mobile-ad";
+    mobileAd.innerHTML = `
+      <ins class="kakao_ad_area" style="display:none;"
+      data-ad-unit = "DAN-Gn6ntfFuQg1qkaa4"
+      data-ad-width = "320" 
+      data-ad-height = "50"></ins>
+    `;
+
+    adContainer.appendChild(desktopAd);
+    adContainer.appendChild(mobileAd);
     container.appendChild(adContainer);
 
     // 등록/장착 효과 표시
@@ -323,7 +346,13 @@ const ModalHandler = (function () {
       document.getElementById("bind-sum").textContent = "합산: 0";
     }
 
-    // 광고 초기화
+    // 광고 초기화 - 카카오 애드핏
+    const adScript = document.createElement("script");
+    adScript.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+    adScript.async = true;
+    container.appendChild(adScript);
+
+    // 기존 AdInitializer 유지
     if (
       window.AdInitializer &&
       typeof window.AdInitializer.addAdsToModalContent === "function"
@@ -331,6 +360,16 @@ const ModalHandler = (function () {
       window.AdInitializer.addAdsToModalContent(adContainer);
       window.AdInitializer.initializeAdsInModal(container);
     }
+
+    // 화면 크기에 따른 광고 표시
+    function handleResize() {
+      const isMobile = window.innerWidth <= 768;
+      desktopAd.style.display = isMobile ? "none" : "block";
+      mobileAd.style.display = isMobile ? "block" : "none";
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
   }
 
   function displayStats(levelStat, highlightStat) {

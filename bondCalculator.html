@@ -17,49 +17,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/main.css">
+    <link href="assets/css/bondCalculator.css" rel="stylesheet">
 
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
-    <header class="header">
-        <div class="logo-container">
-            <a href="info.html">
-                <img src="assets/img/BHY.png" alt="바연화연 로고" class="logo">
-            </a>
-        </div>
-        <nav class="tabs">
-            <div class="tab" onclick="location.assign('info.html')">환수정보</div>
-            <div class="tab active" onclick="location.assign('bondCalculator.html')">환수 결속</div>
-            <div class="tab" onclick="location.assign('rankingManager.html')">환수 랭킹</div>
-            <div class="tab" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
-            <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
-        </nav>
-    </header>
-
-    <div class="sub-tabs" id="subTabs">
-        <div class="tab active" data-category="수호">수호</div>
-        <div class="tab" data-category="탑승">탑승</div>
-        <div class="tab" data-category="변신">변신</div>
-    </div>
-
-    <div class="ad-row">
-        <div class="ad-container-left">
-            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-XTAnZwWzQOT46c36" data-ad-width="728"
-                data-ad-height="90"></ins>
-        </div>
-
-        <div class="ad-container-right">
-            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-l6ShIzRdMfSOcB8v" data-ad-width="728"
-                data-ad-height="90"></ins>
-        </div>
-    </div>
-
-    <div class="ad-container mobile-ad">
-        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-UDsuae5QVIAxX2fS" data-ad-width="320"
-            data-ad-height="50"></ins>
-    </div>
+    <div id="header-container"></div>
+    <div id="subtabs-container"></div>
+    <div id="ads-top"></div>
 
     <div class="view-toggle-container">
         <label class="toggle-switch">
@@ -92,18 +59,15 @@
                                 <label>일괄 레벨 설정:</label>
                                 <input type="number" id="batchLevel" min="0" max="25" value="0">
                                 <button onclick="BondCalculatorApp.applyBatchLevel('batchLevel')">적용</button>
-                                <button onclick="setMaxBatchLevel('batchLevel')" class="max-level-btn">Max</button>
+                                <button onclick="BondCalculatorApp.setMaxBatchLevel('batchLevel')"
+                                    class="max-level-btn">Max</button>
                             </div>
                             <div class="calculate-btn-small">
-
-                                <button id="findOptimalBtn" onclick="BondCalculatorApp.findOptimalCombination()">최적
-                                    조합
+                                <button id="findOptimalBtn" onclick="BondCalculatorApp.findOptimalCombination()">최적 조합
                                     찾기</button>
                             </div>
                         </div>
                     </div>
-
-
                     <div id="selectedSpirits" class="selected-spirits"></div>
                 </div>
             </div>
@@ -124,35 +88,21 @@
                             <input type="number" id="mobileBatchLevel" min="0" max="25" value="0">
                             <button onclick="BondCalculatorApp.applyBatchLevel('mobileBatchLevel')"
                                 class="apply-level-btn">적용</button>
-                            <button onclick="setMaxBatchLevel('mobileBatchLevel')" class="max-level-btn">Max</button>
+                            <button onclick="BondCalculatorApp.setMaxBatchLevel('mobileBatchLevel')"
+                                class="max-level-btn">Max</button>
                         </div>
                         <div class="calculate-btn-small">
                             <button id="findOptimalBtn" onclick="BondCalculatorApp.findOptimalCombination()">찾기</button>
                         </div>
                     </div>
                 </div>
-                <div id="selectedSpirits" class="selected-spirits"></div>
+                <div class="selected-spirits"></div>
             </div>
         </div>
-
     </div>
 
-    <div class="ad-row">
-        <div class="ad-container-left">
-            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-3TYDe2ScVF7pn7fU" data-ad-width="728"
-                data-ad-height="90"></ins>
-        </div>
+    <div id="ads-bottom"></div>
 
-        <div class="ad-container-right">
-            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Sxen5zACA7yhBeet" data-ad-width="728"
-                data-ad-height="90"></ins>
-        </div>
-    </div>
-
-    <div class="ad-container mobile-ad">
-        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Xtg9TanJcnXcaIaY" data-ad-width="320"
-            data-ad-height="50"></ins>
-    </div>
     <div class="help-container">
         <button class="help-btn" id="helpBtn" aria-label="도움말">
             <span class="help-icon">?</span>
@@ -167,33 +117,24 @@
                     <li> 환수 등록 정보가 0~25 레벨 전부 있는 경우 왼쪽에 표시</li>
                     <li>환수 장착 정보가 0~25 레벨 전부 있는 경우 오른쪽에 표시</li>
                     <li>환수 장착 정보에 25레벨이 존재하는 경우 오른쪽 상단에 표시</li>
-
                     <li> 환수 20개 이하 선택시 탐색 방식으로 검색</li>
                     <li> 환수 20개 초과 선택시 사용시 스마트 필터링 방법으로 검색</li>
                 </ul>
             </div>
         </div>
     </div>
-    <footer class="site-footer">
-        <div class="footer-desktop">
-            <div class="footer-links">
-                <a href="info.html">환수정보</a>
-                <a href="bondCalculator.html">환수 결속</a>
-                <a href="soulCalculator.html">환수혼 계산</a>
-                <a href="chak.html">착 계산</a>
-                <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <p>&copy; 2025 바연화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
-        </div>
-    </footer>
-    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+
+    <div id="footer-container"></div>
 
     <script src="assets/js/common.js"></script>
     <script src="assets/js/firebaseConfig.js"></script>
-    <script src="assets/js/adInitializer.js"></script>
     <script src="assets/js/firebaseHandler.js"></script>
+
+    <script src="assets/js/modules/componentLoader.js"></script>
+    <script src="assets/js/modules/firebaseHandlerWrapper.js"></script>
+    <script src="assets/js/modules/adManager.js"></script>
+    <script src="assets/js/modules/uiHelper.js"></script>
+
     <script src="assets/js/utils.js"></script>
     <script src="assets/js/configManager.js"></script>
     <script src="assets/js/eventBus.js"></script>
@@ -210,13 +151,10 @@
     <script src="assets/js/searchManager.js"></script>
     <script src="assets/js/optimalCombinationFinder.js"></script>
     <script src="assets/js/bondCalculatorApp.js"></script>
-    <script src="assets/js/bondCalculatorInit.js"></script>
-    <script src="assets/js/loadingIndicator.js"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="assets/js/firebaseVisitCounter.js"></script>
+    <script src="assets/js/modules/appInit.js"></script>
+
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
 </body>
 
 </html>

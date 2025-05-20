@@ -5,7 +5,6 @@ const BondCalculatorApp = (function () {
   let lastActiveCategory = "수호";
   let currentScrollY = 0;
 
-  // BondCalculatorApp.js - initialize 함수 내의 수정
   function initialize() {
     const container = document.getElementById("imageContainer");
     if (container) {
@@ -80,9 +79,15 @@ const BondCalculatorApp = (function () {
     OptimalResultModal.initModalStyles();
 
     window.addEventListener("resize", handleResponsiveLayout);
-    handleResponsiveLayout();
+    window.addEventListener("DOMContentLoaded", function () {
+      handleResponsiveLayout();
+      updateMobilePanel();
 
-    // 이 부분을 수정 - null 체크 추가
+      setTimeout(() => {
+        updateMobilePanel();
+      }, 500);
+    });
+
     const optimalModal = document.getElementById("optimalModal");
     if (optimalModal) {
       optimalModal.addEventListener("click", function (e) {
@@ -91,7 +96,6 @@ const BondCalculatorApp = (function () {
         }
       });
     } else {
-      // optimalModal 요소가 없는 경우 동적으로 생성
       const newModal = document.createElement("div");
       newModal.id = "optimalModal";
       newModal.className = "modal-overlay";
@@ -103,8 +107,6 @@ const BondCalculatorApp = (function () {
           closeOptimalModal();
         }
       });
-
-      console.log("optimalModal 요소가 생성되었습니다.");
     }
 
     document.addEventListener("keydown", function (e) {
@@ -113,43 +115,11 @@ const BondCalculatorApp = (function () {
       }
     });
 
-    // 선택 표시 스타일 개선
-    const selectionStyle = document.createElement("style");
-    selectionStyle.id = "improved-selection-style";
-    selectionStyle.textContent = `
-      .img-wrapper img.selected {
-          border: 3px solid #3498db !important;
-          box-shadow: 0 0 8px #3498db, 0 0 12px rgba(52, 152, 219, 0.6) !important;
-          position: relative;
-          filter: brightness(85%);
-      }
-      
-      .img-wrapper .img-box {
-          position: relative;
-      }
-      
-      .center-check-mark {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 24px;
-          height: 24px;
-          background-color: #2ecc71;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-weight: bold;
-          font-size: 15px;
-          border: 2px solid white;
-          z-index: 9999;
-          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-          pointer-events: none; /* 클릭이 이미지에 전달되도록 함 */
-      }
-  `;
-    document.head.appendChild(selectionStyle);
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.type = "text/css";
+    link.href = "bond-calculator.css";
+    document.head.appendChild(link);
   }
 
   function initHelpTooltip() {
@@ -190,31 +160,41 @@ const BondCalculatorApp = (function () {
         rightPanel.classList.add("collapsed");
       }
 
-      panelToggleBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+      panelToggleBtn.removeEventListener("click", mobilePanelToggle);
+      panelToggleBtn.addEventListener("click", mobilePanelToggle);
+    }
+  }
 
-        if (rightPanel.classList.contains("collapsed")) {
-          rightPanel.classList.remove("collapsed");
-          rightPanel.style.display = "block";
-          rightPanel.style.maxHeight = "80vh";
+  function mobilePanelToggle(e) {
+    e.preventDefault();
+    e.stopPropagation();
 
-          const toggleIcon = this.querySelector(".toggle-icon");
-          if (toggleIcon) {
-            toggleIcon.textContent = "▼";
-            toggleIcon.style.transform = "rotate(0deg)";
-          }
-        } else {
-          rightPanel.classList.add("collapsed");
-          rightPanel.style.maxHeight = "0";
+    const mobilePanel = document.querySelector(
+      "#panelToggleContainer .right-panel"
+    );
+    const toggleIcon = document.querySelector("#panelToggleBtn .toggle-icon");
 
-          const toggleIcon = this.querySelector(".toggle-icon");
-          if (toggleIcon) {
-            toggleIcon.textContent = "▲";
-            toggleIcon.style.transform = "rotate(360deg)";
-          }
-        }
-      });
+    if (!mobilePanel) {
+      return;
+    }
+
+    if (mobilePanel.classList.contains("collapsed")) {
+      mobilePanel.classList.remove("collapsed");
+      mobilePanel.style.display = "block";
+      mobilePanel.style.maxHeight = "80vh";
+
+      if (toggleIcon) {
+        toggleIcon.textContent = "▼";
+        toggleIcon.style.transform = "rotate(0deg)";
+      }
+    } else {
+      mobilePanel.classList.add("collapsed");
+      mobilePanel.style.maxHeight = "0";
+
+      if (toggleIcon) {
+        toggleIcon.textContent = "▲";
+        toggleIcon.style.transform = "rotate(360deg)";
+      }
     }
   }
 
@@ -379,46 +359,17 @@ const BondCalculatorApp = (function () {
         if (src === spirit.image || srcFilename === imageFilename) {
           img.classList.add("selected");
 
-          // 이미지 상단에 체크마크가 아닌 컨테이너에 추가하고 이미지 위에 겹치도록 함
           const imgWrapper = img.closest(".img-wrapper");
           if (imgWrapper && !imgWrapper.querySelector(".center-check-mark")) {
-            // 기존 체크마크 제거
             const existingCheckMarks =
               imgWrapper.querySelectorAll(".center-check-mark");
             existingCheckMarks.forEach((mark) => mark.remove());
 
-            // 이미지 위치와 크기 가져오기
-            const imgRect = img.getBoundingClientRect();
-            const wrapperRect = imgWrapper.getBoundingClientRect();
-
-            // 체크마크 생성 및 위치 설정
             const checkMark = document.createElement("div");
             checkMark.className = "center-check-mark";
             checkMark.innerHTML = "✓";
 
-            // 체크마크의 스타일 설정
-            checkMark.style.position = "absolute";
-            checkMark.style.zIndex = "100";
-            checkMark.style.top = img.offsetTop + img.offsetHeight / 2 + "px";
-            checkMark.style.left = img.offsetLeft + img.offsetWidth / 2 + "px";
-            checkMark.style.transform = "translate(-50%, -50%)";
-
-            // CSS 클래스만으로는 정확한 중앙 배치가 어려울 수 있어 직접 스타일 적용
-            checkMark.style.width = "24px";
-            checkMark.style.height = "24px";
-            checkMark.style.backgroundColor = "#2ecc71";
-            checkMark.style.borderRadius = "50%";
-            checkMark.style.display = "flex";
-            checkMark.style.alignItems = "center";
-            checkMark.style.justifyContent = "center";
-            checkMark.style.color = "white";
-            checkMark.style.fontWeight = "bold";
-            checkMark.style.fontSize = "15px";
-            checkMark.style.border = "2px solid white";
-            checkMark.style.boxShadow = "0 0 5px rgba(0,0,0,0.3)";
-            checkMark.style.pointerEvents = "none";
-
-            imgWrapper.style.position = "relative"; // 부모 요소에 relative 설정
+            imgWrapper.style.position = "relative";
             imgWrapper.appendChild(checkMark);
           }
         }
@@ -503,7 +454,6 @@ const BondCalculatorApp = (function () {
     });
   }
 
-  // setMinLevel 함수 추가
   function setMinLevel(index) {
     currentScrollY = window.scrollY;
     selectedSpirits[index].level = 0;
@@ -772,6 +722,7 @@ const BondCalculatorApp = (function () {
 })();
 
 window.BondCalculatorApp = BondCalculatorApp;
+
 document.addEventListener("DOMContentLoaded", function () {
   BondCalculatorApp.initialize();
 });

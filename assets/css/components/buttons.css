@@ -11,7 +11,7 @@
     justify-content: center;
     text-decoration: none;
     font-size: 14px;
-    min-height: 36px;
+    min-height: var(--button-height-default);
 }
 
 .btn:hover {
@@ -113,8 +113,6 @@
     box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
     margin-left: 5px;
 }
-
-
 
 .max-level-btn:hover {
     background-color: var(--color-secondary-dark);
@@ -320,6 +318,7 @@
     .btn {
         padding: 6px 12px;
         font-size: 13px;
+        min-height: var(--button-height-mobile);
     }
 
     .btn-lg {
@@ -356,6 +355,10 @@
     .exp-tab {
         padding: 8px 12px;
         font-size: 12px;
+    }
+
+    .tab-score {
+        font-size: 9px;
     }
 }
 

@@ -5,23 +5,48 @@ const AdInitializer = (function () {
     try {
       const adElements = container.querySelectorAll(".kakao_ad_area");
       adElements.forEach((ad) => {
-        if (ad) ad.style.display = "";
+        if (ad) {
+          ad.style.display = "block"; // 기존 "display:none;"을 "block"으로 수정
+        }
       });
 
-      if (typeof kakao !== "undefined" && typeof kakao.adfit !== "undefined") {
+      // Kakao AdFit 렌더링이 가능한지 확인
+      if (
+        typeof kakao !== "undefined" &&
+        kakao.adfit &&
+        typeof kakao.adfit.render === "function"
+      ) {
         kakao.adfit.render();
-      } else if (typeof kakaoDotCom !== "undefined" && kakaoDotCom.adFit) {
-        kakaoDotCom.adFit.render();
       } else {
-        loadAdScript();
+        loadAdScript(); // 카카오 광고 스크립트를 로드
       }
     } catch (error) {
-      console.log("광고 초기화 오류(무시됨):", error);
+      console.error("광고 초기화 오류:", error);
     }
   }
 
+  // function loadAdScript() {
+  //   if (document.getElementById("kakao-ad-script")) {
+  //     return;
+  //   }
+
+  //   const script = document.createElement("script");
+  //   script.id = "kakao-ad-script";
+  //   script.type = "text/javascript";
+  //   script.async = true;
+  //   script.defer = true;
+  //   script.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+
+  //   script.onerror = function () {
+  //     console.log("광고 스크립트 로드 실패");
+  //   };
+
+  //   document.head.appendChild(script);
+  // }
+
   function loadAdScript() {
     if (document.getElementById("kakao-ad-script")) {
+      console.log("카카오 광고 스크립트가 이미 로드되었습니다.");
       return;
     }
 
@@ -29,11 +54,21 @@ const AdInitializer = (function () {
     script.id = "kakao-ad-script";
     script.type = "text/javascript";
     script.async = true;
-    script.defer = true;
     script.src = "//t1.daumcdn.net/kas/static/ba.min.js";
 
+    script.onload = function () {
+      console.log("카카오 광고 스크립트 성공적으로 로드됨");
+      if (
+        typeof kakao !== "undefined" &&
+        kakao.adfit &&
+        typeof kakao.adfit.render === "function"
+      ) {
+        kakao.adfit.render();
+      }
+    };
+
     script.onerror = function () {
-      console.log("광고 스크립트 로드 실패");
+      console.error("카카오 광고 스크립트 로드 실패");
     };
 
     document.head.appendChild(script);
@@ -94,26 +129,26 @@ const AdInitializer = (function () {
     }
   }
 
-  function safelyInitializeAds(container) {
-    try {
-      // 광고 영역 표시
-      const adElements = container.querySelectorAll(".kakao_ad_area");
-      adElements.forEach((ad) => {
-        if (ad) ad.style.display = "";
-      });
+  // function safelyInitializeAds(container) {
+  //   try {
+  //     // 광고 영역 표시
+  //     const adElements = container.querySelectorAll(".kakao_ad_area");
+  //     adElements.forEach((ad) => {
+  //       if (ad) ad.style.display = "";
+  //     });
 
-      // 카카오 광고 스크립트 로드 확인 및 렌더링
-      if (typeof kakao !== "undefined" && typeof kakao.adfit !== "undefined") {
-        kakao.adfit.render();
-      } else if (typeof kakaoDotCom !== "undefined" && kakaoDotCom.adFit) {
-        kakaoDotCom.adFit.render();
-      } else {
-        loadAdScript();
-      }
-    } catch (error) {
-      console.log("광고 초기화 오류(무시됨):", error);
-    }
-  }
+  //     // 카카오 광고 스크립트 로드 확인 및 렌더링
+  //     if (typeof kakao !== "undefined" && typeof kakao.adfit !== "undefined") {
+  //       kakao.adfit.render();
+  //     } else if (typeof kakaoDotCom !== "undefined" && kakaoDotCom.adFit) {
+  //       kakaoDotCom.adFit.render();
+  //     } else {
+  //       loadAdScript();
+  //     }
+  //   } catch (error) {
+  //     console.log("광고 초기화 오류(무시됨):", error);
+  //   }
+  // }
 
   return {
     initializeAdsInModal,

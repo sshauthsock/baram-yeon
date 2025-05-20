@@ -3,7 +3,7 @@
     background-color: var(--bg-white);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
-    padding: 15px;
+    padding: var(--card-padding);
     margin-bottom: 15px;
 }
 
@@ -149,7 +149,6 @@
     height: 16px !important;
     margin-left: 2px;
 }
-
 
 .spirit-level-control input {
     width: 28px;
@@ -312,8 +311,7 @@
     top: 3px;
 }
 
-.selected-spirit-card .ribbon-left,
-.selected-spirit-card .ribbon-right {
+.selected-spirit-card [class^="ribbon"] {
     top: -5px;
 }
 

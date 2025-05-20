@@ -18,6 +18,8 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!-- 주요 Firebase 스크립트 먼저 로드 -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 </head>
@@ -30,11 +32,11 @@
             </a>
         </div>
         <nav class="tabs">
-            <div class="tab active" onclick="location.href='info.html'">환수정보</div>
-            <div class="tab" onclick="location.href='bondCalculator.html'">환수 결속</div>
-            <div class="tab" onclick="location.assign('rankingManager.html')">환수 랭킹</div>
-            <div class="tab" onclick="location.href='soulCalculator.html'">환수혼 계산</div>
-            <div class="tab" onclick="location.href='chak.html'">착 계산</div>
+            <div class="tab active" id="info-tab" onclick="location.href='info.html'">환수정보</div>
+            <div class="tab" id="bond-tab" onclick="location.href='bondCalculator.html'">환수 결속</div>
+            <div class="tab" id="ranking-tab" onclick="location.assign('rankingManager.html')">환수 랭킹</div>
+            <div class="tab" id="soul-tab" onclick="location.href='soulCalculator.html'">환수혼 계산</div>
+            <div class="tab" id="chak-tab" onclick="location.href='chak.html'">착 계산</div>
         </nav>
     </header>
 
@@ -44,6 +46,7 @@
         <div class="tab" data-category="변신">변신</div>
     </div>
 
+    <!-- 광고 영역 -->
     <div class="ad-row">
         <div class="ad-container-left">
             <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-XTAnZwWzQOT46c36" data-ad-width="728"
@@ -80,6 +83,7 @@
         </div>
     </div>
 
+    <!-- 하단 광고 영역 -->
     <div class="ad-row">
         <div class="ad-container-left">
             <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-3TYDe2ScVF7pn7fU" data-ad-width="728"
@@ -95,7 +99,6 @@
         <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Xtg9TanJcnXcaIaY" data-ad-width="320"
             data-ad-height="50"></ins>
     </div>
-
 
     <div class="report-container">
         <button class="report-btn" onclick="openReportSheet()">
@@ -129,6 +132,7 @@
             <div class="footer-links">
                 <a href="info.html">환수정보</a>
                 <a href="bondCalculator.html">환수 결속</a>
+                <a href="rankingManager.html">환수 랭킹</a>
                 <a href="soulCalculator.html">환수혼 계산</a>
                 <a href="chak.html">착 계산</a>
                 <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
@@ -139,79 +143,30 @@
         </div>
     </footer>
 
-    <script src="assets/js/common.js"></script>
+    <!-- 기본 공통 스크립트 -->
     <script src="assets/js/firebaseConfig.js"></script>
-    <script src="assets/js/AdInitializer.js"></script>
+    <script src="assets/js/common.js"></script>
     <script src="assets/js/utils.js"></script>
+    <script src="assets/js/firebaseHandler.js"></script>
+
+    <!-- 유틸리티 모듈 -->
+    <script src="assets/js/modules/uiHelper.js"></script>
+    <script src="assets/js/modules/firebaseHandlerWrapper.js"></script>
+    <script src="assets/js/modules/moduleLoader.js"></script>
+
+    <!-- 비즈니스 로직 -->
     <script src="assets/js/uiRenderer.js"></script>
     <script src="assets/js/configManager.js"></script>
     <script src="assets/js/eventBus.js"></script>
-
-    <script src="assets/js/firebaseHandler.js"></script>
     <script src="assets/js/dataManager.js"></script>
     <script src="assets/js/modalHandler.js"></script>
     <script src="assets/js/imageHandler-compat.js"></script>
 
+    <!-- 페이지별 스크립트 -->
     <script src="assets/js/info.js"></script>
-    <script src="assets/js/infoInit.js"></script>
-    <script src="assets/js/loadingIndicator.js"></script>
+
+    <!-- 광고 스크립트 -->
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-    <script>
-        (function () {
-            let adRetries = 0;
-            const maxRetries = 5;
-
-            function checkAdsVisibility() {
-                let adElements = document.querySelectorAll('.kakao_ad_area');
-                let anyVisible = false;
-
-                adElements.forEach(function (ad) {
-                    if (ad.offsetHeight > 1 && ad.innerHTML !== '') {
-                        anyVisible = true;
-                    }
-                });
-
-                if (!anyVisible && adRetries < maxRetries) {
-                    reloadKakaoAdScript();
-                    adRetries++;
-                    setTimeout(checkAdsVisibility, 2000);
-                }
-            }
-
-            function reloadKakaoAdScript() {
-                const script = document.createElement('script');
-                script.src = '//t1.daumcdn.net/kas/static/ba.min.js';
-                script.async = true;
-                document.body.appendChild(script);
-            }
-
-            function handleVisibilityChange() {
-                if (document.visibilityState === 'visible') {
-                    reloadKakaoAdScript();
-                    setTimeout(checkAdsVisibility, 1000);
-                }
-            }
-
-            document.addEventListener('DOMContentLoaded', function () {
-                setTimeout(checkAdsVisibility, 2000);
-            });
-
-            document.addEventListener('visibilitychange', handleVisibilityChange);
-
-            window.addEventListener('load', function () {
-                setTimeout(checkAdsVisibility, 1000);
-            });
-
-            window.addEventListener('focus', function () {
-                reloadKakaoAdScript();
-            });
-        })();
-    </script>
-
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="assets/js/firebaseVisitCounter.js"></script>
 </body>
 
 </html>

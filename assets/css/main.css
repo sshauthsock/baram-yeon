@@ -14,7 +14,6 @@
 @import 'components/buttons.css';
 @import 'components/cards.css';
 @import 'components/forms.css';
-/* @import 'components/modals.css'; */
 @import 'components/modal-styles.css';
 @import 'components/tables.css';
 @import 'components/pagination.css';
@@ -31,4 +30,8 @@
 @import 'pages/chak.css';
 @import 'pages/ranking-manager.css';
 
+/* 브레이크포인트 */
+@import 'responsive/breakpoints.css';
+
+/* 오버라이드 */
 @import 'overrides.css';

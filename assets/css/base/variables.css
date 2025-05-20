@@ -90,4 +90,18 @@
     --z-popover: 5000;
     --z-tooltip: 9000;
     --z-top: 9999;
+
+    /* 컴포넌트 특화 변수 */
+    --card-padding: var(--space-md);
+    --button-height-default: 36px;
+    --button-height-mobile: 32px;
+    --input-height-default: 36px;
+    --input-height-mobile: 32px;
+
+    /* 브레이크포인트 */
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
 }

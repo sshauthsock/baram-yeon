@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="ko">
 
 <head>
@@ -181,6 +181,135 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="assets/js/firebaseVisitCounter.js"></script>
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>바연화연 - 환수 랭킹</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="바람의나라: 연 환수 랭킹, 최적 환수 조합과 능력치별 환수 순위">
+
+    <link rel="icon" type="image/png" href="assets/img/BHY.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/BHY.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+</head>
+
+<body>
+    <div id="header-container"></div>
+    <div id="subtabs-container"></div>
+    <div id="ads-top"></div>
+
+    <div class="filters-container">
+        <div class="filter-section">
+            <div class="filter-label">랭킹 종류:</div>
+            <div class="filter-buttons ranking-type-selector">
+                <button class="filter-btn active" data-type="bond">결속 랭킹</button>
+                <button class="filter-btn" data-type="stat">능력치 랭킹</button>
+            </div>
+        </div>
+
+        <div class="filter-section filter-section-placeholder" id="gradeFilterPlaceholder">
+            <div class="filter-section" id="gradeFilterContainer">
+                <div class="filter-label">환수 필터:</div>
+                <div class="filter-buttons grade-filter-group">
+                    <button class="filter-btn active" data-grade="all">전체 환수</button>
+                    <button class="filter-btn" data-grade="legendary">전설 환수만</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ranking-container">
+        <div class="ranking-header">
+            <h1 class="ranking-title">환수 <span id="rankingCategoryTitle">수호</span> <span id="rankingTypeTitle">결속</span>
+                랭킹</h1>
+            <div class="last-updated">마지막 업데이트: <span id="lastUpdated">로딩 중...</span></div>
+
+            <div id="statSelectorContainer" class="stat-selector-container" style="display: none;">
+                <label for="statSelector">능력치 선택:</label>
+                <select id="statSelector">
+                    <option value="bind">장착효과</option>
+                    <option value="registration">등록효과</option>
+                    <option value="damageResistancePenetration">피해저항관통</option>
+                    <option value="damageResistance">피해저항</option>
+                    <option value="pvpDamagePercent">대인피해%</option>
+                    <option value="pvpDefensePercent">대인방어%</option>
+                    <option value="healthIncreasePercent">체력증가%</option>
+                    <option value="magicIncreasePercent">마력증가%</option>
+                    <option value="bossMonsterAdditionalDamage">보스몬스터추가피해</option>
+                    <option value="bossMonsterPenetration">보스몬스터관통</option>
+                    <option value="statusEffectAccuracy">상태이상적중</option>
+                    <option value="statusEffectResistance">상태이상저항</option>
+                    <option value="criticalPowerPercent">치명위력%</option>
+                    <option value="movementSpeed">이동속도</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="rankingNotice" class="ranking-notice">
+            <div class="calculating-wrapper">
+                <div class="calculating-box">
+                    <div class="calculating-spinner"></div>
+                    <h3>랭킹 데이터 로딩 중...</h3>
+                    <p>잠시만 기다려주세요</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="bondRankingsContainer" class="rankings-list"></div>
+        <div id="statRankingsContainer" class="rankings-list" style="display: none;"></div>
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <div id="ads-bottom"></div>
+    <div id="footer-container"></div>
+
+    <!-- 기본 라이브러리 및 설정 -->
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/firebaseConfig.js"></script>
+    <script src="assets/js/firebaseHandler.js"></script>
+
+    <!-- 모듈 스크립트 -->
+    <script src="assets/js/modules/componentLoader.js"></script>
+    <script src="assets/js/modules/firebaseHandlerWrapper.js"></script>
+    <script src="assets/js/modules/adManager.js"></script>
+    <script src="assets/js/modules/uiHelper.js"></script>
+
+    <!-- 유틸리티 스크립트 -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/spiritUtils.js"></script>
+    <script src="assets/js/calculationUtils.js"></script>
+
+    <!-- 데이터 관련 스크립트 -->
+    <script src="assets/js/dataManager.js"></script>
+    <script src="assets/js/modalHandler.js"></script>
+    <script src="assets/js/optimalResultModal.js"></script>
+
+    <!-- 랭킹 관련 스크립트 -->
+    <script src="assets/js/rankingManager.js"></script>
+    <script src="assets/js/rankingViewer.js"></script>
+
+    <!-- 초기화 스크립트 -->
+    <script src="assets/js/modules/appInit.js"></script>
+
+    <!-- 광고 스크립트 -->
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
 </body>
 
 </html>

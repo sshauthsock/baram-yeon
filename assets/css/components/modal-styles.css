@@ -307,9 +307,7 @@
         padding: 8px;
     }
 
-    .stats-container {
-        flex-direction: column;
-    }
+
 
     .stats-column {
         flex: 0 0 100%;

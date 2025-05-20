@@ -1,12 +1,43 @@
 const DataManager = (function () {
-  const CATEGORY_FILE_MAP = window.CommonData.CATEGORY_FILE_MAP;
-  const FACTION_ICONS = window.CommonData.FACTION_ICONS;
-  const STATS_MAPPING = window.CommonData.STATS_MAPPING;
-  const STATS_ORDER = window.CommonData.STATS_ORDER || [];
-  const SPECIAL_STAT_CLASSES = window.CommonData.SPECIAL_STAT_CLASSES;
+  const CATEGORY_FILE_MAP = window.CommonData?.CATEGORY_FILE_MAP || {};
+  const FACTION_ICONS = window.CommonData?.FACTION_ICONS || {};
+  const STATS_MAPPING = window.CommonData?.STATS_MAPPING || {};
+  const STATS_ORDER = window.CommonData?.STATS_ORDER || [];
+  const SPECIAL_STAT_CLASSES = window.CommonData?.SPECIAL_STAT_CLASSES || {};
   let mobData = { 수호: [], 탑승: [], 변신: [] };
 
+  async function waitForFirebaseHandler() {
+    if (typeof FirebaseHandler !== "undefined") {
+      return true;
+    }
+
+    return new Promise((resolve) => {
+      let attempts = 0;
+      const maxAttempts = 50;
+
+      const checkInterval = setInterval(() => {
+        attempts++;
+        if (typeof FirebaseHandler !== "undefined") {
+          clearInterval(checkInterval);
+          resolve(true);
+        } else if (attempts >= maxAttempts) {
+          clearInterval(checkInterval);
+          console.error("FirebaseHandler failed to load within timeout period");
+          resolve(false);
+        }
+      }, 100);
+    });
+  }
+
   async function loadCategoryData() {
+    const isFirebaseAvailable = await waitForFirebaseHandler();
+    if (!isFirebaseAvailable) {
+      console.error(
+        "FirebaseHandler is not available. Cannot load category data."
+      );
+      return mobData;
+    }
+
     let allLoaded = true;
 
     for (const [category, files] of Object.entries(CATEGORY_FILE_MAP)) {
@@ -39,14 +70,26 @@ const DataManager = (function () {
 
   async function loadRegistrationData(fileName) {
     if (!fileName) return [];
-    const data = await FirebaseHandler.getFirestoreDocument(fileName);
-    return processRegistrationData(data);
+    await waitForFirebaseHandler();
+    try {
+      const data = await FirebaseHandler.getFirestoreDocument(fileName);
+      return processRegistrationData(data);
+    } catch (error) {
+      console.error(`Error loading registration data for ${fileName}:`, error);
+      return [];
+    }
   }
 
   async function loadBindData(fileName) {
     if (!fileName) return [];
-    const data = await FirebaseHandler.getFirestoreDocument(fileName);
-    return processBindData(data);
+    await waitForFirebaseHandler();
+    try {
+      const data = await FirebaseHandler.getFirestoreDocument(fileName);
+      return processBindData(data);
+    } catch (error) {
+      console.error(`Error loading bind data for ${fileName}:`, error);
+      return [];
+    }
   }
 
   function processRegistrationData(data) {

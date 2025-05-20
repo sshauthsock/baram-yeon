@@ -1,64 +1,67 @@
 document.addEventListener("DOMContentLoaded", function () {
-  function initializeApp() {
-    if (
-      typeof FirebaseHandler !== "undefined" &&
-      typeof FirebaseHandler.initFirebase === "function"
-    ) {
-      FirebaseHandler.initFirebase();
-      FirebaseHandler.testFirebaseConnectivity().then(() => {
-        if (
-          typeof BondCalculatorApp !== "undefined" &&
-          BondCalculatorApp.initialize
-        ) {
-          BondCalculatorApp.initialize();
-        } else {
-          console.error(
-            "BondCalculatorApp is not available after Firebase initialization"
-          );
-        }
-      });
-    } else {
-      if (
-        typeof BondCalculatorApp !== "undefined" &&
-        BondCalculatorApp.initialize
-      ) {
+  // FirebaseHandler와 BondCalculatorApp이 로드될 때까지 기다리기
+  waitForDependencies(["FirebaseHandler", "BondCalculatorApp"], function () {
+    console.log("All dependencies loaded for Bond Calculator");
+
+    FirebaseHandler.initFirebase();
+    FirebaseHandler.testFirebaseConnectivity()
+      .then(() => {
+        console.log("Firebase connectivity verified, initializing app...");
         BondCalculatorApp.initialize();
-      } else {
-        console.error("BondCalculatorApp is not available");
-      }
-    }
-  }
+      })
+      .catch((err) => {
+        console.warn("Firebase connectivity test failed:", err);
+        console.log("Proceeding with app initialization anyway...");
+        BondCalculatorApp.initialize();
+      });
+  });
 
-  // BondCalculatorApp이 로드될 때까지 기다리기
-  if (
-    typeof BondCalculatorApp !== "undefined" &&
-    BondCalculatorApp.initialize
-  ) {
-    initializeApp();
-  } else {
-    // 일정 시간마다 BondCalculatorApp이 로드됐는지 확인
-    let attempts = 0;
-    const maxAttempts = 50; // 최대 5초(50 * 100ms) 동안 시도
-
-    const checkInterval = setInterval(function () {
-      attempts++;
-      if (
-        typeof BondCalculatorApp !== "undefined" &&
-        BondCalculatorApp.initialize
-      ) {
-        clearInterval(checkInterval);
-        console.log("BondCalculatorApp loaded successfully");
-        initializeApp();
-      } else if (attempts >= maxAttempts) {
-        clearInterval(checkInterval);
-        console.error("BondCalculatorApp failed to load within timeout period");
-      }
-    }, 100);
-  }
-
+  // 모바일 뷰 상태 저장
   var isMobile = window.innerWidth <= 768;
   localStorage.setItem("isMobileView", isMobile);
 
+  // 도움말 툴팁 설정
+  setupHelpTooltip();
+
+  // 반응형 처리
+  window.addEventListener("resize", debounce(handleResize, 250));
+});
+
+// 의존성이 로드될 때까지 기다리기
+function waitForDependencies(deps, callback) {
+  const checkDeps = () => {
+    for (let dep of deps) {
+      if (typeof window[dep] === "undefined") {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  if (checkDeps()) {
+    callback();
+  } else {
+    let attempts = 0;
+    const maxAttempts = 50; // 5초 타임아웃
+
+    const interval = setInterval(() => {
+      attempts++;
+      if (checkDeps()) {
+        clearInterval(interval);
+        callback();
+      } else if (attempts >= maxAttempts) {
+        clearInterval(interval);
+        console.error(
+          "Dependencies failed to load within timeout period:",
+          deps
+        );
+      }
+    }, 100);
+  }
+}
+
+// 도움말 툴팁 설정
+function setupHelpTooltip() {
   const helpBtn = document.getElementById("helpBtn");
   const helpTooltip = document.getElementById("helpTooltip");
   const closeHelp = document.getElementById("closeHelp");
@@ -81,20 +84,18 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+}
 
-  window.addEventListener(
-    "resize",
-    debounce(function () {
-      var wasMobile = localStorage.getItem("isMobileView") === "true";
-      var isMobile = window.innerWidth <= 768;
+// 반응형 처리
+function handleResize() {
+  var wasMobile = localStorage.getItem("isMobileView") === "true";
+  var isMobile = window.innerWidth <= 768;
 
-      if (wasMobile !== isMobile) {
-        localStorage.setItem("isMobileView", isMobile);
-        location.reload();
-      }
-    }, 250)
-  );
-});
+  if (wasMobile !== isMobile) {
+    localStorage.setItem("isMobileView", isMobile);
+    location.reload();
+  }
+}
 
 function debounce(func, wait) {
   var timeout;

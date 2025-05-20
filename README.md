@@ -66,3 +66,42 @@
 진행 상태 표시 (미개방/부분 강화/완료)
 현재 보유한 모든 능력치의 합계 정리
 이 계산기는 게임 플레이어가 자신의 캐릭터 능력치를 최적화하고, 필요한 자원을 효율적으로 관리할 수 있도록 도와줍니다. 특히 검색 기능을 통해 특정 능력치의 현재 총합을 확인할 수 있어, 사용자가 원하는 능력치를 효과적으로 높일 수 있는 방법을 찾는데 유용합니다.
+
+/css
+/base
+variables.css # CSS 변수
+reset.css # 기본 스타일 리셋
+typography.css # 글꼴, 텍스트 스타일
+utilities.css # 유틸리티 클래스
+animations.css # 애니메이션
+breakpoints.css # 반응형 브레이크포인트
+
+/components
+/buttons
+base.css # 기본 버튼 스타일
+variants.css # 버튼 변형
+/cards # 카드 컴포넌트
+/forms # 폼 컴포넌트
+/modals # 모달 컴포넌트
+/tables # 테이블 컴포넌트
+/pagination # 페이지네이션 컴포넌트
+/help # 도움말 컴포넌트
+header.css # 헤더 컴포넌트
+footer.css # 푸터 컴포넌트
+ads.css # 광고 컴포넌트
+
+/layouts
+containers.css # 컨테이너 레이아웃
+grid.css # 그리드 시스템
+panels.css # 패널 레이아웃
+
+/pages
+bond-calculator.css # 환수 결속 페이지
+image-category.css # 이미지 카테고리 페이지
+info.css # 환수정보 페이지
+soul-calculator.css # 환수혼 계산 페이지
+chak.css # 착 계산 페이지
+ranking-manager.css # 환수 랭킹 페이지
+
+main.css # 스타일 진입점
+overrides.css # 오버라이드 스타일
