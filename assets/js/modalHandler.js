@@ -23,7 +23,7 @@ const ModalHandler = (function () {
     link.rel = "stylesheet";
     link.type = "text/css";
     link.href = "modalHandler.css";
-    document.head.appendChild(link);
+    // document.head.appendChild(link);
   }
 
   // 모달 요소를 완전히 생성하고 DOM에 추가

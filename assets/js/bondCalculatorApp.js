@@ -119,7 +119,7 @@ const BondCalculatorApp = (function () {
     link.rel = "stylesheet";
     link.type = "text/css";
     link.href = "bond-calculator.css";
-    document.head.appendChild(link);
+    // document.head.appendChild(link);
   }
 
   function initHelpTooltip() {

@@ -17,15 +17,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link href="assets/css/bondCalculator.css" rel="stylesheet">
 
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
-    <div id="header-container"></div>
-    <div id="subtabs-container"></div>
+    <header class="header">
+        <div class="logo-container">
+            <a href="bondCalculator.html">
+                <img src="assets/img/BHY.png" alt="바연화연 로고" class="logo">
+            </a>
+        </div>
+        <nav class="tabs">
+            <div class="tab" id="info-tab" onclick="location.href='info.html'">환수정보</div>
+            <div class="tab active" id="bond-tab" onclick="location.href='bondCalculator.html'">환수 결속</div>
+            <div class="tab" id="ranking-tab" onclick="location.assign('rankingManager.html')">환수 랭킹</div>
+            <div class="tab" id="soul-tab" onclick="location.href='soulCalculator.html'">환수혼 계산</div>
+            <div class="tab" id="chak-tab" onclick="location.href='chak.html'">착 계산</div>
+        </nav>
+    </header>
+    <div class="sub-tabs" id="subTabs">
+        <div class="tab active" data-category="수호">수호</div>
+        <div class="tab" data-category="탑승">탑승</div>
+        <div class="tab" data-category="변신">변신</div>
+    </div>
     <div id="ads-top"></div>
 
     <div class="view-toggle-container">
@@ -130,7 +146,6 @@
     <script src="assets/js/firebaseConfig.js"></script>
     <script src="assets/js/firebaseHandler.js"></script>
 
-    <script src="assets/js/modules/componentLoader.js"></script>
     <script src="assets/js/modules/firebaseHandlerWrapper.js"></script>
     <script src="assets/js/modules/adManager.js"></script>
     <script src="assets/js/modules/uiHelper.js"></script>
