@@ -8,10 +8,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  document
-    .getElementById("search-button")
-    .addEventListener("click", ChakApp.searchStats);
+  // ChakApp 초기화 및 데이터 로드
+  ChakApp.loadChakData();
 
+  // 검색 버튼에 이벤트 리스너 추가
+  const searchButton = document.getElementById("search-button");
+  if (searchButton) {
+    searchButton.addEventListener("click", ChakApp.searchStats);
+  }
+
+  // 모바일 뷰 확인 및 설정
   var isMobile = window.innerWidth <= 768;
   localStorage.setItem("isMobileView", isMobile);
 

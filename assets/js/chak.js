@@ -3740,20 +3740,20 @@ const ChakApp = (() => {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-document.addEventListener("DOMContentLoaded", function () {
-  ChakApp.loadChakData();
+// document.addEventListener("DOMContentLoaded", function () {
+//   ChakApp.loadChakData();
 
-  // 검색 버튼에 이벤트 리스너 추가
-  const searchButton = document.getElementById("search-button");
-  if (searchButton) {
-    searchButton.addEventListener("click", ChakApp.searchStats);
-  }
+//   // 검색 버튼에 이벤트 리스너 추가
+//   const searchButton = document.getElementById("search-button");
+//   if (searchButton) {
+//     searchButton.addEventListener("click", ChakApp.searchStats);
+//   }
 
-  // 튜토리얼 팁 닫기 버튼
-  const closeTipButton = document.getElementById("close-tip");
-  if (closeTipButton) {
-    closeTipButton.addEventListener("click", function () {
-      document.getElementById("tutorial-tip").style.display = "none";
-    });
-  }
-});
+//   // 튜토리얼 팁 닫기 버튼
+//   const closeTipButton = document.getElementById("close-tip");
+//   if (closeTipButton) {
+//     closeTipButton.addEventListener("click", function () {
+//       document.getElementById("tutorial-tip").style.display = "none";
+//     });
+//   }
+// });

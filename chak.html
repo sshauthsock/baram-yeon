@@ -13,11 +13,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/BHY.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/BHY.png">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="assets/css/global.css" rel="stylesheet">
-    <link href="assets/css/main.css" rel="stylesheet">
-    <link href="assets/css/components/ads.css" rel="stylesheet">
-    <link href="assets/css/components/footer.css" rel="stylesheet">
-    <link href="assets/css/components/header.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/chak.css">
+
 
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
@@ -78,8 +75,8 @@
         <div class="panel summary-panel">
             <div class="tool-section">
                 <div class="preset-section">
-                    <button onclick="ChakApp.optimizeStats('boss')" class="preset-btn boss-btn">보스용 조합</button>
-                    <button onclick="ChakApp.optimizeStats('pvp')" class="preset-btn pvp-btn">피빕용 조합</button>
+                    <button onclick="ChakApp.optimizeStats('boss')" class="btn btn-secondary boss-btn">보스용 조합</button>
+                    <button onclick="ChakApp.optimizeStats('pvp')" class="btn btn-primary pvp-btn">피빕용 조합</button>
                 </div>
                 <div class="search-section">
                     <div class="search-input-container">
@@ -113,7 +110,6 @@
             <div id="summary-display" class="summary-box"></div>
         </div>
     </div>
-
     <div id="search-results-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -153,13 +149,15 @@
         </div>
     </div>
 
+
+
     <div id="tutorial-tip" class="tutorial-tip">
         <div class="tip-content">
             <h4>착 계산기 사용법</h4>
             <p>1. 왼쪽에서 장비 부위를 선택하세요</p>
             <p>2. 강화 레벨을 선택하세요</p>
             <p>3. 능력치를 개방하고 강화하세요</p>
-            <button id="close-tip" class="close-tip-btn">확인</button>
+            <button id="close-tip" class="btn btn-primary close-tip-btn">확인</button>
         </div>
     </div>
 
@@ -181,14 +179,13 @@
     </div>
 
     <footer class="site-footer">
-        <div class="footer-desktop">
-            <div class="footer-links">
-                <a href="info.html">환수정보</a>
-                <a href="bondCalculator.html">환수 결속</a>
-                <a href="soulCalculator.html">환수혼 계산</a>
-                <a href="chak.html">착 계산</a>
-                <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
-            </div>
+        <div class="footer-links">
+            <a href="info.html">환수정보</a>
+            <a href="bondCalculator.html">환수 결속</a>
+            <a href="rankingManager.html">환수 랭킹</a>
+            <a href="soulCalculator.html">환수혼 계산</a>
+            <a href="chak.html">착 계산</a>
+            <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
         </div>
         <div class="footer-copyright">
             <p>&copy; 2025 바연화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>

@@ -21,6 +21,39 @@
 
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <style>
+        .ad-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            width: 100%;
+        }
+
+        .ad-container-left,
+        .ad-container-right {
+            width: 48%;
+            min-height: 90px;
+            display: block;
+            text-align: center;
+        }
+
+        .ad-container-mobile {
+            display: block;
+            width: 100%;
+            min-height: 50px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        /* 모바일 광고 스타일 */
+        .mobile-ad {
+            display: block;
+            width: 100%;
+            margin: 15px auto;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -44,7 +77,22 @@
         <div class="tab" data-category="탑승">탑승</div>
         <div class="tab" data-category="변신">변신</div>
     </div>
-    <div id="ads-top"></div>
+
+    <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:block;" data-ad-unit="DAN-yjMqiyAsM7PPR4B6" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+        <div class="ad-container-right">
+            <ins class="kakao_ad_area" style="display:block;" data-ad-unit="DAN-QEGZiGMF1AGAjK2Y" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+    </div>
+
+    <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:block;" data-ad-unit="DAN-IlR8tcsgw0h6ZsLK" data-ad-width="320"
+            data-ad-height="50"></ins>
+    </div>
 
     <div class="filters-container">
         <div class="filter-section">
@@ -68,13 +116,16 @@
 
     <div class="ranking-container">
         <div class="ranking-header">
-            <h1 class="ranking-title">환수 <span id="rankingCategoryTitle">수호</span> <span id="rankingTypeTitle">결속</span>
-                랭킹</h1>
-            <div class="last-updated">마지막 업데이트: <span id="lastUpdated">로딩 중...</span></div>
+            <div>
+                <h1 class="ranking-title">환수 <span id="rankingCategoryTitle">수호</span> <span
+                        id="rankingTypeTitle">결속</span>
+                    랭킹 (신규환수 25레벨 결속 제보 부탁드립니다)</h1>
+                <div class="last-updated">마지막 업데이트: <span id="lastUpdated">로딩 중...</span></div>
+            </div>
 
             <div id="statSelectorContainer" class="stat-selector-container" style="display: none;">
-                <label for="statSelector">능력치 선택:</label>
-                <select id="statSelector">
+                <label for="statSelector">필터: </label>
+                <select id="statSelector" class="stat-selector">
                     <option value="bind">장착효과</option>
                     <option value="registration">등록효과</option>
                     <option value="damageResistancePenetration">피해저항관통</option>
@@ -108,38 +159,66 @@
         <div class="pagination" id="pagination"></div>
     </div>
 
-    <div id="ads-bottom"></div>
-    <div id="footer-container"></div>
+    <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:block;" data-ad-unit="DAN-olaIQrkitoyD4wF4" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+        <div class="ad-container-right">
+            <ins class="kakao_ad_area" style="display:block;" data-ad-unit="DAN-PNvLp6MBwD0euois" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+    </div>
 
-    <!-- 기본 라이브러리 및 설정 -->
+    <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:block;" data-ad-unit="DAN-tq6uazVDh5q4KZye" data-ad-width="320"
+            data-ad-height="50"></ins>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="info.html">환수정보</a>
+            <a href="bondCalculator.html">환수 결속</a>
+            <a href="rankingManager.html">환수 랭킹</a>
+            <a href="soulCalculator.html">환수혼 계산</a>
+            <a href="chak.html">착 계산</a>
+            <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2025 바연화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
+        </div>
+    </footer>
+
+    <script>
+        function initializeKakaoAds() {
+            const kakaoScript = document.createElement('script');
+            kakaoScript.src = 'https://t1.daumcdn.net/kas/static/ba.min.js';
+            kakaoScript.async = true;
+            document.body.appendChild(kakaoScript);
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            initializeKakaoAds();
+        });
+    </script>
+
     <script src="assets/js/common.js"></script>
     <script src="assets/js/firebaseConfig.js"></script>
     <script src="assets/js/firebaseHandler.js"></script>
 
-    <!-- 모듈 스크립트 -->
     <script src="assets/js/modules/firebaseHandlerWrapper.js"></script>
-    <script src="assets/js/modules/adManager.js"></script>
     <script src="assets/js/modules/uiHelper.js"></script>
 
-    <!-- 유틸리티 스크립트 -->
     <script src="assets/js/utils.js"></script>
     <script src="assets/js/spiritUtils.js"></script>
     <script src="assets/js/calculationUtils.js"></script>
 
-    <!-- 데이터 관련 스크립트 -->
     <script src="assets/js/dataManager.js"></script>
     <script src="assets/js/modalHandler.js"></script>
     <script src="assets/js/optimalResultModal.js"></script>
 
-    <!-- 랭킹 관련 스크립트 -->
     <script src="assets/js/rankingManager.js"></script>
     <script src="assets/js/rankingViewer.js"></script>
-
-    <!-- 초기화 스크립트 -->
-    <script src="assets/js/modules/appInit.js"></script>
-
-    <!-- 광고 스크립트 -->
-    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
 </body>
 
 </html>

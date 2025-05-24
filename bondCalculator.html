@@ -42,7 +42,23 @@
         <div class="tab" data-category="탑승">탑승</div>
         <div class="tab" data-category="변신">변신</div>
     </div>
-    <div id="ads-top"></div>
+
+    <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-XTAnZwWzQOT46c36" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+
+        <div class="ad-container-right">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-l6ShIzRdMfSOcB8v" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+    </div>
+
+    <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-UDsuae5QVIAxX2fS" data-ad-width="320"
+            data-ad-height="50"></ins>
+    </div>
 
     <div class="view-toggle-container">
         <label class="toggle-switch">
@@ -74,12 +90,14 @@
                             <div class="level-batch-control">
                                 <label>일괄 레벨 설정:</label>
                                 <input type="number" id="batchLevel" min="0" max="25" value="0">
-                                <button onclick="BondCalculatorApp.applyBatchLevel('batchLevel')">적용</button>
+                                <button class="btn btn-primary"
+                                    onclick="BondCalculatorApp.applyBatchLevel('batchLevel')">적용</button>
                                 <button onclick="BondCalculatorApp.setMaxBatchLevel('batchLevel')"
-                                    class="max-level-btn">Max</button>
+                                    class="btn btn-warning max-level-btn">Max</button>
                             </div>
                             <div class="calculate-btn-small">
-                                <button id="findOptimalBtn" onclick="BondCalculatorApp.findOptimalCombination()">최적 조합
+                                <button id="findOptimalBtn" class="btn btn-secondary"
+                                    onclick="BondCalculatorApp.findOptimalCombination()">최적 조합
                                     찾기</button>
                             </div>
                         </div>
@@ -103,12 +121,13 @@
                             <label>일괄 레벨 설정:</label>
                             <input type="number" id="mobileBatchLevel" min="0" max="25" value="0">
                             <button onclick="BondCalculatorApp.applyBatchLevel('mobileBatchLevel')"
-                                class="apply-level-btn">적용</button>
+                                class="btn btn-primary apply-level-btn">적용</button>
                             <button onclick="BondCalculatorApp.setMaxBatchLevel('mobileBatchLevel')"
-                                class="max-level-btn">Max</button>
+                                class="btn btn-warning max-level-btn">Max</button>
                         </div>
                         <div class="calculate-btn-small">
-                            <button id="findOptimalBtn" onclick="BondCalculatorApp.findOptimalCombination()">찾기</button>
+                            <button id="findOptimalBtn" class="btn btn-secondary"
+                                onclick="BondCalculatorApp.findOptimalCombination()">찾기</button>
                         </div>
                     </div>
                 </div>
@@ -117,7 +136,22 @@
         </div>
     </div>
 
-    <div id="ads-bottom"></div>
+    <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-3TYDe2ScVF7pn7fU" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+
+        <div class="ad-container-right">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Sxen5zACA7yhBeet" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+    </div>
+
+    <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Xtg9TanJcnXcaIaY" data-ad-width="320"
+            data-ad-height="50"></ins>
+    </div>
 
     <div class="help-container">
         <button class="help-btn" id="helpBtn" aria-label="도움말">
@@ -130,24 +164,36 @@
                     <button class="close-help" id="closeHelp">&times;</button>
                 </div>
                 <ul class="help-list">
-                    <li> 환수 등록 정보가 0~25 레벨 전부 있는 경우 왼쪽에 표시</li>
+                    <li>환수 등록 정보가 0~25 레벨 전부 있는 경우 왼쪽에 표시</li>
                     <li>환수 장착 정보가 0~25 레벨 전부 있는 경우 오른쪽에 표시</li>
                     <li>환수 장착 정보에 25레벨이 존재하는 경우 오른쪽 상단에 표시</li>
-                    <li> 환수 20개 이하 선택시 탐색 방식으로 검색</li>
-                    <li> 환수 20개 초과 선택시 사용시 스마트 필터링 방법으로 검색</li>
+                    <li>환수 모든 정보가 있으면 사각형 테두리로 표시</li>
+                    <li>환수 20개 이하 선택시 탐색 방식으로 검색</li>
+                    <li>환수 20개 초과 선택시 사용시 스마트 필터링 방법으로 검색</li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <div id="footer-container"></div>
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="info.html">환수정보</a>
+            <a href="bondCalculator.html">환수 결속</a>
+            <a href="rankingManager.html">환수 랭킹</a>
+            <a href="soulCalculator.html">환수혼 계산</a>
+            <a href="chak.html">착 계산</a>
+            <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2025 바연화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
+        </div>
+    </footer>
 
     <script src="assets/js/common.js"></script>
     <script src="assets/js/firebaseConfig.js"></script>
     <script src="assets/js/firebaseHandler.js"></script>
 
     <script src="assets/js/modules/firebaseHandlerWrapper.js"></script>
-    <script src="assets/js/modules/adManager.js"></script>
     <script src="assets/js/modules/uiHelper.js"></script>
 
     <script src="assets/js/utils.js"></script>
@@ -166,8 +212,6 @@
     <script src="assets/js/searchManager.js"></script>
     <script src="assets/js/optimalCombinationFinder.js"></script>
     <script src="assets/js/bondCalculatorApp.js"></script>
-
-    <script src="assets/js/modules/appInit.js"></script>
 
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
 </body>

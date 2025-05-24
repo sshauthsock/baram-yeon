@@ -391,7 +391,7 @@ const OptimalCombinationFinder = (function () {
         </div>
   
         <div id="optimalSpiritsDetails" class="spirit-details-container">
-          <h4>선택된 환수 상세 스탯</h4>
+          <h4>선택된 환수 상세 스탯 (결속 수치)</h4>
           <div id="spiritStatsDetails" class="spirit-stats-grid"></div>
         </div>
       </div>

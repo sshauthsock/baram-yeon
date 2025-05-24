@@ -1,13 +1,11 @@
 const FirebaseHandlerWrapper = {
   init: function () {
-    // 원본 FirebaseHandler가 없으면 대기
     if (typeof FirebaseHandler === "undefined") {
       console.warn("FirebaseHandler not available yet, waiting...");
       setTimeout(() => this.init(), 100);
       return;
     }
 
-    // firebaseConfig가 없는 경우를 처리
     if (typeof firebaseConfig === "undefined") {
       console.warn(
         "firebaseConfig가 정의되지 않았습니다. 기본 설정을 사용합니다."
@@ -22,16 +20,14 @@ const FirebaseHandlerWrapper = {
       };
     }
 
-    // Firebase 초기화
     FirebaseHandler.initFirebase();
 
-    // 연결성 테스트
     FirebaseHandler.testFirebaseConnectivity()
       .then((connected) => {
-        console.log(
-          "Firebase connectivity test result:",
-          connected ? "Connected" : "Not connected"
-        );
+        // console.log(
+        //   "Firebase connectivity test result:",
+        //   connected ? "Connected" : "Not connected"
+        // );
         document.dispatchEvent(
           new CustomEvent("firebase:ready", { detail: { connected } })
         );
@@ -45,7 +41,6 @@ const FirebaseHandlerWrapper = {
   },
 };
 
-// 자동 초기화
 document.addEventListener("DOMContentLoaded", function () {
   if (typeof FirebaseHandler !== "undefined") {
     FirebaseHandlerWrapper.init();

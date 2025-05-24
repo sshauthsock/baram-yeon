@@ -79,9 +79,9 @@ const ModalHandler = (function () {
     highlightStat,
     spiritName
   ) {
-    console.log(
-      `showInfoInModal 호출: ${category}, ${imagePath}, 레벨=${startLevel}, 하이라이트=${highlightStat}, 이름=${spiritName}`
-    );
+    // console.log(
+    //   `showInfoInModal 호출: ${category}, ${imagePath}, 레벨=${startLevel}, 하이라이트=${highlightStat}, 이름=${spiritName}`
+    // );
 
     const { modal, content } = createModal(
       category,

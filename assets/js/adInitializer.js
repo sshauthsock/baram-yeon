@@ -46,7 +46,7 @@ const AdInitializer = (function () {
 
   function loadAdScript() {
     if (document.getElementById("kakao-ad-script")) {
-      console.log("카카오 광고 스크립트가 이미 로드되었습니다.");
+      // console.log("카카오 광고 스크립트가 이미 로드되었습니다.");
       return;
     }
 
@@ -57,7 +57,7 @@ const AdInitializer = (function () {
     script.src = "//t1.daumcdn.net/kas/static/ba.min.js";
 
     script.onload = function () {
-      console.log("카카오 광고 스크립트 성공적으로 로드됨");
+      // console.log("카카오 광고 스크립트 성공적으로 로드됨");
       if (
         typeof kakao !== "undefined" &&
         kakao.adfit &&
@@ -75,12 +75,10 @@ const AdInitializer = (function () {
   }
 
   function addAdsToModalContent(container) {
-    // 기존 광고 요소 제거
     container
       .querySelectorAll(".ad-row, .mobile-ad")
       .forEach((el) => el.remove());
 
-    // 모달에 광고 요소 추가
     const adRow = document.createElement("div");
     adRow.className = "ad-row";
     adRow.innerHTML = `
@@ -124,7 +122,7 @@ const AdInitializer = (function () {
         initializationInProgress = false;
       }, 500);
     } catch (e) {
-      console.log("광고 초기화 중 오류:", e);
+      // console.log("광고 초기화 중 오류:", e);
       initializationInProgress = false;
     }
   }

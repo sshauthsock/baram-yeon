@@ -1,33 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // FirebaseHandler와 BondCalculatorApp이 로드될 때까지 기다리기
   waitForDependencies(["FirebaseHandler", "BondCalculatorApp"], function () {
     console.log("All dependencies loaded for Bond Calculator");
 
     FirebaseHandler.initFirebase();
     FirebaseHandler.testFirebaseConnectivity()
       .then(() => {
-        console.log("Firebase connectivity verified, initializing app...");
+        // console.log("Firebase connectivity verified, initializing app...");
         BondCalculatorApp.initialize();
       })
       .catch((err) => {
         console.warn("Firebase connectivity test failed:", err);
-        console.log("Proceeding with app initialization anyway...");
+        // console.log("Proceeding with app initialization anyway...");
         BondCalculatorApp.initialize();
       });
   });
 
-  // 모바일 뷰 상태 저장
   var isMobile = window.innerWidth <= 768;
   localStorage.setItem("isMobileView", isMobile);
 
-  // 도움말 툴팁 설정
   setupHelpTooltip();
 
-  // 반응형 처리
   window.addEventListener("resize", debounce(handleResize, 250));
 });
 
-// 의존성이 로드될 때까지 기다리기
 function waitForDependencies(deps, callback) {
   const checkDeps = () => {
     for (let dep of deps) {
@@ -42,7 +37,7 @@ function waitForDependencies(deps, callback) {
     callback();
   } else {
     let attempts = 0;
-    const maxAttempts = 50; // 5초 타임아웃
+    const maxAttempts = 50;
 
     const interval = setInterval(() => {
       attempts++;
@@ -60,16 +55,25 @@ function waitForDependencies(deps, callback) {
   }
 }
 
-// 도움말 툴팁 설정
 function setupHelpTooltip() {
   const helpBtn = document.getElementById("helpBtn");
   const helpTooltip = document.getElementById("helpTooltip");
   const closeHelp = document.getElementById("closeHelp");
 
+  // console.log("Elements found:", {
+  //   helpBtn: !!helpBtn,
+  //   helpTooltip: !!helpTooltip,
+  //   closeHelp: !!closeHelp,
+  // });
+
   if (helpBtn && helpTooltip && closeHelp) {
-    helpBtn.addEventListener("click", function () {
+    helpTooltip.style.display = "none";
+
+    helpBtn.addEventListener("click", function (event) {
+      // console.log("Help button clicked");
       helpTooltip.style.display =
         helpTooltip.style.display === "block" ? "none" : "block";
+      event.stopPropagation();
     });
 
     closeHelp.addEventListener("click", function () {
@@ -77,16 +81,18 @@ function setupHelpTooltip() {
     });
 
     document.addEventListener("click", function (event) {
+      // console.log("Click event detected");
       const isClickInsideHelp =
         helpTooltip.contains(event.target) || helpBtn.contains(event.target);
       if (!isClickInsideHelp && helpTooltip.style.display === "block") {
         helpTooltip.style.display = "none";
       }
     });
+  } else {
+    console.error("Required elements for help tooltip not found in DOM");
   }
 }
 
-// 반응형 처리
 function handleResize() {
   var wasMobile = localStorage.getItem("isMobileView") === "true";
   var isMobile = window.innerWidth <= 768;

@@ -18,8 +18,30 @@ const RankingViewer = (function () {
   let initStarted = false;
   let initComplete = false;
 
+  function calculateScore(effects) {
+    if (!effects) return 0;
+
+    const damageResistancePenetration = SpiritUtils.ensureNumber(
+      effects.damageResistancePenetration || 0
+    );
+    const damageResistance = SpiritUtils.ensureNumber(
+      effects.damageResistance || 0
+    );
+    const pvpDamagePercent =
+      SpiritUtils.ensureNumber(effects.pvpDamagePercent || 0) * 10;
+    const pvpDefensePercent =
+      SpiritUtils.ensureNumber(effects.pvpDefensePercent || 0) * 10;
+
+    return (
+      damageResistancePenetration +
+      damageResistance +
+      pvpDamagePercent +
+      pvpDefensePercent
+    );
+  }
+
   async function waitForDependencies() {
-    console.log("RankingViewer: 의존성 로드 대기 시작");
+    // console.log("RankingViewer: 의존성 로드 대기 시작");
     const requiredDeps = [
       "FirebaseHandler",
       "DataManager",
@@ -27,7 +49,7 @@ const RankingViewer = (function () {
       "SpiritUtils",
     ];
     let attempts = 0;
-    const maxAttempts = 50; // 5초 (100ms × 50)
+    const maxAttempts = 50;
 
     return new Promise((resolve) => {
       function checkDependencies() {
@@ -36,25 +58,25 @@ const RankingViewer = (function () {
         );
 
         if (missingDeps.length === 0) {
-          console.log("RankingViewer: 모든 의존성 로드 완료");
+          // console.log("RankingViewer: 모든 의존성 로드 완료");
           return resolve(true);
         }
 
         attempts++;
         if (attempts >= maxAttempts) {
-          console.warn(
-            `RankingViewer: 의존성 로드 시간 초과. 누락된 의존성: ${missingDeps.join(
-              ", "
-            )}`
-          );
+          // console.warn(
+          //   `RankingViewer: 의존성 로드 시간 초과. 누락된 의존성: ${missingDeps.join(
+          //     ", "
+          //   )}`
+          // );
           return resolve(false);
         }
 
-        console.log(
-          `RankingViewer: 의존성 대기 중... (${attempts}/${maxAttempts}), 누락: ${missingDeps.join(
-            ", "
-          )}`
-        );
+        // console.log(
+        //   `RankingViewer: 의존성 대기 중... (${attempts}/${maxAttempts}), 누락: ${missingDeps.join(
+        //     ", "
+        //   )}`
+        // );
         setTimeout(checkDependencies, 100);
       }
 
@@ -63,7 +85,6 @@ const RankingViewer = (function () {
   }
 
   async function initialize() {
-    // 이중 초기화 방지
     if (initStarted) {
       console.log("RankingViewer: 이미 초기화 진행 중");
       return;
@@ -72,7 +93,6 @@ const RankingViewer = (function () {
     initStarted = true;
     console.log("RankingViewer: 초기화 시작");
 
-    // DOM 요소 참조 가져오기
     bondRankingsContainer = document.getElementById("bondRankingsContainer");
     statRankingsContainer = document.getElementById("statRankingsContainer");
     statSelectorContainer = document.getElementById("statSelectorContainer");
@@ -85,7 +105,6 @@ const RankingViewer = (function () {
       return;
     }
 
-    // 의존성이 로드될 때까지 대기
     const depsLoaded = await waitForDependencies();
     if (!depsLoaded) {
       showError(
@@ -94,11 +113,9 @@ const RankingViewer = (function () {
       return;
     }
 
-    // 이벤트 리스너 설정
     setupModalEvents();
     setupEventListeners();
 
-    // Firebase 초기화
     if (
       typeof FirebaseHandler !== "undefined" &&
       FirebaseHandler.initFirebase
@@ -117,7 +134,6 @@ const RankingViewer = (function () {
       );
     }
 
-    // 데이터 로드
     if (typeof DataManager !== "undefined" && DataManager.loadCategoryData) {
       try {
         console.log("RankingViewer: 카테고리 데이터 로드 중");
@@ -132,7 +148,6 @@ const RankingViewer = (function () {
       );
     }
 
-    // 환수 이미지 클릭 이벤트 대리자(delegate) 설정
     document.addEventListener("click", function (e) {
       if (e.target.classList.contains("spirit-image")) {
         if (!e.target.hasAttribute("data-image")) {
@@ -145,7 +160,6 @@ const RankingViewer = (function () {
       }
     });
 
-    // 랭킹 데이터 로드
     loadRankingData();
 
     initComplete = true;
@@ -316,7 +330,6 @@ const RankingViewer = (function () {
       }
     }
 
-    // RankingManager 의존성 체크
     if (typeof window.RankingManager === "undefined") {
       showError("RankingManager 모듈을 찾을 수 없습니다");
       return;
@@ -397,6 +410,7 @@ const RankingViewer = (function () {
 
           if (doc.exists) {
             rankingData = doc.data();
+            // console.log("Firebase에서 랭킹 데이터 로드:", docName);
           } else if (currentGradeFilter === "legendary") {
             docName = `bond-rankings-${categoryMap[currentCategory]}`;
             const regularDoc = await db
@@ -407,6 +421,43 @@ const RankingViewer = (function () {
             if (regularDoc.exists) {
               const data = regularDoc.data();
               allRankingsData[currentCategory] = data.rankings || [];
+
+              for (const item of allRankingsData[currentCategory]) {
+                const gradeEffectsScore = calculateScore(
+                  item.gradeEffects || {}
+                );
+                const factionEffectsScore = calculateScore(
+                  item.factionEffects || {}
+                );
+                const bindStatScore = calculateScore(item.bindStats || {});
+
+                item.calculatedScore =
+                  gradeEffectsScore + factionEffectsScore + bindStatScore;
+
+                item.debugGradeScore = gradeEffectsScore;
+                item.debugFactionScore = factionEffectsScore;
+                item.debugBindScore = bindStatScore;
+              }
+
+              allRankingsData[currentCategory].sort((a, b) => {
+                return b.calculatedScore - a.calculatedScore;
+              });
+
+              // console.log("정렬 후 상위 3개 항목의 환산합 값:");
+              for (
+                let i = 0;
+                i < Math.min(3, allRankingsData[currentCategory].length);
+                i++
+              ) {
+                const item = allRankingsData[currentCategory][i];
+                // console.log(
+                //   `${i + 1}등: ${item.calculatedScore} = 등급(${
+                //     item.debugGradeScore
+                //   }) + 세력(${item.debugFactionScore}) + 장착(${
+                //     item.debugBindScore
+                //   })`
+                // );
+              }
 
               rankings = allRankingsData[currentCategory].filter((ranking) => {
                 return (
@@ -445,6 +496,37 @@ const RankingViewer = (function () {
 
       allRankingsData[currentCategory] =
         rankingData.rankings || rankingData.data.rankings || [];
+
+      for (const item of allRankingsData[currentCategory]) {
+        const gradeEffectsScore = calculateScore(item.gradeEffects || {});
+        const factionEffectsScore = calculateScore(item.factionEffects || {});
+        const bindStatScore = calculateScore(item.bindStats || {});
+
+        item.calculatedScore =
+          gradeEffectsScore + factionEffectsScore + bindStatScore;
+
+        item.debugGradeScore = gradeEffectsScore;
+        item.debugFactionScore = factionEffectsScore;
+        item.debugBindScore = bindStatScore;
+      }
+
+      allRankingsData[currentCategory].sort((a, b) => {
+        return b.calculatedScore - a.calculatedScore;
+      });
+
+      // console.log("정렬 후 상위 3개 항목의 환산합 값:");
+      for (
+        let i = 0;
+        i < Math.min(3, allRankingsData[currentCategory].length);
+        i++
+      ) {
+        const item = allRankingsData[currentCategory][i];
+        // console.log(
+        //   `${i + 1}등: ${item.calculatedScore} = 등급(${
+        //     item.debugGradeScore
+        //   }) + 세력(${item.debugFactionScore}) + 장착(${item.debugBindScore})`
+        // );
+      }
 
       if (currentGradeFilter === "legendary") {
         rankings = allRankingsData[currentCategory].filter((ranking) => {
@@ -491,9 +573,9 @@ const RankingViewer = (function () {
         throw new Error(`${currentCategory} 환수 데이터를 찾을 수 없습니다`);
       }
 
-      console.log(
-        `${currentCategory} 카테고리에서 ${allSpirits.length}개의 환수 데이터를 로드했습니다.`
-      );
+      // console.log(
+      //   `${currentCategory} 카테고리에서 ${allSpirits.length}개의 환수 데이터를 로드했습니다.`
+      // );
 
       let calculatedRankings = [];
 
@@ -560,7 +642,7 @@ const RankingViewer = (function () {
 
       calculatedRankings.sort((a, b) => b.value - a.value);
 
-      console.log(`${calculatedRankings.length}개의 환수 랭킹을 계산했습니다.`);
+      // console.log(`${calculatedRankings.length}개의 환수 랭킹을 계산했습니다.`);
 
       rankings = calculatedRankings;
       totalRankings = calculatedRankings.length;
@@ -603,6 +685,28 @@ const RankingViewer = (function () {
 
       bondRankingsContainer.innerHTML = `<div class="no-data-message">${message}</div>`;
       return;
+    }
+
+    // 검증: 환산합 기준 내림차순 정렬 확인
+    const isDescSorted = rankings.every(
+      (item, i) =>
+        i === 0 ||
+        !rankings[i - 1].calculatedScore ||
+        !item.calculatedScore ||
+        parseFloat(rankings[i - 1].calculatedScore) >=
+          parseFloat(item.calculatedScore)
+    );
+
+    if (!isDescSorted) {
+      console.warn(
+        "랭킹 데이터가 환산합 기준 내림차순으로 정렬되어 있지 않습니다. 다시 정렬합니다."
+      );
+      rankings.sort((a, b) => {
+        return (
+          (parseFloat(b.calculatedScore) || 0) -
+          (parseFloat(a.calculatedScore) || 0)
+        );
+      });
     }
 
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -690,16 +794,26 @@ const RankingViewer = (function () {
         );
       }
 
-      const gradeScore = Math.round(
-        SpiritUtils.ensureNumber(ranking.gradeScore || 0)
-      );
-      const factionScore = Math.round(
-        SpiritUtils.ensureNumber(ranking.factionScore || 0)
-      );
-      const bindScore = Math.round(
-        SpiritUtils.ensureNumber(ranking.bindScore || 0)
-      );
-      const totalScore = gradeScore + factionScore + bindScore;
+      // 환산합 계산 (등급 + 세력 + 장착)
+      const gradeScore =
+        ranking.debugGradeScore !== undefined
+          ? ranking.debugGradeScore
+          : calculateScore(ranking.gradeEffects || {});
+
+      const factionScore =
+        ranking.debugFactionScore !== undefined
+          ? ranking.debugFactionScore
+          : calculateScore(ranking.factionEffects || {});
+
+      const bindScore =
+        ranking.debugBindScore !== undefined
+          ? ranking.debugBindScore
+          : calculateScore(ranking.bindStats || {});
+
+      const calculatedScore =
+        ranking.calculatedScore !== undefined
+          ? ranking.calculatedScore
+          : gradeScore + factionScore + bindScore;
 
       const rankClass = isTop ? `top-${rank}` : "";
 
@@ -715,9 +829,11 @@ const RankingViewer = (function () {
             <div class="faction-tags">${factionTagsHtml}</div>
           </td>
           <td class="score-column">
-            <div class="total-score">${totalScore}</div>
+            <div class="total-score">${Math.round(calculatedScore)}</div>
             <div class="score-breakdown">
-              (등급: ${gradeScore} | 세력: ${factionScore} | 장착: ${bindScore})
+              (등급: ${Math.round(gradeScore)} | 세력: ${Math.round(
+        factionScore
+      )} | 장착: ${Math.round(bindScore)})
             </div>
           </td>
           <td class="action-column">
@@ -734,7 +850,6 @@ const RankingViewer = (function () {
     `;
 
     bondRankingsContainer.innerHTML = tableHtml;
-
     attachSpiritImageClickEvents();
   }
 
@@ -755,12 +870,12 @@ const RankingViewer = (function () {
     const influence = img.getAttribute("data-influence") || "";
     const spiritName = img.getAttribute("data-name") || "";
 
-    console.log("환수 이미지 클릭:", {
-      imageUrl,
-      category,
-      influence,
-      spiritName,
-    });
+    // console.log("환수 이미지 클릭:", {
+    //   imageUrl,
+    //   category,
+    //   influence,
+    //   spiritName,
+    // });
 
     if (imageUrl) {
       showSpiritModal(imageUrl, category, influence, spiritName);
@@ -864,12 +979,12 @@ const RankingViewer = (function () {
     const influence = card.getAttribute("data-influence") || "";
     const spiritName = card.getAttribute("data-name") || "";
 
-    console.log("능력치 랭킹 카드 클릭:", {
-      imageUrl,
-      category,
-      influence,
-      spiritName,
-    });
+    // console.log("능력치 랭킹 카드 클릭:", {
+    //   imageUrl,
+    //   category,
+    //   influence,
+    //   spiritName,
+    // });
 
     if (imageUrl) {
       showSpiritModal(imageUrl, category, influence, spiritName);
@@ -893,7 +1008,7 @@ const RankingViewer = (function () {
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
 
-    let html = `<div class="pagination-controls">`;
+    let html = `<div class="pagination-wrapper"><div class="pagination-controls">`;
 
     html += `
       <button class="pagination-button ${currentPage === 1 ? "disabled" : ""}" 
@@ -959,6 +1074,8 @@ const RankingViewer = (function () {
       </div>
     `;
 
+    html += `</div>`;
+
     paginationContainer.innerHTML = html;
 
     const selector = document.getElementById("itemsPerPageSelect");
@@ -981,7 +1098,6 @@ const RankingViewer = (function () {
   function findSpiritNameInRankings(imageUrl) {
     if (!rankings || !imageUrl) return null;
 
-    // 결속 랭킹에서 검색
     if (currentRankingType === "bond") {
       for (const ranking of rankings) {
         if (ranking.spirits) {
@@ -992,9 +1108,7 @@ const RankingViewer = (function () {
           }
         }
       }
-    }
-    // 능력치 랭킹에서 검색
-    else {
+    } else {
       for (const ranking of rankings) {
         if (ranking.image === imageUrl) {
           return ranking.name;
@@ -1006,14 +1120,13 @@ const RankingViewer = (function () {
   }
 
   function showSpiritModal(imageUrl, category, influence, spiritName = null) {
-    console.log("랭킹 뷰어: 환수 모달 표시 요청", {
-      imageUrl,
-      category,
-      influence,
-      spiritName,
-    });
+    // console.log("랭킹 뷰어: 환수 모달 표시 요청", {
+    //   imageUrl,
+    //   category,
+    //   influence,
+    //   spiritName,
+    // });
 
-    // 기존 모달 닫기
     if (typeof window.ModalHandler !== "undefined") {
       if (typeof window.ModalHandler.removeAllModals === "function") {
         window.ModalHandler.removeAllModals();
@@ -1022,7 +1135,6 @@ const RankingViewer = (function () {
       }
     }
 
-    // 로딩 표시
     const loadingOverlay = document.createElement("div");
     loadingOverlay.className = "temp-loading-overlay";
     loadingOverlay.style.position = "fixed";
@@ -1046,7 +1158,6 @@ const RankingViewer = (function () {
     `;
     document.body.appendChild(loadingOverlay);
 
-    // 능력치 하이라이트 설정
     const highlightStat =
       currentRankingType === "stat" &&
       currentStat !== "bind" &&
@@ -1054,12 +1165,10 @@ const RankingViewer = (function () {
         ? currentStat
         : null;
 
-    // 환수 이름 찾기
     if (!spiritName) {
       spiritName = findSpiritNameInRankings(imageUrl);
     }
 
-    // 데이터 로드 후 모달 표시
     if (
       window.DataManager &&
       typeof window.DataManager.loadCategoryData === "function"
@@ -1190,14 +1299,11 @@ const RankingViewer = (function () {
     }
   }
 
-  // DOMContentLoaded 이벤트에서 초기화 시작
   document.addEventListener("DOMContentLoaded", function () {
     console.log("RankingViewer: DOMContentLoaded 이벤트 발생");
-    // 약간의 지연을 두고 초기화 시작 - 다른 스크립트의 로딩 시간 확보
     setTimeout(initialize, 10);
   });
 
-  // 외부에 노출할 메소드들
   return {
     changePage,
     loadRankingData,
@@ -1207,5 +1313,4 @@ const RankingViewer = (function () {
   };
 })();
 
-// 전역 객체에 등록
 window.RankingViewer = RankingViewer;

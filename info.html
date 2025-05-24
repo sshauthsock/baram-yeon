@@ -45,7 +45,6 @@
         <div class="tab" data-category="변신">변신</div>
     </div>
 
-    <!-- 광고 영역 -->
     <div class="ad-row">
         <div class="ad-container-left">
             <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-XTAnZwWzQOT46c36" data-ad-width="728"
@@ -72,17 +71,17 @@
             <select id="statFilter" class="stat-filter">
                 <option value="">능력치 필터</option>
             </select>
-            <button id="clearFilter" class="clear-filter-btn" style="display: none;">초기화</button>
+            <button id="clearFilter" class="btn btn-sm btn-danger clear-filter-btn" style="display: none;">초기화</button>
         </div>
     </div>
 
     <div class="image-container" id="imageContainer">
         <div class="loading-indicator">
+            <div class="spin"></div>
             <span>데이터를 불러오는 중입니다...</span>
         </div>
     </div>
 
-    <!-- 하단 광고 영역 -->
     <div class="ad-row">
         <div class="ad-container-left">
             <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-3TYDe2ScVF7pn7fU" data-ad-width="728"
@@ -100,7 +99,7 @@
     </div>
 
     <div class="report-container">
-        <button class="report-btn" onclick="openReportSheet()">
+        <button class="btn btn-primary report-btn" onclick="openReportSheet()">
             <span class="report-icon">📋</span>
             <span class="report-text">제보하기</span>
             <span class="report-spark">✨</span>
@@ -114,12 +113,13 @@
         <div class="help-tooltip" id="helpTooltip">
             <div class="help-content">
                 <div class="help-header">
-                    <h3>리본 표시 안내</h3>
+                    <h3>환수 표시 안내</h3>
                     <button class="close-help" id="closeHelp">&times;</button>
                 </div>
                 <ul class="help-list">
-                    <li> 환수 등록 정보가 0~25 레벨 전부 있는 경우 왼쪽에 표시</li>
+                    <li>환수 등록 정보가 0~25 레벨 전부 있는 경우 왼쪽에 표시</li>
                     <li>환수 장착 정보가 0~25 레벨 전부 있는 경우 오른쪽에 표시</li>
+                    <li>환수 모든 정보가 있으면 사각형 테두리로 표시</li>
                     <li>환수 장착 정보에 25레벨이 존재하는 경우 오른쪽 상단에 표시</li>
                 </ul>
             </div>
@@ -127,33 +127,26 @@
     </div>
 
     <footer class="site-footer">
-        <div class="footer-desktop">
-            <div class="footer-links">
-                <a href="info.html">환수정보</a>
-                <a href="bondCalculator.html">환수 결속</a>
-                <a href="rankingManager.html">환수 랭킹</a>
-                <a href="soulCalculator.html">환수혼 계산</a>
-                <a href="chak.html">착 계산</a>
-                <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
-            </div>
+        <div class="footer-links">
+            <a href="info.html">환수정보</a>
+            <a href="bondCalculator.html">환수 결속</a>
+            <a href="rankingManager.html">환수 랭킹</a>
+            <a href="soulCalculator.html">환수혼 계산</a>
+            <a href="chak.html">착 계산</a>
+            <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
         </div>
         <div class="footer-copyright">
             <p>&copy; 2025 바연화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
         </div>
     </footer>
 
-    <!-- 기본 공통 스크립트 -->
     <script src="assets/js/firebaseConfig.js"></script>
     <script src="assets/js/common.js"></script>
     <script src="assets/js/utils.js"></script>
     <script src="assets/js/firebaseHandler.js"></script>
 
-    <!-- 유틸리티 모듈 -->
-    <script src="assets/js/modules/uiHelper.js"></script>
     <script src="assets/js/modules/firebaseHandlerWrapper.js"></script>
-    <script src="assets/js/modules/moduleLoader.js"></script>
 
-    <!-- 비즈니스 로직 -->
     <script src="assets/js/uiRenderer.js"></script>
     <script src="assets/js/configManager.js"></script>
     <script src="assets/js/eventBus.js"></script>
@@ -161,10 +154,8 @@
     <script src="assets/js/modalHandler.js"></script>
     <script src="assets/js/imageHandler-compat.js"></script>
 
-    <!-- 페이지별 스크립트 -->
     <script src="assets/js/info.js"></script>
 
-    <!-- 광고 스크립트 -->
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
 </body>
 

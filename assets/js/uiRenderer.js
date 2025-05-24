@@ -1,5 +1,4 @@
 window.UIRenderer = (function () {
-  // Utils가 정의되지 않았을 경우를 위한 로컬 유틸 함수
   const localUtils = {
     createElement: function (type, className, attributes = {}) {
       const element = document.createElement(type);
@@ -45,7 +44,6 @@ window.UIRenderer = (function () {
     },
   };
 
-  // 전역 Utils 객체 또는 로컬 유틸 사용
   const Utils = window.Utils || localUtils;
 
   let currentCategory = "수호";
@@ -476,17 +474,39 @@ window.UIRenderer = (function () {
 
     if (secondRowHasContent) container.appendChild(secondRow);
 
-    if (
-      !firstRowHasContent &&
-      !secondRowHasContent &&
-      itemsInCategory.length > 0
-    ) {
-      renderEmptyState(
-        container,
-        `알려진 세력에 속하지 않는 ${category} 환수가 있습니다.`
-      );
-    } else if (!firstRowHasContent && !secondRowHasContent) {
-      renderEmptyState(container, `표시할 ${category} 환수 정보가 없습니다.`);
+    const itemsWithoutInfluence = itemsInCategory.filter(
+      (item) =>
+        !item.influence ||
+        (!firstRowInfluences.includes(item.influence) &&
+          !secondRowInfluences.includes(item.influence))
+    );
+
+    if (itemsWithoutInfluence.length > 0) {
+      const unknownRow = Utils.createElement("div", "influence-row");
+      const unknownGroup = Utils.createElement("div", "influence-group");
+
+      const headerWrapper = Utils.createElement("div", "header-wrapper");
+      const header = Utils.createElement("h3", "influence-header", {
+        text: "기타",
+      });
+      const countSpan = Utils.createElement("span", "influence-count", {
+        text: ` (${itemsWithoutInfluence.length})`,
+      });
+      header.appendChild(countSpan);
+      headerWrapper.appendChild(header);
+      unknownGroup.appendChild(headerWrapper);
+
+      const itemsWrapper = Utils.createElement("div", "influence-items");
+
+      itemsWithoutInfluence.forEach((item) => {
+        if (!item || !item.image || !item.name) return;
+        const imgWrapper = createImageWrapper(item, category);
+        itemsWrapper.appendChild(imgWrapper);
+      });
+
+      unknownGroup.appendChild(itemsWrapper);
+      unknownRow.appendChild(unknownGroup);
+      container.appendChild(unknownRow);
     }
 
     if (
@@ -614,13 +634,13 @@ window.UIRenderer = (function () {
       });
     } else {
       imgBox.addEventListener("click", () => {
-        console.log("이미지 클릭됨:", item.name);
+        // console.log("이미지 클릭됨:", item.name);
 
         const statFilter = document.getElementById("statFilter");
         const highlightStat = statFilter?.value || currentStatFilter || null;
 
         if (ModalHandler && typeof ModalHandler.showInfo === "function") {
-          console.log("ModalHandler.showInfo 호출 (필터:", highlightStat, ")");
+          // console.log("ModalHandler.showInfo 호출 (필터:", highlightStat, ")");
           ModalHandler.showInfo(
             category,
             item.image,

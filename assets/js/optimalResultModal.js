@@ -46,8 +46,8 @@ const OptimalResultModal = (function () {
     closeButton.innerHTML = "✕";
     closeButton.style.cssText = `
       position: absolute;
-      top: 15px;
       right: 15px;
+      top: 15px;
       font-size: 24px;
       background: none;
       border: none;
@@ -77,27 +77,24 @@ const OptimalResultModal = (function () {
     const baseModal = createBaseModal();
     const modalContent = baseModal.content;
 
-    // 1. Ad Row
     const adRow = document.createElement("div");
     adRow.className = "ad-row";
     adRow.innerHTML = `
       <div class="ad-container-left">
-        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-sgK0ytXrL3f7EHRF"
+        <ins class="kakao_ad_area" style="display:block;" data-ad-unit="DAN-sgK0ytXrL3f7EHRF"
             data-ad-width="728" data-ad-height="90"></ins>
       </div>
     `;
     modalContent.appendChild(adRow);
 
-    // 2. Mobile Ad
     const mobileAd = document.createElement("div");
     mobileAd.className = "ad-container mobile-ad";
     mobileAd.innerHTML = `
-      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-TPesUrzJaxJ008Lm"
+      <ins class="kakao_ad_area" style="display:block;" data-ad-unit="DAN-TPesUrzJaxJ008Lm"
           data-ad-width="320" data-ad-height="50"></ins>
     `;
     modalContent.appendChild(mobileAd);
 
-    // 3. Header
     const headerDiv = document.createElement("div");
     headerDiv.id = "optimalHeader";
     headerDiv.className = "optimal-header";
@@ -112,7 +109,6 @@ const OptimalResultModal = (function () {
     headerDiv.appendChild(scoreDiv);
     modalContent.appendChild(headerDiv);
 
-    // 4. Action Buttons
     if (modalType === "bond") {
       const actionButtons = document.createElement("div");
       actionButtons.className = "action-buttons";
@@ -122,7 +118,6 @@ const OptimalResultModal = (function () {
       modalContent.appendChild(actionButtons);
     }
 
-    // 5. 히스토리 탭 컨테이너 (bond 모드에서만)
     if (modalType === "bond") {
       const spiritsList = document.createElement("div");
       spiritsList.id = "optimalSpiritsList";
@@ -130,17 +125,14 @@ const OptimalResultModal = (function () {
       modalContent.appendChild(spiritsList);
     }
 
-    // 6. 결과 컨테이너 (combinationResultsContainer) - 히스토리 탭 아래에 위치
     const combinationContainer = document.createElement("div");
     combinationContainer.id = "combinationResultsContainer";
     combinationContainer.className = "combination-results-container";
     modalContent.appendChild(combinationContainer);
 
-    // 7. 결과 컨테이너
     const resultsContainer = document.createElement("div");
     resultsContainer.className = "results-container";
 
-    // Grade Effects
     const gradeSection = document.createElement("div");
     gradeSection.className = "results-section";
     const gradeEffects = document.createElement("div");
@@ -149,7 +141,6 @@ const OptimalResultModal = (function () {
     gradeSection.appendChild(gradeEffects);
     resultsContainer.appendChild(gradeSection);
 
-    // Faction Effects
     const factionSection = document.createElement("div");
     factionSection.className = "results-section";
     const factionEffects = document.createElement("div");
@@ -158,7 +149,6 @@ const OptimalResultModal = (function () {
     factionSection.appendChild(factionEffects);
     resultsContainer.appendChild(factionSection);
 
-    // Bind Effects
     const bindSection = document.createElement("div");
     bindSection.className = "results-section";
     const bindEffects = document.createElement("div");
@@ -169,12 +159,11 @@ const OptimalResultModal = (function () {
 
     modalContent.appendChild(resultsContainer);
 
-    // 8. 상세 정보 컨테이너
     const detailsContainer = document.createElement("div");
     detailsContainer.id = "optimalSpiritsDetails";
     detailsContainer.className = "spirit-details-container";
     const detailsTitle = document.createElement("h4");
-    detailsTitle.textContent = "선택된 환수 상세 스탯";
+    detailsTitle.textContent = "선택된 환수 상세 스탯 (결속 수치)";
     detailsContainer.appendChild(detailsTitle);
 
     const statsGrid = document.createElement("div");
@@ -204,6 +193,9 @@ const OptimalResultModal = (function () {
     if (optimalModal) {
       optimalModal.style.display = "flex";
       document.body.style.overflow = "hidden";
+
+      // 광고 초기화 즉시 실행
+      initKakaoAds();
     }
 
     const modalTitle = document.querySelector(".modal-title");
@@ -248,12 +240,10 @@ const OptimalResultModal = (function () {
       optimalScoreBindEl.style.display = "none";
     }
 
-    // 결과 렌더링을 위한 임시 컨테이너 생성
     const tempContainer = document.createElement("div");
     tempContainer.style.display = "none";
     document.body.appendChild(tempContainer);
 
-    // 정보 안내 박스
     const infoBox = document.createElement("div");
     infoBox.className = "data-submission-request";
     infoBox.innerHTML =
@@ -261,7 +251,6 @@ const OptimalResultModal = (function () {
       "해당 레벨에 대해 정보가 있으신가요? 제보해주시면 바로 반영하겠습니다.";
     tempContainer.appendChild(infoBox);
 
-    // 데이터 누락 경고
     if (
       (missingDataSpirits && missingDataSpirits.length > 0) ||
       (missingBindDataSpirits && missingBindDataSpirits.length > 0)
@@ -292,7 +281,6 @@ const OptimalResultModal = (function () {
       tempContainer.appendChild(warningBox);
     }
 
-    // 영혼 그리드 표시
     const spiritsGridWrapper = document.createElement("div");
     spiritsGridWrapper.innerHTML = `
       <h4>조합 환수 정보</h4>
@@ -314,7 +302,6 @@ const OptimalResultModal = (function () {
     `;
     tempContainer.appendChild(spiritsGridWrapper);
 
-    // 준비된 내용을 combinationResultsContainer에 복사
     const combinationContainer = document.getElementById(
       "combinationResultsContainer"
     );
@@ -322,14 +309,12 @@ const OptimalResultModal = (function () {
       combinationContainer.innerHTML = tempContainer.innerHTML;
     }
 
-    // 임시 컨테이너 제거
     tempContainer.remove();
 
-    // Bond 모달 타입인 경우 히스토리 탭 렌더링
     if (modalType === "bond") {
       const spiritsList = document.getElementById("optimalSpiritsList");
       if (spiritsList) {
-        spiritsList.innerHTML = ""; // 초기화
+        spiritsList.innerHTML = "";
       }
 
       if (
@@ -346,7 +331,6 @@ const OptimalResultModal = (function () {
               category,
               document.getElementById("optimalSpiritsList"),
               (historyResult) => {
-                // 다른 결과로 전환하기 위한 함수
                 renderNewResult(historyResult);
               }
             );
@@ -387,13 +371,6 @@ const OptimalResultModal = (function () {
 
     initModalStyles();
 
-    if (
-      window.AdInitializer &&
-      typeof window.AdInitializer.initializeAdsInModal === "function"
-    ) {
-      window.AdInitializer.initializeAdsInModal(optimalModal);
-    }
-
     setTimeout(() => {
       document.querySelectorAll(".info-icon").forEach((icon) => {
         icon.addEventListener("click", function () {
@@ -409,7 +386,35 @@ const OptimalResultModal = (function () {
     }, 500);
   }
 
-  // 하나의 결과를 다른 결과로 전환하는 함수 (깜박임 방지)
+  function initKakaoAds() {
+    if (typeof window.kakaoPixel === "function") {
+      refreshKakaoAds();
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
+    script.async = true;
+    script.onload = function () {
+      // console.log("카카오 광고 스크립트 로드 완료");
+      refreshKakaoAds();
+    };
+    document.body.appendChild(script);
+  }
+
+  function refreshKakaoAds() {
+    const adElements = document.querySelectorAll(".kakao_ad_area");
+    adElements.forEach((ad) => {
+      ad.style.display = "block";
+    });
+
+    if (window.kakaoPixel) {
+      if (typeof window.kakaoPixel.refresh === "function") {
+        window.kakaoPixel.refresh();
+      }
+    }
+  }
+
   function renderNewResult(result) {
     if (!result) return;
 
@@ -427,7 +432,6 @@ const OptimalResultModal = (function () {
       missingBindDataSpirits,
     } = result;
 
-    // 점수 업데이트
     const combinedScoreWithoutReg = Math.round(
       SpiritUtils.ensureNumber(gradeScore) +
         SpiritUtils.ensureNumber(factionScore) +
@@ -445,10 +449,8 @@ const OptimalResultModal = (function () {
       optimalScoreEl.textContent = `${combinedScoreWithoutReg} (등급: ${displayGradeScore} 세력: ${displayFactionScore} 장착효과: ${displayBindScore})`;
     }
 
-    // 결과 렌더링을 위한 임시 컨테이너 생성
     const tempContainer = document.createElement("div");
 
-    // 정보 안내 박스
     const infoBox = document.createElement("div");
     infoBox.className = "data-submission-request";
     infoBox.innerHTML =
@@ -456,7 +458,6 @@ const OptimalResultModal = (function () {
       "해당 레벨에 대해 정보가 있으신가요? 제보해주시면 바로 반영하겠습니다.";
     tempContainer.appendChild(infoBox);
 
-    // 데이터 누락 경고
     if (
       (missingDataSpirits && missingDataSpirits.length > 0) ||
       (missingBindDataSpirits && missingBindDataSpirits.length > 0)
@@ -487,7 +488,6 @@ const OptimalResultModal = (function () {
       tempContainer.appendChild(warningBox);
     }
 
-    // 영혼 그리드 표시
     const spiritsGridWrapper = document.createElement("div");
     spiritsGridWrapper.innerHTML = `
       <h4>조합 환수 정보</h4>
@@ -509,7 +509,6 @@ const OptimalResultModal = (function () {
     `;
     tempContainer.appendChild(spiritsGridWrapper);
 
-    // content DOM 업데이트를 기다리지 않고 효과를 먼저 업데이트
     renderEffects(
       gradeEffects,
       factionEffects,
@@ -523,12 +522,10 @@ const OptimalResultModal = (function () {
 
     renderSpiritDetailsTable(spirits);
 
-    // 준비된 내용을 combinationResultsContainer에 복사
     const combinationContainer = document.getElementById(
       "combinationResultsContainer"
     );
     if (combinationContainer) {
-      // requestAnimationFrame을 사용하여 부드럽게 DOM 업데이트
       requestAnimationFrame(() => {
         combinationContainer.innerHTML = tempContainer.innerHTML;
       });
@@ -536,6 +533,7 @@ const OptimalResultModal = (function () {
   }
 
   window.HistoryManager = window.HistoryManager || {};
+
   window.HistoryManager.getHistoryTabsHTML = function (category, onTabChange) {
     const historyManager = window.HistoryManager;
     if (!historyManager || !historyManager.loadSavedCombinations) {
@@ -635,7 +633,7 @@ const OptimalResultModal = (function () {
             .join("")}
         </div>
       </div>
-      <div id="selected-tab-info" class="history-info">
+      <div id="selected-tab-info" class="history-info" style="font-size: 0.9em; margin-bottom: 5px;">
         ${
           categoryCombinations[currentActiveIndex]
             ? `
@@ -644,7 +642,7 @@ const OptimalResultModal = (function () {
           }</span>
           ${
             currentActiveIndex === highestScoreIndex
-              ? '<span class="best-notice">(최고 점수입니다!)</span>'
+              ? '<span class="best-notice">(최고 점수)</span>'
               : ""
           }
         `
@@ -663,21 +661,16 @@ const OptimalResultModal = (function () {
   ) {
     if (!container) return;
 
-    // HTML 생성
     const tabsHtml = this.getHistoryTabsHTML(category, onTabChange);
 
-    // 컨테이너에 HTML 삽입
     container.innerHTML = tabsHtml;
 
-    // 탭 이벤트 리스너 등록
     document.querySelectorAll(".history-tab").forEach((tab) => {
       tab.addEventListener("click", function () {
-        // 이전 탭 비활성화
         document
           .querySelectorAll(".history-tab")
           .forEach((t) => t.classList.remove("active"));
 
-        // 클릭한 탭 활성화
         this.classList.add("active");
 
         const comboIndex = parseInt(this.dataset.index);
@@ -687,7 +680,6 @@ const OptimalResultModal = (function () {
         const result = savedOptimalCombinations[category][comboIndex];
 
         if (typeof onTabChange === "function") {
-          // 콜백 실행 (새 결과 렌더링)
           onTabChange(
             result,
             comboIndex === window.HistoryManager.getHighestScoreIndex(category)
@@ -870,6 +862,12 @@ const OptimalResultModal = (function () {
     const STAT_COLOR_MAP = window.CommonData.STAT_COLOR_MAP || {};
     const PERCENT_STATS = window.CommonData.PERCENT_STATS || [];
 
+    function parseNumericValue(value) {
+      if (value === undefined || value === null) return 0;
+      if (typeof value !== "string") return parseFloat(value) || 0;
+      return parseFloat(value.replace(/,/g, "")) || 0;
+    }
+
     const container = document.getElementById("spiritStatsDetails");
     if (!container) return;
 
@@ -972,26 +970,13 @@ const OptimalResultModal = (function () {
       scoreCell.style.backgroundColor = "#e3f2fd";
       scoreCell.style.fontWeight = "bold";
 
-      let totalScore = 0;
+      let bindScore = 0;
 
       try {
         if (spirit.stats && Array.isArray(spirit.stats)) {
           const levelStat = spirit.stats.find(
             (s) => s && s.level === spirit.level
           );
-
-          if (levelStat && levelStat.registrationStat) {
-            const stats = levelStat.registrationStat;
-
-            const penResist = parseFloat(
-              stats.damageResistancePenetration || 0
-            );
-            const resist = parseFloat(stats.damageResistance || 0);
-            const pvpDmg = parseFloat(stats.pvpDamagePercent || 0) * 10;
-            const pvpDef = parseFloat(stats.pvpDefensePercent || 0) * 10;
-
-            totalScore = penResist + resist + pvpDmg + pvpDef;
-          }
 
           let bindStat = null;
 
@@ -1005,30 +990,31 @@ const OptimalResultModal = (function () {
           }
 
           if (bindStat) {
-            const bindPenResist = parseFloat(
-              bindStat.damageResistancePenetration || 0
+            const bindPenResist = parseNumericValue(
+              bindStat.damageResistancePenetration
             );
-            const bindResist = parseFloat(bindStat.damageResistance || 0);
-            const bindPvpDmg = parseFloat(bindStat.pvpDamagePercent || 0) * 10;
-            const bindPvpDef = parseFloat(bindStat.pvpDefensePercent || 0) * 10;
+            const bindResist = parseNumericValue(bindStat.damageResistance);
+            const bindPvpDmg =
+              parseNumericValue(bindStat.pvpDamagePercent) * 10;
+            const bindPvpDef =
+              parseNumericValue(bindStat.pvpDefensePercent) * 10;
 
-            const bindScore =
-              bindPenResist + bindResist + bindPvpDmg + bindPvpDef;
-
-            if (bindScore > 0) {
-              scoreCell.innerHTML = `<span style="color:#e67e22; font-size:0.85em;">${Math.round(
-                bindScore
-              )}</span>`;
-              scoreRow.appendChild(scoreCell);
-              return;
-            }
+            bindScore = bindPenResist + bindResist + bindPvpDmg + bindPvpDef;
           }
         }
       } catch (e) {
         console.warn("점수 계산 중 오류 발생:", e);
+        bindScore = 0;
       }
 
-      scoreCell.textContent = Math.round(totalScore);
+      if (bindScore > 0) {
+        scoreCell.innerHTML = `<span class="bind-effect">${Math.round(
+          bindScore
+        )}</span>`;
+      } else {
+        scoreCell.textContent = "0";
+      }
+
       scoreRow.appendChild(scoreCell);
     });
 
@@ -1081,7 +1067,6 @@ const OptimalResultModal = (function () {
           statCell.className = colorClass;
         }
 
-        let statValue = 0;
         let bindValue = 0;
 
         try {
@@ -1089,16 +1074,6 @@ const OptimalResultModal = (function () {
             const levelStat = spirit.stats.find(
               (s) => s && s.level === spirit.level
             );
-            if (levelStat && levelStat.registrationStat) {
-              for (const [key, value] of Object.entries(
-                levelStat.registrationStat
-              )) {
-                if (SpiritUtils.normalizeStatKey(key) === statKey) {
-                  statValue = value || 0;
-                  break;
-                }
-              }
-            }
 
             let bindStat = null;
 
@@ -1114,7 +1089,7 @@ const OptimalResultModal = (function () {
             if (bindStat) {
               for (const [key, value] of Object.entries(bindStat)) {
                 if (SpiritUtils.normalizeStatKey(key) === statKey) {
-                  bindValue = value || 0;
+                  bindValue = parseNumericValue(value);
                   break;
                 }
               }
@@ -1122,7 +1097,6 @@ const OptimalResultModal = (function () {
           }
         } catch (e) {
           console.warn("스탯 접근 중 오류 발생:", e);
-          statValue = 0;
           bindValue = 0;
         }
 
@@ -1130,10 +1104,10 @@ const OptimalResultModal = (function () {
 
         if (bindValue > 0) {
           statCell.innerHTML = isPercentStat
-            ? `<span style="color:#e67e22; font-size:0.85em;">${bindValue}%</span>`
-            : `<span style="color:#e67e22; font-size:0.85em;">${bindValue}</span>`;
+            ? `<span class="bind-effect">${bindValue}%</span>`
+            : `<span class="bind-effect">${bindValue}</span>`;
         } else {
-          statCell.textContent = isPercentStat ? `${statValue}%` : statValue;
+          statCell.textContent = "0";
         }
 
         row.appendChild(statCell);
@@ -1171,6 +1145,11 @@ const OptimalResultModal = (function () {
         margin-bottom: 2px;
       }
       
+      .bind-effect {
+        color: #e67e22;
+        font-weight: bold;
+      }
+      
       @media (max-width: 768px) {
         .spirits-stats-table {
           font-size: 0.75rem;
@@ -1186,6 +1165,7 @@ const OptimalResultModal = (function () {
         }
       }
     `;
+
     document.head.appendChild(style);
   }
 
@@ -1195,247 +1175,285 @@ const OptimalResultModal = (function () {
 
     const style = document.createElement("style");
     style.id = "optimal-modal-styles";
+
     style.textContent = `
-      #optimalModal {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        background-color: rgba(0, 0, 0, 0.7) !important;
-        z-index: 10000 !important;
-        display: none;
-        justify-content: center !important;
-        align-items: center !important;
-        -webkit-overflow-scrolling: touch;
-      }
-      
-      #optimalModalContent {
-        background: #fff !important;
-        width: 90% !important;
-        max-width: 800px !important;
-        padding: 20px !important;
-        border-radius: 12px !important;
-        max-height: 85vh !important;
-        overflow-y: auto !important;
-        position: relative !important;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3) !important;
-        display: block !important;
-        z-index: 10001 !important;
-        margin: 0 auto !important;
-      }
-      
-      #closeOptimalModal {
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        font-size: 24px;
-        color: #555;
-        background: none;
-        border: none;
-        cursor: pointer;
-        z-index: 10002;
-      }
-      
-      #closeOptimalModal:hover {
-        color: #000;
-      }
+  #optimalModal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    z-index: 10000 !important;
+    display: none;
+    justify-content: center !important;
+    align-items: center !important;
+    -webkit-overflow-scrolling: touch;
+  }
   
-      #combinationResultsContainer {
-        min-height: 200px;
-        position: relative;
-        will-change: contents;
-        contain: layout;
-        padding: 10px 0;
-      }
+  #optimalModalContent {
+    background: #fff !important;
+    width: 90% !important;
+    max-width: 800px !important;
+    padding: 20px !important;
+    border-radius: 12px !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+    position: relative !important;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3) !important;
+    display: block !important;
+    z-index: 10001 !important;
+    margin: 0 auto !important;
+  }
   
-      .history-tabs-container {
-        width: 100%;
-        overflow-x: hidden;
-        padding-bottom: 5px;
-        margin-top: 15px;
-        contain: content;
-      }
+  #closeOptimalModal {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 24px;
+    color: #555;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10002;
+  }
   
-      .history-tabs {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr) !important;
-        width: 100%;
-        margin-bottom: 12px;
-        gap: 4px;
-      }
+  #closeOptimalModal:hover {
+    color: #000;
+  }
   
-      .history-tab, .history-tab-placeholder {
-        border-radius: 6px;
-        padding: 28px 2px 5px !important;
-        margin: 0;
-        position: relative;
-        min-height: 65px;
-      }
+  .ad-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    overflow: hidden;
+  }
+
+  .ad-container-left {
+    width: 100%;
+    max-width: 728px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .mobile-ad {
+    display: none;
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+  }
   
-      .history-tab {
-        border: 1px solid #ddd;
-        background-color: #f8f8f8;
-        cursor: pointer;
-        transition: background-color 0.2s, border-color 0.2s;
-        overflow: hidden;
-      }
+  .history-tabs-container {
+    width: 90%;
+    max-width: 600px;
+    margin: 10px auto;
+    overflow-x: hidden;
+    padding-bottom: 3px;
+    contain: content;
+  }
+
+  .history-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr) !important;
+    width: 100%;
+    margin-bottom: 8px;
+    gap: 3px;
+  }
+
+  .history-tab, .history-tab-placeholder {
+    border-radius: 5px;
+    padding: 20px 2px 5px !important;
+    margin: 0;
+    position: relative;
+    min-height: 50px;
+  }
+
+  .history-tab {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    overflow: hidden;
+  }
+
+  .tab-indicators {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    z-index: 2;
+  }
+
+  .current-marker, .best-marker {
+    font-size: 8px;
+    padding: 1px 3px;
+    border-radius: 2px;
+    font-weight: normal;
+    z-index: 2;
+  }
+
+  .current-marker {
+    background: #3498db;
+    color: white;
+  }
+
+  .best-marker {
+    background: #e74c3c;
+    color: white;
+  }
+
+  .combo-name {
+    font-weight: bold;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 5px;
+    padding: 0 5px;
+    z-index: 1;
+  }
+
+  .tab-score {
+    font-size: 10px;
+    font-weight: bold;
+    margin-top: 3px;
+    display: block;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .best-notice {
+    margin-left: 10px;
+    color: #e74c3c;
+    font-weight: bold;
+  }
+
+  .history-tab.active {
+    border: 2px solid #3498db;
+    background-color: #ebf5fb;
+  }
+
+  .history-tab.best {
+    border: 2px solid #e74c3c;
+    background-color: #fdedec;
+  }
+
+  .history-tab.active.best {
+    background: linear-gradient(135deg, #ebf5fb 0%, #fdedec 100%);
+  }
   
-      .tab-indicators {
-        position: absolute;
-        top: 2px;
-        left: 0;
-        right: 0;
-        display: flex;
-        justify-content: center;
-        gap: 2px;
-        z-index: 2;
-      }
+  .clear-history-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin: 0;
+    font-size: 0.9em;
+  }
   
-      .current-marker, .best-marker {
-        font-size: 9px;
-        padding: 1px 4px;
-        border-radius: 2px;
-        font-weight: normal;
-        z-index: 2;
-      }
+  .clear-history-btn:hover {
+    background-color: #c0392b;
+  }
   
-      .current-marker {
-        background: #3498db;
-        color: white;
-      }
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 5px;
+  }
   
-      .best-marker {
-        background: #e74c3c;
-        color: white;
-      }
+  .spirits-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-gap: 6px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
   
-      .combo-name {
-        font-weight: bold;
-        font-size: 12px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-top: 5px;
-        padding: 0 5px;
-        z-index: 1;
-      }
+  .spirit-info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px;
+    border-radius: 6px;
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
   
-      .tab-score {
-        font-size: 11px;
-        font-weight: bold;
-        margin-top: 3px;
-        display: block;
-        text-align: center;
-        z-index: 1;
-      }
+  .spirit-info-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
   
-      .best-notice {
-        margin-left: 10px;
-        color: #e74c3c;
-        font-weight: bold;
-      }
+  .spirit-info-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-bottom: 4px;
+  }
   
-      .history-tab.active {
-        border: 2px solid #3498db;
-        background-color: #ebf5fb;
-      }
+  .spirit-info-details {
+    width: 100%;
+    text-align: center;
+  }
   
-      .history-tab.best {
-        border: 2px solid #e74c3c;
-        background-color: #fdedec;
-      }
+  .spirit-info-name {
+    font-weight: bold;
+    font-size: 9px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   
-      .history-tab.active.best {
-        background: linear-gradient(135deg, #ebf5fb 0%, #fdedec 100%);
-      }
-      
-      .clear-history-btn {
-        background-color: #e74c3c;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 6px 12px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.2s;
-        margin: 0;
-        font-size: 0.9em;
-      }
-      
-      .clear-history-btn:hover {
-        background-color: #c0392b;
-      }
-      
-      .action-buttons {
-        display: flex;
-        justify-content: flex-end;
-        margin-bottom: 5px;
-      }
+  .spirit-info-level {
+    font-size: 7px;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   
-      .spirits-grid-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        grid-gap: 8px;
-        margin-top: 10px;
-      }
-      
-      .spirit-info-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 8px;
-        border-radius: 8px;
-        background-color: #f8f8f8;
-        border: 1px solid #e0e0e0;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-      
-      .spirit-info-item:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      }
-      
-      .spirit-info-item img {
-        width: 48px;
-        height: 48px;
-        object-fit: contain;
-        margin-bottom: 5px;
-      }
-      
-      .spirit-info-details {
-        width: 100%;
-        text-align: center;
-      }
-      
-      .spirit-info-name {
-        font-weight: bold;
-        font-size: 10px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      
-      .spirit-info-level {
-        font-size: 8px;
-        color: #666;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
+  .timestamp {
+    font-size: 0.75em;
+    color: #777;
+  }
   
-      @media (min-width: 768px) {
-        .spirits-grid-container {
-          grid-template-columns: repeat(6, 1fr);
-        }
-      }
-      
-      .no-flicker {
-        backface-visibility: hidden;
-        transform: translateZ(0);
-        perspective: 1000;
-      }
-    `;
+  .history-info {
+    font-size: 0.85em;
+    margin-bottom: 4px;
+  }
+
+  @media (min-width: 768px) {
+    .spirits-grid-container {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .ad-container-left {
+      display: none;
+    }
+    
+    .mobile-ad {
+      display: block;
+    }
+  }
+  
+  .no-flicker {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    perspective: 1000;
+  }
+`;
+
     document.head.appendChild(style);
   }
 
@@ -1454,6 +1472,7 @@ const OptimalResultModal = (function () {
     initModalStyles,
     prepareModalStructure,
     closeOptimalModal,
+    initKakaoAds,
   };
 })();
 

@@ -52,93 +52,60 @@ const FirebaseHandler = (function () {
     }
   }
 
-  // async function getFirestoreDocument(fileName) {
-  //   const cachedKey = `firestore_${fileName}`;
-  //   const cachedTimeKey = `${cachedKey}_time`;
-
-  //   const cachedData = loadCache(cachedKey);
-  //   if (cachedData && isCacheValid(cachedTimeKey)) {
-  //     return cachedData;
-  //   }
-
-  //   const docId = DOCUMENT_MAP[fileName + ".json"];
-  //   if (db && docId) {
-  //     try {
-  //       const docRef = await db.collection("jsonData").doc(docId).get();
-
-  //       if (docRef.exists) {
-  //         const data = docRef.data();
-  //         if (data) {
-  //           saveCache(cachedKey, cachedTimeKey, data);
-  //           return data;
-  //         }
-  //       }
-  //     } catch (error) {
-  //       handleFirestoreError(fileName, error);
-  //     }
-  //   }
-
-  //   return { data: [] };
-  // }
-
-  // rankingManager.js - getFirestoreDocument 메소드 개선
   async function getFirestoreDocument(fileName) {
     const cachedKey = `firestore_${fileName}`;
     const cachedTimeKey = `${cachedKey}_time`;
 
     try {
-      // 캐시된 데이터가 있고 유효한지 확인
       const cachedData = loadCache(cachedKey);
       if (cachedData && isCacheValid(cachedTimeKey)) {
-        console.log(`캐시에서 ${fileName} 로드됨`);
+        // console.log(`캐시에서 ${fileName} 로드됨`);
         return cachedData;
       }
 
       const docId = DOCUMENT_MAP[fileName + ".json"];
       if (db && docId) {
         try {
-          console.log(`Firestore에서 ${fileName} 로드 시도`);
+          // console.log(`Firestore에서 ${fileName} 로드 시도`);
           const docRef = await db.collection("jsonData").doc(docId).get();
 
           if (docRef.exists) {
             const data = docRef.data();
             if (data) {
-              console.log(`Firestore에서 ${fileName} 성공적으로 로드됨`);
+              // console.log(`Firestore에서 ${fileName} 성공적으로 로드됨`);
               saveCache(cachedKey, cachedTimeKey, data);
               return data;
             }
           }
 
-          console.log(`Firestore에서 ${fileName} 문서가 존재하지 않음`);
+          // console.log(`Firestore에서 ${fileName} 문서가 존재하지 않음`);
         } catch (error) {
-          // 에러 핸들링을 더 자세하게
-          console.error(`Firestore에서 ${fileName} 로드 중 오류:`, error);
-          // 네트워크 오류 시 조용히 캐시된 데이터로 폴백
+          // console.error(`Firestore에서 ${fileName} 로드 중 오류:`, error);
+
           const lastCache = loadCache(cachedKey);
           if (lastCache) {
-            console.log(`네트워크 오류로 인해 캐시된 ${fileName} 사용`);
+            // console.log(`네트워크 오류로 인해 캐시된 ${fileName} 사용`);
             return lastCache;
           }
         }
       }
 
-      // 파이어스토어 접근 실패 시 로컬 데이터 사용 시도
-      console.log(`로컬 JSON에서 ${fileName} 로드 시도`);
+      // console.log(`로컬 JSON에서 ${fileName} 로드 시도`);
       try {
         const response = await fetch(`${getBaseUrl()}output/${fileName}.json`);
         if (response.ok) {
           const data = await response.json();
           saveCache(cachedKey, cachedTimeKey, data);
-          console.log(`로컬 JSON에서 ${fileName} 로드 성공`);
+          // console.log(`로컬 JSON에서 ${fileName} 로드 성공`);
           return data;
         }
       } catch (localError) {
-        console.warn(`로컬 JSON에서 ${fileName} 로드 실패:`, localError);
+        // console.warn(`로컬 JSON에서 ${fileName} 로드 실패:`, localError);
       }
 
-      console.warn(
-        `${fileName}에 대한 모든 데이터 소스 로드 실패, 빈 데이터 반환`
-      );
+      // console.warn(
+      //   `${fileName}에 대한 모든 데이터 소스 로드 실패, 빈 데이터 반환`
+      // );
       return { data: [] };
     } catch (e) {
       console.error(`${fileName} 데이터 로드 중 치명적 오류:`, e);
@@ -169,7 +136,7 @@ const FirebaseHandler = (function () {
   }
 
   function handleFirestoreError(source, error) {
-    console.error(`Firestore error for ${source}:`, error);
+    // console.error(`Firestore error for ${source}:`, error);
   }
 
   return {

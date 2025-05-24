@@ -29,7 +29,7 @@ const ModuleLoader = {
       );
 
       if (allLoaded) {
-        console.log(`All dependencies for ${moduleName} loaded successfully`);
+        // console.log(`All dependencies for ${moduleName} loaded successfully`);
         callback();
         return true;
       } else if (attempts >= maxAttempts) {
@@ -64,7 +64,7 @@ const ModuleLoader = {
       const appObject =
         window[pageName.charAt(0).toUpperCase() + pageName.slice(1) + "App"];
       if (appObject && typeof appObject.initialize === "function") {
-        console.log(`Initializing ${pageName} application...`);
+        // console.log(`Initializing ${pageName} application...`);
         appObject.initialize();
       } else {
         console.warn(`No initialization method found for ${pageName}`);

@@ -89,6 +89,13 @@ const RankingCalculator = (function () {
         };
       });
 
+      // 환산합산(scoreWithBind) 기준으로 내림차순 정렬 보장
+      optimizedRankings.sort((a, b) => {
+        const scoreA = parseFloat(a.scoreWithBind) || 0;
+        const scoreB = parseFloat(b.scoreWithBind) || 0;
+        return scoreB - scoreA;
+      });
+
       return {
         ...data,
         rankings: optimizedRankings,
@@ -241,7 +248,15 @@ const RankingCalculator = (function () {
       }
     }
 
-    results.sort((a, b) => b.scoreWithBind - a.scoreWithBind);
+    // 환산합산(scoreWithBind) 값을 기준으로 명확하게 내림차순 정렬
+    results.sort((a, b) => {
+      const scoreA = parseFloat(a.scoreWithBind) || 0;
+      const scoreB = parseFloat(b.scoreWithBind) || 0;
+      if (scoreA !== scoreB) {
+        return scoreB - scoreA;
+      }
+      return (parseFloat(b.score) || 0) - (parseFloat(a.score) || 0);
+    });
 
     const topResults = results.slice(0, 50);
 
@@ -457,7 +472,15 @@ const RankingCalculator = (function () {
       }
     }
 
-    results.sort((a, b) => b.scoreWithBind - a.scoreWithBind);
+    // 환산합산(scoreWithBind) 값을 기준으로 명확하게 내림차순 정렬
+    results.sort((a, b) => {
+      const scoreA = parseFloat(a.scoreWithBind) || 0;
+      const scoreB = parseFloat(b.scoreWithBind) || 0;
+      if (scoreA !== scoreB) {
+        return scoreB - scoreA;
+      }
+      return (parseFloat(b.score) || 0) - (parseFloat(a.score) || 0);
+    });
 
     const topResults = results.slice(0, 50);
 
@@ -1003,6 +1026,36 @@ const RankingCalculator = (function () {
 
       const optimizedData = optimizeDataForStorage(data);
 
+      // 결속 랭킹 데이터인 경우 저장 전에 반드시 scoreWithBind 기준으로 정렬
+      if (
+        fileName.includes("bond-rankings") &&
+        optimizedData.rankings &&
+        Array.isArray(optimizedData.rankings)
+      ) {
+        // 명시적으로 scoreWithBind 값으로 내림차순 정렬 (높은 값이 앞에 오도록)
+        optimizedData.rankings.sort((a, b) => {
+          const scoreA = parseFloat(a.scoreWithBind) || 0;
+          const scoreB = parseFloat(b.scoreWithBind) || 0;
+          if (scoreA !== scoreB) {
+            return scoreB - scoreA; // 높은 점수가 앞에 오도록 내림차순 정렬
+          }
+          return (parseFloat(b.score) || 0) - (parseFloat(a.score) || 0);
+        });
+
+        // 정렬 후 검증
+        if (window.addLogEntry && optimizedData.rankings.length > 1) {
+          const first = optimizedData.rankings[0]?.scoreWithBind || 0;
+          const second = optimizedData.rankings[1]?.scoreWithBind || 0;
+          const last =
+            optimizedData.rankings[optimizedData.rankings.length - 1]
+              ?.scoreWithBind || 0;
+          window.addLogEntry(
+            `정렬 확인: 1등 점수 ${first}, 2등 점수 ${second}, 마지막 항목 점수 ${last}`,
+            "info"
+          );
+        }
+      }
+
       const jsonSize = JSON.stringify(optimizedData).length;
       if (jsonSize > 1000000) {
         if (window.addLogEntry) {
@@ -1182,10 +1235,19 @@ const RankingCalculator = (function () {
         rankings: rankingData.bond[category] || [],
       };
 
+      // 저장 전에 다시 한 번 정렬 확인
+      if (data.rankings && Array.isArray(data.rankings)) {
+        data.rankings.sort((a, b) => {
+          const scoreA = parseFloat(a.scoreWithBind) || 0;
+          const scoreB = parseFloat(b.scoreWithBind) || 0;
+          if (scoreA !== scoreB) {
+            return scoreB - scoreA;
+          }
+          return (parseFloat(b.score) || 0) - (parseFloat(a.score) || 0);
+        });
+      }
+
       downloadJsonFile(data, fileName);
-      // console.log(
-      //   `Storing ${rankingData.bond[category].length} rankings for ${category}`
-      // );
       return {
         success: true,
         count: rankingData.bond[category].length,
@@ -1247,6 +1309,18 @@ const RankingCalculator = (function () {
           updatedAt: rankingMeta.bondRankings[category].updatedAt,
           rankings: rankingData.bond[category] || [],
         };
+
+        // 저장 전에 다시 한 번 정렬 확인
+        if (data.rankings && Array.isArray(data.rankings)) {
+          data.rankings.sort((a, b) => {
+            const scoreA = parseFloat(a.scoreWithBind) || 0;
+            const scoreB = parseFloat(b.scoreWithBind) || 0;
+            if (scoreA !== scoreB) {
+              return scoreB - scoreA;
+            }
+            return (parseFloat(b.score) || 0) - (parseFloat(a.score) || 0);
+          });
+        }
 
         zip.file(fileName, JSON.stringify(data, null, 2));
         saveToFirebase(data, getCategoryFileName(category, "bond"));

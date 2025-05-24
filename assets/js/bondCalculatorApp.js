@@ -46,7 +46,7 @@ const BondCalculatorApp = (function () {
       });
     }
 
-    initHelpTooltip();
+    // initHelpTooltip();
     initPanelToggle();
 
     if (

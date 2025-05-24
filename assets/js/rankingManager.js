@@ -84,6 +84,17 @@ window.RankingManager = (function () {
         try {
           const data = await FirebaseHandler.getFirestoreDocument(fileName);
           if (data && (data.rankings || data.data)) {
+            // Firebase에서 가져온 데이터 정렬 확인
+            if (data.rankings && Array.isArray(data.rankings)) {
+              data.rankings.sort((a, b) => {
+                const scoreA = parseFloat(a.scoreWithBind) || 0;
+                const scoreB = parseFloat(b.scoreWithBind) || 0;
+                if (scoreA !== scoreB) {
+                  return scoreB - scoreA;
+                }
+                return (parseFloat(b.score) || 0) - (parseFloat(a.score) || 0);
+              });
+            }
             return data;
           }
         } catch (firebaseError) {
@@ -96,7 +107,21 @@ window.RankingManager = (function () {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json();
+      const data = await response.json();
+
+      // 파일에서 가져온 데이터 정렬 확인
+      if (data && data.rankings && Array.isArray(data.rankings)) {
+        data.rankings.sort((a, b) => {
+          const scoreA = parseFloat(a.scoreWithBind) || 0;
+          const scoreB = parseFloat(b.scoreWithBind) || 0;
+          if (scoreA !== scoreB) {
+            return scoreB - scoreA;
+          }
+          return (parseFloat(b.score) || 0) - (parseFloat(a.score) || 0);
+        });
+      }
+
+      return data;
     } catch (error) {
       console.error(`${category} 결속 랭킹 로드 오류:`, error);
       return {
