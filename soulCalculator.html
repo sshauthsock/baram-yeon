@@ -1,4 +1,4 @@
-<!-- Files obfuscated: Thu May 22 08:50:56 UTC 2025 -->
+<!-- JS obfuscated: Sat May 24 14:28:35 UTC 2025 -->
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -12,27 +12,25 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/BHY.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/BHY.png">
 
-    <link href="assets/css/soulCalculator.min.1747903855.css" rel="stylesheet">
-    <link href="assets/css/global.min.1747903855.css" rel="stylesheet">
-    <link href="assets/css/components/ads.min.1747903855.css" rel="stylesheet">
-    <link href="assets/css/components/footer.min.1747903855.css" rel="stylesheet">
-    <link href="assets/css/components/header.min.1747903855.css" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js?v=1748096915"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js?v=1748096915"></script>
 </head>
 
 <body>
     <header class="header">
         <div class="logo-container">
-            <a href="info.html">
+            <a href="soulCalculator.html">
                 <img src="assets/img/BHY.png" alt="바연화연 로고" class="logo">
             </a>
         </div>
         <nav class="tabs">
-            <div class="tab" onclick="location.assign('info.html')">환수정보</div>
-            <div class="tab" onclick="location.assign('bondCalculator.html')">환수 결속</div>
-            <div class="tab active" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
-            <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
+            <div class="tab" id="info-tab" onclick="location.href='info.html'">환수정보</div>
+            <div class="tab" id="bond-tab" onclick="location.href='bondCalculator.html'">환수 결속</div>
+            <div class="tab" id="ranking-tab" onclick="location.assign('rankingManager.html')">환수 랭킹</div>
+            <div class="tab active" id="soul-tab" onclick="location.href='soulCalculator.html'">환수혼 계산</div>
+            <div class="tab" id="chak-tab" onclick="location.href='chak.html'">착 계산</div>
         </nav>
     </header>
 
@@ -54,7 +52,7 @@
     </div>
 
     <div class="container">
-        <div class="left">
+        <div class="left card">
             <h3>환수 성장 경험치 테이블</h3>
             <div class="exp-type-tabs">
                 <div class="exp-tab active" data-type="legend">전설</div>
@@ -87,14 +85,14 @@
             </div>
         </div>
 
-        <div class="right">
+        <div class="right card">
             <h2>환수혼 계산기</h2>
 
             <div class="calculator-form">
                 <div class="input-row">
                     <div class="input-group type-select">
                         <label>종류:</label>
-                        <select id="expType">
+                        <select id="expType" class="form-control">
                             <option value="legend">전설</option>
                             <option value="immortal">불멸</option>
                         </select>
@@ -102,12 +100,12 @@
 
                     <div class="input-group">
                         <label>현재:</label>
-                        <input type="number" id="currentLevel" min="0" max="24" value="0">
+                        <input type="number" id="currentLevel" min="0" max="24" value="0" class="form-control">
                     </div>
 
                     <div class="input-group">
                         <label>목표:</label>
-                        <input type="number" id="targetLevel" min="1" max="25" value="1">
+                        <input type="number" id="targetLevel" min="1" max="25" value="1" class="form-control">
                     </div>
                 </div>
 
@@ -115,21 +113,21 @@
                     <div class="soul-item">
                         <img src="assets/img/high-soul.jpg" alt="최상급">
                         <label>최상급 (1000)</label>
-                        <input type="number" id="highSoul" min="0" value="0">
+                        <input type="number" id="highSoul" min="0" value="0" class="form-control">
                     </div>
                     <div class="soul-item">
                         <img src="assets/img/mid-soul.jpg" alt="상급">
                         <label>상급 (100)</label>
-                        <input type="number" id="midSoul" min="0" value="0">
+                        <input type="number" id="midSoul" min="0" value="0" class="form-control">
                     </div>
                     <div class="soul-item">
                         <img src="assets/img/low-soul.jpg" alt="하급">
                         <label>하급 (10)</label>
-                        <input type="number" id="lowSoul" min="0" value="0">
+                        <input type="number" id="lowSoul" min="0" value="0" class="form-control">
                     </div>
                 </div>
                 <div class="calc-btn">
-                    <button id="calculateBtn">계산</button>
+                    <button id="calculateBtn" class="btn btn-primary">계산</button>
                 </div>
             </div>
 
@@ -162,31 +160,38 @@
     </div>
 
     <footer class="site-footer">
-        <div class="footer-desktop">
-            <div class="footer-links">
-                <a href="info.html">환수정보</a>
-                <a href="bondCalculator.html">환수 결속</a>
-                <a href="soulCalculator.html">환수혼 계산</a>
-                <a href="chak.html">착 계산</a>
-                <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
-            </div>
+        <div class="footer-links">
+            <a href="info.html">환수정보</a>
+            <a href="bondCalculator.html">환수 결속</a>
+            <a href="rankingManager.html">환수 랭킹</a>
+            <a href="soulCalculator.html">환수혼 계산</a>
+            <a href="chak.html">착 계산</a>
+            <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
         </div>
         <div class="footer-copyright">
             <p>&copy; 2025 바연화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
         </div>
     </footer>
 
-    <script src="assets/js/common.obf.1747903843.js"></script>
-    <script src="assets/js/firebaseConfig.obf.1747903843.js"></script>
-    <script src="assets/js/soulCalculator.obf.1747903843.js"></script>
-    <script src="assets/js/soulCalculatorInit.obf.1747903843.js"></script>
-    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    <script src="assets/js/common.js?v=1748096915"></script>
+    <script src="assets/js/firebaseConfig.js?v=1748096915"></script>
+    <script src="assets/js/firebaseHandler.js?v=1748096915"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="assets/js/firebaseVisitCounter.obf.1747903843.js"></script>
+    <script src="assets/js/modules/firebaseHandlerWrapper.js?v=1748096915"></script>
+    <script src="assets/js/modules/uiHelper.js?v=1748096915"></script>
 
+    <script src="assets/js/soulCalculator.js?v=1748096915"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                if (typeof SoulCalculator !== 'undefined' && SoulCalculator.initialize) {
+                    SoulCalculator.initialize();
+                }
+            }, 100);
+        });
+    </script>
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js?v=1748096915" async></script>
 </body>
 
 </html>

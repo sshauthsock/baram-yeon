@@ -1,4 +1,4 @@
-<!-- Files obfuscated: Thu May 22 08:50:56 UTC 2025 -->
+<!-- JS obfuscated: Sat May 24 14:28:35 UTC 2025 -->
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -14,14 +14,11 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/BHY.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/BHY.png">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="assets/css/global.min.1747903855.css" rel="stylesheet">
-    <link href="assets/css/chak.min.1747903855.css" rel="stylesheet">
-    <link href="assets/css/components/ads.min.1747903855.css" rel="stylesheet">
-    <link href="assets/css/components/footer.min.1747903855.css" rel="stylesheet">
-    <link href="assets/css/components/header.min.1747903855.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/chak.css">
 
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js?v=1748096915"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js?v=1748096915"></script>
 </head>
 
 <body>
@@ -34,6 +31,7 @@
         <nav class="tabs">
             <div class="tab" onclick="location.assign('info.html')">환수정보</div>
             <div class="tab" onclick="location.assign('bondCalculator.html')">환수 결속</div>
+            <div class="tab" id="ranking-tab" onclick="location.assign('rankingManager.html')">환수 랭킹</div>
             <div class="tab" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
             <div class="tab active" onclick="location.assign('chak.html')">착 계산</div>
         </nav>
@@ -78,8 +76,8 @@
         <div class="panel summary-panel">
             <div class="tool-section">
                 <div class="preset-section">
-                    <button onclick="ChakApp.optimizeStats('boss')" class="preset-btn boss-btn">보스용 조합</button>
-                    <button onclick="ChakApp.optimizeStats('pvp')" class="preset-btn pvp-btn">피빕용 조합</button>
+                    <button onclick="ChakApp.optimizeStats('boss')" class="btn btn-secondary boss-btn">보스용 조합</button>
+                    <button onclick="ChakApp.optimizeStats('pvp')" class="btn btn-primary pvp-btn">피빕용 조합</button>
                 </div>
                 <div class="search-section">
                     <div class="search-input-container">
@@ -113,7 +111,6 @@
             <div id="summary-display" class="summary-box"></div>
         </div>
     </div>
-
     <div id="search-results-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -153,13 +150,15 @@
         </div>
     </div>
 
+
+
     <div id="tutorial-tip" class="tutorial-tip">
         <div class="tip-content">
             <h4>착 계산기 사용법</h4>
             <p>1. 왼쪽에서 장비 부위를 선택하세요</p>
             <p>2. 강화 레벨을 선택하세요</p>
             <p>3. 능력치를 개방하고 강화하세요</p>
-            <button id="close-tip" class="close-tip-btn">확인</button>
+            <button id="close-tip" class="btn btn-primary close-tip-btn">확인</button>
         </div>
     </div>
 
@@ -181,29 +180,28 @@
     </div>
 
     <footer class="site-footer">
-        <div class="footer-desktop">
-            <div class="footer-links">
-                <a href="info.html">환수정보</a>
-                <a href="bondCalculator.html">환수 결속</a>
-                <a href="soulCalculator.html">환수혼 계산</a>
-                <a href="chak.html">착 계산</a>
-                <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
-            </div>
+        <div class="footer-links">
+            <a href="info.html">환수정보</a>
+            <a href="bondCalculator.html">환수 결속</a>
+            <a href="rankingManager.html">환수 랭킹</a>
+            <a href="soulCalculator.html">환수혼 계산</a>
+            <a href="chak.html">착 계산</a>
+            <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
         </div>
         <div class="footer-copyright">
             <p>&copy; 2025 바연화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
         </div>
     </footer>
-    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-    <script src="assets/js/common.obf.1747903843.js"></script>
-    <script src="assets/js/firebaseConfig.obf.1747903843.js"></script>
-    <script src="assets/js/chak.obf.1747903843.js"></script>
-    <script src="assets/js/chakInit.obf.1747903843.js"></script>
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js?v=1748096915" async></script>
+    <script src="assets/js/common.js?v=1748096915"></script>
+    <script src="assets/js/firebaseConfig.js?v=1748096915"></script>
+    <script src="assets/js/chak.js?v=1748096915"></script>
+    <script src="assets/js/chakInit.js?v=1748096915"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="assets/js/firebaseVisitCounter.obf.1747903843.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js?v=1748096915"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js?v=1748096915"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js?v=1748096915"></script>
+    <script src="assets/js/firebaseVisitCounter.js?v=1748096915"></script>
 
 </body>
 
