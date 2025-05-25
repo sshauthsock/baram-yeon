@@ -125,7 +125,6 @@ const HistoryManager = (function () {
         <div class="history-tabs-container">
           <p class="no-history-message">${category} 카테고리에 저장된 조합 기록이 없습니다.</p>
         </div>
-        <div id="combinationResultsContainer"></div>
       `;
       return;
     }
@@ -165,6 +164,7 @@ const HistoryManager = (function () {
       categoryState[category].activeIndex = newestIndex;
     }
 
+    // *** 중요 변경: combinationResultsContainer 제거 ***
     const tabsHtml = `
       <div class="history-tabs-container">
         <div class="history-tabs">
@@ -228,56 +228,75 @@ const HistoryManager = (function () {
             : ""
         }
       </div>
-      <div id="combinationResultsContainer" class="no-flicker"></div>
     `;
 
     container.innerHTML = tabsHtml;
 
-    // 클론 컨테이너 생성 - 깜박임 방지
-    const hiddenCloneContainer = document.createElement("div");
-    hiddenCloneContainer.style.position = "absolute";
-    hiddenCloneContainer.style.left = "-9999px";
-    hiddenCloneContainer.style.visibility = "hidden";
-    document.body.appendChild(hiddenCloneContainer);
+    // 최초 로드 시 컨텐츠 표시를 위한 코드
+    const currentResult = categoryCombinations[currentActiveIndex];
+    if (currentResult && typeof onTabChange === "function") {
+      // combinationResultsContainer가 있는지 확인하고 없으면 생성
+      let resultsContainer = document.getElementById(
+        "combinationResultsContainer"
+      );
+      if (!resultsContainer) {
+        resultsContainer = document.createElement("div");
+        resultsContainer.id = "combinationResultsContainer";
+        resultsContainer.className = "combination-results-container no-flicker";
+        // 컨테이너를 historyTabs 다음에 배치
+        container.parentNode.insertBefore(
+          resultsContainer,
+          container.nextSibling
+        );
+      }
 
+      // 초기 내용을 비우고 현재 선택된 탭의 결과를 표시
+      resultsContainer.innerHTML = "";
+      onTabChange(
+        currentResult,
+        currentActiveIndex === highestScoreIndex,
+        resultsContainer
+      );
+    }
+
+    // 탭 클릭 이벤트 처리
     document.querySelectorAll(".history-tab").forEach((tab) => {
       tab.addEventListener("click", function () {
-        // 이전 탭 비활성화
         document
           .querySelectorAll(".history-tab")
           .forEach((t) => t.classList.remove("active"));
 
-        // 클릭한 탭 활성화
         this.classList.add("active");
 
         const comboIndex = parseInt(this.dataset.index);
         categoryState[category].activeIndex = comboIndex;
         const result = categoryCombinations[comboIndex];
 
-        // 먼저 숨겨진 컨테이너에 내용 렌더링
-        hiddenCloneContainer.innerHTML = "";
-
         if (typeof onTabChange === "function") {
-          // 클론에 렌더링
-          const tempResultContainer = document.createElement("div");
-          hiddenCloneContainer.appendChild(tempResultContainer);
+          // 기존 컨테이너를 찾음
+          let resultsContainer = document.getElementById(
+            "combinationResultsContainer"
+          );
 
-          // 콜백에서 클론 컨테이너에 렌더링하도록 함
+          // 컨테이너가 없으면 생성 (보통은 이미 존재함)
+          if (!resultsContainer) {
+            resultsContainer = document.createElement("div");
+            resultsContainer.id = "combinationResultsContainer";
+            resultsContainer.className =
+              "combination-results-container no-flicker";
+            container.parentNode.insertBefore(
+              resultsContainer,
+              container.nextSibling
+            );
+          }
+
+          // 컨테이너를 비우고 새 결과 렌더링
+          resultsContainer.innerHTML = "";
           onTabChange(
             result,
             comboIndex === highestScoreIndex,
-            tempResultContainer
+            resultsContainer
           );
-
-          // 내용 준비 완료 후 실제 컨테이너로 이동
-          requestAnimationFrame(() => {
-            const resultsContainer = document.getElementById(
-              "combinationResultsContainer"
-            );
-            if (resultsContainer) {
-              resultsContainer.innerHTML = tempResultContainer.innerHTML;
-            }
-          });
         }
 
         document.getElementById("selected-tab-info").innerHTML = `
@@ -290,13 +309,6 @@ const HistoryManager = (function () {
         `;
       });
     });
-
-    // 클린업
-    setTimeout(() => {
-      if (document.body.contains(hiddenCloneContainer)) {
-        document.body.removeChild(hiddenCloneContainer);
-      }
-    }, 2000);
   }
 
   return {
