@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("Initializing InfoApp...");
   InfoApp.initialize();
   var isMobile = window.innerWidth <= 768;
   localStorage.setItem("isMobileView", isMobile);
