@@ -1,28 +1,30 @@
-const OptimalCombinationFinder = (function () {
-  let isCalculationCancelled = false;
-  let isProcessing = false;
+window.OptimalCombinationFinder =
+  window.OptimalCombinationFinder ||
+  (function () {
+    let isCalculationCancelled = false;
+    let isProcessing = false;
 
-  function findOptimalCombination(selectedSpirits, lastActiveCategory) {
-    const currentCategory = lastActiveCategory;
-    const categorySpirits = selectedSpirits.filter(
-      (spirit) => spirit.category === currentCategory
-    );
+    function findOptimalCombination(selectedSpirits, lastActiveCategory) {
+      const currentCategory = lastActiveCategory;
+      const categorySpirits = selectedSpirits.filter(
+        (spirit) => spirit.category === currentCategory
+      );
 
-    if (categorySpirits.length === 0) {
-      alert(`${currentCategory} 최적 조합을 찾으려면 환수를 선택하세요.`);
-      return;
-    }
+      if (categorySpirits.length === 0) {
+        alert(`${currentCategory} 최적 조합을 찾으려면 환수를 선택하세요.`);
+        return;
+      }
 
-    isProcessing = true;
-    isCalculationCancelled = false;
+      isProcessing = true;
+      isCalculationCancelled = false;
 
-    OptimalResultModal.prepareModalStructure();
-    OptimalResultModal.initModalStyles();
+      OptimalResultModal.prepareModalStructure();
+      OptimalResultModal.initModalStyles();
 
-    const optimalModal = document.getElementById("optimalModal");
-    const modalContent = document.getElementById("optimalModalContent");
+      const optimalModal = document.getElementById("optimalModal");
+      const modalContent = document.getElementById("optimalModalContent");
 
-    modalContent.innerHTML = `
+      modalContent.innerHTML = `
       <div class="calculating-wrapper">
         <div class="calculating-box">
           <div class="calculating-spinner"></div>
@@ -33,23 +35,23 @@ const OptimalCombinationFinder = (function () {
       </div>
     `;
 
-    optimalModal.style.display = "flex";
-    document.body.style.overflow = "hidden";
+      optimalModal.style.display = "flex";
+      document.body.style.overflow = "hidden";
 
-    setTimeout(() => {
-      const cancelCalcBtn = document.getElementById("cancelCalcBtn");
-      if (cancelCalcBtn) {
-        cancelCalcBtn.addEventListener("click", function () {
-          isCalculationCancelled = true;
-          document.querySelector(".calculating-box h3").textContent =
-            "계산이 취소되었습니다";
-        });
-      }
-    }, 10);
+      setTimeout(() => {
+        const cancelCalcBtn = document.getElementById("cancelCalcBtn");
+        if (cancelCalcBtn) {
+          cancelCalcBtn.addEventListener("click", function () {
+            isCalculationCancelled = true;
+            document.querySelector(".calculating-box h3").textContent =
+              "계산이 취소되었습니다";
+          });
+        }
+      }, 10);
 
-    const calcStyle = document.createElement("style");
-    calcStyle.id = "calc-style";
-    calcStyle.textContent = `
+      const calcStyle = document.createElement("style");
+      calcStyle.id = "calc-style";
+      calcStyle.textContent = `
         .calculating-wrapper {
           display: flex;
           justify-content: center;
@@ -88,28 +90,28 @@ const OptimalCombinationFinder = (function () {
           font-weight: bold;
         }
       `;
-    document.head.appendChild(calcStyle);
+      document.head.appendChild(calcStyle);
 
-    setTimeout(() => {
-      try {
-        const {
-          invalidSpirits,
-          invalidBindSpirits,
-          spiritsWithSuggestions,
-          spiritsWithBindSuggestions,
-        } = checkSpiritLevelData(selectedSpirits, lastActiveCategory);
-
-        if (invalidSpirits.length > 0 || invalidBindSpirits.length > 0) {
-          const warning = showLevelDataWarning(
+      setTimeout(() => {
+        try {
+          const {
             invalidSpirits,
-            spiritsWithSuggestions,
             invalidBindSpirits,
+            spiritsWithSuggestions,
             spiritsWithBindSuggestions,
-            currentCategory
-          );
+          } = checkSpiritLevelData(selectedSpirits, lastActiveCategory);
 
-          if (warning) {
-            document.getElementById("optimalModalContent").innerHTML = `
+          if (invalidSpirits.length > 0 || invalidBindSpirits.length > 0) {
+            const warning = showLevelDataWarning(
+              invalidSpirits,
+              spiritsWithSuggestions,
+              invalidBindSpirits,
+              spiritsWithBindSuggestions,
+              currentCategory
+            );
+
+            if (warning) {
+              document.getElementById("optimalModalContent").innerHTML = `
                 <div class="warning-dialog">
                   <h3>데이터 경고</h3>
                   <div class="warning-content">${warning}</div>
@@ -120,8 +122,8 @@ const OptimalCombinationFinder = (function () {
                 </div>
               `;
 
-            const warningStyle = document.createElement("style");
-            warningStyle.textContent = `
+              const warningStyle = document.createElement("style");
+              warningStyle.textContent = `
                 .warning-dialog {
                   padding: 20px;
                   background: #fff;
@@ -156,33 +158,33 @@ const OptimalCombinationFinder = (function () {
                   color: white;
                 }
               `;
-            document.head.appendChild(warningStyle);
+              document.head.appendChild(warningStyle);
 
-            document
-              .getElementById("continueBtn")
-              .addEventListener("click", function () {
-                setTimeout(
-                  () =>
-                    runActualCalculation(selectedSpirits, lastActiveCategory),
-                  100
-                );
-              });
+              document
+                .getElementById("continueBtn")
+                .addEventListener("click", function () {
+                  setTimeout(
+                    () =>
+                      runActualCalculation(selectedSpirits, lastActiveCategory),
+                    100
+                  );
+                });
 
-            document
-              .getElementById("cancelBtn")
-              .addEventListener("click", function () {
-                closeOptimalModal();
-                isProcessing = false;
-              });
+              document
+                .getElementById("cancelBtn")
+                .addEventListener("click", function () {
+                  closeOptimalModal();
+                  isProcessing = false;
+                });
+            } else {
+              runActualCalculation(selectedSpirits, lastActiveCategory);
+            }
           } else {
             runActualCalculation(selectedSpirits, lastActiveCategory);
           }
-        } else {
-          runActualCalculation(selectedSpirits, lastActiveCategory);
-        }
-      } catch (error) {
-        console.error("Error starting calculation:", error);
-        document.getElementById("optimalModalContent").innerHTML = `
+        } catch (error) {
+          console.error("Error starting calculation:", error);
+          document.getElementById("optimalModalContent").innerHTML = `
             <div class="error-message">
               <h3>오류 발생</h3>
               <p>계산 준비 중 오류가 발생했습니다: ${
@@ -191,159 +193,159 @@ const OptimalCombinationFinder = (function () {
               <button onclick="BondCalculatorApp.closeOptimalModal()" class="close-btn">닫기</button>
             </div>
           `;
-        isProcessing = false;
-      }
-    }, 100);
+          isProcessing = false;
+        }
+      }, 100);
 
-    return { isProcessing };
-  }
+      return { isProcessing };
+    }
 
-  function checkSpiritLevelData(selectedSpirits, lastActiveCategory) {
-    const currentCategory = lastActiveCategory;
+    function checkSpiritLevelData(selectedSpirits, lastActiveCategory) {
+      const currentCategory = lastActiveCategory;
 
-    const categorySpirits = selectedSpirits.filter(
-      (spirit) => spirit.category === currentCategory
-    );
+      const categorySpirits = selectedSpirits.filter(
+        (spirit) => spirit.category === currentCategory
+      );
 
-    const invalidSpirits = [];
-    const invalidBindSpirits = [];
-    const spiritsWithSuggestions = [];
-    const spiritsWithBindSuggestions = [];
+      const invalidSpirits = [];
+      const invalidBindSpirits = [];
+      const spiritsWithSuggestions = [];
+      const spiritsWithBindSuggestions = [];
 
-    for (const spirit of categorySpirits) {
-      const name = spirit.name;
-      const level = spirit.level || 0;
-      const availableLevels = [];
-      const availableBindLevels = [];
+      for (const spirit of categorySpirits) {
+        const name = spirit.name;
+        const level = spirit.level || 0;
+        const availableLevels = [];
+        const availableBindLevels = [];
 
-      if (spirit.stats && Array.isArray(spirit.stats)) {
-        spirit.stats.forEach((stat) => {
-          if (
-            stat.registrationStat &&
-            Object.keys(stat.registrationStat).length > 0
-          ) {
-            availableLevels.push(stat.level);
-          }
+        if (spirit.stats && Array.isArray(spirit.stats)) {
+          spirit.stats.forEach((stat) => {
+            if (
+              stat.registrationStat &&
+              Object.keys(stat.registrationStat).length > 0
+            ) {
+              availableLevels.push(stat.level);
+            }
 
-          if (stat.bindStat && Object.keys(stat.bindStat).length > 0) {
-            availableBindLevels.push(stat.level);
-          }
-        });
-      }
+            if (stat.bindStat && Object.keys(stat.bindStat).length > 0) {
+              availableBindLevels.push(stat.level);
+            }
+          });
+        }
 
-      if (!availableLevels.includes(level)) {
-        invalidSpirits.push({
-          name,
-          level,
-          availableLevels,
-          category: currentCategory,
-        });
-
-        if (availableLevels.length > 0) {
-          spiritsWithSuggestions.push({
+        if (!availableLevels.includes(level)) {
+          invalidSpirits.push({
             name,
             level,
             availableLevels,
             category: currentCategory,
           });
+
+          if (availableLevels.length > 0) {
+            spiritsWithSuggestions.push({
+              name,
+              level,
+              availableLevels,
+              category: currentCategory,
+            });
+          }
         }
-      }
 
-      if (
-        !availableBindLevels.includes(level) &&
-        !availableBindLevels.includes(25)
-      ) {
-        invalidBindSpirits.push({
-          name,
-          level,
-          availableBindLevels,
-          category: currentCategory,
-        });
-
-        if (availableBindLevels.length > 0) {
-          spiritsWithBindSuggestions.push({
+        if (
+          !availableBindLevels.includes(level) &&
+          !availableBindLevels.includes(25)
+        ) {
+          invalidBindSpirits.push({
             name,
             level,
             availableBindLevels,
             category: currentCategory,
           });
+
+          if (availableBindLevels.length > 0) {
+            spiritsWithBindSuggestions.push({
+              name,
+              level,
+              availableBindLevels,
+              category: currentCategory,
+            });
+          }
         }
       }
+
+      return {
+        invalidSpirits,
+        invalidBindSpirits,
+        spiritsWithSuggestions,
+        spiritsWithBindSuggestions,
+      };
     }
 
-    return {
+    function showLevelDataWarning(
       invalidSpirits,
-      invalidBindSpirits,
       spiritsWithSuggestions,
+      invalidBindSpirits,
       spiritsWithBindSuggestions,
-    };
-  }
+      currentCategory
+    ) {
+      let message = "";
 
-  function showLevelDataWarning(
-    invalidSpirits,
-    spiritsWithSuggestions,
-    invalidBindSpirits,
-    spiritsWithBindSuggestions,
-    currentCategory
-  ) {
-    let message = "";
+      if (invalidSpirits.length > 0) {
+        message += `<strong>${currentCategory} 등록 스탯 데이터 누락 경고:</strong><br><br>`;
 
-    if (invalidSpirits.length > 0) {
-      message += `<strong>${currentCategory} 등록 스탯 데이터 누락 경고:</strong><br><br>`;
+        invalidSpirits.forEach((spirit) => {
+          message += `- <strong>${spirit.name}</strong>: ${spirit.level}레벨에 등록 스탯 데이터가 없습니다.`;
 
-      invalidSpirits.forEach((spirit) => {
-        message += `- <strong>${spirit.name}</strong>: ${spirit.level}레벨에 등록 스탯 데이터가 없습니다.`;
+          if (spirit.availableLevels.length > 0) {
+            message += ` 다음 레벨에는 데이터가 있습니다: ${spirit.availableLevels.join(
+              ", "
+            )}`;
+          } else {
+            message += " (사용 가능한 데이터가 없습니다)";
+          }
 
-        if (spirit.availableLevels.length > 0) {
-          message += ` 다음 레벨에는 데이터가 있습니다: ${spirit.availableLevels.join(
-            ", "
-          )}`;
-        } else {
-          message += " (사용 가능한 데이터가 없습니다)";
+          message += "<br>";
+        });
+
+        if (spiritsWithSuggestions.length > 0) {
+          message +=
+            '<br>권장 조치: 각 환수의 레벨을 데이터가 있는 레벨로 변경하시거나 "MAX" 버튼을 눌러 최대 레벨로 설정하세요.<br><br>';
         }
-
-        message += "<br>";
-      });
-
-      if (spiritsWithSuggestions.length > 0) {
-        message +=
-          '<br>권장 조치: 각 환수의 레벨을 데이터가 있는 레벨로 변경하시거나 "MAX" 버튼을 눌러 최대 레벨로 설정하세요.<br><br>';
       }
+
+      if (invalidBindSpirits.length > 0) {
+        message += `<strong>${currentCategory} 결속 스탯 데이터 누락 경고:</strong><br><br>`;
+
+        invalidBindSpirits.forEach((spirit) => {
+          message += `- <strong>${spirit.name}</strong>: ${spirit.level}레벨에 결속 스탯 데이터가 없습니다.`;
+
+          if (spirit.availableBindLevels.length > 0) {
+            message += ` 다음 레벨에는 결속 스탯이 있습니다: ${spirit.availableBindLevels.join(
+              ", "
+            )}`;
+          } else {
+            message += " (사용 가능한 결속 스탯 데이터가 없습니다)";
+          }
+
+          message += "<br>";
+        });
+
+        if (spiritsWithBindSuggestions.length > 0) {
+          message +=
+            "<br>권장 조치: 각 환수의 레벨을 결속 스탯 데이터가 있는 레벨로 변경하시거나, 25레벨 결속 스탯을 사용할 수 있는 환수의 경우 자동으로 적용됩니다.";
+        }
+      }
+
+      return message;
     }
 
-    if (invalidBindSpirits.length > 0) {
-      message += `<strong>${currentCategory} 결속 스탯 데이터 누락 경고:</strong><br><br>`;
+    function runActualCalculation(selectedSpirits, lastActiveCategory) {
+      const currentCategory = lastActiveCategory;
+      const categorySpirits = selectedSpirits.filter(
+        (spirit) => spirit.category === currentCategory
+      );
 
-      invalidBindSpirits.forEach((spirit) => {
-        message += `- <strong>${spirit.name}</strong>: ${spirit.level}레벨에 결속 스탯 데이터가 없습니다.`;
-
-        if (spirit.availableBindLevels.length > 0) {
-          message += ` 다음 레벨에는 결속 스탯이 있습니다: ${spirit.availableBindLevels.join(
-            ", "
-          )}`;
-        } else {
-          message += " (사용 가능한 결속 스탯 데이터가 없습니다)";
-        }
-
-        message += "<br>";
-      });
-
-      if (spiritsWithBindSuggestions.length > 0) {
-        message +=
-          "<br>권장 조치: 각 환수의 레벨을 결속 스탯 데이터가 있는 레벨로 변경하시거나, 25레벨 결속 스탯을 사용할 수 있는 환수의 경우 자동으로 적용됩니다.";
-      }
-    }
-
-    return message;
-  }
-
-  function runActualCalculation(selectedSpirits, lastActiveCategory) {
-    const currentCategory = lastActiveCategory;
-    const categorySpirits = selectedSpirits.filter(
-      (spirit) => spirit.category === currentCategory
-    );
-
-    document.getElementById("optimalModalContent").innerHTML = `
+      document.getElementById("optimalModalContent").innerHTML = `
       <h3 class="modal-title">${currentCategory} 최적 결속 조합 결과 (최대 6개)</h3>
       <div class="modal-content">
         <div class="ad-row">
@@ -397,8 +399,8 @@ const OptimalCombinationFinder = (function () {
       </div>
     `;
 
-    const style = document.createElement("style");
-    style.textContent = `
+      const style = document.createElement("style");
+      style.textContent = `
         .calculating {
           padding: 10px;
           background-color: #f1f8fe;
@@ -578,105 +580,105 @@ const OptimalCombinationFinder = (function () {
           100% { transform: rotate(360deg); }
         }
       `;
-    document.head.appendChild(style);
+      document.head.appendChild(style);
 
-    document
-      .getElementById("cancelCalculationBtn")
-      .addEventListener("click", function () {
-        isCalculationCancelled = true;
-        document.getElementById("optimalSpiritsList").innerHTML =
-          "<div class='warning-message'>계산이 중단되었습니다. 현재까지 찾은 최적 조합을 표시합니다.</div>";
-      });
+      document
+        .getElementById("cancelCalculationBtn")
+        .addEventListener("click", function () {
+          isCalculationCancelled = true;
+          document.getElementById("optimalSpiritsList").innerHTML =
+            "<div class='warning-message'>계산이 중단되었습니다. 현재까지 찾은 최적 조합을 표시합니다.</div>";
+        });
 
-    document
-      .getElementById("clearHistoryButton")
-      .addEventListener("click", function () {
-        clearSavedOptimalCombinations(currentCategory);
-      });
+      document
+        .getElementById("clearHistoryButton")
+        .addEventListener("click", function () {
+          clearSavedOptimalCombinations(currentCategory);
+        });
 
-    const historyData = HistoryManager.loadSavedCombinations();
-    const { savedOptimalCombinations, categoryState } = historyData;
+      const historyData = HistoryManager.loadSavedCombinations();
+      const { savedOptimalCombinations, categoryState } = historyData;
 
-    HistoryManager.renderHistoryTabs(
-      currentCategory,
-      document.getElementById("optimalSpiritsList"),
-      (result, isBest) => {
-        OptimalResultModal.showResultModal(result);
-      }
-    );
-
-    if (
-      savedOptimalCombinations[currentCategory] &&
-      savedOptimalCombinations[currentCategory].length > 0
-    ) {
-      const currentActiveIndex = categoryState[currentCategory].activeIndex;
-      OptimalResultModal.showResultModal(
-        savedOptimalCombinations[currentCategory][currentActiveIndex]
+      HistoryManager.renderHistoryTabs(
+        currentCategory,
+        document.getElementById("optimalSpiritsList"),
+        (result, isBest) => {
+          OptimalResultModal.showResultModal(result);
+        }
       );
-    }
 
-    SearchManager.initializeAds(optimalModal);
+      if (
+        savedOptimalCombinations[currentCategory] &&
+        savedOptimalCombinations[currentCategory].length > 0
+      ) {
+        const currentActiveIndex = categoryState[currentCategory].activeIndex;
+        OptimalResultModal.showResultModal(
+          savedOptimalCombinations[currentCategory][currentActiveIndex]
+        );
+      }
 
-    setTimeout(() => {
-      try {
-        const validSpirits = categorySpirits
-          .map((spirit) => {
-            const copy = JSON.parse(JSON.stringify(spirit));
-            copy.category = spirit.category;
-            copy.grade = spirit.grade || "전설";
-            copy.faction = spirit.influence || spirit.faction || "결의";
-            return copy;
-          })
-          .filter((spirit) => {
-            const hasValidLevel =
-              spirit.level !== undefined && spirit.level !== null;
-            const hasLevelStats = spirit.stats?.some(
-              (s) =>
-                s.level === spirit.level &&
-                s.registrationStat &&
-                Object.keys(s.registrationStat).length > 0
+      SearchManager.initializeAds(optimalModal);
+
+      setTimeout(() => {
+        try {
+          const validSpirits = categorySpirits
+            .map((spirit) => {
+              const copy = JSON.parse(JSON.stringify(spirit));
+              copy.category = spirit.category;
+              copy.grade = spirit.grade || "전설";
+              copy.faction = spirit.influence || spirit.faction || "결의";
+              return copy;
+            })
+            .filter((spirit) => {
+              const hasValidLevel =
+                spirit.level !== undefined && spirit.level !== null;
+              const hasLevelStats = spirit.stats?.some(
+                (s) =>
+                  s.level === spirit.level &&
+                  s.registrationStat &&
+                  Object.keys(s.registrationStat).length > 0
+              );
+              return hasValidLevel && hasLevelStats;
+            });
+
+          if (validSpirits.length === 0) {
+            throw new Error(
+              "유효한 환수 데이터가 없습니다. 환수들의 레벨을 확인해주세요."
             );
-            return hasValidLevel && hasLevelStats;
-          });
+          }
 
-        if (validSpirits.length === 0) {
-          throw new Error(
-            "유효한 환수 데이터가 없습니다. 환수들의 레벨을 확인해주세요."
-          );
-        }
-
-        if (validSpirits.length <= 20) {
-          runMethodA(validSpirits);
-        } else {
-          runMethodB(validSpirits);
-        }
-      } catch (error) {
-        console.error("Error finding optimal combination:", error);
-        document.getElementById("optimalSpiritsList").innerHTML = `
+          if (validSpirits.length <= 20) {
+            runMethodA(validSpirits);
+          } else {
+            runMethodB(validSpirits);
+          }
+        } catch (error) {
+          console.error("Error finding optimal combination:", error);
+          document.getElementById("optimalSpiritsList").innerHTML = `
             <div class='warning-message'>${
               error.message || "조합을 찾는 중 오류가 발생했습니다."
             }</div>`;
-        document.getElementById("optimalScore").textContent = "오류";
-        isProcessing = false;
-      }
-    }, 100);
-  }
+          document.getElementById("optimalScore").textContent = "오류";
+          isProcessing = false;
+        }
+      }, 100);
+    }
 
-  function runMethodA(validSpirits) {
-    const targetCombinationSize = Math.min(6, validSpirits.length);
-    let totalCombinations = CalculationUtils.binomialCoefficient(
-      validSpirits.length,
-      targetCombinationSize
-    );
+    function runMethodA(validSpirits) {
+      const targetCombinationSize = Math.min(6, validSpirits.length);
+      let totalCombinations = CalculationUtils.binomialCoefficient(
+        validSpirits.length,
+        targetCombinationSize
+      );
 
-    let processedCombinations = 0;
-    let bestResult = null;
+      let processedCombinations = 0;
+      let bestResult = null;
 
-    const updateProgress = (progress) => {
-      if (!isCalculationCancelled) {
-        document.getElementById(
-          "optimalSpiritsList"
-        ).innerHTML = `<div class='processing-message'>
+      const updateProgress = (progress) => {
+        if (!isCalculationCancelled) {
+          document.getElementById(
+            "optimalSpiritsList"
+          ).innerHTML = `<div class='processing-message'>
                 <div class="calculating-spinner-small"></div>
                 최적 조합을 찾는 중입니다... (${Math.round(progress * 100)}%)
                 <div style="margin-top: 10px;">
@@ -684,112 +686,33 @@ const OptimalCombinationFinder = (function () {
                 </div>
               </div>`;
 
-        document
-          .getElementById("cancelCalculationBtn")
-          .addEventListener("click", function () {
-            isCalculationCancelled = true;
-            document.getElementById("optimalSpiritsList").innerHTML =
-              "<div class='warning-message'>계산이 중단되었습니다. 현재까지 찾은 최적 조합을 표시합니다.</div>";
-          });
-      }
-    };
+          document
+            .getElementById("cancelCalculationBtn")
+            .addEventListener("click", function () {
+              isCalculationCancelled = true;
+              document.getElementById("optimalSpiritsList").innerHTML =
+                "<div class='warning-message'>계산이 중단되었습니다. 현재까지 찾은 최적 조합을 표시합니다.</div>";
+            });
+        }
+      };
 
-    function processInBatches(
-      combinationIndex,
-      batchSize,
-      validSpirits,
-      combinations
-    ) {
-      if (combinationIndex === 0) {
-        combinations = CalculationUtils.generateCombinations(
-          validSpirits,
-          targetCombinationSize
-        );
-      }
-
-      if (combinationIndex >= combinations.length || isCalculationCancelled) {
-        if (bestResult) {
-          const deepCopiedResult = JSON.parse(JSON.stringify(bestResult));
-          HistoryManager.addNewCombination(deepCopiedResult);
-
-          const category =
-            bestResult.spirits[0]?.category || lastActiveCategory;
-          OptimalResultModal.showResultModal(bestResult);
-          HistoryManager.renderHistoryTabs(
-            category,
-            document.getElementById("optimalSpiritsList"),
-            (result) => {
-              OptimalResultModal.showResultModal(result);
-            }
+      function processInBatches(
+        combinationIndex,
+        batchSize,
+        validSpirits,
+        combinations
+      ) {
+        if (combinationIndex === 0) {
+          combinations = CalculationUtils.generateCombinations(
+            validSpirits,
+            targetCombinationSize
           );
-        } else {
-          document.getElementById("optimalSpiritsList").innerHTML =
-            "<div class='warning-message'>최적 조합을 찾을 수 없습니다.</div>";
-        }
-        isProcessing = false;
-        return;
-      }
-
-      const endIndex = Math.min(
-        combinationIndex + batchSize,
-        combinations.length
-      );
-
-      for (let i = combinationIndex; i < endIndex; i++) {
-        const combination = combinations[i];
-        const result = CalculationUtils.calculateEffectsForSpirits(combination);
-
-        processedCombinations++;
-
-        if (processedCombinations % 20 === 0) {
-          updateProgress(processedCombinations / totalCombinations);
         }
 
-        if (!bestResult || result.scoreWithBind > bestResult.scoreWithBind) {
-          bestResult = result;
-        } else if (result.scoreWithBind === bestResult.scoreWithBind) {
-          const resultBindCount = SpiritUtils.countSpiritsWithBindStats(result);
-          const bestBindCount =
-            SpiritUtils.countSpiritsWithBindStats(bestResult);
-
-          if (resultBindCount > bestBindCount) {
-            bestResult = result;
-          } else if (resultBindCount === bestBindCount) {
-            const currentImmortalCount = SpiritUtils.countGradeInResult(
-              result,
-              "불멸"
-            );
-            const bestImmortalCount = SpiritUtils.countGradeInResult(
-              bestResult,
-              "불멸"
-            );
-
-            if (currentImmortalCount > bestImmortalCount) {
-              bestResult = result;
-            } else if (currentImmortalCount === bestImmortalCount) {
-              const currentGradeTypes =
-                SpiritUtils.countGradeTypesInResult(result);
-              const bestGradeTypes =
-                SpiritUtils.countGradeTypesInResult(bestResult);
-
-              if (currentGradeTypes > bestGradeTypes) {
-                bestResult = result;
-              }
-            }
-          }
-        }
-      }
-
-      if (endIndex < combinations.length) {
-        setTimeout(() => {
-          processInBatches(endIndex, batchSize, validSpirits, combinations);
-        }, 0);
-      } else {
-        setTimeout(() => {
+        if (combinationIndex >= combinations.length || isCalculationCancelled) {
           if (bestResult) {
             const deepCopiedResult = JSON.parse(JSON.stringify(bestResult));
-            const { resultWithTimestamp, index } =
-              HistoryManager.addNewCombination(deepCopiedResult);
+            HistoryManager.addNewCombination(deepCopiedResult);
 
             const category =
               bestResult.spirits[0]?.category || lastActiveCategory;
@@ -806,18 +729,99 @@ const OptimalCombinationFinder = (function () {
               "<div class='warning-message'>최적 조합을 찾을 수 없습니다.</div>";
           }
           isProcessing = false;
-        }, 0);
+          return;
+        }
+
+        const endIndex = Math.min(
+          combinationIndex + batchSize,
+          combinations.length
+        );
+
+        for (let i = combinationIndex; i < endIndex; i++) {
+          const combination = combinations[i];
+          const result =
+            CalculationUtils.calculateEffectsForSpirits(combination);
+
+          processedCombinations++;
+
+          if (processedCombinations % 20 === 0) {
+            updateProgress(processedCombinations / totalCombinations);
+          }
+
+          if (!bestResult || result.scoreWithBind > bestResult.scoreWithBind) {
+            bestResult = result;
+          } else if (result.scoreWithBind === bestResult.scoreWithBind) {
+            const resultBindCount =
+              SpiritUtils.countSpiritsWithBindStats(result);
+            const bestBindCount =
+              SpiritUtils.countSpiritsWithBindStats(bestResult);
+
+            if (resultBindCount > bestBindCount) {
+              bestResult = result;
+            } else if (resultBindCount === bestBindCount) {
+              const currentImmortalCount = SpiritUtils.countGradeInResult(
+                result,
+                "불멸"
+              );
+              const bestImmortalCount = SpiritUtils.countGradeInResult(
+                bestResult,
+                "불멸"
+              );
+
+              if (currentImmortalCount > bestImmortalCount) {
+                bestResult = result;
+              } else if (currentImmortalCount === bestImmortalCount) {
+                const currentGradeTypes =
+                  SpiritUtils.countGradeTypesInResult(result);
+                const bestGradeTypes =
+                  SpiritUtils.countGradeTypesInResult(bestResult);
+
+                if (currentGradeTypes > bestGradeTypes) {
+                  bestResult = result;
+                }
+              }
+            }
+          }
+        }
+
+        if (endIndex < combinations.length) {
+          setTimeout(() => {
+            processInBatches(endIndex, batchSize, validSpirits, combinations);
+          }, 0);
+        } else {
+          setTimeout(() => {
+            if (bestResult) {
+              const deepCopiedResult = JSON.parse(JSON.stringify(bestResult));
+              const { resultWithTimestamp, index } =
+                HistoryManager.addNewCombination(deepCopiedResult);
+
+              const category =
+                bestResult.spirits[0]?.category || lastActiveCategory;
+              OptimalResultModal.showResultModal(bestResult);
+              HistoryManager.renderHistoryTabs(
+                category,
+                document.getElementById("optimalSpiritsList"),
+                (result) => {
+                  OptimalResultModal.showResultModal(result);
+                }
+              );
+            } else {
+              document.getElementById("optimalSpiritsList").innerHTML =
+                "<div class='warning-message'>최적 조합을 찾을 수 없습니다.</div>";
+            }
+            isProcessing = false;
+          }, 0);
+        }
       }
+
+      const batchSize = 50;
+      processInBatches(0, batchSize, validSpirits, null);
     }
 
-    const batchSize = 50;
-    processInBatches(0, batchSize, validSpirits, null);
-  }
-
-  function runMethodB(validSpirits) {
-    const filteringInfoContainer = document.createElement("div");
-    filteringInfoContainer.className = "smart-filtering-info";
-    filteringInfoContainer.innerHTML = `
+    function runMethodB(validSpirits) {
+      const filteringInfoContainer = document.createElement("div");
+      filteringInfoContainer.className = "smart-filtering-info";
+      filteringInfoContainer.innerHTML = `
         <h4>스마트 필터링으로 계산 중</h4>
         <div class="filtering-info">환수 수가 많아 효율적인 스마트 필터링을 적용합니다</div>
         <div class="filtering-phases">
@@ -831,135 +835,135 @@ const OptimalCombinationFinder = (function () {
         </div>
       `;
 
-    document.getElementById("optimalSpiritsList").innerHTML = "";
-    document
-      .getElementById("optimalSpiritsList")
-      .appendChild(filteringInfoContainer);
+      document.getElementById("optimalSpiritsList").innerHTML = "";
+      document
+        .getElementById("optimalSpiritsList")
+        .appendChild(filteringInfoContainer);
 
-    const formattedSpirits = validSpirits.map((spirit) => ({
-      name: spirit.name,
-      image: spirit.image,
-      category: spirit.category,
-      grade: spirit.grade || "전설",
-      faction: spirit.influence || spirit.faction || "결의",
-      level: spirit.level,
-      stats: spirit.stats,
-      isFixedLevel: spirit.isFixedLevel,
-      hasLevel25Bind: spirit.hasLevel25Bind,
-    }));
+      const formattedSpirits = validSpirits.map((spirit) => ({
+        name: spirit.name,
+        image: spirit.image,
+        category: spirit.category,
+        grade: spirit.grade || "전설",
+        faction: spirit.influence || spirit.faction || "결의",
+        level: spirit.level,
+        stats: spirit.stats,
+        isFixedLevel: spirit.isFixedLevel,
+        hasLevel25Bind: spirit.hasLevel25Bind,
+      }));
 
-    updatePhase("phase1", "환수 개별 성능을 평가 중입니다...");
-    setTimeout(() => {
-      const rankedSpirits = rankSpirits(formattedSpirits);
-      displayInitialSpiritRanking(rankedSpirits);
-
-      updatePhase("phase2", "최적 조합 후보군을 선정 중입니다...");
-
+      updatePhase("phase1", "환수 개별 성능을 평가 중입니다...");
       setTimeout(() => {
-        updatePhase("phase3", "후보 조합을 최적화 중입니다...");
+        const rankedSpirits = rankSpirits(formattedSpirits);
+        displayInitialSpiritRanking(rankedSpirits);
+
+        updatePhase("phase2", "최적 조합 후보군을 선정 중입니다...");
 
         setTimeout(() => {
-          if (window.Worker) {
-            optimizeWithSmartFiltering(rankedSpirits);
-          } else {
-            optimizeWithoutWorkerSmartFiltering(rankedSpirits);
-          }
+          updatePhase("phase3", "후보 조합을 최적화 중입니다...");
+
+          setTimeout(() => {
+            if (window.Worker) {
+              optimizeWithSmartFiltering(rankedSpirits);
+            } else {
+              optimizeWithoutWorkerSmartFiltering(rankedSpirits);
+            }
+          }, 300);
         }, 300);
       }, 300);
-    }, 300);
-  }
+    }
 
-  function updatePhase(currentPhaseId, description) {
-    document.querySelectorAll(".filtering-phases .phase").forEach((phase) => {
-      phase.classList.remove("active");
-      phase.classList.remove("completed");
-    });
+    function updatePhase(currentPhaseId, description) {
+      document.querySelectorAll(".filtering-phases .phase").forEach((phase) => {
+        phase.classList.remove("active");
+        phase.classList.remove("completed");
+      });
 
-    const phaseElement = document.getElementById(currentPhaseId);
-    if (phaseElement) {
-      phaseElement.classList.add("active");
+      const phaseElement = document.getElementById(currentPhaseId);
+      if (phaseElement) {
+        phaseElement.classList.add("active");
 
-      const phaseNumber = parseInt(currentPhaseId.replace("phase", ""));
-      for (let i = 1; i < phaseNumber; i++) {
-        const prevPhase = document.getElementById(`phase${i}`);
-        if (prevPhase) {
-          prevPhase.classList.add("completed");
+        const phaseNumber = parseInt(currentPhaseId.replace("phase", ""));
+        for (let i = 1; i < phaseNumber; i++) {
+          const prevPhase = document.getElementById(`phase${i}`);
+          if (prevPhase) {
+            prevPhase.classList.add("completed");
+          }
         }
+      }
+
+      const descriptionElement = document.getElementById("phaseDescription");
+      if (descriptionElement && description) {
+        descriptionElement.textContent = description;
       }
     }
 
-    const descriptionElement = document.getElementById("phaseDescription");
-    if (descriptionElement && description) {
-      descriptionElement.textContent = description;
+    function rankSpirits(spirits) {
+      return spirits
+        .map((spirit) => {
+          const levelStat =
+            spirit.stats?.find((s) => s.level === spirit.level)
+              ?.registrationStat || {};
+
+          let bindStat = spirit.stats?.find(
+            (s) => s.level === spirit.level
+          )?.bindStat;
+
+          if (!bindStat && spirit.hasLevel25Bind) {
+            bindStat = spirit.stats?.find((s) => s.level === 25)?.bindStat;
+          }
+
+          bindStat = bindStat || {};
+
+          const regScore =
+            (levelStat.damageResistancePenetration || 0) +
+            (levelStat.damageResistance || 0) +
+            (levelStat.pvpDamagePercent || 0) * 10 +
+            (levelStat.pvpDefensePercent || 0) * 10;
+
+          const bindScore =
+            (bindStat.damageResistancePenetration || 0) +
+            (bindStat.damageResistance || 0) +
+            (bindStat.pvpDamagePercent || 0) * 10 +
+            (bindStat.pvpDefensePercent || 0) * 10;
+
+          return {
+            ...spirit,
+            score: regScore,
+            bindScore: bindScore,
+            totalScore: regScore + bindScore,
+            calculatedStats: levelStat,
+            calculatedBindStats: bindStat,
+          };
+        })
+        .sort((a, b) => b.totalScore - a.totalScore);
     }
-  }
 
-  function rankSpirits(spirits) {
-    return spirits
-      .map((spirit) => {
-        const levelStat =
-          spirit.stats?.find((s) => s.level === spirit.level)
-            ?.registrationStat || {};
+    function displayInitialSpiritRanking(rankedSpirits) {
+      const pvpSpirits = rankedSpirits.filter((spirit) =>
+        hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"])
+      );
 
-        let bindStat = spirit.stats?.find(
-          (s) => s.level === spirit.level
-        )?.bindStat;
+      const resistanceSpirits = rankedSpirits.filter(
+        (spirit) =>
+          !hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"]) &&
+          hasCriticalStat(spirit, [
+            "damageResistancePenetration",
+            "damageResistance",
+          ])
+      );
 
-        if (!bindStat && spirit.hasLevel25Bind) {
-          bindStat = spirit.stats?.find((s) => s.level === 25)?.bindStat;
-        }
+      const otherSpirits = rankedSpirits.filter(
+        (spirit) =>
+          !hasCriticalStat(spirit, [
+            "pvpDamagePercent",
+            "pvpDefensePercent",
+            "damageResistancePenetration",
+            "damageResistance",
+          ])
+      );
 
-        bindStat = bindStat || {};
-
-        const regScore =
-          (levelStat.damageResistancePenetration || 0) +
-          (levelStat.damageResistance || 0) +
-          (levelStat.pvpDamagePercent || 0) * 10 +
-          (levelStat.pvpDefensePercent || 0) * 10;
-
-        const bindScore =
-          (bindStat.damageResistancePenetration || 0) +
-          (bindStat.damageResistance || 0) +
-          (bindStat.pvpDamagePercent || 0) * 10 +
-          (bindStat.pvpDefensePercent || 0) * 10;
-
-        return {
-          ...spirit,
-          score: regScore,
-          bindScore: bindScore,
-          totalScore: regScore + bindScore,
-          calculatedStats: levelStat,
-          calculatedBindStats: bindStat,
-        };
-      })
-      .sort((a, b) => b.totalScore - a.totalScore);
-  }
-
-  function displayInitialSpiritRanking(rankedSpirits) {
-    const pvpSpirits = rankedSpirits.filter((spirit) =>
-      hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"])
-    );
-
-    const resistanceSpirits = rankedSpirits.filter(
-      (spirit) =>
-        !hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"]) &&
-        hasCriticalStat(spirit, [
-          "damageResistancePenetration",
-          "damageResistance",
-        ])
-    );
-
-    const otherSpirits = rankedSpirits.filter(
-      (spirit) =>
-        !hasCriticalStat(spirit, [
-          "pvpDamagePercent",
-          "pvpDefensePercent",
-          "damageResistancePenetration",
-          "damageResistance",
-        ])
-    );
-
-    const infoHTML = `
+      const infoHTML = `
       <div class="smart-filtering-info">
           <h4>스마트 필터링 준비 완료 (20개 초과 선택 시 작동)</h4>
           <p><strong>선택된 환수:</strong> ${rankedSpirits.length}개</p>
@@ -985,13 +989,13 @@ const OptimalCombinationFinder = (function () {
       </div>
     `;
 
-    document.getElementById("optimalSpiritsList").innerHTML = infoHTML;
+      document.getElementById("optimalSpiritsList").innerHTML = infoHTML;
 
-    const animStyle = document.getElementById("progress-animation-style");
-    if (!animStyle) {
-      const style = document.createElement("style");
-      style.id = "progress-animation-style";
-      style.textContent = `
+      const animStyle = document.getElementById("progress-animation-style");
+      if (!animStyle) {
+        const style = document.createElement("style");
+        style.id = "progress-animation-style";
+        style.textContent = `
         .progress-container {
           position: relative;
           margin: 15px 0;
@@ -1040,324 +1044,368 @@ const OptimalCombinationFinder = (function () {
           }
         }
       `;
-      document.head.appendChild(style);
-    }
-  }
-
-  function updateProgressWithCharacter(progress) {
-    const progressBar = document.getElementById("calculation-progress-bar");
-    const progressCharacter = document.getElementById("progress-character");
-
-    if (progressBar && progressCharacter) {
-      const percentage = Math.round(progress * 100);
-      progressBar.style.width = `${percentage}%`;
-
-      const containerWidth = progressBar.parentElement.offsetWidth;
-      const characterWidth = progressCharacter.offsetWidth;
-
-      const maxLeft = containerWidth - characterWidth;
-      const left = Math.max(
-        0,
-        (containerWidth - characterWidth) * (percentage / 100)
-      );
-      progressCharacter.style.left = `${Math.min(left, maxLeft)}px`;
-    }
-  }
-
-  function updateCalculationPhase(phaseIndex) {
-    document.querySelectorAll(".phase").forEach((el, idx) => {
-      el.classList.remove("active", "completed");
-      if (idx < phaseIndex) {
-        el.classList.add("completed");
-      } else if (idx === phaseIndex) {
-        el.classList.add("active");
-      }
-    });
-
-    const statusText = document.getElementById("calculation-status");
-    if (statusText) {
-      switch (phaseIndex) {
-        case 0:
-          statusText.textContent = "계산 시작 준비 완료";
-          break;
-        case 1:
-          statusText.textContent = "1단계: 상위 점수 환수 분석 중...";
-          break;
-        case 2:
-          statusText.textContent = "2단계: 균형 환수 조합 분석 중...";
-          break;
-        case 3:
-          statusText.textContent = "3단계: 전체 환수 분석 중...";
-          break;
-        case 4:
-          statusText.textContent = "계산 완료!";
-          break;
-        default:
-          statusText.textContent = "계산 진행 중...";
-      }
-    }
-  }
-
-  function hasCriticalStat(spirit, statKeys) {
-    if (spirit.stats && Array.isArray(spirit.stats)) {
-      const levelStat = spirit.stats.find((s) => s.level === spirit.level);
-      if (levelStat && levelStat.registrationStat) {
-        const stats = levelStat.registrationStat;
-        if (
-          statKeys.some((key) => {
-            const value = parseFloat(stats[key] || 0);
-            return value > 0;
-          })
-        ) {
-          return true;
-        }
+        document.head.appendChild(style);
       }
     }
 
-    if (spirit.stats && Array.isArray(spirit.stats)) {
-      const levelStat = spirit.stats.find((s) => s.level === spirit.level);
-      if (levelStat && levelStat.bindStat) {
-        const stats = levelStat.bindStat;
-        if (
-          statKeys.some((key) => {
-            const value = parseFloat(stats[key] || 0);
-            return value > 0;
-          })
-        ) {
-          return true;
-        }
-      }
+    function updateProgressWithCharacter(progress) {
+      const progressBar = document.getElementById("calculation-progress-bar");
+      const progressCharacter = document.getElementById("progress-character");
 
-      if (spirit.hasLevel25Bind) {
-        const level25Stat = spirit.stats.find((s) => s.level === 25);
-        if (level25Stat && level25Stat.bindStat) {
-          const stats = level25Stat.bindStat;
-          return statKeys.some((key) => {
-            const value = parseFloat(stats[key] || 0);
-            return value > 0;
-          });
-        }
-      }
-    }
+      if (progressBar && progressCharacter) {
+        const percentage = Math.round(progress * 100);
+        progressBar.style.width = `${percentage}%`;
 
-    return false;
-  }
+        const containerWidth = progressBar.parentElement.offsetWidth;
+        const characterWidth = progressCharacter.offsetWidth;
 
-  function optimizeWithSmartFiltering(rankedSpirits) {
-    const totalSpirits = rankedSpirits.length;
-    let bestResultOverall = null;
-    let processedResultCount = 0;
-
-    updateCalculationPhase(0);
-
-    const topRankedSpirits = rankedSpirits.slice(0, Math.min(25, totalSpirits));
-
-    const pvpSpirits = rankedSpirits
-      .filter((spirit) =>
-        hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"])
-      )
-      .slice(0, 15);
-
-    const resistanceSpirits = rankedSpirits
-      .filter(
-        (spirit) =>
-          hasCriticalStat(spirit, [
-            "damageResistancePenetration",
-            "damageResistance",
-          ]) &&
-          !hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"])
-      )
-      .slice(0, 15);
-
-    const otherSpirits = rankedSpirits
-      .filter(
-        (spirit) =>
-          !hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"]) &&
-          !hasCriticalStat(spirit, [
-            "damageResistancePenetration",
-            "damageResistance",
-          ])
-      )
-      .slice(0, 15);
-
-    const mixedSpirits = [
-      ...new Set([...pvpSpirits, ...resistanceSpirits, ...otherSpirits]),
-    ];
-
-    const phases = [
-      {
-        spirits: topRankedSpirits,
-        maxSize: 6,
-        name: "상위 점수 환수",
-        phaseId: "phase1",
-      },
-      {
-        spirits: mixedSpirits,
-        maxSize: 6,
-        name: "균형 환수 조합",
-        phaseId: "phase2",
-      },
-      {
-        spirits: rankedSpirits.slice(0, Math.min(40, totalSpirits)),
-        maxSize: 6,
-        name: "전체 환수",
-        phaseId: "phase3",
-      },
-    ];
-
-    let currentPhase = 0;
-    processNextPhase();
-
-    function processNextPhase() {
-      if (currentPhase >= phases.length || isCalculationCancelled) {
-        finishCalculation();
-        return;
-      }
-
-      updateCalculationPhase(currentPhase + 1);
-      const phase = phases[currentPhase];
-
-      const statusText = document.getElementById("calculation-status");
-      if (statusText) {
-        statusText.textContent = `${phase.name} 분석 중...`;
-      }
-
-      const targetSize = Math.min(phase.maxSize, phase.spirits.length);
-      const combinations = CalculationUtils.generateCombinations(
-        phase.spirits,
-        targetSize
-      );
-      const totalCombos = combinations.length;
-
-      let bestPhaseResult = null;
-      let processedCount = 0;
-
-      function processBatch(startIndex, batchSize) {
-        if (startIndex >= totalCombos || isCalculationCancelled) {
-          currentPhase++;
-          processNextPhase();
-          return;
-        }
-
-        const endIndex = Math.min(startIndex + batchSize, totalCombos);
-
-        for (let i = startIndex; i < endIndex; i++) {
-          const result = CalculationUtils.calculateEffectsForSpirits(
-            combinations[i]
-          );
-
-          if (
-            !bestPhaseResult ||
-            result.scoreWithBind > bestPhaseResult.scoreWithBind
-          ) {
-            bestPhaseResult = result;
-          }
-
-          if (
-            !bestResultOverall ||
-            result.scoreWithBind > bestResultOverall.scoreWithBind
-          ) {
-            bestResultOverall = result;
-
-            document.getElementById("optimalScore").textContent = `${
-              bestResultOverall.scoreWithBind
-            } (등록효과: ${bestResultOverall.score} 장착효과: ${
-              bestResultOverall.bindScore || 0
-            })`;
-
-            const bindScoreEl = document.getElementById("optimalScoreBind");
-            if (bindScoreEl) bindScoreEl.style.display = "none";
-          }
-        }
-
-        processedCount += endIndex - startIndex;
-        updateProgressWithCharacter(processedCount / totalCombos);
-
-        setTimeout(() => {
-          processBatch(endIndex, batchSize);
-        }, 0);
-      }
-
-      // Start processing with appropriate batch size
-      const batchSize = Math.min(
-        50,
-        Math.max(10, Math.floor(totalCombos / 100))
-      );
-      processBatch(0, batchSize);
-    }
-
-    function finishCalculation() {
-      updateCalculationPhase(4);
-
-      const calcStatus = document.getElementById("calculation-status");
-      if (calcStatus) {
-        calcStatus.innerHTML =
-          '계산 완료! <span class="calculation-complete-icon">✓</span>';
-        calcStatus.classList.add("calculation-complete");
-      }
-
-      if (bestResultOverall) {
-        const deepCopiedResult = JSON.parse(JSON.stringify(bestResultOverall));
-        HistoryManager.addNewCombination(deepCopiedResult);
-
-        const category =
-          bestResultOverall.spirits[0]?.category || lastActiveCategory;
-        OptimalResultModal.showResultModal(bestResultOverall);
-        HistoryManager.renderHistoryTabs(
-          category,
-          document.getElementById("optimalSpiritsList"),
-          (result) => {
-            OptimalResultModal.showResultModal(result);
-          }
+        const maxLeft = containerWidth - characterWidth;
+        const left = Math.max(
+          0,
+          (containerWidth - characterWidth) * (percentage / 100)
         );
-      } else {
-        document.getElementById("optimalSpiritsList").innerHTML =
-          "<div class='warning-message'>최적 조합을 찾을 수 없습니다.</div>";
+        progressCharacter.style.left = `${Math.min(left, maxLeft)}px`;
       }
-
-      isProcessing = false;
     }
-  }
 
-  function optimizeWithoutWorkerSmartFiltering(rankedSpirits) {
-    const totalSpirits = rankedSpirits.length;
-    let bestResult = null;
-
-    const topSpirits = rankedSpirits.slice(0, Math.min(15, totalSpirits));
-
-    document.getElementById("calculation-status").textContent =
-      "웹 워커를 지원하지 않습니다. 상위 환수만 계산합니다...";
-
-    setTimeout(() => {
-      const targetSize = Math.min(6, topSpirits.length);
-      const combinations = CalculationUtils.generateCombinations(
-        topSpirits,
-        targetSize
-      );
-
-      combinations.forEach((combination, index) => {
-        const result = CalculationUtils.calculateEffectsForSpirits(combination);
-
-        if (!bestResult || result.scoreWithBind > bestResult.scoreWithBind) {
-          bestResult = result;
-        }
-
-        if (index % 100 === 0) {
-          const progress = (index / combinations.length) * 100;
-          const progressBar = document.getElementById(
-            "calculation-progress-bar"
-          );
-          if (progressBar) {
-            progressBar.style.width = `${Math.round(progress)}%`;
-          }
+    function updateCalculationPhase(phaseIndex) {
+      document.querySelectorAll(".phase").forEach((el, idx) => {
+        el.classList.remove("active", "completed");
+        if (idx < phaseIndex) {
+          el.classList.add("completed");
+        } else if (idx === phaseIndex) {
+          el.classList.add("active");
         }
       });
 
-      if (bestResult) {
-        HistoryManager.addNewCombination(bestResult);
+      const statusText = document.getElementById("calculation-status");
+      if (statusText) {
+        switch (phaseIndex) {
+          case 0:
+            statusText.textContent = "계산 시작 준비 완료";
+            break;
+          case 1:
+            statusText.textContent = "1단계: 상위 점수 환수 분석 중...";
+            break;
+          case 2:
+            statusText.textContent = "2단계: 균형 환수 조합 분석 중...";
+            break;
+          case 3:
+            statusText.textContent = "3단계: 전체 환수 분석 중...";
+            break;
+          case 4:
+            statusText.textContent = "계산 완료!";
+            break;
+          default:
+            statusText.textContent = "계산 진행 중...";
+        }
+      }
+    }
 
-        const category = bestResult.spirits[0]?.category || lastActiveCategory;
-        OptimalResultModal.showResultModal(bestResult);
+    function hasCriticalStat(spirit, statKeys) {
+      if (spirit.stats && Array.isArray(spirit.stats)) {
+        const levelStat = spirit.stats.find((s) => s.level === spirit.level);
+        if (levelStat && levelStat.registrationStat) {
+          const stats = levelStat.registrationStat;
+          if (
+            statKeys.some((key) => {
+              const value = parseFloat(stats[key] || 0);
+              return value > 0;
+            })
+          ) {
+            return true;
+          }
+        }
+      }
+
+      if (spirit.stats && Array.isArray(spirit.stats)) {
+        const levelStat = spirit.stats.find((s) => s.level === spirit.level);
+        if (levelStat && levelStat.bindStat) {
+          const stats = levelStat.bindStat;
+          if (
+            statKeys.some((key) => {
+              const value = parseFloat(stats[key] || 0);
+              return value > 0;
+            })
+          ) {
+            return true;
+          }
+        }
+
+        if (spirit.hasLevel25Bind) {
+          const level25Stat = spirit.stats.find((s) => s.level === 25);
+          if (level25Stat && level25Stat.bindStat) {
+            const stats = level25Stat.bindStat;
+            return statKeys.some((key) => {
+              const value = parseFloat(stats[key] || 0);
+              return value > 0;
+            });
+          }
+        }
+      }
+
+      return false;
+    }
+
+    function optimizeWithSmartFiltering(rankedSpirits) {
+      const totalSpirits = rankedSpirits.length;
+      let bestResultOverall = null;
+      let processedResultCount = 0;
+
+      updateCalculationPhase(0);
+
+      const topRankedSpirits = rankedSpirits.slice(
+        0,
+        Math.min(25, totalSpirits)
+      );
+
+      const pvpSpirits = rankedSpirits
+        .filter((spirit) =>
+          hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"])
+        )
+        .slice(0, 15);
+
+      const resistanceSpirits = rankedSpirits
+        .filter(
+          (spirit) =>
+            hasCriticalStat(spirit, [
+              "damageResistancePenetration",
+              "damageResistance",
+            ]) &&
+            !hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"])
+        )
+        .slice(0, 15);
+
+      const otherSpirits = rankedSpirits
+        .filter(
+          (spirit) =>
+            !hasCriticalStat(spirit, [
+              "pvpDamagePercent",
+              "pvpDefensePercent",
+            ]) &&
+            !hasCriticalStat(spirit, [
+              "damageResistancePenetration",
+              "damageResistance",
+            ])
+        )
+        .slice(0, 15);
+
+      const mixedSpirits = [
+        ...new Set([...pvpSpirits, ...resistanceSpirits, ...otherSpirits]),
+      ];
+
+      const phases = [
+        {
+          spirits: topRankedSpirits,
+          maxSize: 6,
+          name: "상위 점수 환수",
+          phaseId: "phase1",
+        },
+        {
+          spirits: mixedSpirits,
+          maxSize: 6,
+          name: "균형 환수 조합",
+          phaseId: "phase2",
+        },
+        {
+          spirits: rankedSpirits.slice(0, Math.min(40, totalSpirits)),
+          maxSize: 6,
+          name: "전체 환수",
+          phaseId: "phase3",
+        },
+      ];
+
+      let currentPhase = 0;
+      processNextPhase();
+
+      function processNextPhase() {
+        if (currentPhase >= phases.length || isCalculationCancelled) {
+          finishCalculation();
+          return;
+        }
+
+        updateCalculationPhase(currentPhase + 1);
+        const phase = phases[currentPhase];
+
+        const statusText = document.getElementById("calculation-status");
+        if (statusText) {
+          statusText.textContent = `${phase.name} 분석 중...`;
+        }
+
+        const targetSize = Math.min(phase.maxSize, phase.spirits.length);
+        const combinations = CalculationUtils.generateCombinations(
+          phase.spirits,
+          targetSize
+        );
+        const totalCombos = combinations.length;
+
+        let bestPhaseResult = null;
+        let processedCount = 0;
+
+        function processBatch(startIndex, batchSize) {
+          if (startIndex >= totalCombos || isCalculationCancelled) {
+            currentPhase++;
+            processNextPhase();
+            return;
+          }
+
+          const endIndex = Math.min(startIndex + batchSize, totalCombos);
+
+          for (let i = startIndex; i < endIndex; i++) {
+            const result = CalculationUtils.calculateEffectsForSpirits(
+              combinations[i]
+            );
+
+            if (
+              !bestPhaseResult ||
+              result.scoreWithBind > bestPhaseResult.scoreWithBind
+            ) {
+              bestPhaseResult = result;
+            }
+
+            if (
+              !bestResultOverall ||
+              result.scoreWithBind > bestResultOverall.scoreWithBind
+            ) {
+              bestResultOverall = result;
+
+              document.getElementById("optimalScore").textContent = `${
+                bestResultOverall.scoreWithBind
+              } (등록효과: ${bestResultOverall.score} 장착효과: ${
+                bestResultOverall.bindScore || 0
+              })`;
+
+              const bindScoreEl = document.getElementById("optimalScoreBind");
+              if (bindScoreEl) bindScoreEl.style.display = "none";
+            }
+          }
+
+          processedCount += endIndex - startIndex;
+          updateProgressWithCharacter(processedCount / totalCombos);
+
+          setTimeout(() => {
+            processBatch(endIndex, batchSize);
+          }, 0);
+        }
+
+        // Start processing with appropriate batch size
+        const batchSize = Math.min(
+          50,
+          Math.max(10, Math.floor(totalCombos / 100))
+        );
+        processBatch(0, batchSize);
+      }
+
+      function finishCalculation() {
+        updateCalculationPhase(4);
+
+        const calcStatus = document.getElementById("calculation-status");
+        if (calcStatus) {
+          calcStatus.innerHTML =
+            '계산 완료! <span class="calculation-complete-icon">✓</span>';
+          calcStatus.classList.add("calculation-complete");
+        }
+
+        if (bestResultOverall) {
+          const deepCopiedResult = JSON.parse(
+            JSON.stringify(bestResultOverall)
+          );
+          HistoryManager.addNewCombination(deepCopiedResult);
+
+          const category =
+            bestResultOverall.spirits[0]?.category || lastActiveCategory;
+          OptimalResultModal.showResultModal(bestResultOverall);
+          HistoryManager.renderHistoryTabs(
+            category,
+            document.getElementById("optimalSpiritsList"),
+            (result) => {
+              OptimalResultModal.showResultModal(result);
+            }
+          );
+        } else {
+          document.getElementById("optimalSpiritsList").innerHTML =
+            "<div class='warning-message'>최적 조합을 찾을 수 없습니다.</div>";
+        }
+
+        isProcessing = false;
+      }
+    }
+
+    function optimizeWithoutWorkerSmartFiltering(rankedSpirits) {
+      const totalSpirits = rankedSpirits.length;
+      let bestResult = null;
+
+      const topSpirits = rankedSpirits.slice(0, Math.min(15, totalSpirits));
+
+      document.getElementById("calculation-status").textContent =
+        "웹 워커를 지원하지 않습니다. 상위 환수만 계산합니다...";
+
+      setTimeout(() => {
+        const targetSize = Math.min(6, topSpirits.length);
+        const combinations = CalculationUtils.generateCombinations(
+          topSpirits,
+          targetSize
+        );
+
+        combinations.forEach((combination, index) => {
+          const result =
+            CalculationUtils.calculateEffectsForSpirits(combination);
+
+          if (!bestResult || result.scoreWithBind > bestResult.scoreWithBind) {
+            bestResult = result;
+          }
+
+          if (index % 100 === 0) {
+            const progress = (index / combinations.length) * 100;
+            const progressBar = document.getElementById(
+              "calculation-progress-bar"
+            );
+            if (progressBar) {
+              progressBar.style.width = `${Math.round(progress)}%`;
+            }
+          }
+        });
+
+        if (bestResult) {
+          HistoryManager.addNewCombination(bestResult);
+
+          const category =
+            bestResult.spirits[0]?.category || lastActiveCategory;
+          OptimalResultModal.showResultModal(bestResult);
+          HistoryManager.renderHistoryTabs(
+            category,
+            document.getElementById("optimalSpiritsList"),
+            (result) => {
+              OptimalResultModal.showResultModal(result);
+            }
+          );
+        } else {
+          document.getElementById("optimalSpiritsList").innerHTML =
+            "<div class='warning-message'>최적 조합을 찾을 수 없습니다.</div>";
+        }
+
+        isProcessing = false;
+      }, 100);
+    }
+
+    function clearSavedOptimalCombinations(category) {
+      if (
+        confirm(
+          `${category} 카테고리의 저장된 모든 조합 기록을 삭제하시겠습니까?`
+        )
+      ) {
+        HistoryManager.clearCombinations(category);
+
+        document.getElementById("optimalGradeEffects").innerHTML = "";
+        document.getElementById("optimalFactionEffects").innerHTML = "";
+        document.getElementById("optimalBindEffects").innerHTML = "";
+        document.getElementById("optimalTotalEffects").innerHTML = "";
+        document.getElementById("spiritStatsDetails").innerHTML = "";
+        document.getElementById("combinationResultsContainer").innerHTML = "";
+        document.getElementById("optimalScore").textContent = "0";
+        document.getElementById("optimalScoreBind").textContent =
+          "(장착효과: 0)";
+
         HistoryManager.renderHistoryTabs(
           category,
           document.getElementById("optimalSpiritsList"),
@@ -1365,55 +1413,22 @@ const OptimalCombinationFinder = (function () {
             OptimalResultModal.showResultModal(result);
           }
         );
-      } else {
-        document.getElementById("optimalSpiritsList").innerHTML =
-          "<div class='warning-message'>최적 조합을 찾을 수 없습니다.</div>";
+
+        alert(`${category} 조합 기록이 모두 삭제되었습니다.`);
       }
-
-      isProcessing = false;
-    }, 100);
-  }
-
-  function clearSavedOptimalCombinations(category) {
-    if (
-      confirm(
-        `${category} 카테고리의 저장된 모든 조합 기록을 삭제하시겠습니까?`
-      )
-    ) {
-      HistoryManager.clearCombinations(category);
-
-      document.getElementById("optimalGradeEffects").innerHTML = "";
-      document.getElementById("optimalFactionEffects").innerHTML = "";
-      document.getElementById("optimalBindEffects").innerHTML = "";
-      document.getElementById("optimalTotalEffects").innerHTML = "";
-      document.getElementById("spiritStatsDetails").innerHTML = "";
-      document.getElementById("combinationResultsContainer").innerHTML = "";
-      document.getElementById("optimalScore").textContent = "0";
-      document.getElementById("optimalScoreBind").textContent = "(장착효과: 0)";
-
-      HistoryManager.renderHistoryTabs(
-        category,
-        document.getElementById("optimalSpiritsList"),
-        (result) => {
-          OptimalResultModal.showResultModal(result);
-        }
-      );
-
-      alert(`${category} 조합 기록이 모두 삭제되었습니다.`);
     }
-  }
 
-  function closeOptimalModal() {
-    document.getElementById("optimalModal").style.display = "none";
-    document.body.style.overflow = "auto";
-    isProcessing = false;
-  }
+    function closeOptimalModal() {
+      document.getElementById("optimalModal").style.display = "none";
+      document.body.style.overflow = "auto";
+      isProcessing = false;
+    }
 
-  return {
-    findOptimalCombination,
-    closeOptimalModal,
-    clearSavedOptimalCombinations,
-  };
-})();
+    return {
+      findOptimalCombination,
+      closeOptimalModal,
+      clearSavedOptimalCombinations,
+    };
+  })();
 
 window.OptimalCombinationFinder = OptimalCombinationFinder;

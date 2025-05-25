@@ -9796,4 +9796,12 @@ input:focus {
         font-size: 12px;
         margin-bottom: 5px;
     }
+
+    .tab-content span {
+        font-size: 8px;
+    }
+
+    .tab-indicators span {
+        font-size: 6px;
+    }
 }
