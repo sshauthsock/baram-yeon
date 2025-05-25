@@ -687,7 +687,6 @@ const RankingViewer = (function () {
       return;
     }
 
-    // 검증: 환산합 기준 내림차순 정렬 확인
     const isDescSorted = rankings.every(
       (item, i) =>
         i === 0 ||
@@ -714,6 +713,27 @@ const RankingViewer = (function () {
     const currentRankings = rankings.slice(startIndex, endIndex);
 
     let tableHtml = "";
+
+    // 추정값 경고 표시 추가
+    let hasEstimatedValues = false;
+    for (const ranking of currentRankings) {
+      if (ranking.usesEstimatedValues) {
+        hasEstimatedValues = true;
+        break;
+      }
+    }
+
+    if (hasEstimatedValues) {
+      tableHtml += `
+        <div class="estimation-warning">
+          <div class="warning-icon">⚠️</div>
+          <div class="warning-text">
+            <strong>추정값 사용 알림:</strong> 일부 환수의 결속 스탯에는 추정값이 포함되어 있습니다. 
+            추정값이 포함된 항목은 <span class="estimated-value-indicator">*</span> 표시가 되어 있습니다.
+          </div>
+        </div>
+      `;
+    }
 
     if (currentGradeFilter === "legendary") {
       tableHtml += `
@@ -746,18 +766,26 @@ const RankingViewer = (function () {
       let spiritsHtml = "";
       if (ranking.spirits && ranking.spirits.length > 0) {
         spiritsHtml = ranking.spirits
-          .map(
-            (spirit) => `
-          <img src="${spirit.image}" alt="${spirit.name}" title="${
+          .map((spirit) => {
+            // 추정치 표시를 위해 확인
+            const hasEstimation =
+              ranking.estimatedInfo &&
+              ranking.estimatedInfo.spirits &&
+              ranking.estimatedInfo.spirits.some((s) => s.name === spirit.name);
+
+            return `
+              <img src="${spirit.image}" alt="${spirit.name}" title="${
               spirit.name
-            }" 
-              class="spirit-image ${isTop ? "top-rank" : ""}"
-              data-image="${spirit.image}"
-              data-category="${spirit.category || currentCategory}"
-              data-influence="${spirit.faction || spirit.influence || ""}"
-              data-name="${spirit.name}">
-        `
-          )
+            }${hasEstimation ? " (추정값 포함)" : ""}" 
+                class="spirit-image ${isTop ? "top-rank" : ""} ${
+              hasEstimation ? "has-estimated-value" : ""
+            }"
+                data-image="${spirit.image}"
+                data-category="${spirit.category || currentCategory}"
+                data-influence="${spirit.faction || spirit.influence || ""}"
+                data-name="${spirit.name}">
+            `;
+          })
           .join("");
       }
 
@@ -794,7 +822,6 @@ const RankingViewer = (function () {
         );
       }
 
-      // 환산합 계산 (등급 + 세력 + 장착)
       const gradeScore =
         ranking.debugGradeScore !== undefined
           ? ranking.debugGradeScore
@@ -815,6 +842,10 @@ const RankingViewer = (function () {
           ? ranking.calculatedScore
           : gradeScore + factionScore + bindScore;
 
+      const estimatedIcon = ranking.usesEstimatedValues
+        ? `<span class="estimated-icon" title="추정값이 포함되어 있습니다">*</span>`
+        : "";
+
       const rankClass = isTop ? `top-${rank}` : "";
 
       tableHtml += `
@@ -829,11 +860,15 @@ const RankingViewer = (function () {
             <div class="faction-tags">${factionTagsHtml}</div>
           </td>
           <td class="score-column">
-            <div class="total-score">${Math.round(calculatedScore)}</div>
+            <div class="total-score">${Math.round(
+              calculatedScore
+            )}${estimatedIcon}</div>
             <div class="score-breakdown">
               (등급: ${Math.round(gradeScore)} | 세력: ${Math.round(
         factionScore
-      )} | 장착: ${Math.round(bindScore)})
+      )} | 장착: ${Math.round(bindScore)}${
+        ranking.usesEstimatedValues ? "*" : ""
+      })
             </div>
           </td>
           <td class="action-column">
@@ -848,6 +883,62 @@ const RankingViewer = (function () {
         </table>
       </div>
     `;
+
+    const estimationStyle = document.getElementById("estimation-style");
+    if (!estimationStyle) {
+      const style = document.createElement("style");
+      style.id = "estimation-style";
+      style.textContent = `
+        .estimation-warning {
+          display: flex;
+          align-items: center;
+          background-color: #fff3cd;
+          border: 1px solid #ffeeba;
+          border-left: 4px solid #ffc107;
+          padding: 10px 15px;
+          margin-bottom: 15px;
+          border-radius: 4px;
+        }
+        
+        .warning-icon {
+          font-size: 20px;
+          margin-right: 10px;
+        }
+        
+        .warning-text {
+          font-size: 14px;
+          color: #856404;
+        }
+        
+        .estimated-value-indicator {
+          color: #dc3545;
+          font-weight: bold;
+        }
+        
+        .has-estimated-value {
+          position: relative;
+        }
+        
+        .has-estimated-value::after {
+          content: '*';
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          color: #dc3545;
+          font-weight: bold;
+          font-size: 16px;
+        }
+        
+        .estimated-icon {
+          color: #dc3545;
+          font-weight: bold;
+          margin-left: 2px;
+          font-size: 14px;
+          vertical-align: top;
+        }
+      `;
+      document.head.appendChild(style);
+    }
 
     bondRankingsContainer.innerHTML = tableHtml;
     attachSpiritImageClickEvents();
@@ -910,6 +1001,26 @@ const RankingViewer = (function () {
       <h3 class="stat-ranking-title">${statDisplayName} 랭킹 - 전체 ${rankings.length}개 항목</h3>
     `;
 
+    let hasEstimatedValues = false;
+    for (const ranking of rankings) {
+      if (ranking.isEstimated) {
+        hasEstimatedValues = true;
+        break;
+      }
+    }
+
+    if (hasEstimatedValues) {
+      html += `
+        <div class="estimation-warning">
+          <div class="warning-icon">⚠️</div>
+          <div class="warning-text">
+            <strong>추정값 사용 알림:</strong> 일부 환수의 스탯에는 추정값이 포함되어 있습니다. 
+            추정값이 포함된 항목은 <span class="estimated-value-indicator">*</span> 표시가 되어 있습니다.
+          </div>
+        </div>
+      `;
+    }
+
     if (currentStat !== "registration" && currentStat !== "bind") {
       html += `
         <div class="stat-format-info">
@@ -923,30 +1034,37 @@ const RankingViewer = (function () {
     rankings.forEach((ranking, index) => {
       const rank = index + 1;
       const topClass = rank <= 3 ? `top-${rank}` : "";
+      const hasEstimation = ranking.isEstimated;
 
       let displayValue = "";
 
       if (currentStat === "registration") {
         displayValue = ranking.isPercent
-          ? `${ranking.regValue}%`
-          : ranking.regValue;
+          ? `${ranking.regValue}%${hasEstimation ? "*" : ""}`
+          : `${ranking.regValue}${hasEstimation ? "*" : ""}`;
       } else if (currentStat === "bind") {
         displayValue = ranking.isPercent
-          ? `${ranking.bindValue}%`
-          : ranking.bindValue;
+          ? `${ranking.bindValue}%${hasEstimation ? "*" : ""}`
+          : `${ranking.bindValue}${hasEstimation ? "*" : ""}`;
       } else {
         const regValue = ranking.regValue;
         const bindValue = ranking.bindValue;
 
         if (ranking.isPercent) {
-          displayValue = `${regValue}% (${bindValue}%)`;
+          displayValue = `${regValue}% (${bindValue}%${
+            hasEstimation ? "*" : ""
+          })`;
         } else {
-          displayValue = `${regValue} (${bindValue})`;
+          displayValue = `${regValue} (${bindValue}${
+            hasEstimation ? "*" : ""
+          })`;
         }
       }
 
       html += `
-        <div class="stat-card ${topClass}" 
+        <div class="stat-card ${topClass} ${
+        hasEstimation ? "has-estimated-value" : ""
+      }" 
              data-image="${ranking.image}"
              data-category="${currentCategory}"
              data-influence="${ranking.faction || ranking.influence || ""}"
