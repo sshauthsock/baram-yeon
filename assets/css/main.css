@@ -1366,6 +1366,11 @@ p {
         grid-template-columns: 1fr;
     }
 
+    .results-container h4 {
+        font-size: 12px;
+    }
+
+
     .stats-grid {
         gap: 8px;
     }
@@ -2381,7 +2386,7 @@ p {
     }
 
     .spirit-level-control input {
-        width: 25px;
+        width: 20px !important;
     }
 }
 
@@ -4374,6 +4379,9 @@ tr.max-level {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
     height: 100%;
 }
+
+
+
 
 .selected-spirits-header {
     display: flex;
@@ -7006,12 +7014,6 @@ tr.max-level {
 
 @media screen and (max-width: 768px) {
 
-    .image-container-grid,
-    .image-container-grouped {
-        padding: 10px;
-        gap: 15px;
-    }
-
     .influence-row {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
@@ -7722,6 +7724,84 @@ tr.max-level {
     flex-wrap: wrap;
     gap: 2px;
 }
+
+/**/
+
+@media screen and (max-width: 768px) {
+    .spirits-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: min-content;
+        gap: 0;
+        width: 100%;
+    }
+
+    .spirit-image {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        max-width: 35px;
+        margin: 0 auto;
+    }
+
+    /* 테이블 레이아웃 최적화 */
+    .ranking-table {
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    .rank-column {
+        width: 40px;
+    }
+
+    .faction-column,
+    .score-column {
+        font-size: 0.8rem;
+    }
+
+    .action-column {
+        width: 60px;
+    }
+
+    .detail-button {
+        padding: 4px 8px;
+        font-size: 0.8rem;
+    }
+
+    .score-breakdown {
+        display: none;
+    }
+
+    .ranking-row td {
+        padding: 8px 4px;
+    }
+}
+
+/* 매우 작은 화면에 대한 추가 최적화 */
+@media screen and (max-width: 480px) {
+    .spirit-image {
+        max-width: 30px;
+    }
+
+    .rank-badge {
+        font-size: 0.9rem;
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+    }
+
+    .ranking-title {
+        font-size: 12px;
+    }
+
+    .last-updated {
+        font-size: 10px;
+    }
+}
+
+
+
+/**/
 
 .spirit-image {
     width: 40px;
@@ -9495,7 +9575,7 @@ input:focus {
     }
 
     .spirits-grid-container {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, 1fr) !important;
         gap: 5px;
     }
 
@@ -9658,10 +9738,62 @@ input:focus {
 
     .filter-btn {
         padding: 8px 16px;
-        font-size: 10px;
+        font-size: 9px;
+    }
+
+    .filter-label {
+        font-size: 9px;
     }
 
     #panelToggleContainer .right-panel {
         padding: 12px;
+    }
+
+    .items-per-page {
+        font-size: 10px !important;
+    }
+
+    .items-per-page select {
+        font-size: 10px !important;
+    }
+
+    .stat-value,
+    .stat-key {
+        font-size: 10px !important;
+    }
+
+    .stats-sum {
+        font-size: 10px !important;
+        padding: 0;
+    }
+
+    .stats-header {
+        font-size: 10px !important;
+    }
+
+    .optimal-score h4 {
+        font-size: 11px !important;
+    }
+
+    .optimal-score small {
+        font-size: 8px !important;
+    }
+
+    .data-submission-request {
+        font-size: 9px;
+        padding: 8px 10px;
+    }
+
+    .min-btn {
+        width: 30px !important;
+    }
+
+    .level-input-container {
+        width: 250px;
+    }
+
+    .spirit-modal-title-section h3 {
+        font-size: 12px;
+        margin-bottom: 5px;
     }
 }

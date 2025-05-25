@@ -731,7 +731,7 @@ const RankingViewer = (function () {
             <tr>
               <th class="rank-column">순위</th>
               <th>환수</th>
-              <th class="faction-column">세력</th>
+              <th class="faction-column">등급/세력</th>
               <th>환산</th>
               <th class="action-column">상세</th>
             </tr>

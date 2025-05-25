@@ -2561,4 +2561,91 @@ h3 {
         min-width: 20px;
         min-height: 20px;
     }
+
+    .action-btn {
+        font-size: 10px !important;
+    }
+
+    .boss-btn,
+    .pvp-btn,
+    .search-btn {
+        padding: 6px 10px;
+        font-size: 10px;
+        min-height: 30px;
+    }
+
+    .stat-option {
+        font-size: 11px !important;
+    }
+
+    .resource-input {
+        font-size: 11px !important;
+    }
+
+    .resource-input input {
+        font-size: 11px !important;
+        padding: 4px 6px;
+    }
+
+    .resource-details,
+    .resource-value {
+        font-size: 11px !important;
+        padding: 4px 6px;
+    }
+
+    .stat-item span {
+        font-size: 11px;
+    }
+
+    .summary-title {
+        font-size: 11px;
+    }
+
+    .searched-stat-item span {
+        font-size: 11px;
+    }
+
+    .summary-stat-badge {
+        font-size: 11px !important;
+    }
+
+    .preset-header h4 {
+        font-size: 11px !important;
+    }
+
+    .preset-stats span {
+        font-size: 10px !important;
+    }
+
+    .preset-stats strong {
+        font-size: 9px !important;
+    }
+
+    .resource-req-title,
+    .resource-req-item span {
+        font-size: 11px !important;
+    }
+
+    .stat-name-section,
+    .stat-name-section span,
+    .stat-info span {
+        font-size: 9px !important;
+    }
+
+    .part-header span {
+        font-size: 9px !important;
+    }
+
+    .loc-header span,
+    .loc-details span {
+        font-size: 9px !important;
+    }
+
+    .optimize-buttons {
+        display: none;
+    }
+
+    .compact-group {
+        padding: 0;
+    }
 }
