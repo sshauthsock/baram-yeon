@@ -1,5 +1,41 @@
+window.SpiritUtils = window.SpiritUtils || {};
+
+window.SpiritUtils.cleanEstimatedValue = function (value) {
+  if (value === undefined || value === null) return 0;
+
+  if (typeof value === "string") {
+    if (value.includes("(추정)")) {
+      const numericValue = value.replace(/\(추정\)/g, "").trim();
+      return parseFloat(numericValue) || 0;
+    }
+    return parseFloat(value) || 0;
+  }
+  return value || 0;
+};
+
 const OptimalResultModal = (function () {
   const FACTION_ICONS = window.CommonData.FACTION_ICONS || {};
+
+  function cleanEstimatedValue(value) {
+    if (value === undefined || value === null) return 0;
+
+    if (typeof value === "string") {
+      if (value.includes("(추정)")) {
+        const numericValue = value.replace(/\(추정\)/g, "").trim();
+        return parseFloat(numericValue) || 0;
+      }
+      return parseFloat(value) || 0;
+    }
+    return value || 0;
+  }
+
+  function hasEstimatedValues(stats) {
+    if (!stats) return false;
+
+    return Object.values(stats).some(
+      (value) => typeof value === "string" && value.includes("(추정)")
+    );
+  }
 
   function createBaseModal() {
     let optimalModal = document.getElementById("optimalModal");
@@ -194,7 +230,6 @@ const OptimalResultModal = (function () {
       optimalModal.style.display = "flex";
       document.body.style.overflow = "hidden";
 
-      // 광고 초기화 즉시 실행
       initKakaoAds();
     }
 
@@ -216,6 +251,7 @@ const OptimalResultModal = (function () {
       bindStats,
       missingDataSpirits,
       missingBindDataSpirits,
+      usesEstimatedValues,
     } = result;
 
     const combinedScoreWithoutReg = Math.round(
@@ -279,6 +315,14 @@ const OptimalResultModal = (function () {
 
       warningBox.innerHTML = warningContent;
       tempContainer.appendChild(warningBox);
+    }
+
+    if (usesEstimatedValues) {
+      const estimationWarning = document.createElement("div");
+      estimationWarning.className = "estimation-warning";
+      estimationWarning.innerHTML =
+        "⚠️ 일부 결속 수치는 추정값을 사용하여 계산되었습니다.";
+      tempContainer.appendChild(estimationWarning);
     }
 
     const spiritsGridWrapper = document.createElement("div");
@@ -364,7 +408,8 @@ const OptimalResultModal = (function () {
       displayFactionScore,
       displayBindScore,
       gradeCounts,
-      factionCounts
+      factionCounts,
+      usesEstimatedValues
     );
 
     renderSpiritDetailsTable(spirits);
@@ -396,7 +441,6 @@ const OptimalResultModal = (function () {
     script.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
     script.async = true;
     script.onload = function () {
-      // console.log("카카오 광고 스크립트 로드 완료");
       refreshKakaoAds();
     };
     document.body.appendChild(script);
@@ -430,6 +474,7 @@ const OptimalResultModal = (function () {
       bindStats,
       missingDataSpirits,
       missingBindDataSpirits,
+      usesEstimatedValues,
     } = result;
 
     const combinedScoreWithoutReg = Math.round(
@@ -488,6 +533,14 @@ const OptimalResultModal = (function () {
       tempContainer.appendChild(warningBox);
     }
 
+    if (usesEstimatedValues) {
+      const estimationWarning = document.createElement("div");
+      estimationWarning.className = "estimation-warning";
+      estimationWarning.innerHTML =
+        "⚠️ 일부 결속 수치는 추정값을 사용하여 계산되었습니다.";
+      tempContainer.appendChild(estimationWarning);
+    }
+
     const spiritsGridWrapper = document.createElement("div");
     spiritsGridWrapper.innerHTML = `
       <h4>조합 환수 정보</h4>
@@ -517,7 +570,8 @@ const OptimalResultModal = (function () {
       displayFactionScore,
       displayBindScore,
       gradeCounts,
-      factionCounts
+      factionCounts,
+      usesEstimatedValues
     );
 
     renderSpiritDetailsTable(spirits);
@@ -793,7 +847,8 @@ const OptimalResultModal = (function () {
     displayFactionScore,
     displayBindScore,
     gradeCounts,
-    factionCounts
+    factionCounts,
+    usesEstimatedValues
   ) {
     const gradeEffectsContainer = document.getElementById(
       "optimalGradeEffects"
@@ -844,6 +899,11 @@ const OptimalResultModal = (function () {
           </h4>
           <div class="effects-content">
             ${CalculationUtils.renderEffectsList(bindStats, "", true)}
+            ${
+              usesEstimatedValues
+                ? '<div class="estimation-warning">⚠️ 일부 결속 수치는 추정값을 사용하여 계산되었습니다.</div>'
+                : ""
+            }
           </div>
         `;
       } else {
@@ -879,6 +939,7 @@ const OptimalResultModal = (function () {
     }
 
     const allStatKeys = new Set();
+    let hasAnyEstimatedValue = false;
 
     spirits.forEach((spirit) => {
       if (!spirit || !spirit.stats || !Array.isArray(spirit.stats)) return;
@@ -906,6 +967,11 @@ const OptimalResultModal = (function () {
       if (bindStatData) {
         Object.keys(bindStatData).forEach((key) => {
           if (key) allStatKeys.add(SpiritUtils.normalizeStatKey(key));
+
+          const value = bindStatData[key];
+          if (typeof value === "string" && value.includes("(추정)")) {
+            hasAnyEstimatedValue = true;
+          }
         });
       }
     });
@@ -990,14 +1056,29 @@ const OptimalResultModal = (function () {
           }
 
           if (bindStat) {
-            const bindPenResist = parseNumericValue(
-              bindStat.damageResistancePenetration
-            );
-            const bindResist = parseNumericValue(bindStat.damageResistance);
+            const bindPenResist =
+              typeof bindStat.damageResistancePenetration === "string" &&
+              bindStat.damageResistancePenetration.includes("(추정)")
+                ? cleanEstimatedValue(bindStat.damageResistancePenetration)
+                : parseNumericValue(bindStat.damageResistancePenetration);
+
+            const bindResist =
+              typeof bindStat.damageResistance === "string" &&
+              bindStat.damageResistance.includes("(추정)")
+                ? cleanEstimatedValue(bindStat.damageResistance)
+                : parseNumericValue(bindStat.damageResistance);
+
             const bindPvpDmg =
-              parseNumericValue(bindStat.pvpDamagePercent) * 10;
+              (typeof bindStat.pvpDamagePercent === "string" &&
+              bindStat.pvpDamagePercent.includes("(추정)")
+                ? cleanEstimatedValue(bindStat.pvpDamagePercent)
+                : parseNumericValue(bindStat.pvpDamagePercent)) * 10;
+
             const bindPvpDef =
-              parseNumericValue(bindStat.pvpDefensePercent) * 10;
+              (typeof bindStat.pvpDefensePercent === "string" &&
+              bindStat.pvpDefensePercent.includes("(추정)")
+                ? cleanEstimatedValue(bindStat.pvpDefensePercent)
+                : parseNumericValue(bindStat.pvpDefensePercent)) * 10;
 
             bindScore = bindPenResist + bindResist + bindPvpDmg + bindPvpDef;
           }
@@ -1068,6 +1149,8 @@ const OptimalResultModal = (function () {
         }
 
         let bindValue = 0;
+        let isEstimated = false;
+        let originalValue = null;
 
         try {
           if (spirit.stats && Array.isArray(spirit.stats)) {
@@ -1089,7 +1172,15 @@ const OptimalResultModal = (function () {
             if (bindStat) {
               for (const [key, value] of Object.entries(bindStat)) {
                 if (SpiritUtils.normalizeStatKey(key) === statKey) {
-                  bindValue = parseNumericValue(value);
+                  originalValue = value;
+                  isEstimated =
+                    typeof value === "string" && value.includes("(추정)");
+
+                  if (isEstimated) {
+                    bindValue = cleanEstimatedValue(value);
+                  } else {
+                    bindValue = parseNumericValue(value);
+                  }
                   break;
                 }
               }
@@ -1103,9 +1194,15 @@ const OptimalResultModal = (function () {
         const isPercentStat = PERCENT_STATS.includes(statKey);
 
         if (bindValue > 0) {
-          statCell.innerHTML = isPercentStat
-            ? `<span class="bind-effect">${bindValue}%</span>`
-            : `<span class="bind-effect">${bindValue}</span>`;
+          let displayValue = isPercentStat ? `${bindValue}%` : `${bindValue}`;
+
+          if (isEstimated) {
+            statCell.innerHTML = `<span class="bind-effect estimated-value" title="추정값: ${originalValue}">${displayValue}</span>`;
+          } else {
+            statCell.innerHTML = `<span class="bind-effect">${displayValue}</span>`;
+          }
+        } else if (isEstimated && originalValue) {
+          statCell.innerHTML = `<span class="bind-effect estimated-value" title="추정값">${originalValue}</span>`;
         } else {
           statCell.textContent = "0";
         }
@@ -1117,6 +1214,13 @@ const OptimalResultModal = (function () {
     });
 
     container.appendChild(table);
+
+    if (hasAnyEstimatedValue) {
+      const estimatedInfoDiv = document.createElement("div");
+      estimatedInfoDiv.className = "estimated-value-info";
+      estimatedInfoDiv.innerHTML = "* 표시된 값은 추정치입니다.";
+      container.appendChild(estimatedInfoDiv);
+    }
 
     const style = document.createElement("style");
     style.textContent = `
@@ -1148,6 +1252,35 @@ const OptimalResultModal = (function () {
       .bind-effect {
         color: #e67e22;
         font-weight: bold;
+      }
+      
+      .estimated-value {
+        position: relative;
+      }
+      
+      .estimated-value:after {
+        content: "*";
+        position: relative;
+        top: -0.5em;
+        font-size: 0.8em;
+        color: #e74c3c;
+      }
+      
+      .estimated-value-info {
+        font-size: 0.8em;
+        color: #e74c3c;
+        margin-top: 8px;
+        font-style: italic;
+        text-align: right;
+      }
+      
+      .estimation-warning {
+        background-color: #fff3cd;
+        border-left: 3px solid #ffc107;
+        padding: 10px;
+        margin: 10px 0;
+        font-size: 0.9em;
+        color: #856404;
       }
       
       @media (max-width: 768px) {
@@ -1431,6 +1564,35 @@ const OptimalResultModal = (function () {
     margin-bottom: 4px;
   }
 
+  .estimated-value {
+    position: relative;
+  }
+  
+  .estimated-value:after {
+    content: "*";
+    position: relative;
+    top: -0.5em;
+    font-size: 0.8em;
+    color: #e74c3c;
+  }
+  
+  .estimated-value-info {
+    font-size: 0.8em;
+    color: #e74c3c;
+    margin-top: 8px;
+    font-style: italic;
+    text-align: right;
+  }
+  
+  .estimation-warning {
+    background-color: #fff3cd;
+    border-left: 3px solid #ffc107;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 0.9em;
+    color: #856404;
+  }
+
   @media (min-width: 768px) {
     .spirits-grid-container {
       grid-template-columns: repeat(6, 1fr);
@@ -1473,6 +1635,8 @@ const OptimalResultModal = (function () {
     prepareModalStructure,
     closeOptimalModal,
     initKakaoAds,
+    cleanEstimatedValue,
+    hasEstimatedValues,
   };
 })();
 

@@ -4,6 +4,43 @@ const RankingCalculator = (function () {
   const GRADE_SET_EFFECTS = window.CommonData.GRADE_SET_EFFECTS;
   const FACTION_SET_EFFECTS = window.CommonData.FACTION_SET_EFFECTS;
 
+  function cleanEstimatedValue(value) {
+    if (value === undefined || value === null) return 0;
+
+    if (typeof value === "string") {
+      if (value.includes("(추정)")) {
+        const numericValue = value.replace(/\(추정\)/g, "").trim();
+        return parseFloat(numericValue) || 0;
+      }
+      return parseFloat(value) || 0;
+    }
+    return value || 0;
+  }
+
+  function isEstimatedValue(value) {
+    return typeof value === "string" && value.includes("(추정)");
+  }
+
+  function trackEstimatedValues(stats, estimatedInfo) {
+    if (!stats) return false;
+
+    let hasEstimatedValues = false;
+
+    for (const [key, value] of Object.entries(stats)) {
+      if (isEstimatedValue(value)) {
+        hasEstimatedValues = true;
+        if (estimatedInfo && !estimatedInfo.stats) {
+          estimatedInfo.stats = {};
+        }
+        if (estimatedInfo && estimatedInfo.stats) {
+          estimatedInfo.stats[key] = value;
+        }
+      }
+    }
+
+    return hasEstimatedValues;
+  }
+
   let mobData = { 수호: [], 탑승: [], 변신: [] };
   let rankingData = {
     bond: {
@@ -89,7 +126,6 @@ const RankingCalculator = (function () {
         };
       });
 
-      // 환산합산(scoreWithBind) 기준으로 내림차순 정렬 보장
       optimizedRankings.sort((a, b) => {
         const scoreA = parseFloat(a.scoreWithBind) || 0;
         const scoreB = parseFloat(b.scoreWithBind) || 0;
@@ -544,6 +580,247 @@ const RankingCalculator = (function () {
     }
   }
 
+  // async function calculateStatRankings(category, progressCallback = null) {
+  //   if (!mobData[category] || !Array.isArray(mobData[category])) {
+  //     throw new Error(`Invalid data for category: ${category}`);
+  //   }
+
+  //   const spirits = mobData[category]
+  //     .filter((spirit) => spirit && spirit.stats && Array.isArray(spirit.stats))
+  //     .map((spirit) => {
+  //       const spiritCopy = { ...spirit };
+  //       if (spiritCopy.stats && Array.isArray(spiritCopy.stats)) {
+  //         const level25Stat = spiritCopy.stats.find(
+  //           (stat) => stat && stat.level === 25
+  //         );
+  //         spiritCopy.stats = level25Stat ? [level25Stat] : [];
+  //       }
+  //       return spiritCopy;
+  //     });
+
+  //   if (spirits.length === 0) {
+  //     throw new Error(`No valid spirits found for category: ${category}`);
+  //   }
+
+  //   if (progressCallback) {
+  //     progressCallback(10, `${category} 능력치 랭킹: 환수 데이터 준비 완료`);
+  //   }
+
+  //   const statTypes = new Set();
+
+  //   spirits.forEach((spirit) => {
+  //     const level25Stat = spirit.stats?.[0];
+  //     if (level25Stat) {
+  //       if (level25Stat.registrationStat) {
+  //         Object.keys(level25Stat.registrationStat).forEach((key) => {
+  //           const normalizedKey = normalizeStatKey(key);
+  //           statTypes.add(normalizedKey);
+  //         });
+  //       }
+
+  //       if (level25Stat.bindStat) {
+  //         Object.keys(level25Stat.bindStat).forEach((key) => {
+  //           const normalizedKey = normalizeStatKey(key);
+  //           statTypes.add(normalizedKey);
+  //         });
+  //       }
+  //     }
+  //   });
+
+  //   const statArray = Array.from(statTypes);
+
+  //   if (progressCallback) {
+  //     progressCallback(
+  //       20,
+  //       `${category} 능력치 랭킹: ${statArray.length}개 능력치 유형 감지됨`
+  //     );
+  //   }
+
+  //   const statRankings = {};
+  //   let processedStats = 0;
+  //   const totalStats = statArray.length;
+
+  //   for (const statType of statArray) {
+  //     const spiritRankings = [];
+
+  //     spirits.forEach((spirit) => {
+  //       const level25Stat = spirit.stats?.[0];
+  //       if (!level25Stat) return;
+
+  //       let statValue = 0;
+
+  //       if (level25Stat.registrationStat) {
+  //         for (const [key, value] of Object.entries(
+  //           level25Stat.registrationStat
+  //         )) {
+  //           if (normalizeStatKey(key) === statType) {
+  //             statValue += ensureNumber(value);
+  //           }
+  //         }
+  //       }
+
+  //       if (level25Stat.bindStat) {
+  //         for (const [key, value] of Object.entries(level25Stat.bindStat)) {
+  //           if (normalizeStatKey(key) === statType) {
+  //             statValue += ensureNumber(value);
+  //           }
+  //         }
+  //       }
+
+  //       if (statValue > 0) {
+  //         spiritRankings.push({
+  //           name: spirit.name,
+  //           image: spirit.image,
+  //           influence: spirit.influence || spirit.faction || "결의",
+  //           grade: spirit.grade || "전설",
+  //           value: statValue,
+  //         });
+  //       }
+  //     });
+
+  //     spiritRankings.sort((a, b) => b.value - a.value);
+
+  //     if (spiritRankings.length > 0) {
+  //       statRankings[statType] = spiritRankings;
+  //     }
+
+  //     processedStats++;
+  //     if (progressCallback) {
+  //       const percentComplete =
+  //         20 + Math.floor((processedStats / totalStats) * 75);
+  //       progressCallback(
+  //         percentComplete,
+  //         `${category} 능력치 랭킹: ${processedStats}/${totalStats} 능력치 계산 중`
+  //       );
+  //     }
+  //   }
+
+  //   rankingData.stat[category] = statRankings;
+
+  //   rankingMeta.statRankings[category] = {
+  //     statCount: Object.keys(statRankings).length,
+  //     updatedAt: new Date().toISOString(),
+  //   };
+  //   rankingMeta.lastUpdated = new Date().toISOString();
+
+  //   if (progressCallback) {
+  //     progressCallback(100, `${category} 능력치 랭킹: 계산 완료`);
+  //   }
+
+  //   return {
+  //     success: true,
+  //     stats: Object.keys(statRankings).length,
+  //     fileName: getCategoryFileName(category, "stat"),
+  //   };
+  // }
+
+  // function calculateEffectsForSpirits(spirits) {
+  //   const registrationStats = {};
+  //   const bindStats = {};
+  //   const missingDataSpirits = [];
+  //   const missingBindDataSpirits = [];
+  //   const categoryGradeCount = {};
+  //   const categoryFactionCount = {};
+
+  //   spirits.forEach((spirit) => {
+  //     const levelStats = spirit.stats?.[0]?.registrationStat;
+
+  //     if (levelStats) {
+  //       Object.entries(levelStats).forEach(([stat, value]) => {
+  //         const numValue = ensureNumber(value);
+  //         if (numValue !== 0) {
+  //           const normalizedStat = normalizeStatKey(stat);
+  //           registrationStats[normalizedStat] =
+  //             (registrationStats[normalizedStat] || 0) + numValue;
+  //         }
+  //       });
+  //     } else {
+  //       missingDataSpirits.push(spirit.name);
+  //     }
+
+  //     let bindLevelStats = null;
+  //     bindLevelStats = spirit.stats?.[0]?.bindStat;
+
+  //     if (bindLevelStats) {
+  //       Object.entries(bindLevelStats).forEach(([stat, value]) => {
+  //         const numValue = ensureNumber(value);
+  //         if (numValue !== 0) {
+  //           const normalizedStat = normalizeStatKey(stat);
+  //           bindStats[normalizedStat] =
+  //             (bindStats[normalizedStat] || 0) + numValue;
+  //         }
+  //       });
+  //     } else {
+  //       missingBindDataSpirits.push(spirit.name);
+  //     }
+
+  //     const category = spirit.category;
+  //     const grade = spirit.grade || "전설";
+  //     const faction = spirit.influence || spirit.faction || "결의";
+
+  //     if (!categoryGradeCount[category]) categoryGradeCount[category] = {};
+  //     if (!categoryGradeCount[category][grade])
+  //       categoryGradeCount[category][grade] = 0;
+  //     categoryGradeCount[category][grade]++;
+
+  //     if (!categoryFactionCount[category]) categoryFactionCount[category] = {};
+  //     if (!categoryFactionCount[category][faction])
+  //       categoryFactionCount[category][faction] = 0;
+  //     categoryFactionCount[category][faction]++;
+  //   });
+
+  //   const gradeEffects = calculateGradeSetEffects(categoryGradeCount);
+  //   const factionEffects = calculateFactionSetEffects(categoryFactionCount);
+
+  //   const registrationOnly = { ...registrationStats };
+
+  //   const combinedEffects = { ...registrationStats };
+
+  //   Object.entries(gradeEffects).forEach(([stat, value]) => {
+  //     combinedEffects[stat] =
+  //       ensureNumber(combinedEffects[stat]) + ensureNumber(value);
+  //   });
+
+  //   Object.entries(factionEffects).forEach(([stat, value]) => {
+  //     combinedEffects[stat] =
+  //       ensureNumber(combinedEffects[stat]) + ensureNumber(value);
+  //   });
+
+  //   const combinedEffectsWithBind = { ...combinedEffects };
+
+  //   Object.entries(bindStats).forEach(([stat, value]) => {
+  //     combinedEffectsWithBind[stat] =
+  //       ensureNumber(combinedEffectsWithBind[stat]) + ensureNumber(value);
+  //   });
+
+  //   const regScore = calculateScore(registrationOnly);
+  //   const gradeScore = calculateScore(gradeEffects);
+  //   const factionScore = calculateScore(factionEffects);
+  //   const bindScore = calculateScore(bindStats);
+  //   const score = calculateScore(combinedEffects);
+  //   const scoreWithBind = calculateScore(combinedEffectsWithBind);
+
+  //   return {
+  //     spirits,
+  //     gradeEffects,
+  //     factionEffects,
+  //     bindStats,
+  //     registrationOnly,
+  //     combinedEffects,
+  //     combinedEffectsWithBind,
+  //     missingDataSpirits,
+  //     missingBindDataSpirits,
+  //     regScore,
+  //     gradeScore,
+  //     factionScore,
+  //     score,
+  //     scoreWithBind,
+  //     bindScore,
+  //     gradeCounts: categoryGradeCount,
+  //     factionCounts: categoryFactionCount,
+  //   };
+  // }
+
   async function calculateStatRankings(category, progressCallback = null) {
     if (!mobData[category] || !Array.isArray(mobData[category])) {
       throw new Error(`Invalid data for category: ${category}`);
@@ -612,13 +889,19 @@ const RankingCalculator = (function () {
         if (!level25Stat) return;
 
         let statValue = 0;
+        let isEstimated = false;
+        let originalValue = null;
 
         if (level25Stat.registrationStat) {
           for (const [key, value] of Object.entries(
             level25Stat.registrationStat
           )) {
             if (normalizeStatKey(key) === statType) {
-              statValue += ensureNumber(value);
+              if (isEstimatedValue(value)) {
+                isEstimated = true;
+                originalValue = value;
+              }
+              statValue += cleanEstimatedValue(value);
             }
           }
         }
@@ -626,7 +909,11 @@ const RankingCalculator = (function () {
         if (level25Stat.bindStat) {
           for (const [key, value] of Object.entries(level25Stat.bindStat)) {
             if (normalizeStatKey(key) === statType) {
-              statValue += ensureNumber(value);
+              if (isEstimatedValue(value)) {
+                isEstimated = true;
+                originalValue = value;
+              }
+              statValue += cleanEstimatedValue(value);
             }
           }
         }
@@ -638,6 +925,11 @@ const RankingCalculator = (function () {
             influence: spirit.influence || spirit.faction || "결의",
             grade: spirit.grade || "전설",
             value: statValue,
+            regValue: regValue,
+            bindValue: bindValue,
+            isPercent: window.CommonData?.PERCENT_STATS?.includes(statType),
+            isEstimated: isEstimated,
+            originalValue: originalValue,
           });
         }
       });
@@ -685,15 +977,28 @@ const RankingCalculator = (function () {
     const missingBindDataSpirits = [];
     const categoryGradeCount = {};
     const categoryFactionCount = {};
+    const estimatedInfo = { hasEstimatedValues: false, spirits: [] };
 
     spirits.forEach((spirit) => {
       const levelStats = spirit.stats?.[0]?.registrationStat;
+      const spiritEstimatedInfo = {
+        name: spirit.name,
+        hasEstimatedRegStats: false,
+        hasEstimatedBindStats: false,
+      };
 
       if (levelStats) {
         Object.entries(levelStats).forEach(([stat, value]) => {
-          const numValue = ensureNumber(value);
+          const normalizedStat = normalizeStatKey(stat);
+
+          // 추정값 처리
+          if (isEstimatedValue(value)) {
+            spiritEstimatedInfo.hasEstimatedRegStats = true;
+            estimatedInfo.hasEstimatedValues = true;
+          }
+
+          const numValue = cleanEstimatedValue(value);
           if (numValue !== 0) {
-            const normalizedStat = normalizeStatKey(stat);
             registrationStats[normalizedStat] =
               (registrationStats[normalizedStat] || 0) + numValue;
           }
@@ -707,9 +1012,16 @@ const RankingCalculator = (function () {
 
       if (bindLevelStats) {
         Object.entries(bindLevelStats).forEach(([stat, value]) => {
-          const numValue = ensureNumber(value);
+          const normalizedStat = normalizeStatKey(stat);
+
+          // 추정값 처리
+          if (isEstimatedValue(value)) {
+            spiritEstimatedInfo.hasEstimatedBindStats = true;
+            estimatedInfo.hasEstimatedValues = true;
+          }
+
+          const numValue = cleanEstimatedValue(value);
           if (numValue !== 0) {
-            const normalizedStat = normalizeStatKey(stat);
             bindStats[normalizedStat] =
               (bindStats[normalizedStat] || 0) + numValue;
           }
@@ -731,6 +1043,14 @@ const RankingCalculator = (function () {
       if (!categoryFactionCount[category][faction])
         categoryFactionCount[category][faction] = 0;
       categoryFactionCount[category][faction]++;
+
+      // 추정값 정보 추가
+      if (
+        spiritEstimatedInfo.hasEstimatedRegStats ||
+        spiritEstimatedInfo.hasEstimatedBindStats
+      ) {
+        estimatedInfo.spirits.push(spiritEstimatedInfo);
+      }
     });
 
     const gradeEffects = calculateGradeSetEffects(categoryGradeCount);
@@ -782,6 +1102,8 @@ const RankingCalculator = (function () {
       bindScore,
       gradeCounts: categoryGradeCount,
       factionCounts: categoryFactionCount,
+      usesEstimatedValues: estimatedInfo.hasEstimatedValues,
+      estimatedInfo: estimatedInfo.hasEstimatedValues ? estimatedInfo : null,
     };
   }
 
@@ -907,12 +1229,18 @@ const RankingCalculator = (function () {
   }
 
   function calculateScore(effects) {
+    if (!effects) return 0;
+
     const damageResistancePenetration = ensureNumber(
-      effects.damageResistancePenetration
+      cleanEstimatedValue(effects.damageResistancePenetration)
     );
-    const damageResistance = ensureNumber(effects.damageResistance);
-    const pvpDamagePercent = ensureNumber(effects.pvpDamagePercent) * 10;
-    const pvpDefensePercent = ensureNumber(effects.pvpDefensePercent) * 10;
+    const damageResistance = ensureNumber(
+      cleanEstimatedValue(effects.damageResistance)
+    );
+    const pvpDamagePercent =
+      ensureNumber(cleanEstimatedValue(effects.pvpDamagePercent)) * 10;
+    const pvpDefensePercent =
+      ensureNumber(cleanEstimatedValue(effects.pvpDefensePercent)) * 10;
 
     return (
       damageResistancePenetration +
@@ -930,17 +1258,21 @@ const RankingCalculator = (function () {
         let bindStats = level25Stat?.bindStat || {};
 
         const dpr =
-          ensureNumber(regStats.damageResistancePenetration) +
-          ensureNumber(bindStats.damageResistancePenetration);
+          ensureNumber(
+            cleanEstimatedValue(regStats.damageResistancePenetration)
+          ) +
+          ensureNumber(
+            cleanEstimatedValue(bindStats.damageResistancePenetration)
+          );
         const dr =
-          ensureNumber(regStats.damageResistance) +
-          ensureNumber(bindStats.damageResistance);
+          ensureNumber(cleanEstimatedValue(regStats.damageResistance)) +
+          ensureNumber(cleanEstimatedValue(bindStats.damageResistance));
         const pvpDmg =
-          ensureNumber(regStats.pvpDamagePercent) * 10 +
-          ensureNumber(bindStats.pvpDamagePercent) * 10;
+          ensureNumber(cleanEstimatedValue(regStats.pvpDamagePercent)) * 10 +
+          ensureNumber(cleanEstimatedValue(bindStats.pvpDamagePercent)) * 10;
         const pvpDef =
-          ensureNumber(regStats.pvpDefensePercent) * 10 +
-          ensureNumber(bindStats.pvpDefensePercent) * 10;
+          ensureNumber(cleanEstimatedValue(regStats.pvpDefensePercent)) * 10 +
+          ensureNumber(cleanEstimatedValue(bindStats.pvpDefensePercent)) * 10;
 
         const score = dpr + dr + pvpDmg + pvpDef;
 
