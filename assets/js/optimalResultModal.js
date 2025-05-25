@@ -1,18 +1,3 @@
-window.SpiritUtils = window.SpiritUtils || {};
-
-window.SpiritUtils.cleanEstimatedValue = function (value) {
-  if (value === undefined || value === null) return 0;
-
-  if (typeof value === "string") {
-    if (value.includes("(추정)")) {
-      const numericValue = value.replace(/\(추정\)/g, "").trim();
-      return parseFloat(numericValue) || 0;
-    }
-    return parseFloat(value) || 0;
-  }
-  return value || 0;
-};
-
 const OptimalResultModal = (function () {
   const FACTION_ICONS = window.CommonData.FACTION_ICONS || {};
 
@@ -35,6 +20,35 @@ const OptimalResultModal = (function () {
     return Object.values(stats).some(
       (value) => typeof value === "string" && value.includes("(추정)")
     );
+  }
+
+  // 환산합산 점수 계산
+  function calculateScore(effects) {
+    if (!effects) return 0;
+
+    const damageResistancePenetration = ensureNumber(
+      cleanEstimatedValue(effects.damageResistancePenetration)
+    );
+    const damageResistance = ensureNumber(
+      cleanEstimatedValue(effects.damageResistance)
+    );
+    const pvpDamagePercent =
+      ensureNumber(cleanEstimatedValue(effects.pvpDamagePercent)) * 10;
+    const pvpDefensePercent =
+      ensureNumber(cleanEstimatedValue(effects.pvpDefensePercent)) * 10;
+
+    return Math.round(
+      damageResistancePenetration +
+        damageResistance +
+        pvpDamagePercent +
+        pvpDefensePercent
+    );
+  }
+
+  function ensureNumber(value) {
+    if (value === undefined || value === null) return 0;
+    const num = parseFloat(String(value).replace(/,/g, ""));
+    return isNaN(num) ? 0 : num;
   }
 
   function createBaseModal() {
@@ -239,6 +253,33 @@ const OptimalResultModal = (function () {
       modalTitle.textContent = `${category} 결속 상세 정보`;
     }
 
+    // 추정치 처리를 위한 복사본 생성
+    const processedResult = JSON.parse(JSON.stringify(result));
+
+    // 추정치가 있는지 확인
+    let hasEstimatedValues = false;
+    let originalBindStats = {};
+
+    if (processedResult.bindStats) {
+      for (const [key, value] of Object.entries(processedResult.bindStats)) {
+        if (typeof value === "string" && value.includes("(추정)")) {
+          hasEstimatedValues = true;
+          originalBindStats[key] = value; // 원본 값 저장
+          processedResult.bindStats[key] = cleanEstimatedValue(value); // 숫자값만 추출
+        }
+      }
+
+      // 추정치가 있는 경우 점수 재계산
+      if (hasEstimatedValues) {
+        processedResult.bindScore = calculateScore(processedResult.bindStats);
+        processedResult.scoreWithBind =
+          (processedResult.gradeScore || 0) +
+          (processedResult.factionScore || 0) +
+          processedResult.bindScore;
+      }
+    }
+
+    // 기존 데이터 유지
     const {
       spirits,
       gradeScore,
@@ -252,19 +293,17 @@ const OptimalResultModal = (function () {
       missingDataSpirits,
       missingBindDataSpirits,
       usesEstimatedValues,
-    } = result;
+    } = processedResult;
 
     const combinedScoreWithoutReg = Math.round(
-      SpiritUtils.ensureNumber(gradeScore) +
-        SpiritUtils.ensureNumber(factionScore) +
-        SpiritUtils.ensureNumber(bindScore)
+      ensureNumber(gradeScore) +
+        ensureNumber(factionScore) +
+        ensureNumber(bindScore)
     );
 
-    const displayGradeScore = Math.round(SpiritUtils.ensureNumber(gradeScore));
-    const displayFactionScore = Math.round(
-      SpiritUtils.ensureNumber(factionScore)
-    );
-    const displayBindScore = Math.round(SpiritUtils.ensureNumber(bindScore));
+    const displayGradeScore = Math.round(ensureNumber(gradeScore));
+    const displayFactionScore = Math.round(ensureNumber(factionScore));
+    const displayBindScore = Math.round(ensureNumber(bindScore));
 
     const optimalScoreEl = document.getElementById("optimalScore");
     if (optimalScoreEl) {
@@ -317,7 +356,8 @@ const OptimalResultModal = (function () {
       tempContainer.appendChild(warningBox);
     }
 
-    if (usesEstimatedValues) {
+    // 추정치 경고 표시 추가
+    if (hasEstimatedValues || usesEstimatedValues) {
       const estimationWarning = document.createElement("div");
       estimationWarning.className = "estimation-warning";
       estimationWarning.innerHTML =
@@ -409,7 +449,8 @@ const OptimalResultModal = (function () {
       displayBindScore,
       gradeCounts,
       factionCounts,
-      usesEstimatedValues
+      usesEstimatedValues || hasEstimatedValues,
+      originalBindStats
     );
 
     renderSpiritDetailsTable(spirits);
@@ -462,6 +503,32 @@ const OptimalResultModal = (function () {
   function renderNewResult(result) {
     if (!result) return;
 
+    // 추정치 처리를 위한 복사본 생성
+    const processedResult = JSON.parse(JSON.stringify(result));
+
+    // 추정치가 있는지 확인
+    let hasEstimatedValues = false;
+    let originalBindStats = {};
+
+    if (processedResult.bindStats) {
+      for (const [key, value] of Object.entries(processedResult.bindStats)) {
+        if (typeof value === "string" && value.includes("(추정)")) {
+          hasEstimatedValues = true;
+          originalBindStats[key] = value; // 원본 값 저장
+          processedResult.bindStats[key] = cleanEstimatedValue(value); // 숫자값만 추출
+        }
+      }
+
+      // 추정치가 있는 경우 점수 재계산
+      if (hasEstimatedValues) {
+        processedResult.bindScore = calculateScore(processedResult.bindStats);
+        processedResult.scoreWithBind =
+          (processedResult.gradeScore || 0) +
+          (processedResult.factionScore || 0) +
+          processedResult.bindScore;
+      }
+    }
+
     const {
       spirits,
       gradeScore,
@@ -475,19 +542,17 @@ const OptimalResultModal = (function () {
       missingDataSpirits,
       missingBindDataSpirits,
       usesEstimatedValues,
-    } = result;
+    } = processedResult;
 
     const combinedScoreWithoutReg = Math.round(
-      SpiritUtils.ensureNumber(gradeScore) +
-        SpiritUtils.ensureNumber(factionScore) +
-        SpiritUtils.ensureNumber(bindScore)
+      ensureNumber(gradeScore) +
+        ensureNumber(factionScore) +
+        ensureNumber(bindScore)
     );
 
-    const displayGradeScore = Math.round(SpiritUtils.ensureNumber(gradeScore));
-    const displayFactionScore = Math.round(
-      SpiritUtils.ensureNumber(factionScore)
-    );
-    const displayBindScore = Math.round(SpiritUtils.ensureNumber(bindScore));
+    const displayGradeScore = Math.round(ensureNumber(gradeScore));
+    const displayFactionScore = Math.round(ensureNumber(factionScore));
+    const displayBindScore = Math.round(ensureNumber(bindScore));
 
     const optimalScoreEl = document.getElementById("optimalScore");
     if (optimalScoreEl) {
@@ -533,7 +598,8 @@ const OptimalResultModal = (function () {
       tempContainer.appendChild(warningBox);
     }
 
-    if (usesEstimatedValues) {
+    // 추정치 경고 표시 추가
+    if (hasEstimatedValues || usesEstimatedValues) {
       const estimationWarning = document.createElement("div");
       estimationWarning.className = "estimation-warning";
       estimationWarning.innerHTML =
@@ -571,7 +637,8 @@ const OptimalResultModal = (function () {
       displayBindScore,
       gradeCounts,
       factionCounts,
-      usesEstimatedValues
+      usesEstimatedValues || hasEstimatedValues,
+      originalBindStats
     );
 
     renderSpiritDetailsTable(spirits);
@@ -612,9 +679,9 @@ const OptimalResultModal = (function () {
     for (let i = 0; i < categoryCombinations.length; i++) {
       const combo = categoryCombinations[i];
       const currentScore =
-        SpiritUtils.ensureNumber(combo.gradeScore) +
-        SpiritUtils.ensureNumber(combo.factionScore) +
-        SpiritUtils.ensureNumber(combo.bindScore);
+        ensureNumber(combo.gradeScore) +
+        ensureNumber(combo.factionScore) +
+        ensureNumber(combo.bindScore);
 
       if (currentScore > highestScore) {
         highestScore = currentScore;
@@ -652,9 +719,9 @@ const OptimalResultModal = (function () {
               }
 
               const totalScore = Math.round(
-                SpiritUtils.ensureNumber(combo.gradeScore || 0) +
-                  SpiritUtils.ensureNumber(combo.factionScore || 0) +
-                  SpiritUtils.ensureNumber(combo.bindScore || 0)
+                ensureNumber(combo.gradeScore || 0) +
+                  ensureNumber(combo.factionScore || 0) +
+                  ensureNumber(combo.bindScore || 0)
               );
 
               return `
@@ -785,9 +852,9 @@ const OptimalResultModal = (function () {
     for (let i = 0; i < categoryCombinations.length; i++) {
       const combo = categoryCombinations[i];
       const currentScore =
-        SpiritUtils.ensureNumber(combo.gradeScore) +
-        SpiritUtils.ensureNumber(combo.factionScore) +
-        SpiritUtils.ensureNumber(combo.bindScore);
+        ensureNumber(combo.gradeScore) +
+        ensureNumber(combo.factionScore) +
+        ensureNumber(combo.bindScore);
 
       if (currentScore > highestScore) {
         highestScore = currentScore;
@@ -848,7 +915,8 @@ const OptimalResultModal = (function () {
     displayBindScore,
     gradeCounts,
     factionCounts,
-    usesEstimatedValues
+    usesEstimatedValues,
+    originalBindStats = {}
   ) {
     const gradeEffectsContainer = document.getElementById(
       "optimalGradeEffects"
@@ -893,12 +961,37 @@ const OptimalResultModal = (function () {
     const bindEffectsContainer = document.getElementById("optimalBindEffects");
     if (bindEffectsContainer) {
       if (bindStats && Object.keys(bindStats).length > 0) {
+        // 추정치가 있는지 확인
+        let hasEstimated = false;
+        const processedBindStats = {};
+
+        // bindStats의 값이 문자열이고 추정치를 포함하고 있는지 확인
+        for (const [key, value] of Object.entries(bindStats)) {
+          if (typeof value === "string" && value.includes("(추정)")) {
+            hasEstimated = true;
+            processedBindStats[key] = cleanEstimatedValue(value);
+          } else {
+            processedBindStats[key] = value;
+          }
+        }
+
+        // 추정치가 있으면 점수 재계산
+        let recalculatedScore = displayBindScore;
+        if (hasEstimated) {
+          recalculatedScore = calculateScore(processedBindStats);
+        }
+
         bindEffectsContainer.innerHTML = `
-          <h4>장착 효과 <span class="section-score">(${displayBindScore})</span>
+          <h4>장착 효과 <span class="section-score">(${recalculatedScore})</span>
             <span class="info-icon" title="각인효과를 제외한 수치입니다">ⓘ</span>
           </h4>
           <div class="effects-content">
-            ${CalculationUtils.renderEffectsList(bindStats, "", true)}
+            ${CalculationUtils.renderEffectsList(
+              bindStats,
+              "",
+              true,
+              originalBindStats
+            )}
             ${
               usesEstimatedValues
                 ? '<div class="estimation-warning">⚠️ 일부 결속 수치는 추정값을 사용하여 계산되었습니다.</div>'
@@ -924,6 +1017,13 @@ const OptimalResultModal = (function () {
 
     function parseNumericValue(value) {
       if (value === undefined || value === null) return 0;
+
+      // 추정치 처리
+      if (typeof value === "string" && value.includes("(추정)")) {
+        const numericValue = value.replace(/\(추정\)/g, "").trim();
+        return parseFloat(numericValue) || 0;
+      }
+
       if (typeof value !== "string") return parseFloat(value) || 0;
       return parseFloat(value.replace(/,/g, "")) || 0;
     }
@@ -1056,29 +1156,14 @@ const OptimalResultModal = (function () {
           }
 
           if (bindStat) {
-            const bindPenResist =
-              typeof bindStat.damageResistancePenetration === "string" &&
-              bindStat.damageResistancePenetration.includes("(추정)")
-                ? cleanEstimatedValue(bindStat.damageResistancePenetration)
-                : parseNumericValue(bindStat.damageResistancePenetration);
-
-            const bindResist =
-              typeof bindStat.damageResistance === "string" &&
-              bindStat.damageResistance.includes("(추정)")
-                ? cleanEstimatedValue(bindStat.damageResistance)
-                : parseNumericValue(bindStat.damageResistance);
-
+            const bindPenResist = parseNumericValue(
+              bindStat.damageResistancePenetration
+            );
+            const bindResist = parseNumericValue(bindStat.damageResistance);
             const bindPvpDmg =
-              (typeof bindStat.pvpDamagePercent === "string" &&
-              bindStat.pvpDamagePercent.includes("(추정)")
-                ? cleanEstimatedValue(bindStat.pvpDamagePercent)
-                : parseNumericValue(bindStat.pvpDamagePercent)) * 10;
-
+              parseNumericValue(bindStat.pvpDamagePercent) * 10;
             const bindPvpDef =
-              (typeof bindStat.pvpDefensePercent === "string" &&
-              bindStat.pvpDefensePercent.includes("(추정)")
-                ? cleanEstimatedValue(bindStat.pvpDefensePercent)
-                : parseNumericValue(bindStat.pvpDefensePercent)) * 10;
+              parseNumericValue(bindStat.pvpDefensePercent) * 10;
 
             bindScore = bindPenResist + bindResist + bindPvpDmg + bindPvpDef;
           }
@@ -1177,7 +1262,7 @@ const OptimalResultModal = (function () {
                     typeof value === "string" && value.includes("(추정)");
 
                   if (isEstimated) {
-                    bindValue = cleanEstimatedValue(value);
+                    bindValue = parseNumericValue(value);
                   } else {
                     bindValue = parseNumericValue(value);
                   }
@@ -1591,6 +1676,14 @@ const OptimalResultModal = (function () {
     margin: 10px 0;
     font-size: 0.9em;
     color: #856404;
+  }
+  
+  .estimated-marker {
+    color: #dc3545;
+    font-weight: bold;
+    margin-left: 2px;
+    vertical-align: super;
+    font-size: 0.8em;
   }
 
   @media (min-width: 768px) {
