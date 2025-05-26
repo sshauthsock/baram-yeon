@@ -1,67 +1,66 @@
-window.OptimalResultModal =
-  window.OptimalResultModal ||
-  (function () {
-    const FACTION_ICONS = window.CommonData.FACTION_ICONS || {};
+const OptimalResultModal = (function () {
+  const FACTION_ICONS = window.CommonData.FACTION_ICONS || {};
 
-    function cleanEstimatedValue(value) {
-      if (value === undefined || value === null) return 0;
+  // 추정치 처리 함수
+  function cleanEstimatedValue(value) {
+    if (value === undefined || value === null) return 0;
 
-      if (typeof value === "string") {
-        if (value.includes("(추정)")) {
-          const numericValue = value.replace(/\(추정\)/g, "").trim();
-          return parseFloat(numericValue) || 0;
-        }
-        return parseFloat(value) || 0;
+    if (typeof value === "string") {
+      if (value.includes("(추정)")) {
+        const numericValue = value.replace(/\(추정\)/g, "").trim();
+        return parseFloat(numericValue) || 0;
       }
-      return value || 0;
+      return parseFloat(value) || 0;
     }
+    return value || 0;
+  }
 
-    function hasEstimatedValues(stats) {
-      if (!stats) return false;
+  function hasEstimatedValues(stats) {
+    if (!stats) return false;
 
-      return Object.values(stats).some(
-        (value) => typeof value === "string" && value.includes("(추정)")
-      );
-    }
+    return Object.values(stats).some(
+      (value) => typeof value === "string" && value.includes("(추정)")
+    );
+  }
 
-    // 환산합산 점수 계산
-    function calculateScore(effects) {
-      if (!effects) return 0;
+  // 환산합산 점수 계산
+  function calculateScore(effects) {
+    if (!effects) return 0;
 
-      const damageResistancePenetration = ensureNumber(
-        cleanEstimatedValue(effects.damageResistancePenetration)
-      );
-      const damageResistance = ensureNumber(
-        cleanEstimatedValue(effects.damageResistance)
-      );
-      const pvpDamagePercent =
-        ensureNumber(cleanEstimatedValue(effects.pvpDamagePercent)) * 10;
-      const pvpDefensePercent =
-        ensureNumber(cleanEstimatedValue(effects.pvpDefensePercent)) * 10;
+    const damageResistancePenetration = ensureNumber(
+      cleanEstimatedValue(effects.damageResistancePenetration)
+    );
+    const damageResistance = ensureNumber(
+      cleanEstimatedValue(effects.damageResistance)
+    );
+    const pvpDamagePercent =
+      ensureNumber(cleanEstimatedValue(effects.pvpDamagePercent)) * 10;
+    const pvpDefensePercent =
+      ensureNumber(cleanEstimatedValue(effects.pvpDefensePercent)) * 10;
 
-      return Math.round(
-        damageResistancePenetration +
-          damageResistance +
-          pvpDamagePercent +
-          pvpDefensePercent
-      );
-    }
+    return Math.round(
+      damageResistancePenetration +
+        damageResistance +
+        pvpDamagePercent +
+        pvpDefensePercent
+    );
+  }
 
-    function ensureNumber(value) {
-      if (value === undefined || value === null) return 0;
-      const num = parseFloat(String(value).replace(/,/g, ""));
-      return isNaN(num) ? 0 : num;
-    }
+  function ensureNumber(value) {
+    if (value === undefined || value === null) return 0;
+    const num = parseFloat(String(value).replace(/,/g, ""));
+    return isNaN(num) ? 0 : num;
+  }
 
-    function createBaseModal() {
-      let optimalModal = document.getElementById("optimalModal");
-      if (optimalModal) {
-        optimalModal.innerHTML = "";
-      } else {
-        optimalModal = document.createElement("div");
-        optimalModal.id = "optimalModal";
-        optimalModal.className = "modal-overlay";
-        optimalModal.style.cssText = `
+  function createBaseModal() {
+    let optimalModal = document.getElementById("optimalModal");
+    if (optimalModal) {
+      optimalModal.innerHTML = "";
+    } else {
+      optimalModal = document.createElement("div");
+      optimalModal.id = "optimalModal";
+      optimalModal.className = "modal-overlay";
+      optimalModal.style.cssText = `
         position: fixed;
         z-index: 10000;
         left: 0;
@@ -73,13 +72,13 @@ window.OptimalResultModal =
         justify-content: center;
         align-items: center;
       `;
-        document.body.appendChild(optimalModal);
-      }
+      document.body.appendChild(optimalModal);
+    }
 
-      const modalContent = document.createElement("div");
-      modalContent.id = "optimalModalContent";
-      modalContent.className = "modal-content";
-      modalContent.style.cssText = `
+    const modalContent = document.createElement("div");
+    modalContent.id = "optimalModalContent";
+    modalContent.className = "modal-content";
+    modalContent.style.cssText = `
       background-color: white;
       border-radius: 12px;
       width: 90%;
@@ -90,13 +89,13 @@ window.OptimalResultModal =
       position: relative;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     `;
-      optimalModal.appendChild(modalContent);
+    optimalModal.appendChild(modalContent);
 
-      const closeButton = document.createElement("button");
-      closeButton.id = "closeOptimalModal";
-      closeButton.className = "modal-close";
-      closeButton.innerHTML = "✕";
-      closeButton.style.cssText = `
+    const closeButton = document.createElement("button");
+    closeButton.id = "closeOptimalModal";
+    closeButton.className = "modal-close";
+    closeButton.innerHTML = "✕";
+    closeButton.style.cssText = `
       position: absolute;
       right: 15px;
       top: 15px;
@@ -107,268 +106,268 @@ window.OptimalResultModal =
       color: #555;
       z-index: 10002;
     `;
-      closeButton.onclick = function () {
-        optimalModal.style.display = "none";
-        document.body.style.overflow = "auto";
-      };
-      modalContent.appendChild(closeButton);
+    closeButton.onclick = function () {
+      optimalModal.style.display = "none";
+      document.body.style.overflow = "auto";
+    };
+    modalContent.appendChild(closeButton);
 
-      const modalTitle = document.createElement("h3");
-      modalTitle.className = "modal-title";
-      modalTitle.textContent = "환수 결속 상세 정보";
-      modalContent.appendChild(modalTitle);
+    const modalTitle = document.createElement("h3");
+    modalTitle.className = "modal-title";
+    modalTitle.textContent = "환수 결속 상세 정보";
+    modalContent.appendChild(modalTitle);
 
-      return {
-        modal: optimalModal,
-        content: modalContent,
-        title: modalTitle,
-      };
-    }
+    return {
+      modal: optimalModal,
+      content: modalContent,
+      title: modalTitle,
+    };
+  }
 
-    function prepareModalStructure(modalType = "bond") {
-      const baseModal = createBaseModal();
-      const modalContent = baseModal.content;
+  function prepareModalStructure(modalType = "bond") {
+    const baseModal = createBaseModal();
+    const modalContent = baseModal.content;
 
-      const adRow = document.createElement("div");
-      adRow.className = "ad-row";
-      adRow.innerHTML = `
+    const adRow = document.createElement("div");
+    adRow.className = "ad-row";
+    adRow.innerHTML = `
       <div class="ad-container-left">
         <ins class="kakao_ad_area" style="display:block;" data-ad-unit="DAN-sgK0ytXrL3f7EHRF"
             data-ad-width="728" data-ad-height="90"></ins>
       </div>
     `;
-      modalContent.appendChild(adRow);
+    modalContent.appendChild(adRow);
 
-      const mobileAd = document.createElement("div");
-      mobileAd.className = "ad-container mobile-ad";
-      mobileAd.innerHTML = `
+    const mobileAd = document.createElement("div");
+    mobileAd.className = "ad-container mobile-ad";
+    mobileAd.innerHTML = `
       <ins class="kakao_ad_area" style="display:block;" data-ad-unit="DAN-TPesUrzJaxJ008Lm"
           data-ad-width="320" data-ad-height="50"></ins>
     `;
-      modalContent.appendChild(mobileAd);
+    modalContent.appendChild(mobileAd);
 
-      const headerDiv = document.createElement("div");
-      headerDiv.id = "optimalHeader";
-      headerDiv.className = "optimal-header";
+    const headerDiv = document.createElement("div");
+    headerDiv.id = "optimalHeader";
+    headerDiv.className = "optimal-header";
 
-      const scoreDiv = document.createElement("div");
-      scoreDiv.className = "optimal-score";
-      scoreDiv.innerHTML = `
+    const scoreDiv = document.createElement("div");
+    scoreDiv.className = "optimal-score";
+    scoreDiv.innerHTML = `
       <h4>환산합산: <span id="optimalScore">0</span> <span id="optimalScoreBind" class="bind-score">(장착효과: 0)</span></h4>
       <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small><br />
       <small>환산 합산은 등급 결속 효과 + 세력 결속 효과 + 장착 효과 능력치입니다.</small>
     `;
-      headerDiv.appendChild(scoreDiv);
-      modalContent.appendChild(headerDiv);
+    headerDiv.appendChild(scoreDiv);
+    modalContent.appendChild(headerDiv);
 
-      if (modalType === "bond") {
-        const actionButtons = document.createElement("div");
-        actionButtons.className = "action-buttons";
-        actionButtons.innerHTML = `
+    if (modalType === "bond") {
+      const actionButtons = document.createElement("div");
+      actionButtons.className = "action-buttons";
+      actionButtons.innerHTML = `
         <button id="clearHistoryButton" class="clear-history-btn">기록 삭제</button>
       `;
-        modalContent.appendChild(actionButtons);
-      }
-
-      if (modalType === "bond") {
-        const spiritsList = document.createElement("div");
-        spiritsList.id = "optimalSpiritsList";
-        spiritsList.className = "selected-spirits-info";
-        modalContent.appendChild(spiritsList);
-      }
-
-      const combinationContainer = document.createElement("div");
-      combinationContainer.id = "combinationResultsContainer";
-      combinationContainer.className = "combination-results-container";
-      modalContent.appendChild(combinationContainer);
-
-      const resultsContainer = document.createElement("div");
-      resultsContainer.className = "results-container";
-
-      const gradeSection = document.createElement("div");
-      gradeSection.className = "results-section";
-      const gradeEffects = document.createElement("div");
-      gradeEffects.id = "optimalGradeEffects";
-      gradeEffects.className = "effects-list";
-      gradeSection.appendChild(gradeEffects);
-      resultsContainer.appendChild(gradeSection);
-
-      const factionSection = document.createElement("div");
-      factionSection.className = "results-section";
-      const factionEffects = document.createElement("div");
-      factionEffects.id = "optimalFactionEffects";
-      factionEffects.className = "effects-list";
-      factionSection.appendChild(factionEffects);
-      resultsContainer.appendChild(factionSection);
-
-      const bindSection = document.createElement("div");
-      bindSection.className = "results-section";
-      const bindEffects = document.createElement("div");
-      bindEffects.id = "optimalBindEffects";
-      bindEffects.className = "effects-list";
-      bindSection.appendChild(bindEffects);
-      resultsContainer.appendChild(bindSection);
-
-      modalContent.appendChild(resultsContainer);
-
-      const detailsContainer = document.createElement("div");
-      detailsContainer.id = "optimalSpiritsDetails";
-      detailsContainer.className = "spirit-details-container";
-      const detailsTitle = document.createElement("h4");
-      detailsTitle.textContent = "선택된 환수 상세 스탯 (결속 수치)";
-      detailsContainer.appendChild(detailsTitle);
-
-      const statsGrid = document.createElement("div");
-      statsGrid.id = "spiritStatsDetails";
-      statsGrid.className = "spirit-stats-grid";
-      detailsContainer.appendChild(statsGrid);
-
-      modalContent.appendChild(detailsContainer);
-
-      return true;
+      modalContent.appendChild(actionButtons);
     }
 
-    function showResultModal(result, modalType = "bond") {
-      if (
-        !result ||
-        !result.spirits ||
-        !Array.isArray(result.spirits) ||
-        result.spirits.length === 0
-      ) {
-        console.warn("Invalid result data provided to modal");
-        return;
-      }
+    if (modalType === "bond") {
+      const spiritsList = document.createElement("div");
+      spiritsList.id = "optimalSpiritsList";
+      spiritsList.className = "selected-spirits-info";
+      modalContent.appendChild(spiritsList);
+    }
 
-      prepareModalStructure(modalType);
+    const combinationContainer = document.createElement("div");
+    combinationContainer.id = "combinationResultsContainer";
+    combinationContainer.className = "combination-results-container";
+    modalContent.appendChild(combinationContainer);
 
-      const optimalModal = document.getElementById("optimalModal");
-      if (optimalModal) {
-        optimalModal.style.display = "flex";
-        document.body.style.overflow = "hidden";
+    const resultsContainer = document.createElement("div");
+    resultsContainer.className = "results-container";
 
-        initKakaoAds();
-      }
+    const gradeSection = document.createElement("div");
+    gradeSection.className = "results-section";
+    const gradeEffects = document.createElement("div");
+    gradeEffects.id = "optimalGradeEffects";
+    gradeEffects.className = "effects-list";
+    gradeSection.appendChild(gradeEffects);
+    resultsContainer.appendChild(gradeSection);
 
-      const modalTitle = document.querySelector(".modal-title");
-      if (modalTitle) {
-        const category = result.spirits[0]?.category || "환수";
-        modalTitle.textContent = `${category} 결속 상세 정보`;
-      }
+    const factionSection = document.createElement("div");
+    factionSection.className = "results-section";
+    const factionEffects = document.createElement("div");
+    factionEffects.id = "optimalFactionEffects";
+    factionEffects.className = "effects-list";
+    factionSection.appendChild(factionEffects);
+    resultsContainer.appendChild(factionSection);
 
-      // 추정치 처리를 위한 복사본 생성
-      const processedResult = JSON.parse(JSON.stringify(result));
+    const bindSection = document.createElement("div");
+    bindSection.className = "results-section";
+    const bindEffects = document.createElement("div");
+    bindEffects.id = "optimalBindEffects";
+    bindEffects.className = "effects-list";
+    bindSection.appendChild(bindEffects);
+    resultsContainer.appendChild(bindSection);
 
-      // 추정치가 있는지 확인
-      let hasEstimatedValues = false;
-      let originalBindStats = {};
+    modalContent.appendChild(resultsContainer);
 
-      if (processedResult.bindStats) {
-        for (const [key, value] of Object.entries(processedResult.bindStats)) {
-          if (typeof value === "string" && value.includes("(추정)")) {
-            hasEstimatedValues = true;
-            originalBindStats[key] = value; // 원본 값 저장
-            processedResult.bindStats[key] = cleanEstimatedValue(value); // 숫자값만 추출
-          }
+    const detailsContainer = document.createElement("div");
+    detailsContainer.id = "optimalSpiritsDetails";
+    detailsContainer.className = "spirit-details-container";
+    const detailsTitle = document.createElement("h4");
+    detailsTitle.textContent = "선택된 환수 상세 스탯 (결속 수치)";
+    detailsContainer.appendChild(detailsTitle);
+
+    const statsGrid = document.createElement("div");
+    statsGrid.id = "spiritStatsDetails";
+    statsGrid.className = "spirit-stats-grid";
+    detailsContainer.appendChild(statsGrid);
+
+    modalContent.appendChild(detailsContainer);
+
+    return true;
+  }
+
+  function showResultModal(result, modalType = "bond") {
+    if (
+      !result ||
+      !result.spirits ||
+      !Array.isArray(result.spirits) ||
+      result.spirits.length === 0
+    ) {
+      console.warn("Invalid result data provided to modal");
+      return;
+    }
+
+    prepareModalStructure(modalType);
+
+    const optimalModal = document.getElementById("optimalModal");
+    if (optimalModal) {
+      optimalModal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+
+      initKakaoAds();
+    }
+
+    const modalTitle = document.querySelector(".modal-title");
+    if (modalTitle) {
+      const category = result.spirits[0]?.category || "환수";
+      modalTitle.textContent = `${category} 결속 상세 정보`;
+    }
+
+    // 추정치 처리를 위한 복사본 생성
+    const processedResult = JSON.parse(JSON.stringify(result));
+
+    // 추정치가 있는지 확인
+    let hasEstimatedValues = false;
+    let originalBindStats = {};
+
+    if (processedResult.bindStats) {
+      for (const [key, value] of Object.entries(processedResult.bindStats)) {
+        if (typeof value === "string" && value.includes("(추정)")) {
+          hasEstimatedValues = true;
+          originalBindStats[key] = value; // 원본 값 저장
+          processedResult.bindStats[key] = cleanEstimatedValue(value); // 숫자값만 추출
         }
-
-        // 추정치가 있는 경우 점수 재계산
-        if (hasEstimatedValues) {
-          processedResult.bindScore = calculateScore(processedResult.bindStats);
-          processedResult.scoreWithBind =
-            (processedResult.gradeScore || 0) +
-            (processedResult.factionScore || 0) +
-            processedResult.bindScore;
-        }
       }
 
-      // 기존 데이터 유지
-      const {
-        spirits,
-        gradeScore,
-        factionScore,
-        bindScore,
-        gradeCounts,
-        factionCounts,
-        gradeEffects,
-        factionEffects,
-        bindStats,
-        missingDataSpirits,
-        missingBindDataSpirits,
-        usesEstimatedValues,
-      } = processedResult;
-
-      const combinedScoreWithoutReg = Math.round(
-        ensureNumber(gradeScore) +
-          ensureNumber(factionScore) +
-          ensureNumber(bindScore)
-      );
-
-      const displayGradeScore = Math.round(ensureNumber(gradeScore));
-      const displayFactionScore = Math.round(ensureNumber(factionScore));
-      const displayBindScore = Math.round(ensureNumber(bindScore));
-
-      const optimalScoreEl = document.getElementById("optimalScore");
-      if (optimalScoreEl) {
-        optimalScoreEl.textContent = `${combinedScoreWithoutReg} (등급: ${displayGradeScore} 세력: ${displayFactionScore} 장착효과: ${displayBindScore})`;
+      // 추정치가 있는 경우 점수 재계산
+      if (hasEstimatedValues) {
+        processedResult.bindScore = calculateScore(processedResult.bindStats);
+        processedResult.scoreWithBind =
+          (processedResult.gradeScore || 0) +
+          (processedResult.factionScore || 0) +
+          processedResult.bindScore;
       }
+    }
 
-      const optimalScoreBindEl = document.getElementById("optimalScoreBind");
-      if (optimalScoreBindEl) {
-        optimalScoreBindEl.style.display = "none";
-      }
+    // 수정된 데이터 사용 - processedResult에서 값을 가져옴
+    const {
+      spirits,
+      gradeScore,
+      factionScore,
+      bindScore,
+      gradeCounts,
+      factionCounts,
+      gradeEffects,
+      factionEffects,
+      bindStats,
+      missingDataSpirits,
+      missingBindDataSpirits,
+      usesEstimatedValues,
+    } = processedResult;
 
-      const tempContainer = document.createElement("div");
-      tempContainer.style.display = "none";
-      document.body.appendChild(tempContainer);
+    const combinedScoreWithoutReg = Math.round(
+      ensureNumber(gradeScore) +
+        ensureNumber(factionScore) +
+        ensureNumber(bindScore)
+    );
 
-      const infoBox = document.createElement("div");
-      infoBox.className = "data-submission-request";
-      infoBox.innerHTML =
-        "해당 환수 레벨에 대한 장착/등록 스탯 데이터가 없는 경우 계산에서 제외됩니다.<br>" +
-        "해당 레벨에 대해 정보가 있으신가요? 제보해주시면 바로 반영하겠습니다.";
-      tempContainer.appendChild(infoBox);
+    const displayGradeScore = Math.round(ensureNumber(gradeScore));
+    const displayFactionScore = Math.round(ensureNumber(factionScore));
+    const displayBindScore = Math.round(ensureNumber(bindScore));
 
-      if (
-        (missingDataSpirits && missingDataSpirits.length > 0) ||
-        (missingBindDataSpirits && missingBindDataSpirits.length > 0)
-      ) {
-        const warningBox = document.createElement("div");
-        warningBox.className = "data-warning-box";
+    const optimalScoreEl = document.getElementById("optimalScore");
+    if (optimalScoreEl) {
+      optimalScoreEl.textContent = `${combinedScoreWithoutReg} (등급: ${displayGradeScore} 세력: ${displayFactionScore} 장착효과: ${displayBindScore})`;
+    }
 
-        let warningContent = "<h4>⚠️ 데이터 누락 경고</h4>";
+    const optimalScoreBindEl = document.getElementById("optimalScoreBind");
+    if (optimalScoreBindEl) {
+      optimalScoreBindEl.style.display = "none";
+    }
 
-        if (missingDataSpirits && missingDataSpirits.length > 0) {
-          warningContent += `<p><strong>등록 스탯 데이터가 없는 환수 (${
-            missingDataSpirits.length
-          }개):</strong> 
+    const tempContainer = document.createElement("div");
+    tempContainer.style.display = "none";
+    document.body.appendChild(tempContainer);
+
+    const infoBox = document.createElement("div");
+    infoBox.className = "data-submission-request";
+    infoBox.innerHTML =
+      "해당 환수 레벨에 대한 장착/등록 스탯 데이터가 없는 경우 계산에서 제외됩니다.<br>" +
+      "해당 레벨에 대해 정보가 있으신가요? 제보해주시면 바로 반영하겠습니다.";
+    tempContainer.appendChild(infoBox);
+
+    if (
+      (missingDataSpirits && missingDataSpirits.length > 0) ||
+      (missingBindDataSpirits && missingBindDataSpirits.length > 0)
+    ) {
+      const warningBox = document.createElement("div");
+      warningBox.className = "data-warning-box";
+
+      let warningContent = "<h4>⚠️ 데이터 누락 경고</h4>";
+
+      if (missingDataSpirits && missingDataSpirits.length > 0) {
+        warningContent += `<p><strong>등록 스탯 데이터가 없는 환수 (${
+          missingDataSpirits.length
+        }개):</strong> 
                            ${missingDataSpirits.join(", ")}</p>`;
-        }
+      }
 
-        if (missingBindDataSpirits && missingBindDataSpirits.length > 0) {
-          warningContent += `<p><strong>결속 스탯 데이터가 없는 환수 (${
-            missingBindDataSpirits.length
-          }개):</strong> 
+      if (missingBindDataSpirits && missingBindDataSpirits.length > 0) {
+        warningContent += `<p><strong>결속 스탯 데이터가 없는 환수 (${
+          missingBindDataSpirits.length
+        }개):</strong> 
                            ${missingBindDataSpirits.join(", ")}</p>`;
-        }
-
-        warningContent +=
-          "<p>위 환수들은 데이터가 없어 계산에 정확히 반영되지 않았습니다. 환수 레벨을 변경하거나 다른 환수를 선택하는 것이 좋습니다.</p>";
-
-        warningBox.innerHTML = warningContent;
-        tempContainer.appendChild(warningBox);
       }
 
-      // 추정치 경고 표시 추가
-      if (hasEstimatedValues || usesEstimatedValues) {
-        const estimationWarning = document.createElement("div");
-        estimationWarning.className = "estimation-warning";
-        estimationWarning.innerHTML =
-          "⚠️ 일부 결속 수치는 추정값을 사용하여 계산되었습니다.";
-        tempContainer.appendChild(estimationWarning);
-      }
+      warningContent +=
+        "<p>위 환수들은 데이터가 없어 계산에 정확히 반영되지 않았습니다. 환수 레벨을 변경하거나 다른 환수를 선택하는 것이 좋습니다.</p>";
 
-      const spiritsGridWrapper = document.createElement("div");
-      spiritsGridWrapper.innerHTML = `
+      warningBox.innerHTML = warningContent;
+      tempContainer.appendChild(warningBox);
+    }
+
+    // 추정치 경고 표시 추가
+    if (hasEstimatedValues || usesEstimatedValues) {
+      const estimationWarning = document.createElement("div");
+      estimationWarning.className = "estimation-warning";
+      estimationWarning.innerHTML =
+        "⚠️ 일부 결속 수치는 추정값을 사용하여 계산되었습니다.";
+      tempContainer.appendChild(estimationWarning);
+    }
+
+    const spiritsGridWrapper = document.createElement("div");
+    spiritsGridWrapper.innerHTML = `
       <h4>조합 환수 정보</h4>
       <div class="spirits-grid-container">
         ${spirits
@@ -386,488 +385,350 @@ window.OptimalResultModal =
           .join("")}
       </div>
     `;
-      tempContainer.appendChild(spiritsGridWrapper);
+    tempContainer.appendChild(spiritsGridWrapper);
 
-      const combinationContainer = document.getElementById(
-        "combinationResultsContainer"
-      );
-      if (combinationContainer) {
-        combinationContainer.innerHTML = tempContainer.innerHTML;
-      }
-
-      tempContainer.remove();
-
-      if (modalType === "bond") {
-        const spiritsList = document.getElementById("optimalSpiritsList");
-        if (spiritsList) {
-          spiritsList.innerHTML = "";
-        }
-
-        if (
-          result.spirits &&
-          result.spirits.length > 0 &&
-          window.HistoryManager &&
-          typeof window.HistoryManager.renderHistoryTabs === "function"
-        ) {
-          const category = result.spirits[0].category;
-
-          setTimeout(() => {
-            try {
-              window.HistoryManager.renderHistoryTabs(
-                category,
-                document.getElementById("optimalSpiritsList"),
-                (historyResult) => {
-                  renderNewResult(historyResult);
-                }
-              );
-
-              const clearButton = document.getElementById("clearHistoryButton");
-              if (clearButton) {
-                clearButton.onclick = function () {
-                  if (
-                    window.OptimalCombinationFinder &&
-                    typeof window.OptimalCombinationFinder
-                      .clearSavedOptimalCombinations === "function"
-                  ) {
-                    window.OptimalCombinationFinder.clearSavedOptimalCombinations(
-                      category
-                    );
-                  }
-                };
-              }
-            } catch (e) {
-              console.error("Failed to render history tabs:", e);
-            }
-          }, 100);
-        }
-      }
-
-      renderEffects(
-        gradeEffects,
-        factionEffects,
-        bindStats,
-        displayGradeScore,
-        displayFactionScore,
-        displayBindScore,
-        gradeCounts,
-        factionCounts,
-        usesEstimatedValues || hasEstimatedValues,
-        originalBindStats
-      );
-
-      renderSpiritDetailsTable(spirits);
-
-      initModalStyles();
-
-      setTimeout(() => {
-        document.querySelectorAll(".info-icon").forEach((icon) => {
-          icon.addEventListener("click", function () {
-            document
-              .querySelectorAll(".info-icon")
-              .forEach((i) => i.classList.remove("show-tooltip"));
-            this.classList.toggle("show-tooltip");
-            setTimeout(() => {
-              this.classList.remove("show-tooltip");
-            }, 3000);
-          });
-        });
-      }, 500);
+    const combinationContainer = document.getElementById(
+      "combinationResultsContainer"
+    );
+    if (combinationContainer) {
+      combinationContainer.innerHTML = tempContainer.innerHTML;
     }
 
-    function initKakaoAds() {
-      if (typeof window.kakaoPixel === "function") {
-        refreshKakaoAds();
-        return;
+    tempContainer.remove();
+
+    if (modalType === "bond") {
+      const spiritsList = document.getElementById("optimalSpiritsList");
+      if (spiritsList) {
+        spiritsList.innerHTML = "";
       }
 
-      const script = document.createElement("script");
-      script.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
-      script.async = true;
-      script.onload = function () {
-        refreshKakaoAds();
-      };
-      document.body.appendChild(script);
-    }
-
-    function refreshKakaoAds() {
-      const adElements = document.querySelectorAll(".kakao_ad_area");
-      adElements.forEach((ad) => {
-        ad.style.display = "block";
-      });
-
-      if (window.kakaoPixel) {
-        if (typeof window.kakaoPixel.refresh === "function") {
-          window.kakaoPixel.refresh();
-        }
-      }
-    }
-
-    // function renderNewResult(result) {
-    //   if (!result) return;
-
-    //   // 추정치 처리를 위한 복사본 생성
-    //   const processedResult = JSON.parse(JSON.stringify(result));
-
-    //   // 추정치가 있는지 확인
-    //   let hasEstimatedValues = false;
-    //   let originalBindStats = {};
-
-    //   if (processedResult.bindStats) {
-    //     for (const [key, value] of Object.entries(processedResult.bindStats)) {
-    //       if (typeof value === "string" && value.includes("(추정)")) {
-    //         hasEstimatedValues = true;
-    //         originalBindStats[key] = value; // 원본 값 저장
-    //         processedResult.bindStats[key] = cleanEstimatedValue(value); // 숫자값만 추출
-    //       }
-    //     }
-
-    //     // 추정치가 있는 경우 점수 재계산
-    //     if (hasEstimatedValues) {
-    //       processedResult.bindScore = calculateScore(processedResult.bindStats);
-    //       processedResult.scoreWithBind =
-    //         (processedResult.gradeScore || 0) +
-    //         (processedResult.factionScore || 0) +
-    //         processedResult.bindScore;
-    //     }
-    //   }
-
-    //   const {
-    //     spirits,
-    //     gradeScore,
-    //     factionScore,
-    //     bindScore,
-    //     gradeCounts,
-    //     factionCounts,
-    //     gradeEffects,
-    //     factionEffects,
-    //     bindStats,
-    //     missingDataSpirits,
-    //     missingBindDataSpirits,
-    //     usesEstimatedValues,
-    //   } = processedResult;
-
-    //   const combinedScoreWithoutReg = Math.round(
-    //     ensureNumber(gradeScore) +
-    //       ensureNumber(factionScore) +
-    //       ensureNumber(bindScore)
-    //   );
-
-    //   const displayGradeScore = Math.round(ensureNumber(gradeScore));
-    //   const displayFactionScore = Math.round(ensureNumber(factionScore));
-    //   const displayBindScore = Math.round(ensureNumber(bindScore));
-
-    //   const optimalScoreEl = document.getElementById("optimalScore");
-    //   if (optimalScoreEl) {
-    //     optimalScoreEl.textContent = `${combinedScoreWithoutReg} (등급: ${displayGradeScore} 세력: ${displayFactionScore} 장착효과: ${displayBindScore})`;
-    //   }
-
-    //   const tempContainer = document.createElement("div");
-
-    //   const infoBox = document.createElement("div");
-    //   infoBox.className = "data-submission-request";
-    //   infoBox.innerHTML =
-    //     "해당 환수 레벨에 대한 장착/등록 스탯 데이터가 없는 경우 계산에서 제외됩니다.<br>" +
-    //     "해당 레벨에 대해 정보가 있으신가요? 제보해주시면 바로 반영하겠습니다.";
-    //   tempContainer.appendChild(infoBox);
-
-    //   if (
-    //     (missingDataSpirits && missingDataSpirits.length > 0) ||
-    //     (missingBindDataSpirits && missingBindDataSpirits.length > 0)
-    //   ) {
-    //     const warningBox = document.createElement("div");
-    //     warningBox.className = "data-warning-box";
-
-    //     let warningContent = "<h4>⚠️ 데이터 누락 경고</h4>";
-
-    //     if (missingDataSpirits && missingDataSpirits.length > 0) {
-    //       warningContent += `<p><strong>등록 스탯 데이터가 없는 환수 (${
-    //         missingDataSpirits.length
-    //       }개):</strong>
-    //                      ${missingDataSpirits.join(", ")}</p>`;
-    //     }
-
-    //     if (missingBindDataSpirits && missingBindDataSpirits.length > 0) {
-    //       warningContent += `<p><strong>결속 스탯 데이터가 없는 환수 (${
-    //         missingBindDataSpirits.length
-    //       }개):</strong>
-    //                      ${missingBindDataSpirits.join(", ")}</p>`;
-    //     }
-
-    //     warningContent +=
-    //       "<p>위 환수들은 데이터가 없어 계산에 정확히 반영되지 않았습니다. 환수 레벨을 변경하거나 다른 환수를 선택하는 것이 좋습니다.</p>";
-
-    //     warningBox.innerHTML = warningContent;
-    //     tempContainer.appendChild(warningBox);
-    //   }
-
-    //   // 추정치 경고 표시 추가
-    //   if (hasEstimatedValues || usesEstimatedValues) {
-    //     const estimationWarning = document.createElement("div");
-    //     estimationWarning.className = "estimation-warning";
-    //     estimationWarning.innerHTML =
-    //       "⚠️ 일부 결속 수치는 추정값을 사용하여 계산되었습니다.";
-    //     tempContainer.appendChild(estimationWarning);
-    //   }
-
-    //   const spiritsGridWrapper = document.createElement("div");
-    //   spiritsGridWrapper.innerHTML = `
-    //   <h4>조합 환수 정보</h4>
-    //   <div class="spirits-grid-container">
-    //     ${spirits
-    //       .map(
-    //         (spirit) => `
-    //       <div class="spirit-info-item">
-    //         <img src="${spirit.image}" alt="${spirit.name}">
-    //         <div class="spirit-info-details">
-    //           <div class="spirit-info-name">${spirit.name}</div>
-    //           <div class="spirit-info-level">레벨: ${spirit.level}</div>
-    //         </div>
-    //       </div>
-    //     `
-    //       )
-    //       .join("")}
-    //   </div>
-    // `;
-    //   tempContainer.appendChild(spiritsGridWrapper);
-
-    //   renderEffects(
-    //     gradeEffects,
-    //     factionEffects,
-    //     bindStats,
-    //     displayGradeScore,
-    //     displayFactionScore,
-    //     displayBindScore,
-    //     gradeCounts,
-    //     factionCounts,
-    //     usesEstimatedValues || hasEstimatedValues,
-    //     originalBindStats
-    //   );
-
-    //   renderSpiritDetailsTable(spirits);
-
-    //   const combinationContainer = document.getElementById(
-    //     "combinationResultsContainer"
-    //   );
-    //   if (combinationContainer) {
-    //     requestAnimationFrame(() => {
-    //       combinationContainer.innerHTML = tempContainer.innerHTML;
-    //     });
-    //   }
-    // }
-
-    function renderNewResult(result, isBest, targetContainer) {
-      if (!result) return;
-
-      const processedResult = JSON.parse(JSON.stringify(result));
-      let hasEstimatedValues = false;
-      let originalBindStats = {};
-
-      if (processedResult.bindStats) {
-        for (const [key, value] of Object.entries(processedResult.bindStats)) {
-          if (typeof value === "string" && value.includes("(추정)")) {
-            hasEstimatedValues = true;
-            originalBindStats[key] = value;
-            processedResult.bindStats[key] = cleanEstimatedValue(value);
-          }
-        }
-
-        if (hasEstimatedValues) {
-          processedResult.bindScore = calculateScore(processedResult.bindStats);
-          processedResult.scoreWithBind =
-            (processedResult.gradeScore || 0) +
-            (processedResult.factionScore || 0) +
-            processedResult.bindScore;
-        }
-      }
-
-      const {
-        spirits,
-        gradeScore,
-        factionScore,
-        bindScore,
-        gradeCounts,
-        factionCounts,
-        gradeEffects,
-        factionEffects,
-        bindStats,
-        missingDataSpirits,
-        missingBindDataSpirits,
-        usesEstimatedValues,
-      } = processedResult;
-
-      const combinedScoreWithoutReg = Math.round(
-        ensureNumber(gradeScore) +
-          ensureNumber(factionScore) +
-          ensureNumber(bindScore)
-      );
-
-      const displayGradeScore = Math.round(ensureNumber(gradeScore));
-      const displayFactionScore = Math.round(ensureNumber(factionScore));
-      const displayBindScore = Math.round(ensureNumber(bindScore));
-
-      const optimalScoreEl = document.getElementById("optimalScore");
-      if (optimalScoreEl) {
-        optimalScoreEl.textContent = `${combinedScoreWithoutReg} (등급: ${displayGradeScore} 세력: ${displayFactionScore} 장착효과: ${displayBindScore})`;
-      }
-
-      // 임시 컨테이너 생성
-      const tempContainer = document.createElement("div");
-
-      // 데이터 제출 요청 박스
-      const infoBox = document.createElement("div");
-      infoBox.className = "data-submission-request";
-      infoBox.innerHTML =
-        "해당 환수 레벨에 대한 장착/등록 스탯 데이터가 없는 경우 계산에서 제외됩니다.<br>" +
-        "해당 레벨에 대해 정보가 있으신가요? 제보해주시면 바로 반영하겠습니다.";
-      tempContainer.appendChild(infoBox);
-
-      // 데이터 누락 경고 표시
       if (
-        (missingDataSpirits && missingDataSpirits.length > 0) ||
-        (missingBindDataSpirits && missingBindDataSpirits.length > 0)
+        result.spirits &&
+        result.spirits.length > 0 &&
+        window.HistoryManager &&
+        typeof window.HistoryManager.renderHistoryTabs === "function"
       ) {
-        const warningBox = document.createElement("div");
-        warningBox.className = "data-warning-box";
+        const category = result.spirits[0].category;
 
-        let warningContent = "<h4>⚠️ 데이터 누락 경고</h4>";
+        setTimeout(() => {
+          try {
+            window.HistoryManager.renderHistoryTabs(
+              category,
+              document.getElementById("optimalSpiritsList"),
+              (historyResult) => {
+                renderNewResult(historyResult);
+              }
+            );
 
-        if (missingDataSpirits && missingDataSpirits.length > 0) {
-          warningContent += `<p><strong>등록 스탯 데이터가 없는 환수 (${
-            missingDataSpirits.length
-          }개):</strong> 
-                         ${missingDataSpirits.join(", ")}</p>`;
-        }
-
-        if (missingBindDataSpirits && missingBindDataSpirits.length > 0) {
-          warningContent += `<p><strong>결속 스탯 데이터가 없는 환수 (${
-            missingBindDataSpirits.length
-          }개):</strong> 
-                         ${missingBindDataSpirits.join(", ")}</p>`;
-        }
-
-        warningContent +=
-          "<p>위 환수들은 데이터가 없어 계산에 정확히 반영되지 않았습니다. 환수 레벨을 변경하거나 다른 환수를 선택하는 것이 좋습니다.</p>";
-
-        warningBox.innerHTML = warningContent;
-        tempContainer.appendChild(warningBox);
-      }
-
-      // 추정치 경고 표시
-      if (hasEstimatedValues || usesEstimatedValues) {
-        const estimationWarning = document.createElement("div");
-        estimationWarning.className = "estimation-warning";
-        estimationWarning.innerHTML =
-          "⚠️ 일부 결속 수치는 추정값을 사용하여 계산되었습니다.";
-        tempContainer.appendChild(estimationWarning);
-      }
-
-      // 환수 그리드 생성
-      const spiritsGridWrapper = document.createElement("div");
-      spiritsGridWrapper.innerHTML = `
-        <h4>조합 환수 정보</h4>
-        <div class="spirits-grid-container">
-          ${spirits
-            .map(
-              (spirit) => `
-            <div class="spirit-info-item">
-              <img src="${spirit.image}" alt="${spirit.name}">
-              <div class="spirit-info-details">
-                <div class="spirit-info-name">${spirit.name}</div>
-                <div class="spirit-info-level">레벨: ${spirit.level}</div>
-              </div>
-            </div>
-          `
-            )
-            .join("")}
-        </div>
-      `;
-      tempContainer.appendChild(spiritsGridWrapper);
-
-      // 이펙트 렌더링 (이는 기존 함수 호출)
-      renderEffects(
-        gradeEffects,
-        factionEffects,
-        bindStats,
-        displayGradeScore,
-        displayFactionScore,
-        displayBindScore,
-        gradeCounts,
-        factionCounts,
-        usesEstimatedValues || hasEstimatedValues,
-        originalBindStats
-      );
-
-      renderSpiritDetailsTable(spirits);
-
-      // 최종 DOM 업데이트
-      const combinationContainer =
-        targetContainer ||
-        document.getElementById("combinationResultsContainer");
-      if (combinationContainer) {
-        // 중요: 내용을 대체하기 전에 컨테이너를 비웁니다
-        combinationContainer.innerHTML = "";
-        combinationContainer.appendChild(tempContainer);
+            const clearButton = document.getElementById("clearHistoryButton");
+            if (clearButton) {
+              clearButton.onclick = function () {
+                if (
+                  window.OptimalCombinationFinder &&
+                  typeof window.OptimalCombinationFinder
+                    .clearSavedOptimalCombinations === "function"
+                ) {
+                  window.OptimalCombinationFinder.clearSavedOptimalCombinations(
+                    category
+                  );
+                }
+              };
+            }
+          } catch (e) {
+            console.error("Failed to render history tabs:", e);
+          }
+        }, 100);
       }
     }
 
-    window.HistoryManager = window.HistoryManager || {};
+    renderEffects(
+      gradeEffects,
+      factionEffects,
+      bindStats,
+      displayGradeScore,
+      displayFactionScore,
+      displayBindScore,
+      gradeCounts,
+      factionCounts,
+      usesEstimatedValues || hasEstimatedValues,
+      originalBindStats
+    );
 
-    window.HistoryManager.getHistoryTabsHTML = function (
-      category,
-      onTabChange
-    ) {
-      const historyManager = window.HistoryManager;
-      if (!historyManager || !historyManager.loadSavedCombinations) {
-        return "";
+    renderSpiritDetailsTable(spirits);
+
+    initModalStyles();
+
+    setTimeout(() => {
+      document.querySelectorAll(".info-icon").forEach((icon) => {
+        icon.addEventListener("click", function () {
+          document
+            .querySelectorAll(".info-icon")
+            .forEach((i) => i.classList.remove("show-tooltip"));
+          this.classList.toggle("show-tooltip");
+          setTimeout(() => {
+            this.classList.remove("show-tooltip");
+          }, 3000);
+        });
+      });
+    }, 500);
+  }
+
+  function initKakaoAds() {
+    if (typeof window.kakaoPixel === "function") {
+      refreshKakaoAds();
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
+    script.async = true;
+    script.onload = function () {
+      refreshKakaoAds();
+    };
+    document.body.appendChild(script);
+  }
+
+  function refreshKakaoAds() {
+    const adElements = document.querySelectorAll(".kakao_ad_area");
+    adElements.forEach((ad) => {
+      ad.style.display = "block";
+    });
+
+    if (window.kakaoPixel) {
+      if (typeof window.kakaoPixel.refresh === "function") {
+        window.kakaoPixel.refresh();
+      }
+    }
+  }
+
+  function renderNewResult(result) {
+    if (!result) return;
+
+    // 추정치 처리를 위한 복사본 생성
+    const processedResult = JSON.parse(JSON.stringify(result));
+
+    // 추정치가 있는지 확인
+    let hasEstimatedValues = false;
+    let originalBindStats = {};
+
+    if (processedResult.bindStats) {
+      for (const [key, value] of Object.entries(processedResult.bindStats)) {
+        if (typeof value === "string" && value.includes("(추정)")) {
+          hasEstimatedValues = true;
+          originalBindStats[key] = value; // 원본 값 저장
+          processedResult.bindStats[key] = cleanEstimatedValue(value); // 숫자값만 추출
+        }
       }
 
-      const { savedOptimalCombinations, categoryState } =
-        historyManager.loadSavedCombinations();
-      let currentActiveIndex = categoryState[category].activeIndex;
-      const categoryCombinations = savedOptimalCombinations[category] || [];
+      // 추정치가 있는 경우 점수 재계산
+      if (hasEstimatedValues) {
+        processedResult.bindScore = calculateScore(processedResult.bindStats);
+        processedResult.scoreWithBind =
+          (processedResult.gradeScore || 0) +
+          (processedResult.factionScore || 0) +
+          processedResult.bindScore;
+      }
+    }
 
-      if (categoryCombinations.length === 0) {
-        return `
+    const {
+      spirits,
+      gradeScore,
+      factionScore,
+      bindScore,
+      gradeCounts,
+      factionCounts,
+      gradeEffects,
+      factionEffects,
+      bindStats,
+      missingDataSpirits,
+      missingBindDataSpirits,
+      usesEstimatedValues,
+    } = processedResult;
+
+    const combinedScoreWithoutReg = Math.round(
+      ensureNumber(gradeScore) +
+        ensureNumber(factionScore) +
+        ensureNumber(bindScore)
+    );
+
+    const displayGradeScore = Math.round(ensureNumber(gradeScore));
+    const displayFactionScore = Math.round(ensureNumber(factionScore));
+    const displayBindScore = Math.round(ensureNumber(bindScore));
+
+    const optimalScoreEl = document.getElementById("optimalScore");
+    if (optimalScoreEl) {
+      optimalScoreEl.textContent = `${combinedScoreWithoutReg} (등급: ${displayGradeScore} 세력: ${displayFactionScore} 장착효과: ${displayBindScore})`;
+    }
+
+    const tempContainer = document.createElement("div");
+
+    const infoBox = document.createElement("div");
+    infoBox.className = "data-submission-request";
+    infoBox.innerHTML =
+      "해당 환수 레벨에 대한 장착/등록 스탯 데이터가 없는 경우 계산에서 제외됩니다.<br>" +
+      "해당 레벨에 대해 정보가 있으신가요? 제보해주시면 바로 반영하겠습니다.";
+    tempContainer.appendChild(infoBox);
+
+    if (
+      (missingDataSpirits && missingDataSpirits.length > 0) ||
+      (missingBindDataSpirits && missingBindDataSpirits.length > 0)
+    ) {
+      const warningBox = document.createElement("div");
+      warningBox.className = "data-warning-box";
+
+      let warningContent = "<h4>⚠️ 데이터 누락 경고</h4>";
+
+      if (missingDataSpirits && missingDataSpirits.length > 0) {
+        warningContent += `<p><strong>등록 스탯 데이터가 없는 환수 (${
+          missingDataSpirits.length
+        }개):</strong> 
+                         ${missingDataSpirits.join(", ")}</p>`;
+      }
+
+      if (missingBindDataSpirits && missingBindDataSpirits.length > 0) {
+        warningContent += `<p><strong>결속 스탯 데이터가 없는 환수 (${
+          missingBindDataSpirits.length
+        }개):</strong> 
+                         ${missingBindDataSpirits.join(", ")}</p>`;
+      }
+
+      warningContent +=
+        "<p>위 환수들은 데이터가 없어 계산에 정확히 반영되지 않았습니다. 환수 레벨을 변경하거나 다른 환수를 선택하는 것이 좋습니다.</p>";
+
+      warningBox.innerHTML = warningContent;
+      tempContainer.appendChild(warningBox);
+    }
+
+    // 추정치 경고 표시 추가
+    if (hasEstimatedValues || usesEstimatedValues) {
+      const estimationWarning = document.createElement("div");
+      estimationWarning.className = "estimation-warning";
+      estimationWarning.innerHTML =
+        "⚠️ 일부 결속 수치는 추정값을 사용하여 계산되었습니다.";
+      tempContainer.appendChild(estimationWarning);
+    }
+
+    const spiritsGridWrapper = document.createElement("div");
+    spiritsGridWrapper.innerHTML = `
+      <h4>조합 환수 정보</h4>
+      <div class="spirits-grid-container">
+        ${spirits
+          .map(
+            (spirit) => `
+          <div class="spirit-info-item">
+            <img src="${spirit.image}" alt="${spirit.name}">
+            <div class="spirit-info-details">
+              <div class="spirit-info-name">${spirit.name}</div>
+              <div class="spirit-info-level">레벨: ${spirit.level}</div>
+            </div>
+          </div>
+        `
+          )
+          .join("")}
+      </div>
+    `;
+    tempContainer.appendChild(spiritsGridWrapper);
+
+    renderEffects(
+      gradeEffects,
+      factionEffects,
+      bindStats,
+      displayGradeScore,
+      displayFactionScore,
+      displayBindScore,
+      gradeCounts,
+      factionCounts,
+      usesEstimatedValues || hasEstimatedValues,
+      originalBindStats
+    );
+
+    renderSpiritDetailsTable(spirits);
+
+    const combinationContainer = document.getElementById(
+      "combinationResultsContainer"
+    );
+    if (combinationContainer) {
+      requestAnimationFrame(() => {
+        combinationContainer.innerHTML = tempContainer.innerHTML;
+      });
+    }
+  }
+
+  window.HistoryManager = window.HistoryManager || {};
+
+  window.HistoryManager.getHistoryTabsHTML = function (category, onTabChange) {
+    const historyManager = window.HistoryManager;
+    if (!historyManager || !historyManager.loadSavedCombinations) {
+      return "";
+    }
+
+    const { savedOptimalCombinations, categoryState } =
+      historyManager.loadSavedCombinations();
+    let currentActiveIndex = categoryState[category].activeIndex;
+    const categoryCombinations = savedOptimalCombinations[category] || [];
+
+    if (categoryCombinations.length === 0) {
+      return `
         <div class="history-tabs-container">
           <p class="no-history-message">${category} 카테고리에 저장된 조합 기록이 없습니다.</p>
         </div>
       `;
-      }
+    }
 
-      let highestScoreIndex = 0;
-      let highestScore = 0;
-      for (let i = 0; i < categoryCombinations.length; i++) {
-        const combo = categoryCombinations[i];
-        const currentScore =
-          ensureNumber(combo.gradeScore) +
-          ensureNumber(combo.factionScore) +
-          ensureNumber(combo.bindScore);
+    let highestScoreIndex = 0;
+    let highestScore = 0;
+    for (let i = 0; i < categoryCombinations.length; i++) {
+      const combo = categoryCombinations[i];
+      // 추정치가 있는 경우 처리
+      let bindScore = combo.bindScore;
+      if (combo.bindStats) {
+        const processedBindStats = {};
+        let hasEstimatedValues = false;
 
-        if (currentScore > highestScore) {
-          highestScore = currentScore;
-          highestScoreIndex = i;
+        for (const [key, value] of Object.entries(combo.bindStats)) {
+          if (typeof value === "string" && value.includes("(추정)")) {
+            hasEstimatedValues = true;
+            processedBindStats[key] = cleanEstimatedValue(value);
+          } else {
+            processedBindStats[key] = value;
+          }
+        }
+
+        if (hasEstimatedValues) {
+          bindScore = calculateScore(processedBindStats);
         }
       }
 
-      let newestIndex = 0;
-      let newestTime = categoryCombinations[0].addedAt || 0;
-      for (let i = 1; i < categoryCombinations.length; i++) {
-        const addedTime = categoryCombinations[i].addedAt || 0;
-        if (addedTime > newestTime) {
-          newestTime = addedTime;
-          newestIndex = i;
-        }
-      }
+      const currentScore =
+        ensureNumber(combo.gradeScore) +
+        ensureNumber(combo.factionScore) +
+        ensureNumber(bindScore);
 
-      if (
-        currentActiveIndex < 0 ||
-        currentActiveIndex >= categoryCombinations.length
-      ) {
-        currentActiveIndex = newestIndex;
-        categoryState[category].activeIndex = newestIndex;
+      if (currentScore > highestScore) {
+        highestScore = currentScore;
+        highestScoreIndex = i;
       }
+    }
 
-      const tabsHtml = `
+    let newestIndex = 0;
+    let newestTime = categoryCombinations[0].addedAt || 0;
+    for (let i = 1; i < categoryCombinations.length; i++) {
+      const addedTime = categoryCombinations[i].addedAt || 0;
+      if (addedTime > newestTime) {
+        newestTime = addedTime;
+        newestIndex = i;
+      }
+    }
+
+    if (
+      currentActiveIndex < 0 ||
+      currentActiveIndex >= categoryCombinations.length
+    ) {
+      currentActiveIndex = newestIndex;
+      categoryState[category].activeIndex = newestIndex;
+    }
+
+    const tabsHtml = `
       <div class="history-tabs-container">
         <div class="history-tabs">
           ${Array(5)
@@ -878,10 +739,30 @@ window.OptimalResultModal =
                 return `<div class="history-tab-placeholder"></div>`;
               }
 
+              // 추정치가 있는 경우 처리
+              let bindScore = combo.bindScore;
+              if (combo.bindStats) {
+                const processedBindStats = {};
+                let hasEstimatedValues = false;
+
+                for (const [key, value] of Object.entries(combo.bindStats)) {
+                  if (typeof value === "string" && value.includes("(추정)")) {
+                    hasEstimatedValues = true;
+                    processedBindStats[key] = cleanEstimatedValue(value);
+                  } else {
+                    processedBindStats[key] = value;
+                  }
+                }
+
+                if (hasEstimatedValues) {
+                  bindScore = calculateScore(processedBindStats);
+                }
+              }
+
               const totalScore = Math.round(
                 ensureNumber(combo.gradeScore || 0) +
                   ensureNumber(combo.factionScore || 0) +
-                  ensureNumber(combo.bindScore || 0)
+                  ensureNumber(bindScore || 0)
               );
 
               return `
@@ -932,45 +813,44 @@ window.OptimalResultModal =
       </div>
     `;
 
-      return tabsHtml;
-    };
+    return tabsHtml;
+  };
 
-    window.HistoryManager.renderHistoryTabs = function (
-      category,
-      container,
-      onTabChange
-    ) {
-      if (!container) return;
+  window.HistoryManager.renderHistoryTabs = function (
+    category,
+    container,
+    onTabChange
+  ) {
+    if (!container) return;
 
-      const tabsHtml = this.getHistoryTabsHTML(category, onTabChange);
+    const tabsHtml = this.getHistoryTabsHTML(category, onTabChange);
 
-      container.innerHTML = tabsHtml;
+    container.innerHTML = tabsHtml;
 
-      document.querySelectorAll(".history-tab").forEach((tab) => {
-        tab.addEventListener("click", function () {
-          document
-            .querySelectorAll(".history-tab")
-            .forEach((t) => t.classList.remove("active"));
+    document.querySelectorAll(".history-tab").forEach((tab) => {
+      tab.addEventListener("click", function () {
+        document
+          .querySelectorAll(".history-tab")
+          .forEach((t) => t.classList.remove("active"));
 
-          this.classList.add("active");
+        this.classList.add("active");
 
-          const comboIndex = parseInt(this.dataset.index);
-          const { savedOptimalCombinations, categoryState } =
-            window.HistoryManager.loadSavedCombinations();
-          categoryState[category].activeIndex = comboIndex;
-          const result = savedOptimalCombinations[category][comboIndex];
+        const comboIndex = parseInt(this.dataset.index);
+        const { savedOptimalCombinations, categoryState } =
+          window.HistoryManager.loadSavedCombinations();
+        categoryState[category].activeIndex = comboIndex;
+        const result = savedOptimalCombinations[category][comboIndex];
 
-          if (typeof onTabChange === "function") {
-            onTabChange(
-              result,
-              comboIndex ===
-                window.HistoryManager.getHighestScoreIndex(category)
-            );
-          }
+        if (typeof onTabChange === "function") {
+          onTabChange(
+            result,
+            comboIndex === window.HistoryManager.getHighestScoreIndex(category)
+          );
+        }
 
-          const tabInfoElement = document.getElementById("selected-tab-info");
-          if (tabInfoElement && result) {
-            tabInfoElement.innerHTML = `
+        const tabInfoElement = document.getElementById("selected-tab-info");
+        if (tabInfoElement && result) {
+          tabInfoElement.innerHTML = `
             <span class="timestamp">계산 시간: ${result.timestamp}</span>
             ${
               comboIndex ===
@@ -979,113 +859,133 @@ window.OptimalResultModal =
                 : ""
             }
           `;
-          }
-        });
+        }
       });
-    };
+    });
+  };
 
-    window.HistoryManager.getCombination = function (category, index) {
-      const historyManager = window.HistoryManager;
-      if (!historyManager || !historyManager.loadSavedCombinations) {
-        return null;
-      }
-
-      const { savedOptimalCombinations } =
-        historyManager.loadSavedCombinations();
-      const categoryCombinations = savedOptimalCombinations[category] || [];
-
-      if (index >= 0 && index < categoryCombinations.length) {
-        if (historyManager.setActiveIndex) {
-          historyManager.setActiveIndex(category, index);
-        }
-        return categoryCombinations[index];
-      }
-
+  window.HistoryManager.getCombination = function (category, index) {
+    const historyManager = window.HistoryManager;
+    if (!historyManager || !historyManager.loadSavedCombinations) {
       return null;
-    };
+    }
 
-    window.HistoryManager.getHighestScoreIndex = function (category) {
-      const { savedOptimalCombinations } = this.loadSavedCombinations();
-      const categoryCombinations = savedOptimalCombinations[category] || [];
+    const { savedOptimalCombinations } = historyManager.loadSavedCombinations();
+    const categoryCombinations = savedOptimalCombinations[category] || [];
 
-      let highestScoreIndex = 0;
-      let highestScore = 0;
-
-      for (let i = 0; i < categoryCombinations.length; i++) {
-        const combo = categoryCombinations[i];
-        const currentScore =
-          ensureNumber(combo.gradeScore) +
-          ensureNumber(combo.factionScore) +
-          ensureNumber(combo.bindScore);
-
-        if (currentScore > highestScore) {
-          highestScore = currentScore;
-          highestScoreIndex = i;
-        }
+    if (index >= 0 && index < categoryCombinations.length) {
+      if (historyManager.setActiveIndex) {
+        historyManager.setActiveIndex(category, index);
       }
+      return categoryCombinations[index];
+    }
 
-      return highestScoreIndex;
-    };
+    return null;
+  };
 
-    function renderGradeSetInfo(gradeCounts) {
-      if (!gradeCounts) return "";
+  window.HistoryManager.getHighestScoreIndex = function (category) {
+    const { savedOptimalCombinations } = this.loadSavedCombinations();
+    const categoryCombinations = savedOptimalCombinations[category] || [];
 
-      let html = "";
+    let highestScoreIndex = 0;
+    let highestScore = 0;
 
-      for (const [category, grades] of Object.entries(gradeCounts || {})) {
-        for (const [grade, count] of Object.entries(grades)) {
-          if (count >= 2) {
-            const gradeClass =
-              grade === "전설" ? "grade-tag-legend" : "grade-tag-immortal";
-            html += `<span class="grade-tag ${gradeClass}">${grade} X ${count}</span> `;
+    for (let i = 0; i < categoryCombinations.length; i++) {
+      const combo = categoryCombinations[i];
+
+      // 추정치가 있는 경우 처리
+      let bindScore = combo.bindScore;
+      if (combo.bindStats) {
+        const processedBindStats = {};
+        let hasEstimatedValues = false;
+
+        for (const [key, value] of Object.entries(combo.bindStats)) {
+          if (typeof value === "string" && value.includes("(추정)")) {
+            hasEstimatedValues = true;
+            processedBindStats[key] = cleanEstimatedValue(value);
+          } else {
+            processedBindStats[key] = value;
           }
         }
-      }
 
-      return html;
-    }
-
-    function renderFactionSetInfo(factionCounts) {
-      if (!factionCounts) return "";
-
-      let html = "";
-
-      for (const [category, factions] of Object.entries(factionCounts || {})) {
-        const factionTags = Object.entries(factions)
-          .filter(([_, count]) => count >= 2)
-          .map(([faction, count]) => {
-            const iconPath =
-              FACTION_ICONS[faction] || "assets/img/bond/default.jpg";
-            return `<span class="faction-tag"><img src="${iconPath}" class="faction-icon" alt="${faction}"> ${faction} X ${count}</span>`;
-          })
-          .join(" ");
-
-        if (factionTags) {
-          html += factionTags;
+        if (hasEstimatedValues) {
+          bindScore = calculateScore(processedBindStats);
         }
       }
 
-      return html;
+      const currentScore =
+        ensureNumber(combo.gradeScore) +
+        ensureNumber(combo.factionScore) +
+        ensureNumber(bindScore);
+
+      if (currentScore > highestScore) {
+        highestScore = currentScore;
+        highestScoreIndex = i;
+      }
     }
 
-    function renderEffects(
-      gradeEffects,
-      factionEffects,
-      bindStats,
-      displayGradeScore,
-      displayFactionScore,
-      displayBindScore,
-      gradeCounts,
-      factionCounts,
-      usesEstimatedValues,
-      originalBindStats = {}
-    ) {
-      const gradeEffectsContainer = document.getElementById(
-        "optimalGradeEffects"
-      );
-      if (gradeEffectsContainer) {
-        const gradeSetInfo = renderGradeSetInfo(gradeCounts);
-        gradeEffectsContainer.innerHTML = `
+    return highestScoreIndex;
+  };
+
+  function renderGradeSetInfo(gradeCounts) {
+    if (!gradeCounts) return "";
+
+    let html = "";
+
+    for (const [category, grades] of Object.entries(gradeCounts || {})) {
+      for (const [grade, count] of Object.entries(grades)) {
+        if (count >= 2) {
+          const gradeClass =
+            grade === "전설" ? "grade-tag-legend" : "grade-tag-immortal";
+          html += `<span class="grade-tag ${gradeClass}">${grade} X ${count}</span> `;
+        }
+      }
+    }
+
+    return html;
+  }
+
+  function renderFactionSetInfo(factionCounts) {
+    if (!factionCounts) return "";
+
+    let html = "";
+
+    for (const [category, factions] of Object.entries(factionCounts || {})) {
+      const factionTags = Object.entries(factions)
+        .filter(([_, count]) => count >= 2)
+        .map(([faction, count]) => {
+          const iconPath =
+            FACTION_ICONS[faction] || "assets/img/bond/default.jpg";
+          return `<span class="faction-tag"><img src="${iconPath}" class="faction-icon" alt="${faction}"> ${faction} X ${count}</span>`;
+        })
+        .join(" ");
+
+      if (factionTags) {
+        html += factionTags;
+      }
+    }
+
+    return html;
+  }
+
+  function renderEffects(
+    gradeEffects,
+    factionEffects,
+    bindStats,
+    displayGradeScore,
+    displayFactionScore,
+    displayBindScore,
+    gradeCounts,
+    factionCounts,
+    usesEstimatedValues,
+    originalBindStats = {}
+  ) {
+    const gradeEffectsContainer = document.getElementById(
+      "optimalGradeEffects"
+    );
+    if (gradeEffectsContainer) {
+      const gradeSetInfo = renderGradeSetInfo(gradeCounts);
+      gradeEffectsContainer.innerHTML = `
         <h4>등급 결속 효과 <span class="section-score">(${displayGradeScore})</span></h4>
         <div class="set-info">${gradeSetInfo}</div>
         <div class="effects-content">
@@ -1096,14 +996,14 @@ window.OptimalResultModal =
           }
         </div>
       `;
-      }
+    }
 
-      const factionEffectsContainer = document.getElementById(
-        "optimalFactionEffects"
-      );
-      if (factionEffectsContainer) {
-        const factionSetInfo = renderFactionSetInfo(factionCounts);
-        factionEffectsContainer.innerHTML = `
+    const factionEffectsContainer = document.getElementById(
+      "optimalFactionEffects"
+    );
+    if (factionEffectsContainer) {
+      const factionSetInfo = renderFactionSetInfo(factionCounts);
+      factionEffectsContainer.innerHTML = `
         <h4>세력 결속 효과 <span class="section-score">(${displayFactionScore})</span></h4>
         <div class="set-info">${factionSetInfo}</div>
         <div class="effects-content">
@@ -1118,188 +1018,286 @@ window.OptimalResultModal =
           }
         </div>
       `;
-      }
+    }
 
-      const bindEffectsContainer =
-        document.getElementById("optimalBindEffects");
-      if (bindEffectsContainer) {
-        if (bindStats && Object.keys(bindStats).length > 0) {
-          // 추정치가 있는지 확인
-          let hasEstimated = false;
-          const processedBindStats = {};
+    const bindEffectsContainer = document.getElementById("optimalBindEffects");
+    if (bindEffectsContainer) {
+      if (bindStats && Object.keys(bindStats).length > 0) {
+        // 추정치를 처리하기 위해 복사본 생성
+        const processedBindStats = {};
+        let hasEstimated = false;
 
-          // bindStats의 값이 문자열이고 추정치를 포함하고 있는지 확인
-          for (const [key, value] of Object.entries(bindStats)) {
-            if (typeof value === "string" && value.includes("(추정)")) {
-              hasEstimated = true;
-              processedBindStats[key] = cleanEstimatedValue(value);
-            } else {
-              processedBindStats[key] = value;
-            }
+        // bindStats의 추정치 처리
+        for (const [key, value] of Object.entries(bindStats)) {
+          if (typeof value === "string" && value.includes("(추정)")) {
+            hasEstimated = true;
+            processedBindStats[key] = cleanEstimatedValue(value);
+          } else {
+            processedBindStats[key] = value;
           }
+        }
 
-          // 추정치가 있으면 점수 재계산
-          let recalculatedScore = displayBindScore;
-          if (hasEstimated) {
-            recalculatedScore = calculateScore(processedBindStats);
-          }
+        // 추정치가 있으면 점수 재계산
+        let recalculatedScore = displayBindScore;
+        if (hasEstimated) {
+          recalculatedScore = calculateScore(processedBindStats);
+        }
 
-          bindEffectsContainer.innerHTML = `
+        bindEffectsContainer.innerHTML = `
           <h4>장착 효과 <span class="section-score">(${recalculatedScore})</span>
             <span class="info-icon" title="각인효과를 제외한 수치입니다">ⓘ</span>
           </h4>
           <div class="effects-content">
             ${CalculationUtils.renderEffectsList(
-              bindStats,
+              processedBindStats, // 추정치가 처리된 값을 전달
               "",
               true,
-              originalBindStats
+              originalBindStats // 원본 값도 함께 전달
             )}
             ${
-              usesEstimatedValues
+              usesEstimatedValues || hasEstimated
                 ? '<div class="estimation-warning">⚠️ 일부 결속 수치는 추정값을 사용하여 계산되었습니다.</div>'
                 : ""
             }
           </div>
         `;
-        } else {
-          bindEffectsContainer.innerHTML = `
+      } else {
+        bindEffectsContainer.innerHTML = `
           <h4>장착 효과 <span class="section-score">(0)</span>
             <span class="info-icon" title="각인효과를 제외한 수치입니다">ⓘ</span>
           </h4>
           <p>사용 가능한 결속 스탯이 없습니다.</p>
         `;
-        }
       }
     }
+  }
 
-    function renderSpiritDetailsTable(spirits) {
-      const STATS_MAPPING = window.CommonData.STATS_MAPPING || {};
-      const STAT_COLOR_MAP = window.CommonData.STAT_COLOR_MAP || {};
-      const PERCENT_STATS = window.CommonData.PERCENT_STATS || [];
+  function renderSpiritDetailsTable(spirits) {
+    const STATS_MAPPING = window.CommonData.STATS_MAPPING || {};
+    const STAT_COLOR_MAP = window.CommonData.STAT_COLOR_MAP || {};
+    const PERCENT_STATS = window.CommonData.PERCENT_STATS || [];
 
-      function parseNumericValue(value) {
-        if (value === undefined || value === null) return 0;
+    function parseNumericValue(value) {
+      if (value === undefined || value === null) return 0;
 
-        // 추정치 처리
-        if (typeof value === "string" && value.includes("(추정)")) {
-          const numericValue = value.replace(/\(추정\)/g, "").trim();
-          return parseFloat(numericValue) || 0;
-        }
-
-        if (typeof value !== "string") return parseFloat(value) || 0;
-        return parseFloat(value.replace(/,/g, "")) || 0;
+      // 추정치 처리
+      if (typeof value === "string" && value.includes("(추정)")) {
+        const numericValue = value.replace(/\(추정\)/g, "").trim();
+        return parseFloat(numericValue) || 0;
       }
 
-      const container = document.getElementById("spiritStatsDetails");
-      if (!container) return;
+      if (typeof value !== "string") return parseFloat(value) || 0;
+      return parseFloat(value.replace(/,/g, "")) || 0;
+    }
 
-      container.innerHTML = "";
+    const container = document.getElementById("spiritStatsDetails");
+    if (!container) return;
 
-      if (!spirits || !Array.isArray(spirits) || spirits.length === 0) {
-        container.innerHTML = "<p>표시할 환수 정보가 없습니다.</p>";
-        return;
+    container.innerHTML = "";
+
+    if (!spirits || !Array.isArray(spirits) || spirits.length === 0) {
+      container.innerHTML = "<p>표시할 환수 정보가 없습니다.</p>";
+      return;
+    }
+
+    const allStatKeys = new Set();
+    let hasAnyEstimatedValue = false;
+
+    spirits.forEach((spirit) => {
+      if (!spirit || !spirit.stats || !Array.isArray(spirit.stats)) return;
+
+      const levelStats = spirit.stats.find(
+        (s) => s && s.level === spirit.level
+      );
+      if (levelStats && levelStats.registrationStat) {
+        Object.keys(levelStats.registrationStat).forEach((key) => {
+          if (key) allStatKeys.add(SpiritUtils.normalizeStatKey(key));
+        });
       }
 
-      const allStatKeys = new Set();
-      let hasAnyEstimatedValue = false;
+      let bindStatData = null;
 
-      spirits.forEach((spirit) => {
-        if (!spirit || !spirit.stats || !Array.isArray(spirit.stats)) return;
-
-        const levelStats = spirit.stats.find(
-          (s) => s && s.level === spirit.level
-        );
-        if (levelStats && levelStats.registrationStat) {
-          Object.keys(levelStats.registrationStat).forEach((key) => {
-            if (key) allStatKeys.add(SpiritUtils.normalizeStatKey(key));
-          });
+      if (levelStats && levelStats.bindStat) {
+        bindStatData = levelStats.bindStat;
+      } else if (spirit.hasLevel25Bind) {
+        const level25Stat = spirit.stats.find((s) => s && s.level === 25);
+        if (level25Stat && level25Stat.bindStat) {
+          bindStatData = level25Stat.bindStat;
         }
+      }
 
-        let bindStatData = null;
+      if (bindStatData) {
+        Object.keys(bindStatData).forEach((key) => {
+          if (key) allStatKeys.add(SpiritUtils.normalizeStatKey(key));
 
-        if (levelStats && levelStats.bindStat) {
-          bindStatData = levelStats.bindStat;
-        } else if (spirit.hasLevel25Bind) {
-          const level25Stat = spirit.stats.find((s) => s && s.level === 25);
-          if (level25Stat && level25Stat.bindStat) {
-            bindStatData = level25Stat.bindStat;
+          const value = bindStatData[key];
+          if (typeof value === "string" && value.includes("(추정)")) {
+            hasAnyEstimatedValue = true;
           }
-        }
-
-        if (bindStatData) {
-          Object.keys(bindStatData).forEach((key) => {
-            if (key) allStatKeys.add(SpiritUtils.normalizeStatKey(key));
-
-            const value = bindStatData[key];
-            if (typeof value === "string" && value.includes("(추정)")) {
-              hasAnyEstimatedValue = true;
-            }
-          });
-        }
-      });
-
-      if (allStatKeys.size === 0) {
-        container.innerHTML = "<p>표시할 스탯 정보가 없습니다.</p>";
-        return;
+        });
       }
+    });
 
-      const priorityStats = [
-        "damageResistancePenetration",
-        "damageResistance",
-        "pvpDamagePercent",
-        "pvpDefensePercent",
-      ];
+    if (allStatKeys.size === 0) {
+      container.innerHTML = "<p>표시할 스탯 정보가 없습니다.</p>";
+      return;
+    }
 
-      const sortedStatKeys = Array.from(allStatKeys).sort((a, b) => {
-        const aPriority = priorityStats.indexOf(a);
-        const bPriority = priorityStats.indexOf(b);
+    const priorityStats = [
+      "damageResistancePenetration",
+      "damageResistance",
+      "pvpDamagePercent",
+      "pvpDefensePercent",
+    ];
 
-        if (aPriority !== -1 && bPriority !== -1) {
-          return aPriority - bPriority;
-        } else if (aPriority !== -1) {
-          return -1;
-        } else if (bPriority !== -1) {
-          return 1;
-        } else {
-          return (STATS_MAPPING[a] || a).localeCompare(STATS_MAPPING[b] || b);
-        }
-      });
+    const sortedStatKeys = Array.from(allStatKeys).sort((a, b) => {
+      const aPriority = priorityStats.indexOf(a);
+      const bPriority = priorityStats.indexOf(b);
 
-      const table = document.createElement("table");
-      table.className = "spirits-stats-table";
+      if (aPriority !== -1 && bPriority !== -1) {
+        return aPriority - bPriority;
+      } else if (aPriority !== -1) {
+        return -1;
+      } else if (bPriority !== -1) {
+        return 1;
+      } else {
+        return (STATS_MAPPING[a] || a).localeCompare(STATS_MAPPING[b] || b);
+      }
+    });
 
-      const headerRow = document.createElement("tr");
-      const emptyHeader = document.createElement("th");
-      emptyHeader.textContent = "환수";
-      headerRow.appendChild(emptyHeader);
+    const table = document.createElement("table");
+    table.className = "spirits-stats-table";
 
-      spirits.forEach((spirit) => {
-        if (!spirit) return;
+    const headerRow = document.createElement("tr");
+    const emptyHeader = document.createElement("th");
+    emptyHeader.textContent = "환수";
+    headerRow.appendChild(emptyHeader);
 
-        const spiritHeader = document.createElement("th");
-        spiritHeader.innerHTML = `
+    spirits.forEach((spirit) => {
+      if (!spirit) return;
+
+      const spiritHeader = document.createElement("th");
+      spiritHeader.innerHTML = `
         <img src="${spirit.image || ""}" alt="${spirit.name || "환수"}"
              class="spirit-thumbnail"><br>${spirit.name || "환수"}
       `;
-        headerRow.appendChild(spiritHeader);
-      });
-      table.appendChild(headerRow);
+      headerRow.appendChild(spiritHeader);
+    });
+    table.appendChild(headerRow);
 
-      const scoreRow = document.createElement("tr");
-      const scoreHeader = document.createElement("th");
-      scoreHeader.textContent = "환산합산";
-      scoreHeader.style.backgroundColor = "#e3f2fd";
-      scoreRow.appendChild(scoreHeader);
+    const scoreRow = document.createElement("tr");
+    const scoreHeader = document.createElement("th");
+    scoreHeader.textContent = "환산합산";
+    scoreHeader.style.backgroundColor = "#e3f2fd";
+    scoreRow.appendChild(scoreHeader);
+
+    spirits.forEach((spirit) => {
+      if (!spirit) return;
+
+      const scoreCell = document.createElement("td");
+      scoreCell.style.backgroundColor = "#e3f2fd";
+      scoreCell.style.fontWeight = "bold";
+
+      let bindScore = 0;
+
+      try {
+        if (spirit.stats && Array.isArray(spirit.stats)) {
+          const levelStat = spirit.stats.find(
+            (s) => s && s.level === spirit.level
+          );
+
+          let bindStat = null;
+
+          if (levelStat && levelStat.bindStat) {
+            bindStat = levelStat.bindStat;
+          } else if (spirit.hasLevel25Bind) {
+            const level25Stat = spirit.stats.find((s) => s && s.level === 25);
+            if (level25Stat && level25Stat.bindStat) {
+              bindStat = level25Stat.bindStat;
+            }
+          }
+
+          if (bindStat) {
+            const bindPenResist = parseNumericValue(
+              bindStat.damageResistancePenetration
+            );
+            const bindResist = parseNumericValue(bindStat.damageResistance);
+            const bindPvpDmg =
+              parseNumericValue(bindStat.pvpDamagePercent) * 10;
+            const bindPvpDef =
+              parseNumericValue(bindStat.pvpDefensePercent) * 10;
+
+            bindScore = bindPenResist + bindResist + bindPvpDmg + bindPvpDef;
+          }
+        }
+      } catch (e) {
+        console.warn("점수 계산 중 오류 발생:", e);
+        bindScore = 0;
+      }
+
+      if (bindScore > 0) {
+        scoreCell.innerHTML = `<span class="bind-effect">${Math.round(
+          bindScore
+        )}</span>`;
+      } else {
+        scoreCell.textContent = "0";
+      }
+
+      scoreRow.appendChild(scoreCell);
+    });
+
+    table.appendChild(scoreRow);
+
+    const levelRow = document.createElement("tr");
+    const levelHeader = document.createElement("th");
+    levelHeader.textContent = "레벨";
+    levelRow.appendChild(levelHeader);
+
+    spirits.forEach((spirit) => {
+      if (!spirit) return;
+
+      const levelCell = document.createElement("td");
+      levelCell.textContent = spirit.level || 0;
+      levelRow.appendChild(levelCell);
+    });
+    table.appendChild(levelRow);
+
+    const factionRow = document.createElement("tr");
+    const factionHeader = document.createElement("th");
+    factionHeader.textContent = "세력";
+    factionRow.appendChild(factionHeader);
+
+    spirits.forEach((spirit) => {
+      if (!spirit) return;
+
+      const factionCell = document.createElement("td");
+      factionCell.textContent = spirit.influence || spirit.faction || "결의";
+      factionRow.appendChild(factionCell);
+    });
+    table.appendChild(factionRow);
+
+    sortedStatKeys.forEach((statKey) => {
+      const row = document.createElement("tr");
+      const statHeader = document.createElement("th");
+      statHeader.textContent = STATS_MAPPING[statKey] || statKey;
+
+      const colorClass = (STAT_COLOR_MAP && STAT_COLOR_MAP[statKey]) || "";
+      if (colorClass) {
+        statHeader.className = colorClass;
+      }
+      row.appendChild(statHeader);
 
       spirits.forEach((spirit) => {
         if (!spirit) return;
 
-        const scoreCell = document.createElement("td");
-        scoreCell.style.backgroundColor = "#e3f2fd";
-        scoreCell.style.fontWeight = "bold";
+        const statCell = document.createElement("td");
+        if (colorClass) {
+          statCell.className = colorClass;
+        }
 
-        let bindScore = 0;
+        let bindValue = 0;
+        let isEstimated = false;
+        let originalValue = null;
 
         try {
           if (spirit.stats && Array.isArray(spirit.stats)) {
@@ -1319,161 +1317,60 @@ window.OptimalResultModal =
             }
 
             if (bindStat) {
-              const bindPenResist = parseNumericValue(
-                bindStat.damageResistancePenetration
-              );
-              const bindResist = parseNumericValue(bindStat.damageResistance);
-              const bindPvpDmg =
-                parseNumericValue(bindStat.pvpDamagePercent) * 10;
-              const bindPvpDef =
-                parseNumericValue(bindStat.pvpDefensePercent) * 10;
+              for (const [key, value] of Object.entries(bindStat)) {
+                if (SpiritUtils.normalizeStatKey(key) === statKey) {
+                  originalValue = value;
+                  isEstimated =
+                    typeof value === "string" && value.includes("(추정)");
 
-              bindScore = bindPenResist + bindResist + bindPvpDmg + bindPvpDef;
+                  if (isEstimated) {
+                    bindValue = parseNumericValue(value);
+                  } else {
+                    bindValue = parseNumericValue(value);
+                  }
+                  break;
+                }
+              }
             }
           }
         } catch (e) {
-          console.warn("점수 계산 중 오류 발생:", e);
-          bindScore = 0;
+          console.warn("스탯 접근 중 오류 발생:", e);
+          bindValue = 0;
         }
 
-        if (bindScore > 0) {
-          scoreCell.innerHTML = `<span class="bind-effect">${Math.round(
-            bindScore
-          )}</span>`;
-        } else {
-          scoreCell.textContent = "0";
-        }
+        const isPercentStat = PERCENT_STATS.includes(statKey);
 
-        scoreRow.appendChild(scoreCell);
-      });
+        if (bindValue > 0) {
+          let displayValue = isPercentStat ? `${bindValue}%` : `${bindValue}`;
 
-      table.appendChild(scoreRow);
-
-      const levelRow = document.createElement("tr");
-      const levelHeader = document.createElement("th");
-      levelHeader.textContent = "레벨";
-      levelRow.appendChild(levelHeader);
-
-      spirits.forEach((spirit) => {
-        if (!spirit) return;
-
-        const levelCell = document.createElement("td");
-        levelCell.textContent = spirit.level || 0;
-        levelRow.appendChild(levelCell);
-      });
-      table.appendChild(levelRow);
-
-      const factionRow = document.createElement("tr");
-      const factionHeader = document.createElement("th");
-      factionHeader.textContent = "세력";
-      factionRow.appendChild(factionHeader);
-
-      spirits.forEach((spirit) => {
-        if (!spirit) return;
-
-        const factionCell = document.createElement("td");
-        factionCell.textContent = spirit.influence || spirit.faction || "결의";
-        factionRow.appendChild(factionCell);
-      });
-      table.appendChild(factionRow);
-
-      sortedStatKeys.forEach((statKey) => {
-        const row = document.createElement("tr");
-        const statHeader = document.createElement("th");
-        statHeader.textContent = STATS_MAPPING[statKey] || statKey;
-
-        const colorClass = (STAT_COLOR_MAP && STAT_COLOR_MAP[statKey]) || "";
-        if (colorClass) {
-          statHeader.className = colorClass;
-        }
-        row.appendChild(statHeader);
-
-        spirits.forEach((spirit) => {
-          if (!spirit) return;
-
-          const statCell = document.createElement("td");
-          if (colorClass) {
-            statCell.className = colorClass;
-          }
-
-          let bindValue = 0;
-          let isEstimated = false;
-          let originalValue = null;
-
-          try {
-            if (spirit.stats && Array.isArray(spirit.stats)) {
-              const levelStat = spirit.stats.find(
-                (s) => s && s.level === spirit.level
-              );
-
-              let bindStat = null;
-
-              if (levelStat && levelStat.bindStat) {
-                bindStat = levelStat.bindStat;
-              } else if (spirit.hasLevel25Bind) {
-                const level25Stat = spirit.stats.find(
-                  (s) => s && s.level === 25
-                );
-                if (level25Stat && level25Stat.bindStat) {
-                  bindStat = level25Stat.bindStat;
-                }
-              }
-
-              if (bindStat) {
-                for (const [key, value] of Object.entries(bindStat)) {
-                  if (SpiritUtils.normalizeStatKey(key) === statKey) {
-                    originalValue = value;
-                    isEstimated =
-                      typeof value === "string" && value.includes("(추정)");
-
-                    if (isEstimated) {
-                      bindValue = parseNumericValue(value);
-                    } else {
-                      bindValue = parseNumericValue(value);
-                    }
-                    break;
-                  }
-                }
-              }
-            }
-          } catch (e) {
-            console.warn("스탯 접근 중 오류 발생:", e);
-            bindValue = 0;
-          }
-
-          const isPercentStat = PERCENT_STATS.includes(statKey);
-
-          if (bindValue > 0) {
-            let displayValue = isPercentStat ? `${bindValue}%` : `${bindValue}`;
-
-            if (isEstimated) {
-              statCell.innerHTML = `<span class="bind-effect estimated-value" title="추정값: ${originalValue}">${displayValue}</span>`;
-            } else {
-              statCell.innerHTML = `<span class="bind-effect">${displayValue}</span>`;
-            }
-          } else if (isEstimated && originalValue) {
-            statCell.innerHTML = `<span class="bind-effect estimated-value" title="추정값">${originalValue}</span>`;
+          if (isEstimated) {
+            statCell.innerHTML = `<span class="bind-effect estimated-value" title="추정값: ${originalValue}">${displayValue}</span>`;
           } else {
-            statCell.textContent = "0";
+            statCell.innerHTML = `<span class="bind-effect">${displayValue}</span>`;
           }
+        } else if (isEstimated && originalValue) {
+          statCell.innerHTML = `<span class="bind-effect estimated-value" title="추정값">${originalValue}</span>`;
+        } else {
+          statCell.textContent = "0";
+        }
 
-          row.appendChild(statCell);
-        });
-
-        table.appendChild(row);
+        row.appendChild(statCell);
       });
 
-      container.appendChild(table);
+      table.appendChild(row);
+    });
 
-      if (hasAnyEstimatedValue) {
-        const estimatedInfoDiv = document.createElement("div");
-        estimatedInfoDiv.className = "estimated-value-info";
-        estimatedInfoDiv.innerHTML = "* 표시된 값은 추정치입니다.";
-        container.appendChild(estimatedInfoDiv);
-      }
+    container.appendChild(table);
 
-      const style = document.createElement("style");
-      style.textContent = `
+    if (hasAnyEstimatedValue) {
+      const estimatedInfoDiv = document.createElement("div");
+      estimatedInfoDiv.className = "estimated-value-info";
+      estimatedInfoDiv.innerHTML = "* 표시된 값은 추정치입니다.";
+      container.appendChild(estimatedInfoDiv);
+    }
+
+    const style = document.createElement("style");
+    style.textContent = `
       .spirits-stats-table {
         width: 100%;
         border-collapse: collapse;
@@ -1549,17 +1446,17 @@ window.OptimalResultModal =
       }
     `;
 
-      document.head.appendChild(style);
-    }
+    document.head.appendChild(style);
+  }
 
-    function initModalStyles() {
-      const existingStyle = document.getElementById("optimal-modal-styles");
-      if (existingStyle) return;
+  function initModalStyles() {
+    const existingStyle = document.getElementById("optimal-modal-styles");
+    if (existingStyle) return;
 
-      const style = document.createElement("style");
-      style.id = "optimal-modal-styles";
+    const style = document.createElement("style");
+    style.id = "optimal-modal-styles";
 
-      style.textContent = `
+    style.textContent = `
   #optimalModal {
     position: fixed !important;
     top: 0 !important;
@@ -1874,28 +1771,28 @@ window.OptimalResultModal =
   }
 `;
 
-      document.head.appendChild(style);
-    }
+    document.head.appendChild(style);
+  }
 
-    function closeOptimalModal() {
-      const modal = document.getElementById("optimalModal");
-      if (modal) {
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
-      }
+  function closeOptimalModal() {
+    const modal = document.getElementById("optimalModal");
+    if (modal) {
+      modal.style.display = "none";
+      document.body.style.overflow = "auto";
     }
+  }
 
-    return {
-      showResultModal,
-      renderNewResult,
-      renderSpiritDetailsTable,
-      initModalStyles,
-      prepareModalStructure,
-      closeOptimalModal,
-      initKakaoAds,
-      cleanEstimatedValue,
-      hasEstimatedValues,
-    };
-  })();
+  return {
+    showResultModal,
+    renderNewResult,
+    renderSpiritDetailsTable,
+    initModalStyles,
+    prepareModalStructure,
+    closeOptimalModal,
+    initKakaoAds,
+    cleanEstimatedValue,
+    hasEstimatedValues,
+  };
+})();
 
 window.OptimalResultModal = OptimalResultModal;

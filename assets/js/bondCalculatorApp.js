@@ -1,3 +1,4 @@
+// bondCalculatorApp.js
 const BondCalculatorApp = (function () {
   const FIXED_LEVEL25_SPIRITS = window.CommonData.FIXED_LEVEL25_SPIRITS || [];
 
@@ -46,7 +47,6 @@ const BondCalculatorApp = (function () {
       });
     }
 
-    // initHelpTooltip();
     initPanelToggle();
 
     if (
@@ -119,7 +119,6 @@ const BondCalculatorApp = (function () {
     link.rel = "stylesheet";
     link.type = "text/css";
     link.href = "bond-calculator.css";
-    // document.head.appendChild(link);
   }
 
   function initHelpTooltip() {
