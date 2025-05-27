@@ -294,7 +294,7 @@ const HistoryManager = (function () {
           resultsContainer.innerHTML = "";
           onTabChange(
             result,
-            comboIndex === highestScoreIndex,
+            comboIndex === window.HistoryManager.getHighestScoreIndex(category),
             resultsContainer
           );
         }
@@ -302,7 +302,7 @@ const HistoryManager = (function () {
         document.getElementById("selected-tab-info").innerHTML = `
           <span class="timestamp">계산 시간: ${result.timestamp}</span>
           ${
-            comboIndex === highestScoreIndex
+            comboIndex === window.HistoryManager.getHighestScoreIndex(category)
               ? '<span class="best-notice">(최고 점수입니다!)</span>'
               : ""
           }
