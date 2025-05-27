@@ -1,7 +1,6 @@
 const OptimalResultModal = (function () {
   const FACTION_ICONS = window.CommonData.FACTION_ICONS || {};
 
-  // 추정치 처리 함수
   function cleanEstimatedValue(value) {
     if (value === undefined || value === null) return 0;
 
@@ -23,7 +22,6 @@ const OptimalResultModal = (function () {
     );
   }
 
-  // 환산합산 점수 계산
   function calculateScore(effects) {
     if (!effects) return 0;
 
@@ -254,10 +252,8 @@ const OptimalResultModal = (function () {
       modalTitle.textContent = `${category} 결속 상세 정보`;
     }
 
-    // 추정치 처리를 위한 복사본 생성
     const processedResult = JSON.parse(JSON.stringify(result));
 
-    // 추정치가 있는지 확인
     let hasEstimatedValues = false;
     let originalBindStats = {};
 
@@ -265,12 +261,11 @@ const OptimalResultModal = (function () {
       for (const [key, value] of Object.entries(processedResult.bindStats)) {
         if (typeof value === "string" && value.includes("(추정)")) {
           hasEstimatedValues = true;
-          originalBindStats[key] = value; // 원본 값 저장
-          processedResult.bindStats[key] = cleanEstimatedValue(value); // 숫자값만 추출
+          originalBindStats[key] = value;
+          processedResult.bindStats[key] = cleanEstimatedValue(value);
         }
       }
 
-      // 추정치가 있는 경우 점수 재계산
       if (hasEstimatedValues) {
         processedResult.bindScore = calculateScore(processedResult.bindStats);
         processedResult.scoreWithBind =
@@ -280,7 +275,6 @@ const OptimalResultModal = (function () {
       }
     }
 
-    // 수정된 데이터 사용 - processedResult에서 값을 가져옴
     const {
       spirits,
       gradeScore,
@@ -357,7 +351,6 @@ const OptimalResultModal = (function () {
       tempContainer.appendChild(warningBox);
     }
 
-    // 추정치 경고 표시 추가
     if (hasEstimatedValues || usesEstimatedValues) {
       const estimationWarning = document.createElement("div");
       estimationWarning.className = "estimation-warning";
@@ -504,10 +497,8 @@ const OptimalResultModal = (function () {
   function renderNewResult(result) {
     if (!result) return;
 
-    // 추정치 처리를 위한 복사본 생성
     const processedResult = JSON.parse(JSON.stringify(result));
 
-    // 추정치가 있는지 확인
     let hasEstimatedValues = false;
     let originalBindStats = {};
 
@@ -515,12 +506,11 @@ const OptimalResultModal = (function () {
       for (const [key, value] of Object.entries(processedResult.bindStats)) {
         if (typeof value === "string" && value.includes("(추정)")) {
           hasEstimatedValues = true;
-          originalBindStats[key] = value; // 원본 값 저장
-          processedResult.bindStats[key] = cleanEstimatedValue(value); // 숫자값만 추출
+          originalBindStats[key] = value;
+          processedResult.bindStats[key] = cleanEstimatedValue(value);
         }
       }
 
-      // 추정치가 있는 경우 점수 재계산
       if (hasEstimatedValues) {
         processedResult.bindScore = calculateScore(processedResult.bindStats);
         processedResult.scoreWithBind =
@@ -599,7 +589,6 @@ const OptimalResultModal = (function () {
       tempContainer.appendChild(warningBox);
     }
 
-    // 추정치 경고 표시 추가
     if (hasEstimatedValues || usesEstimatedValues) {
       const estimationWarning = document.createElement("div");
       estimationWarning.className = "estimation-warning";
@@ -679,7 +668,6 @@ const OptimalResultModal = (function () {
     let highestScore = 0;
     for (let i = 0; i < categoryCombinations.length; i++) {
       const combo = categoryCombinations[i];
-      // 추정치가 있는 경우 처리
       let bindScore = combo.bindScore;
       if (combo.bindStats) {
         const processedBindStats = {};
@@ -739,7 +727,6 @@ const OptimalResultModal = (function () {
                 return `<div class="history-tab-placeholder"></div>`;
               }
 
-              // 추정치가 있는 경우 처리
               let bindScore = combo.bindScore;
               if (combo.bindStats) {
                 const processedBindStats = {};
@@ -893,7 +880,6 @@ const OptimalResultModal = (function () {
     for (let i = 0; i < categoryCombinations.length; i++) {
       const combo = categoryCombinations[i];
 
-      // 추정치가 있는 경우 처리
       let bindScore = combo.bindScore;
       if (combo.bindStats) {
         const processedBindStats = {};
@@ -1023,11 +1009,9 @@ const OptimalResultModal = (function () {
     const bindEffectsContainer = document.getElementById("optimalBindEffects");
     if (bindEffectsContainer) {
       if (bindStats && Object.keys(bindStats).length > 0) {
-        // 추정치를 처리하기 위해 복사본 생성
         const processedBindStats = {};
         let hasEstimated = false;
 
-        // bindStats의 추정치 처리
         for (const [key, value] of Object.entries(bindStats)) {
           if (typeof value === "string" && value.includes("(추정)")) {
             hasEstimated = true;
@@ -1037,7 +1021,6 @@ const OptimalResultModal = (function () {
           }
         }
 
-        // 추정치가 있으면 점수 재계산
         let recalculatedScore = displayBindScore;
         if (hasEstimated) {
           recalculatedScore = calculateScore(processedBindStats);
@@ -1049,10 +1032,10 @@ const OptimalResultModal = (function () {
           </h4>
           <div class="effects-content">
             ${CalculationUtils.renderEffectsList(
-              processedBindStats, // 추정치가 처리된 값을 전달
+              processedBindStats,
               "",
               true,
-              originalBindStats // 원본 값도 함께 전달
+              originalBindStats
             )}
             ${
               usesEstimatedValues || hasEstimated
@@ -1080,7 +1063,6 @@ const OptimalResultModal = (function () {
     function parseNumericValue(value) {
       if (value === undefined || value === null) return 0;
 
-      // 추정치 처리
       if (typeof value === "string" && value.includes("(추정)")) {
         const numericValue = value.replace(/\(추정\)/g, "").trim();
         return parseFloat(numericValue) || 0;
