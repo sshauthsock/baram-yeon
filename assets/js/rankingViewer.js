@@ -1,3 +1,246 @@
+window.RankingManager = (function () {
+  let metadata = null;
+
+  function getBaseUrl() {
+    return "/";
+  }
+
+  async function loadMetadata() {
+    try {
+      if (
+        typeof FirebaseHandler !== "undefined" &&
+        FirebaseHandler.checkFirebaseConnection
+      ) {
+        const isConnected = await FirebaseHandler.checkFirebaseConnection();
+        if (isConnected) {
+          try {
+            const db = firebase.firestore();
+            const doc = await db
+              .collection("mobRankingData")
+              .doc("rankings-meta")
+              .get();
+
+            if (doc.exists) {
+              metadata = doc.data();
+              return metadata;
+            }
+          } catch (firebaseError) {
+            console.warn("Firebase 메타데이터 접근 실패:", firebaseError);
+          }
+        }
+      }
+
+      const response = await fetch(`${getBaseUrl()}output/rankings-meta.json`);
+      if (!response.ok) {
+        return createDefaultMetadata();
+      }
+
+      const text = await response.text();
+      if (!text || text.trim() === "") {
+        return createDefaultMetadata();
+      }
+
+      try {
+        metadata = JSON.parse(text);
+        return metadata;
+      } catch (parseError) {
+        console.error("메타데이터 파싱 오류:", parseError);
+        return createDefaultMetadata();
+      }
+    } catch (error) {
+      console.error("랭킹 메타데이터 로드 오류:", error);
+      return createDefaultMetadata();
+    }
+  }
+
+  function createDefaultMetadata() {
+    return {
+      lastUpdated: new Date().toISOString(),
+      categories: ["수호", "탑승", "변신"],
+      bondRankings: {
+        수호: { count: 0, updatedAt: null },
+        탑승: { count: 0, updatedAt: null },
+        변신: { count: 0, updatedAt: null },
+      },
+      statRankings: {
+        수호: { statCount: 0, updatedAt: null },
+        탑승: { statCount: 0, updatedAt: null },
+        변신: { statCount: 0, updatedAt: null },
+      },
+    };
+  }
+
+  async function loadBondRankings(category) {
+    const categoryMap = {
+      수호: "guardian",
+      탑승: "ride",
+      변신: "transform",
+    };
+
+    const fileName = `bond-rankings-${categoryMap[category]}`;
+
+    try {
+      if (typeof FirebaseHandler !== "undefined") {
+        try {
+          const data = await FirebaseHandler.getFirestoreDocument(fileName);
+          if (data && (data.rankings || data.data)) {
+            if (data.rankings && Array.isArray(data.rankings)) {
+              data.rankings.sort((a, b) => {
+                const scoreA = parseFloat(a.scoreWithBind) || 0;
+                const scoreB = parseFloat(b.scoreWithBind) || 0;
+                if (scoreA !== scoreB) {
+                  return scoreB - scoreA;
+                }
+                return (parseFloat(b.score) || 0) - (parseFloat(a.score) || 0);
+              });
+            }
+            return data;
+          }
+        } catch (firebaseError) {
+          console.warn(`Firebase ${fileName} 데이터 접근 실패:`, firebaseError);
+        }
+      }
+
+      const response = await fetch(`${getBaseUrl()}output/${fileName}.json`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data && data.rankings && Array.isArray(data.rankings)) {
+        data.rankings.sort((a, b) => {
+          const scoreA = parseFloat(a.scoreWithBind) || 0;
+          const scoreB = parseFloat(b.scoreWithBind) || 0;
+          if (scoreA !== scoreB) {
+            return scoreB - scoreA;
+          }
+          return (parseFloat(b.score) || 0) - (parseFloat(a.score) || 0);
+        });
+      }
+
+      return data;
+    } catch (error) {
+      console.error(`${category} 결속 랭킹 로드 오류:`, error);
+      return {
+        category: category,
+        updatedAt: null,
+        rankings: [],
+      };
+    }
+  }
+
+  async function loadStatRankings(category) {
+    const categoryMap = {
+      수호: "guardian",
+      탑승: "ride",
+      변신: "transform",
+    };
+
+    const fileName = `stat-rankings-${categoryMap[category]}`;
+
+    try {
+      if (typeof FirebaseHandler !== "undefined") {
+        try {
+          const data = await FirebaseHandler.getFirestoreDocument(fileName);
+          if (data && (data.rankings || data.data)) {
+            return data;
+          }
+        } catch (firebaseError) {
+          console.warn(`Firebase ${fileName} 데이터 접근 실패:`, firebaseError);
+        }
+      }
+
+      const response = await fetch(`${getBaseUrl()}output/${fileName}.json`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error(`${category} 능력치 랭킹 로드 오류:`, error);
+      return {
+        category: category,
+        updatedAt: null,
+        rankings: {},
+      };
+    }
+  }
+
+  async function getBondRankingsByRange(category, start, count) {
+    const data = await loadBondRankings(category);
+    const rankings = data?.rankings || data?.data?.rankings || [];
+
+    if (!Array.isArray(rankings)) {
+      return [];
+    }
+
+    const end = Math.min(start + count, rankings.length);
+    return rankings.slice(start, end);
+  }
+
+  async function getStatRankingsByRange(category, statKey, start, count) {
+    const data = await loadStatRankings(category);
+    const rankings =
+      data?.rankings?.[statKey] || data?.data?.rankings?.[statKey] || [];
+
+    if (!Array.isArray(rankings)) {
+      return [];
+    }
+
+    const end = Math.min(start + count, rankings.length);
+    return rankings.slice(start, end);
+  }
+
+  async function getBondRankingsCount(category) {
+    const data = await loadBondRankings(category);
+    const rankings = data?.rankings || data?.data?.rankings || [];
+    return Array.isArray(rankings) ? rankings.length : 0;
+  }
+
+  async function getStatRankingsCount(category, statKey) {
+    const data = await loadStatRankings(category);
+    const rankings =
+      data?.rankings?.[statKey] || data?.data?.rankings?.[statKey] || [];
+    return Array.isArray(rankings) ? rankings.length : 0;
+  }
+
+  async function getLastUpdateTime(category, type) {
+    if (!metadata) {
+      await loadMetadata();
+    }
+
+    if (!metadata) return null;
+
+    if (
+      type === "bond" &&
+      metadata.bondRankings &&
+      metadata.bondRankings[category]
+    ) {
+      return metadata.bondRankings[category].updatedAt;
+    } else if (
+      type === "stat" &&
+      metadata.statRankings &&
+      metadata.statRankings[category]
+    ) {
+      return metadata.statRankings[category].updatedAt;
+    }
+
+    return null;
+  }
+
+  return {
+    loadMetadata,
+    loadBondRankings,
+    loadStatRankings,
+    getBondRankingsByRange,
+    getStatRankingsByRange,
+    getBondRankingsCount,
+    getStatRankingsCount,
+    getLastUpdateTime,
+  };
+})();
+
 const RankingViewer = (function () {
   let currentCategory = "수호";
   let currentRankingType = "bond";
@@ -41,7 +284,6 @@ const RankingViewer = (function () {
   }
 
   async function waitForDependencies() {
-    // console.log("RankingViewer: 의존성 로드 대기 시작");
     const requiredDeps = [
       "FirebaseHandler",
       "DataManager",
@@ -58,25 +300,14 @@ const RankingViewer = (function () {
         );
 
         if (missingDeps.length === 0) {
-          // console.log("RankingViewer: 모든 의존성 로드 완료");
           return resolve(true);
         }
 
         attempts++;
         if (attempts >= maxAttempts) {
-          // console.warn(
-          //   `RankingViewer: 의존성 로드 시간 초과. 누락된 의존성: ${missingDeps.join(
-          //     ", "
-          //   )}`
-          // );
           return resolve(false);
         }
 
-        // console.log(
-        //   `RankingViewer: 의존성 대기 중... (${attempts}/${maxAttempts}), 누락: ${missingDeps.join(
-        //     ", "
-        //   )}`
-        // );
         setTimeout(checkDependencies, 100);
       }
 
@@ -86,12 +317,12 @@ const RankingViewer = (function () {
 
   async function initialize() {
     if (initStarted) {
-      console.log("RankingViewer: 이미 초기화 진행 중");
+      // console.log("RankingViewer: 이미 초기화 진행 중");
       return;
     }
 
     initStarted = true;
-    console.log("RankingViewer: 초기화 시작");
+    // console.log("RankingViewer: 초기화 시작");
 
     bondRankingsContainer = document.getElementById("bondRankingsContainer");
     statRankingsContainer = document.getElementById("statRankingsContainer");
@@ -121,10 +352,10 @@ const RankingViewer = (function () {
       FirebaseHandler.initFirebase
     ) {
       try {
-        console.log("RankingViewer: Firebase 초기화 중");
+        // console.log("RankingViewer: Firebase 초기화 중");
         FirebaseHandler.initFirebase();
         await FirebaseHandler.testFirebaseConnectivity();
-        console.log("RankingViewer: Firebase 연결 확인됨");
+        // console.log("RankingViewer: Firebase 연결 확인됨");
       } catch (err) {
         console.warn("RankingViewer: Firebase 연결 테스트 실패", err);
       }
@@ -136,9 +367,9 @@ const RankingViewer = (function () {
 
     if (typeof DataManager !== "undefined" && DataManager.loadCategoryData) {
       try {
-        console.log("RankingViewer: 카테고리 데이터 로드 중");
+        // console.log("RankingViewer: 카테고리 데이터 로드 중");
         await DataManager.loadCategoryData();
-        console.log("RankingViewer: 카테고리 데이터 로드 완료");
+        // console.log("RankingViewer: 카테고리 데이터 로드 완료");
       } catch (err) {
         console.warn("RankingViewer: 카테고리 데이터 로드 실패", err);
       }
@@ -163,7 +394,7 @@ const RankingViewer = (function () {
     loadRankingData();
 
     initComplete = true;
-    console.log("RankingViewer: 초기화 완료");
+    // console.log("RankingViewer: 초기화 완료");
   }
 
   function setupModalEvents() {
@@ -312,9 +543,9 @@ const RankingViewer = (function () {
 
   function loadRankingData() {
     if (!initComplete && !initStarted) {
-      console.log(
-        "RankingViewer: 초기화 완료 전에 loadRankingData 호출됨, 초기화 시작"
-      );
+      // console.log(
+      //   "RankingViewer: 초기화 완료 전에 loadRankingData 호출됨, 초기화 시작"
+      // );
       initialize();
       return;
     }
@@ -410,7 +641,6 @@ const RankingViewer = (function () {
 
           if (doc.exists) {
             rankingData = doc.data();
-            // console.log("Firebase에서 랭킹 데이터 로드:", docName);
           } else if (currentGradeFilter === "legendary") {
             docName = `bond-rankings-${categoryMap[currentCategory]}`;
             const regularDoc = await db
@@ -443,20 +673,12 @@ const RankingViewer = (function () {
                 return b.calculatedScore - a.calculatedScore;
               });
 
-              // console.log("정렬 후 상위 3개 항목의 환산합 값:");
               for (
                 let i = 0;
                 i < Math.min(3, allRankingsData[currentCategory].length);
                 i++
               ) {
                 const item = allRankingsData[currentCategory][i];
-                // console.log(
-                //   `${i + 1}등: ${item.calculatedScore} = 등급(${
-                //     item.debugGradeScore
-                //   }) + 세력(${item.debugFactionScore}) + 장착(${
-                //     item.debugBindScore
-                //   })`
-                // );
               }
 
               rankings = allRankingsData[currentCategory].filter((ranking) => {
@@ -514,18 +736,12 @@ const RankingViewer = (function () {
         return b.calculatedScore - a.calculatedScore;
       });
 
-      // console.log("정렬 후 상위 3개 항목의 환산합 값:");
       for (
         let i = 0;
         i < Math.min(3, allRankingsData[currentCategory].length);
         i++
       ) {
         const item = allRankingsData[currentCategory][i];
-        // console.log(
-        //   `${i + 1}등: ${item.calculatedScore} = 등급(${
-        //     item.debugGradeScore
-        //   }) + 세력(${item.debugFactionScore}) + 장착(${item.debugBindScore})`
-        // );
       }
 
       if (currentGradeFilter === "legendary") {
@@ -572,10 +788,6 @@ const RankingViewer = (function () {
       if (!allSpirits || allSpirits.length === 0) {
         throw new Error(`${currentCategory} 환수 데이터를 찾을 수 없습니다`);
       }
-
-      // console.log(
-      //   `${currentCategory} 카테고리에서 ${allSpirits.length}개의 환수 데이터를 로드했습니다.`
-      // );
 
       let calculatedRankings = [];
 
@@ -641,8 +853,6 @@ const RankingViewer = (function () {
       });
 
       calculatedRankings.sort((a, b) => b.value - a.value);
-
-      // console.log(`${calculatedRankings.length}개의 환수 랭킹을 계산했습니다.`);
 
       rankings = calculatedRankings;
       totalRankings = calculatedRankings.length;
@@ -714,7 +924,6 @@ const RankingViewer = (function () {
 
     let tableHtml = "";
 
-    // 추정값 경고 표시 추가
     let hasEstimatedValues = false;
     for (const ranking of currentRankings) {
       if (ranking.usesEstimatedValues) {
@@ -767,7 +976,6 @@ const RankingViewer = (function () {
       if (ranking.spirits && ranking.spirits.length > 0) {
         spiritsHtml = ranking.spirits
           .map((spirit) => {
-            // 추정치 표시를 위해 확인
             const hasEstimation =
               ranking.estimatedInfo &&
               ranking.estimatedInfo.spirits &&
@@ -970,13 +1178,6 @@ const RankingViewer = (function () {
     const influence = img.getAttribute("data-influence") || "";
     const spiritName = img.getAttribute("data-name") || "";
 
-    // console.log("환수 이미지 클릭:", {
-    //   imageUrl,
-    //   category,
-    //   influence,
-    //   spiritName,
-    // });
-
     if (imageUrl) {
       showSpiritModal(imageUrl, category, influence, spiritName);
     } else {
@@ -1106,13 +1307,6 @@ const RankingViewer = (function () {
     const influence = card.getAttribute("data-influence") || "";
     const spiritName = card.getAttribute("data-name") || "";
 
-    // console.log("능력치 랭킹 카드 클릭:", {
-    //   imageUrl,
-    //   category,
-    //   influence,
-    //   spiritName,
-    // });
-
     if (imageUrl) {
       showSpiritModal(imageUrl, category, influence, spiritName);
     } else {
@@ -1126,38 +1320,24 @@ const RankingViewer = (function () {
       return;
     }
 
-    // const totalPages = Math.ceil(totalRankings / itemsPerPage);
-    // const maxVisiblePages = 5;
-    // let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-    // let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-    // if (endPage - startPage + 1 < maxVisiblePages) {
-    //   startPage = Math.max(1, endPage - maxVisiblePages + 1);
-    // }
-
     const totalPages = Math.ceil(totalRankings / itemsPerPage);
-    let maxVisiblePages = 7; // 표시할 페이지 숫자 버튼 개수
+    let maxVisiblePages = 7;
 
     let startPage, endPage;
 
     if (totalPages <= maxVisiblePages) {
-      // 전체 페이지가 표시 가능한 경우
       startPage = 1;
       endPage = totalPages;
     } else {
-      // 페이지가 많은 경우 현재 페이지 주변만 표시
       const halfVisible = Math.floor(maxVisiblePages / 2);
 
       if (currentPage <= halfVisible + 1) {
-        // 현재 페이지가 앞쪽에 있는 경우
         startPage = 1;
         endPage = maxVisiblePages;
       } else if (currentPage >= totalPages - halfVisible) {
-        // 현재 페이지가 뒤쪽에 있는 경우
         startPage = totalPages - maxVisiblePages + 1;
         endPage = totalPages;
       } else {
-        // 현재 페이지가 중간에 있는 경우
         startPage = currentPage - halfVisible;
         endPage = currentPage + halfVisible;
       }
@@ -1210,24 +1390,6 @@ const RankingViewer = (function () {
     `;
 
     html += `</div>`;
-
-    // html += `
-    //   <div class="items-per-page">
-    //     <label for="itemsPerPageSelect">페이지당 항목 수:</label>
-    //     <select id="itemsPerPageSelect">
-    //       <option value="5" ${itemsPerPage === 5 ? "selected" : ""}>5개</option>
-    //       <option value="10" ${
-    //         itemsPerPage === 10 ? "selected" : ""
-    //       }>10개</option>
-    //       <option value="20" ${
-    //         itemsPerPage === 20 ? "selected" : ""
-    //       }>20개</option>
-    //       <option value="all" ${
-    //         itemsPerPage > 20 ? "selected" : ""
-    //       }>전체 보기</option>
-    //     </select>
-    //   </div>
-    // `;
 
     html += `
     <div class="items-per-page">
@@ -1296,13 +1458,6 @@ const RankingViewer = (function () {
   }
 
   function showSpiritModal(imageUrl, category, influence, spiritName = null) {
-    // console.log("랭킹 뷰어: 환수 모달 표시 요청", {
-    //   imageUrl,
-    //   category,
-    //   influence,
-    //   spiritName,
-    // });
-
     if (typeof window.ModalHandler !== "undefined") {
       if (typeof window.ModalHandler.removeAllModals === "function") {
         window.ModalHandler.removeAllModals();
@@ -1389,29 +1544,6 @@ const RankingViewer = (function () {
     }
   }
 
-  // function showDetailModal(index) {
-  //   if (!rankings || !rankings[index]) {
-  //     console.error("Rankings data not found for index:", index);
-  //     return;
-  //   }
-
-  //   const ranking = rankings[index];
-
-  //   if (window.OptimalResultModal) {
-  //     if (window.OptimalResultModal.prepareModalStructure("ranking")) {
-  //       window.OptimalResultModal.showResultModal(ranking, "ranking");
-  //     } else {
-  //       console.error("Failed to prepare modal structure");
-  //       alert("모달 구성 요소 준비에 실패했습니다.");
-  //     }
-  //   } else {
-  //     console.error("OptimalResultModal not available");
-  //     alert(
-  //       "상세 정보를 표시할 수 없습니다. OptimalResultModal을 찾을 수 없습니다."
-  //     );
-  //   }
-  // }
-
   function showDetailModal(index) {
     if (!rankings || index < 0 || index >= rankings.length) {
       console.error("Rankings data not found for index:", index);
@@ -1420,9 +1552,44 @@ const RankingViewer = (function () {
 
     const ranking = rankings[index];
 
+    const processedRanking = {
+      ...ranking,
+      gradeScore: ranking.gradeScore || ranking.debugGradeScore || 0,
+      factionScore: ranking.factionScore || ranking.debugFactionScore || 0,
+      bindScore: ranking.bindScore || ranking.debugBindScore || 0,
+      gradeCounts: ranking.gradeCounts || {},
+      factionCounts: ranking.factionCounts || {},
+      gradeEffects: ranking.gradeEffects || {},
+      factionEffects: ranking.factionEffects || {},
+      bindStats: ranking.bindStats || {},
+    };
+
+    if (ranking.spirits && Array.isArray(ranking.spirits)) {
+      processedRanking.spirits = ranking.spirits.map((spirit) => {
+        return {
+          ...spirit,
+          level: spirit.level || 25,
+          stats: [
+            {
+              level: spirit.level || 25,
+              registrationStat: spirit.registrationStat || {},
+              bindStat: spirit.bindStat || {},
+            },
+          ],
+        };
+      });
+    } else {
+      processedRanking.spirits = [];
+    }
+
+    processedRanking.scoreWithBind =
+      processedRanking.gradeScore +
+      processedRanking.factionScore +
+      processedRanking.bindScore;
+
     if (window.OptimalResultModal) {
       if (window.OptimalResultModal.prepareModalStructure("ranking")) {
-        window.OptimalResultModal.showResultModal(ranking, "ranking");
+        window.OptimalResultModal.showResultModal(processedRanking, "ranking");
       } else {
         console.error("Failed to prepare modal structure");
         alert("모달 구성 요소 준비에 실패했습니다.");
@@ -1499,7 +1666,7 @@ const RankingViewer = (function () {
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    console.log("RankingViewer: DOMContentLoaded 이벤트 발생");
+    // console.log("RankingViewer: DOMContentLoaded 이벤트 발생");
     setTimeout(initialize, 10);
   });
 
