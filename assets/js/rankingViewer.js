@@ -846,36 +846,45 @@ const RankingViewer = (function () {
         ? `<span class="estimated-icon" title="추정값이 포함되어 있습니다">*</span>`
         : "";
 
-      const rankClass = isTop ? `top-${rank}` : "";
+      const rankClass =
+        rank <= 3
+          ? `top-${rank}`
+          : rank <= 10
+          ? "top-10"
+          : rank <= 50
+          ? "top-50"
+          : "";
 
       tableHtml += `
-        <tr class="ranking-row ${rankClass}">
-          <td class="rank-column">
-            <div class="rank-badge rank-${rank}">${rank}</div>
-          </td>
-          <td class="spirits-column">
-            <div class="spirits-container">${spiritsHtml}</div>
-          </td>
-          <td class="faction-column">
-            <div class="faction-tags">${factionTagsHtml}</div>
-          </td>
-          <td class="score-column">
-            <div class="total-score">${Math.round(
-              calculatedScore
-            )}${estimatedIcon}</div>
-            <div class="score-breakdown">
-              (등급: ${Math.round(gradeScore)} | 세력: ${Math.round(
+      <tr class="ranking-row ${rankClass}">
+        <td class="rank-column">
+          <div class="rank-badge rank-${rank}">${rank}</div>
+        </td>
+        <td class="spirits-column">
+          <div class="spirits-container">${spiritsHtml}</div>
+        </td>
+        <td class="faction-column">
+          <div class="faction-tags">${factionTagsHtml}</div>
+        </td>
+        <td class="score-column">
+          <div class="total-score">${Math.round(
+            calculatedScore
+          )}${estimatedIcon}</div>
+          <div class="score-breakdown">
+            (등급: ${Math.round(gradeScore)} | 세력: ${Math.round(
         factionScore
       )} | 장착: ${Math.round(bindScore)}${
         ranking.usesEstimatedValues ? "*" : ""
       })
-            </div>
-          </td>
-          <td class="action-column">
-            <button class="detail-button" onclick="RankingViewer.showDetailModal(${index})">상세 보기</button>
-          </td>
-        </tr>
-      `;
+          </div>
+        </td>
+        <td class="action-column">
+          <button class="detail-button" onclick="RankingViewer.showDetailModal(${
+            startIndex + index
+          })">상세 보기</button>
+        </td>
+      </tr>
+    `;
     });
 
     tableHtml += `
@@ -1117,13 +1126,41 @@ const RankingViewer = (function () {
       return;
     }
 
-    const totalPages = Math.ceil(totalRankings / itemsPerPage);
-    const maxVisiblePages = 5;
-    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    // const totalPages = Math.ceil(totalRankings / itemsPerPage);
+    // const maxVisiblePages = 5;
+    // let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    // let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
-    if (endPage - startPage + 1 < maxVisiblePages) {
-      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    // if (endPage - startPage + 1 < maxVisiblePages) {
+    //   startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    // }
+
+    const totalPages = Math.ceil(totalRankings / itemsPerPage);
+    let maxVisiblePages = 7; // 표시할 페이지 숫자 버튼 개수
+
+    let startPage, endPage;
+
+    if (totalPages <= maxVisiblePages) {
+      // 전체 페이지가 표시 가능한 경우
+      startPage = 1;
+      endPage = totalPages;
+    } else {
+      // 페이지가 많은 경우 현재 페이지 주변만 표시
+      const halfVisible = Math.floor(maxVisiblePages / 2);
+
+      if (currentPage <= halfVisible + 1) {
+        // 현재 페이지가 앞쪽에 있는 경우
+        startPage = 1;
+        endPage = maxVisiblePages;
+      } else if (currentPage >= totalPages - halfVisible) {
+        // 현재 페이지가 뒤쪽에 있는 경우
+        startPage = totalPages - maxVisiblePages + 1;
+        endPage = totalPages;
+      } else {
+        // 현재 페이지가 중간에 있는 경우
+        startPage = currentPage - halfVisible;
+        endPage = currentPage + halfVisible;
+      }
     }
 
     let html = `<div class="pagination-wrapper"><div class="pagination-controls">`;
@@ -1174,23 +1211,44 @@ const RankingViewer = (function () {
 
     html += `</div>`;
 
+    // html += `
+    //   <div class="items-per-page">
+    //     <label for="itemsPerPageSelect">페이지당 항목 수:</label>
+    //     <select id="itemsPerPageSelect">
+    //       <option value="5" ${itemsPerPage === 5 ? "selected" : ""}>5개</option>
+    //       <option value="10" ${
+    //         itemsPerPage === 10 ? "selected" : ""
+    //       }>10개</option>
+    //       <option value="20" ${
+    //         itemsPerPage === 20 ? "selected" : ""
+    //       }>20개</option>
+    //       <option value="all" ${
+    //         itemsPerPage > 20 ? "selected" : ""
+    //       }>전체 보기</option>
+    //     </select>
+    //   </div>
+    // `;
+
     html += `
-      <div class="items-per-page">
-        <label for="itemsPerPageSelect">페이지당 항목 수:</label>
-        <select id="itemsPerPageSelect">
-          <option value="5" ${itemsPerPage === 5 ? "selected" : ""}>5개</option>
-          <option value="10" ${
-            itemsPerPage === 10 ? "selected" : ""
-          }>10개</option>
-          <option value="20" ${
-            itemsPerPage === 20 ? "selected" : ""
-          }>20개</option>
-          <option value="all" ${
-            itemsPerPage > 20 ? "selected" : ""
-          }>전체 보기</option>
-        </select>
-      </div>
-    `;
+    <div class="items-per-page">
+      <label for="itemsPerPageSelect">페이지당 항목 수:</label>
+      <select id="itemsPerPageSelect">
+        <option value="5" ${itemsPerPage === 5 ? "selected" : ""}>5개</option>
+        <option value="10" ${
+          itemsPerPage === 10 ? "selected" : ""
+        }>10개</option>
+        <option value="20" ${
+          itemsPerPage === 20 ? "selected" : ""
+        }>20개</option>
+        <option value="50" ${
+          itemsPerPage === 50 ? "selected" : ""
+        }>50개</option>
+        <option value="all" ${
+          itemsPerPage > 50 ? "selected" : ""
+        }>전체 보기</option>
+      </select>
+    </div>
+  `;
 
     html += `</div>`;
 
@@ -1331,8 +1389,31 @@ const RankingViewer = (function () {
     }
   }
 
+  // function showDetailModal(index) {
+  //   if (!rankings || !rankings[index]) {
+  //     console.error("Rankings data not found for index:", index);
+  //     return;
+  //   }
+
+  //   const ranking = rankings[index];
+
+  //   if (window.OptimalResultModal) {
+  //     if (window.OptimalResultModal.prepareModalStructure("ranking")) {
+  //       window.OptimalResultModal.showResultModal(ranking, "ranking");
+  //     } else {
+  //       console.error("Failed to prepare modal structure");
+  //       alert("모달 구성 요소 준비에 실패했습니다.");
+  //     }
+  //   } else {
+  //     console.error("OptimalResultModal not available");
+  //     alert(
+  //       "상세 정보를 표시할 수 없습니다. OptimalResultModal을 찾을 수 없습니다."
+  //     );
+  //   }
+  // }
+
   function showDetailModal(index) {
-    if (!rankings || !rankings[index]) {
+    if (!rankings || index < 0 || index >= rankings.length) {
       console.error("Rankings data not found for index:", index);
       return;
     }
