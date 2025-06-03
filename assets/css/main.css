@@ -1363,7 +1363,7 @@ p {
     .grid-2,
     .grid-3,
     .results-container {
-        grid-template-columns: 1fr;
+        /* grid-template-columns: 1fr; */
     }
 
     .results-container h4 {
@@ -3166,6 +3166,18 @@ input:checked+.toggle-slider:before {
     gap: 8px;
 }
 
+.tip-container {
+    right: 60px;
+}
+
+.tip-btn {
+    background-color: #ff9800;
+}
+
+.tip-tooltip {
+    width: 350px;
+}
+
 .ribbon {
     display: inline-block;
     color: white;
@@ -3182,6 +3194,154 @@ input:checked+.toggle-slider:before {
 .ribbon-b {
     background-color: #e74c3c;
 }
+
+/* 모달 기본 최적화 */
+.modal-overlay,
+.spirit-modal-overlay {
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.modal,
+.spirit-modal-content,
+.modal-content,
+#optimalModalContent {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* 모달 내부 컨테이너 최적화 */
+.spirits-info-list,
+.stats-container,
+.spirit-modal-header,
+.modal-header,
+.selected-spirits-info,
+.spirits-stats-container {
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* 테이블 최적화 */
+.spirits-stats-table {
+    width: 100%;
+    table-layout: fixed;
+    font-size: 11px;
+}
+
+.spirits-stats-table th,
+.spirits-stats-table td {
+    word-break: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    padding: 3px 2px;
+    font-size: 10px;
+}
+
+/* 그리드 레이아웃 최적화 */
+@media (max-width: 768px) {
+    .stats-container {
+        gap: 15px;
+    }
+
+    .stats-column {
+        width: 100%;
+        flex: none;
+    }
+
+    .spirits-info-list {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 8px;
+    }
+
+    .spirits-grid-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+    }
+
+    .stat-grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 6px;
+    }
+
+    /* 콘텐츠 확대 방지 */
+    .modal-content {
+        zoom: 0.95;
+    }
+
+    /* 테이블 내용 확인용 스크롤 처리 */
+    .table-responsive-container {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* 모달 내에서 데이터 표시 개선 */
+    .modal-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .spirits-stats-table {
+        font-size: 10px;
+    }
+
+    .spirits-stats-table th,
+    .spirits-stats-table td {
+        font-size: 9px;
+        padding: 2px 1px;
+    }
+
+    .spirits-info-list {
+        grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+        gap: 6px;
+    }
+
+    .spirits-grid-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+    }
+
+    .stat-grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 5px;
+    }
+
+    /* 모달 패딩 축소 */
+    .modal-content,
+    .spirit-modal-content {
+        padding: 12px 10px;
+    }
+
+    .stats-column {
+        padding: 10px;
+    }
+
+    /* 레이아웃 확대 방지 강화 */
+    .modal-content {
+        zoom: 0.9;
+    }
+}
+
+/* 긴 텍스트 처리 */
+.spirit-info-name,
+.spirit-modal-title-section h3,
+.modal h3 {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* 표 내부 텍스트 줄바꿈 개선 */
+table.spirits-stats-table {
+    word-break: break-all;
+}
+
 
 .modal-overlay {
     display: none;
@@ -3200,7 +3360,6 @@ input:checked+.toggle-slider:before {
 
 .modal {
     background-color: #ffffff;
-    width: 95%;
     max-width: 900px;
     border-radius: 12px;
     padding: 20px;
@@ -4194,6 +4353,10 @@ tr.max-level {
     left: 0;
     background-color: #f2f2f2;
     z-index: 2;
+    width: 17%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .spirits-stats-table td {
@@ -6556,7 +6719,7 @@ tr.max-level {
     }
 
     .modal-content {
-        width: 95%;
+        width: 100%;
         padding: 12px;
         margin: 5% auto;
         max-height: 85vh;
@@ -9318,7 +9481,6 @@ input:focus {
 @media (max-width: 768px) {
     .modal-overlay {
         align-items: flex-start;
-        /* Allows scrolling from the top */
         padding-top: 20px;
     }
 

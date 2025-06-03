@@ -1,7 +1,7 @@
 const FirebaseHandler = (function () {
   let db = null;
   const DOCUMENT_MAP = window.CommonData.DOCUMENT_MAP || {};
-  const CACHE_EXPIRY = 24 * 60 * 60 * 1000;
+  const CACHE_EXPIRY = 12 * 60 * 60 * 1000;
 
   function initFirebase() {
     if (typeof firebase === "undefined" || !firebase.app) {
