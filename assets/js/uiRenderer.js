@@ -59,6 +59,7 @@ window.UIRenderer = (function () {
     setupToggleEvents();
     initHelpTooltip();
     initStatFilter();
+    initTipToolTip();
 
     window.addEventListener("resize", Utils.debounce(adjustIndicatorSize, 100));
     setTimeout(adjustIndicatorSize, 200);
@@ -118,6 +119,32 @@ window.UIRenderer = (function () {
         }
       });
       toggle.checked = groupByInfluence;
+    }
+  }
+
+  function initTipToolTip() {
+    const tipBtn = document.getElementById("tipBtn");
+    const tipTooltip = document.getElementById("tipTooltip");
+    const closeTip = document.getElementById("closeTip");
+
+    if (tipBtn) {
+      tipBtn.addEventListener("click", function () {
+        tipTooltip.style.display =
+          tipTooltip.style.display === "block" ? "none" : "block";
+      });
+
+      closeTip?.addEventListener("click", function () {
+        tipTooltip.style.display = "none";
+      });
+
+      document.addEventListener("click", function (event) {
+        if (
+          !tipBtn.contains(event.target) &&
+          !tipTooltip.contains(event.target)
+        ) {
+          tipTooltip.style.display = "none";
+        }
+      });
     }
   }
 

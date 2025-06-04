@@ -1,9 +1,12 @@
 const OptimalCombinationFinder = (function () {
   let isCalculationCancelled = false;
   let isProcessing = false;
+  let currentCategory = ""; // 전역 변수로 현재 카테고리 추가
+  let bestResultOverall = null; // 전역 최적 결과
+  let calculationWorker = null; // 계산 작업자
 
   function findOptimalCombination(selectedSpirits, lastActiveCategory) {
-    const currentCategory = lastActiveCategory;
+    currentCategory = lastActiveCategory; // 전역 변수에 저장
     const categorySpirits = selectedSpirits.filter(
       (spirit) => spirit.category === currentCategory
     );
@@ -15,6 +18,13 @@ const OptimalCombinationFinder = (function () {
 
     isProcessing = true;
     isCalculationCancelled = false;
+    bestResultOverall = null;
+
+    // 이전 Worker가 있다면 정리
+    if (calculationWorker) {
+      calculationWorker.terminate();
+      calculationWorker = null;
+    }
 
     OptimalResultModal.prepareModalStructure();
     OptimalResultModal.initModalStyles();
@@ -41,6 +51,10 @@ const OptimalCombinationFinder = (function () {
       if (cancelCalcBtn) {
         cancelCalcBtn.addEventListener("click", function () {
           isCalculationCancelled = true;
+          if (calculationWorker) {
+            calculationWorker.terminate();
+            calculationWorker = null;
+          }
           document.querySelector(".calculating-box h3").textContent =
             "계산이 취소되었습니다";
         });
@@ -338,261 +352,280 @@ const OptimalCombinationFinder = (function () {
   }
 
   function runActualCalculation(selectedSpirits, lastActiveCategory) {
-    const currentCategory = lastActiveCategory;
+    currentCategory = lastActiveCategory;
     const categorySpirits = selectedSpirits.filter(
       (spirit) => spirit.category === currentCategory
     );
 
     document.getElementById("optimalModalContent").innerHTML = `
-      <h3 class="modal-title">${currentCategory} 최적 결속 조합 결과 (최대 6개)</h3>
-      <div class="modal-content">
-        <div class="ad-row">
-          <div class="ad-container-left">
-              <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-sgK0ytXrL3f7EHRF"
-                  data-ad-width="728" data-ad-height="90"></ins>
-          </div>
-        </div>
-        <div class="ad-container mobile-ad">
-          <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-TPesUrzJaxJ008Lm"
-              data-ad-width="320" data-ad-height="50"></ins>
-          </div>
-        <div id="optimalHeader" class="optimal-header">
-          <div class="optimal-score">
-            <h4>환산합산: <span id="optimalScore">계산 중...</span> <span id="optimalScoreBind" class="bind-score">(장착효과: 계산 중...)</span></h4>
-            <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small><br />
-            <small>환산 합산은 등급 결속 효과 + 세력 결속 효과 + 장착 효과 능력치입니다.</small>
-          </div>
-        </div>
-  
-        <div class="action-buttons">
-          <button id="clearHistoryButton" class="clear-history-btn">${currentCategory} 기록 삭제</button>
-        </div>
-  
-        <div id="optimalSpiritsList" class="selected-spirits-info">
-          <div class='processing-message'>
-            <div class="calculating-spinner-small"></div>
-            최적 조합을 찾는 중입니다... (0%)
-            <div style="margin-top: 10px;">
-              <button id="cancelCalculationBtn" class="cancel-calculation-btn">계산 중단</button>
-            </div>
-          </div>
-        </div>
-  
-        <div class="results-container">
-          <div class="results-section">
-            <div id="optimalGradeEffects" class="effects-list"></div>
-          </div>
-          <div class="results-section">
-            <div id="optimalFactionEffects" class="effects-list"></div>
-          </div>
-          <div class="results-section">
-            <div id="optimalBindEffects" class="effects-list"></div>
-          </div>
-        </div>
-  
-        <div id="optimalSpiritsDetails" class="spirit-details-container">
-          <h4>선택된 환수 상세 스탯 (결속 수치)</h4>
-          <div id="spiritStatsDetails" class="spirit-stats-grid"></div>
+    <h3 class="modal-title">${currentCategory} 최적 결속 조합 결과 (최대 6개)</h3>
+    <div class="modal-content">
+      <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-sgK0ytXrL3f7EHRF"
+                data-ad-width="728" data-ad-height="90"></ins>
         </div>
       </div>
-    `;
+      <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-TPesUrzJaxJ008Lm"
+            data-ad-width="320" data-ad-height="50"></ins>
+      </div>
+      <div id="optimalHeader" class="optimal-header">
+        <div class="optimal-score">
+          <h4>환산합산: <span id="optimalScore">계산 중...</span> <span id="optimalScoreBind" class="bind-score">(장착효과: 계산 중...)</span></h4>
+          <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small><br />
+          <small>환산 합산은 등급 결속 효과 + 세력 결속 효과 + 장착 효과 능력치입니다.</small>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button id="clearHistoryButton" class="clear-history-btn">
+          ${currentCategory} 기록 삭제
+        </button>
+      </div>
+
+      <div id="optimalSpiritsList" class="selected-spirits-info">
+        <div class='processing-message'>
+          <div class="calculating-spinner-small"></div>
+          최적 조합을 찾는 중입니다... (0%)
+          <div style="margin-top: 10px;">
+            <button id="cancelCalculationBtn" class="cancel-calculation-btn">계산 중단</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-container">
+        <div class="results-section">
+          <div id="optimalGradeEffects" class="effects-list"></div>
+        </div>
+        <div class="results-section">
+          <div id="optimalFactionEffects" class="effects-list"></div>
+        </div>
+        <div class="results-section">
+          <div id="optimalBindEffects" class="effects-list"></div>
+        </div>
+      </div>
+
+      <div id="optimalSpiritsDetails" class="spirit-details-container">
+        <h4>선택된 환수 상세 스탯 (결속 수치)</h4>
+        <div id="spiritStatsDetails" class="spirit-stats-grid"></div>
+      </div>
+    </div>
+  `;
 
     const style = document.createElement("style");
     style.textContent = `
-        .calculating {
-          padding: 10px;
-          background-color: #f1f8fe;
-          color: #3498db;
-          border-left: 3px solid #3498db;
-          font-style: italic;
-          text-align: center;
-          margin: 10px 0;
-        }
-        .processing-message {
-          text-align: center;
-          padding: 20px;
+      .calculating {
+        padding: 10px;
+        background-color: #f1f8fe;
+        color: #3498db;
+        border-left: 3px solid #3498db;
+        font-style: italic;
+        text-align: center;
+        margin: 10px 0;
+      }
+      .processing-message {
+        text-align: center;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        font-weight: bold;
+        color: #3498db;
+      }
+      .calculating-spinner-small {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 10px;
+      }
+      .warning-message {
+        padding: 15px;
+        background-color: #fff3cd;
+        border-left: 3px solid #ffc107;
+        color: #856404;
+        margin: 10px 0;
+        border-radius: 4px;
+      }
+      .no-effects {
+        color: #6c757d;
+        font-style: italic;
+        padding: 10px;
+        text-align: center;
+      }
+      .bind-score {
+        font-size: 0.85em;
+        color: #e67e22;
+        margin-left: 5px;
+      }
+      .smart-filtering-info {
           background-color: #f8f9fa;
+          padding: 20px;
           border-radius: 8px;
-          margin-bottom: 15px;
-          font-weight: bold;
-          color: #3498db;
-        }
-        .calculating-spinner-small {
-          border: 4px solid #f3f3f3;
-          border-top: 4px solid #3498db;
-          border-radius: 50%;
-          width: 20px;
-          height: 20px;
-          animation: spin 1s linear infinite;
-          margin: 0 auto 10px;
-        }
-        .warning-message {
-          padding: 15px;
-          background-color: #fff3cd;
-          border-left: 3px solid #ffc107;
-          color: #856404;
-          margin: 10px 0;
-          border-radius: 4px;
-        }
-        .no-effects {
-          color: #6c757d;
-          font-style: italic;
-          padding: 10px;
-          text-align: center;
-        }
-        .bind-score {
-          font-size: 0.85em;
-          color: #e67e22;
-          margin-left: 5px;
-        }
-        .smart-filtering-info {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .filtering-phases {
-            display: flex;
-            justify-content: space-between;
-            margin: 15px 0;
-        }
-        .phase {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #e9ecef;
-            margin: 0 5px;
-            color: #6c757d;
-            font-size: 14px;
-            position: relative;
-        }
-        .phase::after {
-            content: '';
-            position: absolute;
-            right: -15px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 0;
-            height: 0;
-            border-top: 6px solid transparent;
-            border-left: 10px solid #e9ecef;
-            border-bottom: 6px solid transparent;
-        }
-        .phase:last-child::after {
-            display: none;
-        }
-        .phase.active {
-            background-color: #007bff;
-            color: white;
-            font-weight: bold;
-        }
-        .phase.active::after {
-            border-left-color: #007bff;
-        }
-        .phase.completed {
-            background-color: #28a745;
-            color: white;
-        }
-        .phase.completed::after {
-            border-left-color: #28a745;
-        }
-        .spirit-category-counts {
-            display: flex;
-            justify-content: space-around;
-            margin: 15px 0;
-            flex-wrap: wrap;
-        }
-        .spirit-count {
-            background-color: #e3f2fd;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            margin: 5px;
-        }
-        .filtering-info {
-            background-color: #fff3cd;
-            padding: 10px;
-            border-radius: 5px;
-            font-style: italic;
-            text-align: center;
-            margin: 10px 0;
-        }
-        
-        .data-warning-box {
-          margin: 10px 0 20px;
-          padding: 15px;
-          background-color: #fff3cd;
-          border-left: 5px solid #ffc107;
-          border-radius: 4px;
-          font-size: 0.9em;
-        }
-        
-        .data-warning-box h4 {
-          margin-top: 0;
-          color: #856404;
-        }
-        
-        .data-warning-box p {
-          margin: 5px 0;
-        }
-        
-        .data-submission-request {
+          margin-bottom: 20px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      }
+      .filtering-phases {
+          display: flex;
+          justify-content: space-between;
           margin: 15px 0;
-          padding: 12px 15px;
-          background-color: #e8f4f8;
-          border: 2px solid #3498db;
+      }
+      .phase {
+          flex: 1;
+          text-align: center;
+          padding: 10px;
+          border-radius: 5px;
+          background-color: #e9ecef;
+          margin: 0 5px;
+          color: #6c757d;
+          font-size: 14px;
+          position: relative;
+      }
+      .phase::after {
+          content: '';
+          position: absolute;
+          right: -15px;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 0;
+          height: 0;
+          border-top: 6px solid transparent;
+          border-left: 10px solid #e9ecef;
+          border-bottom: 6px solid transparent;
+      }
+      .phase:last-child::after {
+          display: none;
+      }
+      .phase.active {
+          background-color: #007bff;
+          color: white;
+          font-weight: bold;
+      }
+      .phase.active::after {
+          border-left-color: #007bff;
+      }
+      .phase.completed {
+          background-color: #28a745;
+          color: white;
+      }
+      .phase.completed::after {
+          border-left-color: #28a745;
+      }
+      .spirit-category-counts {
+          display: flex;
+          justify-content: space-around;
+          margin: 15px 0;
+          flex-wrap: wrap;
+      }
+      .spirit-count {
+          background-color: #e3f2fd;
+          padding: 8px 15px;
+          border-radius: 20px;
+          font-weight: bold;
+          margin: 5px;
+      }
+      .filtering-info {
+          background-color: #fff3cd;
+          padding: 10px;
           border-radius: 5px;
           font-style: italic;
-          font-size: 12px;
-          color: #333;
           text-align: center;
-          font-weight: bold;
-        }
-        
-        .no-bind-warning {
           margin: 10px 0;
-          padding: 10px 15px;
-          background-color: #f8f9fa;
-          border-left: 3px solid #6c757d;
-          font-size: 0.9em;
-          color: #555;
-        }
-        
-        .has-bind-bonus {
-          color: #2ecc71 !important;
-          font-weight: bold;
-        }
-        
-        .history-tab .tab-score {
-          font-size: 11px;
-          font-weight: bold;
-          margin-top: 3px;
-          display: block;
-          text-align: center;
-        }
-  
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `;
+      }
+      
+      .data-warning-box {
+        margin: 10px 0 20px;
+        padding: 15px;
+        background-color: #fff3cd;
+        border-left: 5px solid #ffc107;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+      
+      .data-warning-box h4 {
+        margin-top: 0;
+        color: #856404;
+      }
+      
+      .data-warning-box p {
+        margin: 5px 0;
+      }
+      
+      .data-submission-request {
+        margin: 15px 0;
+        padding: 12px 15px;
+        background-color: #e8f4f8;
+        border: 2px solid #3498db;
+        border-radius: 5px;
+        font-style: italic;
+        font-size: 12px;
+        color: #333;
+        text-align: center;
+        font-weight: bold;
+      }
+      
+      .no-bind-warning {
+        margin: 10px 0;
+        padding: 10px 15px;
+        background-color: #f8f9fa;
+        border-left: 3px solid #6c757d;
+        font-size: 0.9em;
+        color: #555;
+      }
+      
+      .has-bind-bonus {
+        color: #2ecc71 !important;
+        font-weight: bold;
+      }
+      
+      .history-tab .tab-score {
+        font-size: 11px;
+        font-weight: bold;
+        margin-top: 3px;
+        display: block;
+        text-align: center;
+      }
+      
+      .cancel-calculation-btn {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.2s;
+      }
+      
+      .cancel-calculation-btn:hover {
+        background: #c0392b;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `;
     document.head.appendChild(style);
 
     document
       .getElementById("cancelCalculationBtn")
       .addEventListener("click", function () {
-        isCalculationCancelled = true;
-        document.getElementById("optimalSpiritsList").innerHTML =
-          "<div class='warning-message'>계산이 중단되었습니다. 현재까지 찾은 최적 조합을 표시합니다.</div>";
+        cancelCalculation();
       });
 
-    document
-      .getElementById("clearHistoryButton")
-      .addEventListener("click", function () {
-        clearSavedOptimalCombinations(currentCategory);
+    const clearHistoryBtn = document.getElementById("clearHistoryButton");
+    if (clearHistoryBtn) {
+      const newBtn = clearHistoryBtn.cloneNode(true);
+      clearHistoryBtn.parentNode.replaceChild(newBtn, clearHistoryBtn);
+
+      newBtn.addEventListener("click", function () {
+        clearHistory(currentCategory);
       });
+    }
 
     const historyData = HistoryManager.loadSavedCombinations();
     const { savedOptimalCombinations, categoryState } = historyData;
@@ -647,445 +680,468 @@ const OptimalCombinationFinder = (function () {
           );
         }
 
-        if (validSpirits.length <= 20) {
-          runMethodA(validSpirits);
-        } else {
-          runMethodB(validSpirits);
-        }
+        runGeneticAlgorithm(validSpirits);
       } catch (error) {
         console.error("Error finding optimal combination:", error);
         document.getElementById("optimalSpiritsList").innerHTML = `
-            <div class='warning-message'>${
-              error.message || "조합을 찾는 중 오류가 발생했습니다."
-            }</div>`;
+          <div class='warning-message'>${
+            error.message || "조합을 찾는 중 오류가 발생했습니다."
+          }</div>`;
         document.getElementById("optimalScore").textContent = "오류";
         isProcessing = false;
       }
     }, 100);
   }
 
-  function runMethodA(validSpirits) {
-    const targetCombinationSize = Math.min(6, validSpirits.length);
-    let totalCombinations = CalculationUtils.binomialCoefficient(
-      validSpirits.length,
-      targetCombinationSize
-    );
+  function clearHistory(category) {
+    if (!category) {
+      category = currentCategory; // 인자가 없으면 전역 변수 사용
+    }
 
-    let processedCombinations = 0;
-    let bestResult = null;
-
-    const updateProgress = (progress) => {
-      if (!isCalculationCancelled) {
-        document.getElementById(
-          "optimalSpiritsList"
-        ).innerHTML = `<div class='processing-message'>
-                <div class="calculating-spinner-small"></div>
-                최적 조합을 찾는 중입니다... (${Math.round(progress * 100)}%)
-                <div style="margin-top: 10px;">
-                  <button id="cancelCalculationBtn" class="cancel-calculation-btn">계산 중단</button>
-                </div>
-              </div>`;
-
-        document
-          .getElementById("cancelCalculationBtn")
-          .addEventListener("click", function () {
-            isCalculationCancelled = true;
-            document.getElementById("optimalSpiritsList").innerHTML =
-              "<div class='warning-message'>계산이 중단되었습니다. 현재까지 찾은 최적 조합을 표시합니다.</div>";
-          });
-      }
-    };
-
-    function processInBatches(
-      combinationIndex,
-      batchSize,
-      validSpirits,
-      combinations
+    if (
+      confirm(
+        `${category} 카테고리의 저장된 모든 조합 기록을 삭제하시겠습니까?`
+      )
     ) {
-      if (combinationIndex === 0) {
-        combinations = CalculationUtils.generateCombinations(
-          validSpirits,
-          targetCombinationSize
-        );
-      }
+      try {
+        // console.log(`${category} 기록 삭제 시작`);
 
-      if (combinationIndex >= combinations.length || isCalculationCancelled) {
-        if (bestResult) {
-          const deepCopiedResult = JSON.parse(JSON.stringify(bestResult));
-          HistoryManager.addNewCombination(deepCopiedResult);
+        const savedDataKey = "savedOptimalCombinations";
+        const savedStateKey = "categoryState";
+        let savedData = {};
+        let categoryState = {};
 
-          const category =
-            bestResult.spirits[0]?.category || lastActiveCategory;
-          OptimalResultModal.showResultModal(bestResult);
-          HistoryManager.renderHistoryTabs(
-            category,
-            document.getElementById("optimalSpiritsList"),
-            (result) => {
-              OptimalResultModal.showResultModal(result);
-            }
-          );
-        } else {
-          document.getElementById("optimalSpiritsList").innerHTML =
-            "<div class='warning-message'>최적 조합을 찾을 수 없습니다.</div>";
-        }
-        isProcessing = false;
-        return;
-      }
-
-      const endIndex = Math.min(
-        combinationIndex + batchSize,
-        combinations.length
-      );
-
-      for (let i = combinationIndex; i < endIndex; i++) {
-        const combination = combinations[i];
-        const result = CalculationUtils.calculateEffectsForSpirits(combination);
-
-        // 추정치 처리 - 모든 조합 계산 시 추정치를 처리
-        if (result.bindStats) {
-          let hasEstimatedValues = false;
-          for (const [key, value] of Object.entries(result.bindStats)) {
-            if (typeof value === "string" && value.includes("(추정)")) {
-              hasEstimatedValues = true;
-              // cleanEstimatedValue로 숫자만 추출해서 재설정
-              result.bindStats[key] =
-                OptimalResultModal.cleanEstimatedValue(value);
-            }
+        try {
+          const savedDataStr = localStorage.getItem(savedDataKey);
+          if (savedDataStr) {
+            savedData = JSON.parse(savedDataStr);
           }
 
-          // 추정치가 있는 경우 bindScore와 scoreWithBind 재계산
-          if (hasEstimatedValues) {
-            result.bindScore = CalculationUtils.calculateScore(
-              result.bindStats
-            );
-            // 수정된 부분: 순수 결속 효과 합계 (등급 + 세력 + 장착)
-            result.scoreWithBind =
-              result.gradeScore + result.factionScore + result.bindScore;
-            result.usesEstimatedValues = true;
+          const savedStateStr = localStorage.getItem(savedStateKey);
+          if (savedStateStr) {
+            categoryState = JSON.parse(savedStateStr);
+          }
+        } catch (e) {
+          console.error("로컬 스토리지에서 데이터를 불러오는 중 오류:", e);
+        }
+
+        if (savedData[category]) {
+          delete savedData[category];
+        }
+
+        if (categoryState[category]) {
+          categoryState[category] = {
+            activeIndex: 0,
+            lastUpdated: new Date().toISOString(),
+          };
+        }
+
+        localStorage.setItem(savedDataKey, JSON.stringify(savedData));
+        localStorage.setItem(savedStateKey, JSON.stringify(categoryState));
+
+        // console.log(`localStorage ${category} 기록 삭제 완료`);
+
+        if (window.HistoryManager) {
+          if (window.HistoryManager._savedCombinations) {
+            window.HistoryManager._savedCombinations = null;
           }
         }
 
-        processedCombinations++;
+        const elementsToEmpty = [
+          "optimalGradeEffects",
+          "optimalFactionEffects",
+          "optimalBindEffects",
+          "optimalTotalEffects",
+          "spiritStatsDetails",
+          "combinationResultsContainer",
+        ];
 
-        if (processedCombinations % 20 === 0) {
-          updateProgress(processedCombinations / totalCombinations);
+        elementsToEmpty.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.innerHTML = "";
+        });
+
+        // 4. 점수 표시 초기화
+        const scoreEl = document.getElementById("optimalScore");
+        if (scoreEl) scoreEl.textContent = "0";
+
+        const scoreBindEl = document.getElementById("optimalScoreBind");
+        if (scoreBindEl) scoreBindEl.textContent = "(장착효과: 0)";
+
+        // 5. history-tab 영역 직접 초기화
+        const spiritsList = document.getElementById("optimalSpiritsList");
+        if (spiritsList) {
+          spiritsList.innerHTML = `<div class="history-tabs-container">
+          <p class="no-history-message">${category} 카테고리에 저장된 조합 기록이 없습니다.</p>
+        </div>`;
         }
 
-        if (!bestResult || result.scoreWithBind > bestResult.scoreWithBind) {
-          bestResult = result;
-        } else if (result.scoreWithBind === bestResult.scoreWithBind) {
-          const resultBindCount = SpiritUtils.countSpiritsWithBindStats(result);
-          const bestBindCount =
-            SpiritUtils.countSpiritsWithBindStats(bestResult);
-
-          if (resultBindCount > bestBindCount) {
-            bestResult = result;
-          } else if (resultBindCount === bestBindCount) {
-            const currentImmortalCount = SpiritUtils.countGradeInResult(
-              result,
-              "불멸"
-            );
-            const bestImmortalCount = SpiritUtils.countGradeInResult(
-              bestResult,
-              "불멸"
-            );
-
-            if (currentImmortalCount > bestImmortalCount) {
-              bestResult = result;
-            } else if (currentImmortalCount === bestImmortalCount) {
-              const currentGradeTypes =
-                SpiritUtils.countGradeTypesInResult(result);
-              const bestGradeTypes =
-                SpiritUtils.countGradeTypesInResult(bestResult);
-
-              if (currentGradeTypes > bestGradeTypes) {
-                bestResult = result;
-              }
-            }
-          }
-        }
-      }
-
-      if (endIndex < combinations.length) {
-        setTimeout(() => {
-          processInBatches(endIndex, batchSize, validSpirits, combinations);
-        }, 0);
-      } else {
-        setTimeout(() => {
-          if (bestResult) {
-            const deepCopiedResult = JSON.parse(JSON.stringify(bestResult));
-            const { resultWithTimestamp, index } =
-              HistoryManager.addNewCombination(deepCopiedResult);
-
-            const category =
-              bestResult.spirits[0]?.category || lastActiveCategory;
-            OptimalResultModal.showResultModal(bestResult);
-            HistoryManager.renderHistoryTabs(
+        // 6. HistoryManager 통해 history-tab 새로 렌더링
+        if (
+          window.HistoryManager &&
+          typeof window.HistoryManager.renderHistoryTabs === "function"
+        ) {
+          setTimeout(() => {
+            window.HistoryManager.renderHistoryTabs(
               category,
               document.getElementById("optimalSpiritsList"),
               (result) => {
-                OptimalResultModal.showResultModal(result);
+                if (
+                  window.OptimalResultModal &&
+                  typeof window.OptimalResultModal.showResultModal ===
+                    "function"
+                ) {
+                  window.OptimalResultModal.showResultModal(result);
+                }
               }
             );
-          } else {
-            document.getElementById("optimalSpiritsList").innerHTML =
-              "<div class='warning-message'>최적 조합을 찾을 수 없습니다.</div>";
-          }
-          isProcessing = false;
-        }, 0);
+          }, 100);
+        }
+
+        alert(`${category} 조합 기록이 모두 삭제되었습니다.`);
+      } catch (error) {
+        console.error("기록 삭제 중 오류 발생:", error);
+        alert(
+          "기록 삭제 중 오류가 발생했습니다. 개발자 도구 콘솔을 확인하세요."
+        );
       }
     }
-
-    const batchSize = 50;
-    processInBatches(0, batchSize, validSpirits, null);
   }
 
-  function runMethodB(validSpirits) {
+  // 계산 취소 함수
+  function cancelCalculation() {
+    isCalculationCancelled = true;
+
+    // Worker 종료
+    if (calculationWorker) {
+      calculationWorker.terminate();
+      calculationWorker = null;
+    }
+
+    document.getElementById("optimalSpiritsList").innerHTML =
+      "<div class='warning-message'>계산이 중단되었습니다. 현재까지 찾은 최적 조합이 있으면 표시합니다.</div>";
+
+    // 현재까지 찾은 최적 결과 표시
+    if (bestResultOverall) {
+      // 결과 출력
+      finishCalculation(bestResultOverall);
+    } else {
+      document.getElementById("optimalScore").textContent = "계산 취소됨";
+    }
+  }
+
+  function evaluateSpiritCombination(spirits) {
+    try {
+      // 스탯 계산을 위해 CalculationUtils 사용
+      const result = CalculationUtils.calculateEffectsForSpirits(spirits);
+
+      // 추정치 처리
+      if (result.bindStats) {
+        let hasEstimatedValues = false;
+        for (const [key, value] of Object.entries(result.bindStats)) {
+          if (typeof value === "string" && value.includes("(추정)")) {
+            hasEstimatedValues = true;
+            result.bindStats[key] =
+              parseFloat(OptimalResultModal.cleanEstimatedValue(value)) || 0;
+          }
+        }
+
+        if (hasEstimatedValues) {
+          result.bindScore = parseInt(
+            CalculationUtils.calculateScore(result.bindStats)
+          );
+          result.usesEstimatedValues = true;
+        }
+      }
+
+      // 정확한 점수 계산
+      result.gradeScore = parseInt(result.gradeScore || 0);
+      result.factionScore = parseInt(result.factionScore || 0);
+      result.bindScore = parseInt(result.bindScore || 0);
+
+      // 환산합산 계산
+      result.scoreWithBind =
+        result.gradeScore + result.factionScore + result.bindScore;
+
+      return result;
+    } catch (error) {
+      console.error("조합 평가 중 오류:", error);
+      return {
+        spirits: spirits,
+        scoreWithBind: 0,
+        gradeScore: 0,
+        factionScore: 0,
+        bindScore: 0,
+      };
+    }
+  }
+
+  // 유전 알고리즘 구현
+  function runGeneticAlgorithm(validSpirits) {
+    // UI 준비
     const filteringInfoContainer = document.createElement("div");
     filteringInfoContainer.className = "smart-filtering-info";
     filteringInfoContainer.innerHTML = `
-        <h4>스마트 필터링으로 계산 중</h4>
-        <div class="filtering-info">환수 수가 많아 효율적인 스마트 필터링을 적용합니다</div>
-        <div class="filtering-phases">
-          <div class="phase active" id="phase1">1. 환수 평가</div>
-          <div class="phase" id="phase2">2. 후보군 선정</div>
-          <div class="phase" id="phase3">3. 조합 최적화</div>
-          <div class="phase" id="phase4">4. 최종 검증</div>
+      <h4>유전 알고리즘을 사용한 최적 조합 계산</h4>
+      <div class="filtering-info">학습 기반 알고리즘으로 최적 조합을 빠르게 찾습니다</div>
+      <div class="progress-container">
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="calculation-progress-bar" style="width:0%"></div>
+          <div class="progress-character" id="progress-character"></div>
         </div>
-        <div id="phaseDescription" class="filtering-info">
-          환수 개별 성능을 평가 중입니다...
-        </div>
-      `;
+      </div>
+      <div id="calculation-status">초기 인구 생성 중...</div>
+      <div class="control-buttons">
+        <button id="stopCalculationBtn" class="cancel-calculation-btn">계산 중단</button>
+      </div>
+    `;
 
     document.getElementById("optimalSpiritsList").innerHTML = "";
     document
       .getElementById("optimalSpiritsList")
       .appendChild(filteringInfoContainer);
 
-    const formattedSpirits = validSpirits.map((spirit) => ({
-      name: spirit.name,
-      image: spirit.image,
-      category: spirit.category,
-      grade: spirit.grade || "전설",
-      faction: spirit.influence || spirit.faction || "결의",
-      level: spirit.level,
-      stats: spirit.stats,
-      isFixedLevel: spirit.isFixedLevel,
-      hasLevel25Bind: spirit.hasLevel25Bind,
-    }));
+    // 중지 버튼 이벤트 연결
+    document
+      .getElementById("stopCalculationBtn")
+      .addEventListener("click", cancelCalculation);
 
-    updatePhase("phase1", "환수 개별 성능을 평가 중입니다...");
-    setTimeout(() => {
-      const rankedSpirits = rankSpirits(formattedSpirits);
-      displayInitialSpiritRanking(rankedSpirits);
+    // 유전 알고리즘 설정
+    const populationSize = 100; // 인구 크기
+    const maxGenerations = 30; // 최대 세대 수
+    const targetSize = Math.min(6, validSpirits.length); // 조합 크기 (최대 6개)
+    const mutationRate = 0.2; // 돌연변이 확률 (20%)
+    const eliteSize = 10; // 상위 n개는 그대로 다음 세대로
+    let currentGeneration = 1; // 현재 세대
+    bestResultOverall = null; // 전체 최적 결과
 
-      updatePhase("phase2", "최적 조합 후보군을 선정 중입니다...");
+    // 초기 인구 생성
+    let population = generateInitialPopulation(
+      validSpirits,
+      targetSize,
+      populationSize
+    );
 
-      setTimeout(() => {
-        updatePhase("phase3", "후보 조합을 최적화 중입니다...");
+    // 진행 상황 업데이트
+    updateProgressWithCharacter(0);
+    document.getElementById(
+      "calculation-status"
+    ).textContent = `세대 1/${maxGenerations}: 초기 인구 평가 중...`;
 
-        setTimeout(() => {
-          if (window.Worker) {
-            optimizeWithSmartFiltering(rankedSpirits);
-          } else {
-            optimizeWithoutWorkerSmartFiltering(rankedSpirits);
+    // 다음 세대 계산 함수 (비동기로 진행)
+    function evolveNextGeneration() {
+      if (isCalculationCancelled || currentGeneration > maxGenerations) {
+        finishCalculation(bestResultOverall);
+        return;
+      }
+
+      try {
+        // 1. 현재 인구 평가
+        let fitness = [];
+        for (let i = 0; i < population.length; i++) {
+          const result = evaluateSpiritCombination(population[i]);
+          fitness.push({
+            index: i,
+            combination: population[i],
+            result: result,
+            score: result.scoreWithBind,
+          });
+        }
+
+        fitness.sort((a, b) => b.score - a.score);
+
+        if (
+          !bestResultOverall ||
+          fitness[0].score > bestResultOverall.scoreWithBind
+        ) {
+          bestResultOverall = fitness[0].result;
+
+          document.getElementById("optimalScore").textContent = `${
+            bestResultOverall.scoreWithBind
+          } (등급: ${bestResultOverall.gradeScore} 세력: ${
+            bestResultOverall.factionScore
+          } 장착: ${bestResultOverall.bindScore || 0})`;
+
+          // console.log(
+          //   `새로운 최고 조합 발견! 세대 ${currentGeneration}, 점수: ${bestResultOverall.scoreWithBind}`
+          // );
+        }
+
+        const nextGeneration = [];
+        for (let i = 0; i < eliteSize && i < fitness.length; i++) {
+          nextGeneration.push(fitness[i].combination);
+        }
+
+        while (nextGeneration.length < populationSize) {
+          const parent1 = tournamentSelection(fitness, 5);
+          const parent2 = tournamentSelection(fitness, 5);
+
+          const child = crossover(parent1, parent2, targetSize);
+
+          if (Math.random() < mutationRate) {
+            mutate(child, validSpirits);
           }
-        }, 300);
-      }, 300);
-    }, 300);
+
+          nextGeneration.push(child);
+        }
+
+        population = nextGeneration;
+        currentGeneration++;
+
+        updateProgressWithCharacter(currentGeneration / maxGenerations);
+        document.getElementById(
+          "calculation-status"
+        ).textContent = `세대 ${currentGeneration}/${maxGenerations}: 최고 점수 ${
+          bestResultOverall ? bestResultOverall.scoreWithBind : "계산 중"
+        }`;
+
+        setTimeout(evolveNextGeneration, 0);
+      } catch (error) {
+        console.error("유전 알고리즘 오류:", error);
+        document.getElementById("calculation-status").textContent =
+          "계산 오류 발생";
+        finishCalculation(bestResultOverall);
+      }
+    }
+
+    setTimeout(evolveNextGeneration, 100);
   }
 
-  function updatePhase(currentPhaseId, description) {
-    document.querySelectorAll(".filtering-phases .phase").forEach((phase) => {
-      phase.classList.remove("active");
-      phase.classList.remove("completed");
-    });
+  function tournamentSelection(fitness, tournamentSize) {
+    const selected = [];
+    for (let i = 0; i < tournamentSize; i++) {
+      const randomIndex = Math.floor(Math.random() * fitness.length);
+      selected.push(fitness[randomIndex]);
+    }
 
-    const phaseElement = document.getElementById(currentPhaseId);
-    if (phaseElement) {
-      phaseElement.classList.add("active");
+    selected.sort((a, b) => b.score - a.score);
+    return selected[0].combination;
+  }
 
-      const phaseNumber = parseInt(currentPhaseId.replace("phase", ""));
-      for (let i = 1; i < phaseNumber; i++) {
-        const prevPhase = document.getElementById(`phase${i}`);
-        if (prevPhase) {
-          prevPhase.classList.add("completed");
+  function crossover(parent1, parent2, targetSize) {
+    const child = [];
+    const used = new Set();
+
+    const midpoint = Math.floor(targetSize / 2);
+    for (let i = 0; i < midpoint; i++) {
+      child.push(parent1[i]);
+      used.add(parent1[i].name);
+    }
+
+    for (let i = 0; i < parent2.length && child.length < targetSize; i++) {
+      if (!used.has(parent2[i].name)) {
+        child.push(parent2[i]);
+        used.add(parent2[i].name);
+      }
+    }
+
+    if (child.length < targetSize) {
+      for (
+        let i = midpoint;
+        i < parent1.length && child.length < targetSize;
+        i++
+      ) {
+        if (!used.has(parent1[i].name)) {
+          child.push(parent1[i]);
+          used.add(parent1[i].name);
         }
       }
     }
 
-    const descriptionElement = document.getElementById("phaseDescription");
-    if (descriptionElement && description) {
-      descriptionElement.textContent = description;
+    return child;
+  }
+
+  function mutate(combination, allSpirits) {
+    const replaceIndex = Math.floor(Math.random() * combination.length);
+    const used = new Set(combination.map((spirit) => spirit.name));
+
+    const unusedSpirits = allSpirits.filter((spirit) => !used.has(spirit.name));
+
+    if (unusedSpirits.length > 0) {
+      const newSpiritIndex = Math.floor(Math.random() * unusedSpirits.length);
+      combination[replaceIndex] = unusedSpirits[newSpiritIndex];
     }
   }
 
-  function rankSpirits(spirits) {
-    return spirits
-      .map((spirit) => {
-        const levelStat =
-          spirit.stats?.find((s) => s.level === spirit.level)
-            ?.registrationStat || {};
+  function generateInitialPopulation(spirits, targetSize, populationSize) {
+    const population = [];
 
-        let bindStat = spirit.stats?.find(
-          (s) => s.level === spirit.level
-        )?.bindStat;
+    if (spirits.length <= targetSize) {
+      population.push(spirits);
+      return population;
+    }
 
-        if (!bindStat && spirit.hasLevel25Bind) {
-          bindStat = spirit.stats?.find((s) => s.level === 25)?.bindStat;
-        }
+    const immortalSpirits = spirits.filter((s) => s.grade === "불멸");
+    const legendSpirits = spirits.filter((s) => s.grade !== "불멸");
 
-        // 처리된 bindStat - 추정치 처리
-        const processedBindStat = {};
-        let hasEstimatedValues = false;
+    if (immortalSpirits.length > 0) {
+      const immortalFirst = [...immortalSpirits];
+      while (immortalFirst.length < targetSize && legendSpirits.length > 0) {
+        const randomIndex = Math.floor(Math.random() * legendSpirits.length);
+        immortalFirst.push(legendSpirits[randomIndex]);
+        legendSpirits.splice(randomIndex, 1);
+      }
+      if (immortalFirst.length === targetSize) {
+        population.push(immortalFirst);
+      }
+    }
 
-        if (bindStat) {
-          for (const [key, value] of Object.entries(bindStat)) {
-            if (typeof value === "string" && value.includes("(추정)")) {
-              hasEstimatedValues = true;
-              processedBindStat[key] =
-                OptimalResultModal.cleanEstimatedValue(value);
-            } else {
-              processedBindStat[key] = value;
-            }
-          }
-        }
+    const resistanceSpirits = spirits.filter((s) => {
+      const stats =
+        s.stats?.find((stat) => stat.level === s.level)?.registrationStat || {};
+      return (
+        stats.damageResistance > 0 || stats.damageResistancePenetration > 0
+      );
+    });
 
-        const regScore =
-          (levelStat.damageResistancePenetration || 0) +
-          (levelStat.damageResistance || 0) +
-          (levelStat.pvpDamagePercent || 0) * 10 +
-          (levelStat.pvpDefensePercent || 0) * 10;
+    if (resistanceSpirits.length >= targetSize) {
+      const resistanceCombo = resistanceSpirits.slice(0, targetSize);
+      population.push(resistanceCombo);
+    }
 
-        // 추정치가 처리된 bindScore 계산
-        const bindScore =
-          (processedBindStat.damageResistancePenetration || 0) +
-          (processedBindStat.damageResistance || 0) +
-          (processedBindStat.pvpDamagePercent || 0) * 10 +
-          (processedBindStat.pvpDefensePercent || 0) * 10;
+    const pvpSpirits = spirits.filter((s) => {
+      const stats =
+        s.stats?.find((stat) => stat.level === s.level)?.registrationStat || {};
+      return stats.pvpDamagePercent > 0 || stats.pvpDefensePercent > 0;
+    });
 
-        return {
-          ...spirit,
-          score: regScore,
-          bindScore: bindScore,
-          totalScore: regScore + bindScore,
-          calculatedStats: levelStat,
-          calculatedBindStats: hasEstimatedValues
-            ? processedBindStat
-            : bindStat,
-          usesEstimatedValues: hasEstimatedValues,
-        };
-      })
-      .sort((a, b) => b.totalScore - a.totalScore);
+    if (pvpSpirits.length >= targetSize) {
+      const pvpCombo = pvpSpirits.slice(0, targetSize);
+      population.push(pvpCombo);
+    }
+
+    const factions = {};
+    spirits.forEach((s) => {
+      const faction = s.faction;
+      if (!factions[faction]) factions[faction] = [];
+      factions[faction].push(s);
+    });
+
+    for (const faction in factions) {
+      if (factions[faction].length >= targetSize) {
+        population.push(factions[faction].slice(0, targetSize));
+      }
+    }
+
+    while (population.length < populationSize) {
+      const combination = generateRandomCombination(spirits, targetSize);
+      population.push(combination);
+    }
+
+    return population;
   }
 
-  function displayInitialSpiritRanking(rankedSpirits) {
-    const pvpSpirits = rankedSpirits.filter((spirit) =>
-      hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"])
-    );
+  function generateRandomCombination(spirits, size) {
+    const combination = [];
+    const available = [...spirits];
 
-    const resistanceSpirits = rankedSpirits.filter(
-      (spirit) =>
-        !hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"]) &&
-        hasCriticalStat(spirit, [
-          "damageResistancePenetration",
-          "damageResistance",
-        ])
-    );
-
-    const otherSpirits = rankedSpirits.filter(
-      (spirit) =>
-        !hasCriticalStat(spirit, [
-          "pvpDamagePercent",
-          "pvpDefensePercent",
-          "damageResistancePenetration",
-          "damageResistance",
-        ])
-    );
-
-    const infoHTML = `
-      <div class="smart-filtering-info">
-          <h4>스마트 필터링 준비 완료 (20개 초과 선택 시 작동)</h4>
-          <p><strong>선택된 환수:</strong> ${rankedSpirits.length}개</p>
-          <div class="spirit-category-counts">
-              <div class="spirit-count">대피/대방% 환수: ${pvpSpirits.length}개</div>
-              <div class="spirit-count">피저/피저관 환수: ${resistanceSpirits.length}개</div>
-              <div class="spirit-count">기타 환수: ${otherSpirits.length}개</div>
-          </div>
-          <p class="filtering-info">환수들을 기여도에 따라 분석하여 모든 환수를 고려한 최적화된 계산을 수행합니다.</p>
-          <div class="filtering-phases">
-              <div class="phase active" id="phase0">준비 완료</div>
-              <div class="phase" id="phase1">1단계: 상위 점수 환수 분석</div>
-              <div class="phase" id="phase2">2단계: 균형 환수 분석</div>
-              <div class="phase" id="phase3">3단계: 전체 환수 분석</div>
-          </div>
-          <div class="progress-container">
-              <div class="progress-bar-container">
-                  <div class="progress-bar" id="calculation-progress-bar" style="width:0%"></div>
-                  <div class="progress-character" id="progress-character"></div>
-              </div>
-          </div>
-          <div id="calculation-status">계산 시작 준비 완료</div>
-      </div>
-    `;
-
-    document.getElementById("optimalSpiritsList").innerHTML = infoHTML;
-
-    const animStyle = document.getElementById("progress-animation-style");
-    if (!animStyle) {
-      const style = document.createElement("style");
-      style.id = "progress-animation-style";
-      style.textContent = `
-        .progress-container {
-          position: relative;
-          margin: 15px 0;
-        }
-        
-        .progress-bar-container {
-          position: relative;
-          height: 30px;
-          background-color: #f0f0f0;
-          border-radius: 10px;
-          overflow: hidden;
-        }
-        
-        .progress-bar {
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 100%;
-          background: linear-gradient(90deg, rgba(16, 59, 69, 1), rgba(16, 59, 69, 1)); 
-          border-radius: 10px;
-          transition: width 0.3s;
-          z-index: 1;
-        }
-        
-        .progress-character {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 30px;
-          height: 30px;
-          background-image: url('assets/img/walking.gif');
-          background-size: contain;
-          background-repeat: no-repeat;
-          background-position: center;
-          z-index: 2;
-          transition: left 0.3s;
-        }
-        
-        @media (max-width: 480px) {
-          .progress-character {
-            width: 20px;
-            height: 20px;
-          }
-          .progress-bar-container {
-            height: 20px;
-          }
-        }
-      `;
-      document.head.appendChild(style);
+    while (combination.length < size && available.length > 0) {
+      const index = Math.floor(Math.random() * available.length);
+      combination.push(available[index]);
+      available.splice(index, 1);
     }
+
+    return combination;
   }
 
   function updateProgressWithCharacter(progress) {
@@ -1108,424 +1164,101 @@ const OptimalCombinationFinder = (function () {
     }
   }
 
-  function updateCalculationPhase(phaseIndex) {
-    document.querySelectorAll(".phase").forEach((el, idx) => {
-      el.classList.remove("active", "completed");
-      if (idx < phaseIndex) {
-        el.classList.add("completed");
-      } else if (idx === phaseIndex) {
-        el.classList.add("active");
-      }
-    });
-
-    const statusText = document.getElementById("calculation-status");
-    if (statusText) {
-      switch (phaseIndex) {
-        case 0:
-          statusText.textContent = "계산 시작 준비 완료";
-          break;
-        case 1:
-          statusText.textContent = "1단계: 상위 점수 환수 분석 중...";
-          break;
-        case 2:
-          statusText.textContent = "2단계: 균형 환수 조합 분석 중...";
-          break;
-        case 3:
-          statusText.textContent = "3단계: 전체 환수 분석 중...";
-          break;
-        case 4:
-          statusText.textContent = "계산 완료!";
-          break;
-        default:
-          statusText.textContent = "계산 진행 중...";
-      }
-    }
-  }
-
-  function hasCriticalStat(spirit, statKeys) {
-    if (spirit.stats && Array.isArray(spirit.stats)) {
-      const levelStat = spirit.stats.find((s) => s.level === spirit.level);
-      if (levelStat && levelStat.registrationStat) {
-        const stats = levelStat.registrationStat;
-        if (
-          statKeys.some((key) => {
-            const value = parseFloat(stats[key] || 0);
-            return value > 0;
-          })
-        ) {
-          return true;
-        }
-      }
+  function finishCalculation(bestResult) {
+    const calcStatus = document.getElementById("calculation-status");
+    if (calcStatus) {
+      calcStatus.innerHTML = isCalculationCancelled
+        ? "계산이 중단되었습니다."
+        : '계산 완료! <span class="calculation-complete-icon">✓</span>';
     }
 
-    if (spirit.stats && Array.isArray(spirit.stats)) {
-      const levelStat = spirit.stats.find((s) => s.level === spirit.level);
-      if (levelStat && levelStat.bindStat) {
-        const stats = levelStat.bindStat;
-        if (
-          statKeys.some((key) => {
-            // 추정치 처리
-            let value;
-            if (
-              typeof stats[key] === "string" &&
-              stats[key].includes("(추정)")
-            ) {
-              value = OptimalResultModal.cleanEstimatedValue(stats[key]);
-            } else {
-              value = parseFloat(stats[key] || 0);
-            }
-            return value > 0;
-          })
-        ) {
-          return true;
-        }
+    if (bestResult) {
+      bestResult.gradeScore = parseInt(bestResult.gradeScore || 0);
+      bestResult.factionScore = parseInt(bestResult.factionScore || 0);
+      bestResult.bindScore = parseInt(bestResult.bindScore || 0);
+      bestResult.scoreWithBind =
+        bestResult.gradeScore + bestResult.factionScore + bestResult.bindScore;
+
+      // console.log(
+      //   `최종 결과: 등급=${bestResult.gradeScore} 세력=${bestResult.factionScore} 장착=${bestResult.bindScore} 합산=${bestResult.scoreWithBind}`
+      // );
+
+      const deepCopiedResult = JSON.parse(JSON.stringify(bestResult));
+
+      try {
+        window.HistoryManager.addNewCombination(deepCopiedResult);
+      } catch (e) {
+        console.error("HistoryManager 오류:", e);
       }
 
-      if (spirit.hasLevel25Bind) {
-        const level25Stat = spirit.stats.find((s) => s.level === 25);
-        if (level25Stat && level25Stat.bindStat) {
-          const stats = level25Stat.bindStat;
-          return statKeys.some((key) => {
-            // 추정치 처리
-            let value;
-            if (
-              typeof stats[key] === "string" &&
-              stats[key].includes("(추정)")
-            ) {
-              value = OptimalResultModal.cleanEstimatedValue(stats[key]);
-            } else {
-              value = parseFloat(stats[key] || 0);
-            }
-            return value > 0;
-          });
-        }
-      }
-    }
-
-    return false;
-  }
-
-  function optimizeWithSmartFiltering(rankedSpirits) {
-    const totalSpirits = rankedSpirits.length;
-    let bestResultOverall = null;
-    let processedResultCount = 0;
-
-    updateCalculationPhase(0);
-
-    const topRankedSpirits = rankedSpirits.slice(0, Math.min(25, totalSpirits));
-
-    const pvpSpirits = rankedSpirits
-      .filter((spirit) =>
-        hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"])
-      )
-      .slice(0, 15);
-
-    const resistanceSpirits = rankedSpirits
-      .filter(
-        (spirit) =>
-          hasCriticalStat(spirit, [
-            "damageResistancePenetration",
-            "damageResistance",
-          ]) &&
-          !hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"])
-      )
-      .slice(0, 15);
-
-    const otherSpirits = rankedSpirits
-      .filter(
-        (spirit) =>
-          !hasCriticalStat(spirit, ["pvpDamagePercent", "pvpDefensePercent"]) &&
-          !hasCriticalStat(spirit, [
-            "damageResistancePenetration",
-            "damageResistance",
-          ])
-      )
-      .slice(0, 15);
-
-    const mixedSpirits = [
-      ...new Set([...pvpSpirits, ...resistanceSpirits, ...otherSpirits]),
-    ];
-
-    const phases = [
-      {
-        spirits: topRankedSpirits,
-        maxSize: 6,
-        name: "상위 점수 환수",
-        phaseId: "phase1",
-      },
-      {
-        spirits: mixedSpirits,
-        maxSize: 6,
-        name: "균형 환수 조합",
-        phaseId: "phase2",
-      },
-      {
-        spirits: rankedSpirits.slice(0, Math.min(40, totalSpirits)),
-        maxSize: 6,
-        name: "전체 환수",
-        phaseId: "phase3",
-      },
-    ];
-
-    let currentPhase = 0;
-    processNextPhase();
-
-    function processNextPhase() {
-      if (currentPhase >= phases.length || isCalculationCancelled) {
-        finishCalculation();
-        return;
+      try {
+        window.OptimalResultModal.showResultModal(bestResult);
+      } catch (e) {
+        console.error("OptimalResultModal 오류:", e);
       }
 
-      updateCalculationPhase(currentPhase + 1);
-      const phase = phases[currentPhase];
-
-      const statusText = document.getElementById("calculation-status");
-      if (statusText) {
-        statusText.textContent = `${phase.name} 분석 중...`;
-      }
-
-      const targetSize = Math.min(phase.maxSize, phase.spirits.length);
-      const combinations = CalculationUtils.generateCombinations(
-        phase.spirits,
-        targetSize
-      );
-      const totalCombos = combinations.length;
-
-      let bestPhaseResult = null;
-      let processedCount = 0;
-
-      function processBatch(startIndex, batchSize) {
-        if (startIndex >= totalCombos || isCalculationCancelled) {
-          currentPhase++;
-          processNextPhase();
-          return;
-        }
-
-        const endIndex = Math.min(startIndex + batchSize, totalCombos);
-
-        for (let i = startIndex; i < endIndex; i++) {
-          const result = CalculationUtils.calculateEffectsForSpirits(
-            combinations[i]
-          );
-
-          // 추정치 처리 - 추가된 부분
-          if (result.bindStats) {
-            let hasEstimatedValues = false;
-            for (const [key, value] of Object.entries(result.bindStats)) {
-              if (typeof value === "string" && value.includes("(추정)")) {
-                hasEstimatedValues = true;
-                result.bindStats[key] =
-                  OptimalResultModal.cleanEstimatedValue(value);
-              }
-            }
-
-            if (hasEstimatedValues) {
-              result.bindScore = CalculationUtils.calculateScore(
-                result.bindStats
-              );
-              // 중요: 순수 결속 효과 합계 (등급 + 세력 + 장착)로 수정
+      try {
+        window.HistoryManager.renderHistoryTabs(
+          currentCategory,
+          document.getElementById("optimalSpiritsList"),
+          (result) => {
+            if (result) {
+              result.gradeScore = parseInt(result.gradeScore || 0);
+              result.factionScore = parseInt(result.factionScore || 0);
+              result.bindScore = parseInt(result.bindScore || 0);
               result.scoreWithBind =
                 result.gradeScore + result.factionScore + result.bindScore;
-              result.usesEstimatedValues = true;
             }
-          }
 
-          // 모든 결과에 대해 scoreWithBind를 재계산 - 이걸 안하면 추정치가 없는 결과는 변경되지 않음
-          result.scoreWithBind =
-            result.gradeScore + result.factionScore + result.bindScore;
-
-          if (
-            !bestPhaseResult ||
-            result.scoreWithBind > bestPhaseResult.scoreWithBind
-          ) {
-            bestPhaseResult = result;
-          }
-
-          if (
-            !bestResultOverall ||
-            result.scoreWithBind > bestResultOverall.scoreWithBind
-          ) {
-            bestResultOverall = result;
-
-            document.getElementById("optimalScore").textContent = `${
-              bestResultOverall.scoreWithBind
-            } (등록효과: ${bestResultOverall.score} 장착효과: ${
-              bestResultOverall.bindScore || 0
-            })`;
-
-            const bindScoreEl = document.getElementById("optimalScoreBind");
-            if (bindScoreEl) bindScoreEl.style.display = "none";
-          }
-        }
-
-        processedCount += endIndex - startIndex;
-        updateProgressWithCharacter(processedCount / totalCombos);
-
-        setTimeout(() => {
-          processBatch(endIndex, batchSize);
-        }, 0);
-      }
-
-      // Start processing with appropriate batch size
-      const batchSize = Math.min(
-        50,
-        Math.max(10, Math.floor(totalCombos / 100))
-      );
-      processBatch(0, batchSize);
-    }
-
-    function finishCalculation() {
-      updateCalculationPhase(4);
-
-      const calcStatus = document.getElementById("calculation-status");
-      if (calcStatus) {
-        calcStatus.innerHTML =
-          '계산 완료! <span class="calculation-complete-icon">✓</span>';
-        calcStatus.classList.add("calculation-complete");
-      }
-
-      if (bestResultOverall) {
-        const deepCopiedResult = JSON.parse(JSON.stringify(bestResultOverall));
-        HistoryManager.addNewCombination(deepCopiedResult);
-
-        const category =
-          bestResultOverall.spirits[0]?.category || lastActiveCategory;
-        OptimalResultModal.showResultModal(bestResultOverall);
-        HistoryManager.renderHistoryTabs(
-          category,
-          document.getElementById("optimalSpiritsList"),
-          (result) => {
-            OptimalResultModal.showResultModal(result);
+            window.OptimalResultModal.showResultModal(result);
           }
         );
-      } else {
-        document.getElementById("optimalSpiritsList").innerHTML =
-          "<div class='warning-message'>최적 조합을 찾을 수 없습니다.</div>";
+      } catch (e) {
+        console.error("HistoryManager renderHistoryTabs 오류:", e);
       }
-
-      isProcessing = false;
+    } else {
+      document.getElementById("optimalSpiritsList").innerHTML =
+        "<div class='warning-message'>최적 조합을 찾을 수 없습니다.</div>";
     }
+
+    isProcessing = false;
   }
 
-  function optimizeWithoutWorkerSmartFiltering(rankedSpirits) {
-    const totalSpirits = rankedSpirits.length;
-    let bestResult = null;
+  function binomialCoefficient(n, k) {
+    if (k < 0 || k > n) return 0;
+    if (k === 0 || k === n) return 1;
 
-    const topSpirits = rankedSpirits.slice(0, Math.min(15, totalSpirits));
+    let res = 1;
+    k = Math.min(k, n - k);
 
-    document.getElementById("calculation-status").textContent =
-      "웹 워커를 지원하지 않습니다. 상위 환수만 계산합니다...";
-
-    setTimeout(() => {
-      const targetSize = Math.min(6, topSpirits.length);
-      const combinations = CalculationUtils.generateCombinations(
-        topSpirits,
-        targetSize
-      );
-
-      combinations.forEach((combination, index) => {
-        const result = CalculationUtils.calculateEffectsForSpirits(combination);
-
-        // 추정치 처리 - 추가된 부분
-        if (result.bindStats) {
-          let hasEstimatedValues = false;
-          for (const [key, value] of Object.entries(result.bindStats)) {
-            if (typeof value === "string" && value.includes("(추정)")) {
-              hasEstimatedValues = true;
-              result.bindStats[key] =
-                OptimalResultModal.cleanEstimatedValue(value);
-            }
-          }
-
-          if (hasEstimatedValues) {
-            result.bindScore = CalculationUtils.calculateScore(
-              result.bindStats
-            );
-            // 중요: 순수 결속 효과 합계 (등급 + 세력 + 장착)로 수정
-            result.scoreWithBind =
-              result.gradeScore + result.factionScore + result.bindScore;
-            result.usesEstimatedValues = true;
-          }
-        }
-
-        // 모든 결과에 대해 scoreWithBind를 재계산 - 이걸 안하면 추정치가 없는 결과는 변경되지 않음
-        result.scoreWithBind =
-          result.gradeScore + result.factionScore + result.bindScore;
-
-        if (!bestResult || result.scoreWithBind > bestResult.scoreWithBind) {
-          bestResult = result;
-        }
-
-        if (index % 100 === 0) {
-          const progress = (index / combinations.length) * 100;
-          const progressBar = document.getElementById(
-            "calculation-progress-bar"
-          );
-          if (progressBar) {
-            progressBar.style.width = `${Math.round(progress)}%`;
-          }
-        }
-      });
-
-      if (bestResult) {
-        HistoryManager.addNewCombination(bestResult);
-
-        const category = bestResult.spirits[0]?.category || lastActiveCategory;
-        OptimalResultModal.showResultModal(bestResult);
-        HistoryManager.renderHistoryTabs(
-          category,
-          document.getElementById("optimalSpiritsList"),
-          (result) => {
-            OptimalResultModal.showResultModal(result);
-          }
-        );
-      } else {
-        document.getElementById("optimalSpiritsList").innerHTML =
-          "<div class='warning-message'>최적 조합을 찾을 수 없습니다.</div>";
-      }
-
-      isProcessing = false;
-    }, 100);
-  }
-
-  function clearSavedOptimalCombinations(category) {
-    if (
-      confirm(
-        `${category} 카테고리의 저장된 모든 조합 기록을 삭제하시겠습니까?`
-      )
-    ) {
-      HistoryManager.clearCombinations(category);
-
-      document.getElementById("optimalGradeEffects").innerHTML = "";
-      document.getElementById("optimalFactionEffects").innerHTML = "";
-      document.getElementById("optimalBindEffects").innerHTML = "";
-      document.getElementById("optimalTotalEffects").innerHTML = "";
-      document.getElementById("spiritStatsDetails").innerHTML = "";
-      document.getElementById("combinationResultsContainer").innerHTML = "";
-      document.getElementById("optimalScore").textContent = "0";
-      document.getElementById("optimalScoreBind").textContent = "(장착효과: 0)";
-
-      HistoryManager.renderHistoryTabs(
-        category,
-        document.getElementById("optimalSpiritsList"),
-        (result) => {
-          OptimalResultModal.showResultModal(result);
-        }
-      );
-
-      alert(`${category} 조합 기록이 모두 삭제되었습니다.`);
+    for (let i = 0; i < k; i++) {
+      res *= n - i;
+      res /= i + 1;
     }
+
+    return Math.round(res);
   }
 
   function closeOptimalModal() {
-    document.getElementById("optimalModal").style.display = "none";
-    document.body.style.overflow = "auto";
-    isProcessing = false;
+    const optimalModal = document.getElementById("optimalModal");
+    if (optimalModal) {
+      optimalModal.style.display = "none";
+      document.body.style.overflow = "auto";
+
+      isCalculationCancelled = true;
+      if (calculationWorker) {
+        calculationWorker.terminate();
+        calculationWorker = null;
+      }
+
+      isProcessing = false;
+    }
   }
 
   return {
     findOptimalCombination,
     closeOptimalModal,
-    clearSavedOptimalCombinations,
+    clearHistory,
+    cancelCalculation,
   };
 })();

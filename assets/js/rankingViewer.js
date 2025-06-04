@@ -608,17 +608,17 @@ const RankingViewer = (function () {
   }
 
   async function loadBondRankings() {
-    if (currentCategory === "탑승") {
-      bondRankingsContainer.innerHTML = `
-        <div class="info-message">
-          <h3>안내</h3>
-          <p>탑승 25레벨 정보가 부족합니다. 정보 취합되면 랭킹을 보여드리겠습니다.</p>
-        </div>
-      `;
-      hideLoading();
-      paginationContainer.innerHTML = "";
-      return;
-    }
+    // if (currentCategory === "탑승") {
+    //   bondRankingsContainer.innerHTML = `
+    //     <div class="info-message">
+    //       <h3>안내</h3>
+    //       <p>탑승 25레벨 정보가 부족합니다. 정보 취합되면 랭킹을 보여드리겠습니다.</p>
+    //     </div>
+    //   `;
+    //   hideLoading();
+    //   paginationContainer.innerHTML = "";
+    //   return;
+    // }
 
     const categoryMap = {
       수호: "guardian",
