@@ -8843,7 +8843,7 @@ tr.max-level {
     left: 0;
     width: 30px;
     height: 30px;
-    background-image: url('assets/img/walking.gif');
+    background-image: url('/assets/img/walking.gif');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
