@@ -1,0 +1,164 @@
+name: Obfuscate JS and CSS Files
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  obfuscate-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install tools
+        run: |
+          npm install -g javascript-obfuscator
+          npm install -g clean-css-cli
+
+      - name: Show repository structure
+        run: |
+          echo "===== JS FILES IN REPOSITORY ====="
+          find . -type f -name "*.js" | sort
+          echo "=================================="
+          echo "===== CSS FILES IN REPOSITORY ====="
+          find . -type f -name "*.css" | sort
+          echo "=================================="
+          echo "===== HTML FILES IN REPOSITORY ====="
+          find . -type f -name "*.html" | sort
+          echo "=================================="
+
+      - name: Create dist directory
+        run: |
+          rm -rf dist
+          mkdir -p dist
+          cp -r * dist/ || true
+          find dist -name ".git*" -exec rm -rf {} + 2>/dev/null || true
+
+      - name: Create obfuscated JS files
+        run: |
+          timestamp=$(date +%s)
+          echo "# JS file mapping" > js_mapping.txt
+
+          find dist/assets/js -type f -name "*.js" | while read file; do
+            echo "Processing JS: $file"
+            
+            # Create new filename with timestamp
+            dir_path=$(dirname "$file")
+            base_name=$(basename "$file" .js)
+            new_file="${dir_path}/${base_name}.obf.${timestamp}.js"
+            
+            # Obfuscate to the new file
+            javascript-obfuscator "$file" --output "$new_file" \
+              --compact true \
+              --control-flow-flattening true \
+              --dead-code-injection true \
+              --string-array true \
+              --self-defending true
+            
+            if [ -f "$new_file" ]; then
+              orig_size=$(wc -c < "$file")
+              new_size=$(wc -c < "$new_file")
+              echo "  ✅ ${file}: ${orig_size} → ${new_size} bytes"
+              
+              # Store mapping - get paths relative to dist
+              orig_relative=${file#dist/}
+              new_relative=${new_file#dist/}
+              echo "$orig_relative,$new_relative" >> js_mapping.txt
+            else
+              echo "  ❌ Failed to obfuscate: $file"
+            fi
+          done
+
+          echo "=== JS FILE MAPPING ==="
+          cat js_mapping.txt
+          echo "======================="
+
+      - name: Minify and obfuscate CSS files
+        run: |
+          timestamp=$(date +%s)
+          echo "# CSS file mapping" > css_mapping.txt
+
+          find dist/assets/css -type f -name "*.css" | while read file; do
+            echo "Processing CSS: $file"
+            
+            # Create new filename with timestamp
+            dir_path=$(dirname "$file")
+            base_name=$(basename "$file" .css)
+            new_file="${dir_path}/${base_name}.min.${timestamp}.css"
+            
+            # Minify and obfuscate CSS
+            cleancss -o "$new_file" "$file"
+            
+            if [ -f "$new_file" ]; then
+              orig_size=$(wc -c < "$file")
+              new_size=$(wc -c < "$new_file")
+              echo "  ✅ ${file}: ${orig_size} → ${new_size} bytes"
+              
+              # Store mapping - get paths relative to dist
+              orig_relative=${file#dist/}
+              new_relative=${new_file#dist/}
+              echo "$orig_relative,$new_relative" >> css_mapping.txt
+            else
+              echo "  ❌ Failed to minify: $file"
+            fi
+          done
+
+          echo "=== CSS FILE MAPPING ==="
+          cat css_mapping.txt
+          echo "======================="
+
+      - name: Update HTML files to use obfuscated JS and CSS
+        run: |
+          find dist -type f -name "*.html" | while read html_file; do
+            echo "Updating references in: $html_file"
+            
+            # For each JS file mapping
+            tail -n +2 js_mapping.txt 2>/dev/null | while IFS=, read -r old_path new_path; do
+              echo "  Replacing JS: $old_path → $new_path"
+              # Handle script tags
+              sed -i "s|src=[\"']\\{0,1\\}${old_path}[\"']\\{0,1\\}|src=\"${new_path}\"|g" "$html_file"
+            done
+            
+            # For each CSS file mapping
+            tail -n +2 css_mapping.txt 2>/dev/null | while IFS=, read -r old_path new_path; do
+              echo "  Replacing CSS: $old_path → $new_path"
+              # Handle link tags
+              sed -i "s|href=[\"']\\{0,1\\}${old_path}[\"']\\{0,1\\}|href=\"${new_path}\"|g" "$html_file"
+            done
+            
+            # Add comment at the top
+            sed -i "1s|^|<!-- Files obfuscated: $(date) -->\n|" "$html_file"
+            
+            # Check for script and CSS tags to verify changes
+            echo "Script tags in updated file:"
+            grep -o '<script.*src=[^>]*>' "$html_file" || echo "No script tags found"
+            echo "CSS links in updated file:"
+            grep -o '<link.*href=[^>]*\.css[^>]*>' "$html_file" || echo "No CSS links found"
+          done
+
+      - name: Create index.html if needed
+        run: |
+          if [ ! -f "dist/index.html" ] && [ -f "dist/info.html" ]; then
+            echo "Creating index.html redirect to info.html"
+            echo '<meta http-equiv="refresh" content="0; url=info.html">' > dist/index.html
+          fi
+
+      # 배포 전 gh-pages 브랜치 상태 확인 및 정리
+      - name: Check gh-pages branch status
+        run: |
+          git fetch origin gh-pages || echo "Branch gh-pages doesn't exist yet"
+          git branch -D gh-pages || echo "No local gh-pages branch to delete"
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: dist
+          clean: true
+          force: true # 충돌 시 강제로 푸시
