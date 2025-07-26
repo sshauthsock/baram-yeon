@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JSON 업로드 및 수정</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #333;
+        }
+
+        button {
+            padding: 8px 15px;
+            background: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #3367d6;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        select {
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .options {
+            margin: 15px 0;
+        }
+
+        #status,
+        #connectionStatus {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .info {
+            background: #e2f3f8;
+            color: #0c5460;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .document-preview {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        .radio-group {
+            margin: 10px 0;
+        }
+
+        .radio-group label {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+
+        .document-list {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        .document-item {
+            padding: 8px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .document-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .document-item.selected {
+            background-color: #e2f3f8;
+        }
+
+        .document-name {
+            font-weight: bold;
+        }
+
+        .document-id {
+            color: #666;
+            font-size: 0.85em;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .tab {
+            padding: 8px 15px;
+            cursor: pointer;
+            background: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: 4px 4px 0 0;
+            margin-right: 5px;
+        }
+
+        .tab.active {
+            background: #4285f4;
+            color: white;
+            border-color: #4285f4;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 0 4px 4px 4px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .parsing-preview {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .parsing-step {
+            margin-bottom: 8px;
+            padding: 8px;
+            background: #fff;
+            border-left: 3px solid #4285f4;
+        }
+
+        .key-value {
+            display: flex;
+            margin: 3px 0;
+        }
+
+        .key {
+            font-weight: bold;
+            width: 150px;
+            color: #333;
+        }
+
+        .value {
+            flex-grow: 1;
+            color: #0366d6;
+        }
+
+        .stat-pair {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 5px;
+            padding: 3px 7px;
+            background: #e2f3f8;
+            border-radius: 3px;
+        }
+
+        .primary {
+            background-color: #4285f4;
+            color: white;
+            padding: 10px 20px;
+            font-weight: bold;
+        }
+
+        .primary:hover {
+            background-color: #2b62c7;
+        }
+
+        .new-guardian-form-group {
+            margin-bottom: 15px;
+        }
+
+        #newGuardianStatus {
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="connectionStatus"></div>
+
+    <div class="tab-container">
+        <div class="tab active" data-tab="document-manager">문서 관리</div>
+        <div class="tab" data-tab="document-browser">문서 목록 보기</div>
+        <div class="tab" data-tab="stat-updater">스탯 일괄 업데이트</div>
+        <div class="tab" data-tab="new-guardian">새 환수 추가</div>
+    </div>
+
+    <div id="document-manager" class="tab-content active">
+        <div class="container">
+            <h1>JSON 파일 Firestore에 업로드/수정</h1>
+
+            <div>
+                <label for="documentName">문서 이름:</label>
+                <input type="text" id="documentName" placeholder="문서 이름">
+                <button onclick="checkDocument()">문서 확인</button>
+            </div>
+
+            <div id="documentInfo" class="info" style="display:none; margin-top: 10px;"></div>
+            <div id="documentPreview" class="document-preview" style="display:none;"></div>
+
+            <div class="radio-group">
+                <label><input type="radio" name="uploadMode" value="create" checked> 새 문서 생성</label>
+                <label><input type="radio" name="uploadMode" value="overwrite"> 문서 덮어쓰기</label>
+                <label><input type="radio" name="uploadMode" value="merge"> 문서 병합</label>
+                <label><input type="radio" name="uploadMode" value="update"> 특정 필드만 업데이트</label>
+            </div>
+
+            <div>
+                <label for="jsonFileInput">JSON 파일:</label>
+                <input type="file" id="jsonFileInput" accept=".json">
+            </div>
+
+            <div id="updateFieldsContainer" style="display:none; margin-top:15px;">
+                <label for="updateFields">업데이트할 필드 (쉼표로 구분):</label>
+                <input type="text" id="updateFields" placeholder="예: field1,field2.subfield,field3">
+            </div>
+
+            <div style="margin-top: 20px;">
+                <button onclick="uploadJson()">업로드</button>
+                <button onclick="refreshDocumentList()">문서 목록 새로고침</button>
+            </div>
+
+            <div id="status"></div>
+        </div>
+    </div>
+
+    <div id="document-browser" class="tab-content">
+        <div class="container">
+            <h1>Firestore 문서 목록</h1>
+            <button onclick="refreshDocumentList()">문서 목록 새로고침</button>
+
+            <div class="grid-container">
+                <div>
+                    <h3>문서 목록</h3>
+                    <div id="documentList" class="document-list">
+                        <p>문서를 로딩 중입니다...</p>
+                    </div>
+                    <div class="info" style="margin-top: 10px;">
+                        문서를 클릭하면 오른쪽에 내용이 표시됩니다.
+                    </div>
+                </div>
+                <div>
+                    <h3>문서 내용</h3>
+                    <div id="selectedDocument" class="document-preview">
+                        <p>문서를 선택해주세요.</p>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <button id="editSelectedDocBtn" onclick="prepareEditSelectedDocument()" style="display: none;">이
+                            문서 편집하기</button>
+                        <button id="downloadSelectedDocBtn" onclick="downloadDocument()" style="display: none;">문서
+                            다운로드</button>
+                        <button id="copySelectedDocBtn" onclick="copyDocumentToClipboard()" style="display: none;">클립보드에
+                            복사</button>
+                        <button id="deleteSelectedDocBtn" onclick="deleteSelectedDocument()"
+                            style="display: none; background-color: #dc3545;">이 문서 삭제하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stat-updater" class="tab-content">
+        <div class="container">
+            <h1>스탯 정보 일괄 업데이트</h1>
+
+            <div>
+                <label for="documentSelect">대상 문서 선택:</label>
+                <select id="documentSelect">
+                    <option value="">문서를 선택하세요</option>
+                    <option value="guardian-bind-stats.json">수호 환수 장착 스탯</option>
+                    <option value="guardian-registration-stats.json">수호 환수 등록 스탯</option>
+                    <option value="ride-bind-stats.json">탑승 환수 장착 스탯</option>
+                    <option value="ride-registration-stats.json">탑승 환수 등록 스탯</option>
+                    <option value="transform-bind-stats.json">변신 환수 장착 스탯</option>
+                    <option value="transform-registration-stats.json">변신 환수 등록 스탯</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="statInput">스탯 정보 입력:</label>
+                <textarea id="statInput" rows="6" style="width: 100%; padding: 10px; margin-bottom: 10px;" placeholder="예시 형식:
+화린 금사
+25 레벨 경험치 획득증가 13 피해저항 64 대인피해% 3 대인방어% 3 체력회복향상 11 마력회복향상 11"></textarea>
+            </div>
+
+            <div class="options">
+                <button onclick="previewParsing()">스탯 파싱 미리보기</button>
+                <button onclick="updateStats()">스탯 업데이트</button>
+                <button onclick="clearStatInput()">입력 지우기</button>
+            </div>
+
+            <div id="parsingPreview" class="parsing-preview" style="display: none;"></div>
+            <div id="statUpdateStatus" class="info" style="margin-top: 15px; display: none;"></div>
+            <div id="updateResults" style="margin-top: 15px; max-height: 300px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <div id="new-guardian" class="tab-content">
+        <div class="container">
+            <h1>새로운 환수 추가</h1>
+
+            <div>
+                <label for="newGuardianDocumentSelect">대상 문서 선택:</label>
+                <select id="newGuardianDocumentSelect">
+                    <option value="">문서를 선택하세요</option>
+                    <option value="guardian-bind-stats.json">수호 환수 장착 스탯</option>
+                    <option value="guardian-registration-stats.json">수호 환수 등록 스탯</option>
+                    <option value="ride-bind-stats.json">탑승 환수 장착 스탯</option>
+                    <option value="ride-registration-stats.json">탑승 환수 등록 스탯</option>
+                    <option value="transform-bind-stats.json">변신 환수 장착 스탯</option>
+                    <option value="transform-registration-stats.json">변신 환수 등록 스탯</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="newGuardianName">환수 이름:</label>
+                <input type="text" id="newGuardianName" placeholder="예: 화운 금돼지">
+            </div>
+
+            <div>
+                <label for="newGuardianImage">이미지 경로:</label>
+                <input type="text" id="newGuardianImage">
+            </div>
+
+            <div>
+                <label for="newGuardianInfluence">영향력:</label>
+                <select id="newGuardianInfluence">
+                    <option value="-">-</option>
+                    <option value="결의">결의</option>
+                    <option value="고요">고요</option>
+                    <option value="침착">침착</option>
+                    <option value="의지">의지</option>
+                    <option value="활력">활력</option>
+                    <option value="냉정">냉정</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="newGuardianType">환수 타입:</label>
+                <select id="newGuardianType" onchange="updateImagePath()">
+                    <option value="수호">수호</option>
+                    <option value="탑승">탑승</option>
+                    <option value="변신">변신</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="newGuardianGrade">환수 등급:</label>
+                <select id="newGuardianGrade">
+                    <option value="전설">전설</option>
+                    <option value="불멸">불멸</option>
+                </select>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <button onclick="previewNewGuardian()" class="primary">환수 추가 미리보기</button>
+                <button onclick="addNewGuardian()">환수 추가하기</button>
+                <button onclick="clearNewGuardianForm()">양식 초기화</button>
+            </div>
+
+            <div id="newGuardianJsonPreview" class="document-preview" style="display: none;"></div>
+            <div id="newGuardianStatus" class="info" style="margin-top: 15px; display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        let db;
+        let currentDocument = null;
+        let selectedDocumentId = null;
+        let lastImageNumbers = {};
+
+        const documentMap = {
+            "guardian-bind-stats.json": "data-1745203971906",
+            "guardian-registration-stats.json": "data-1745203990701",
+            "ride-bind-stats.json": "data-1745204015994",
+            "ride-registration-stats.json": "data-1745204029836",
+            "transform-bind-stats.json": "data-1745204045512",
+            "transform-registration-stats.json": "data-1745204058405",
+            "gradeSetEffects.json": "data-1745204079667",
+            "factionSetEffects.json": "data-1745204094503",
+            "chak.json": "data-1745204108850",
+        };
+        const statsMapping = {
+            criticalPower: "치명위력",
+            normalMonsterAdditionalDamage: "일반몬스터추가피해",
+            normalMonsterPenetration: "일반몬스터관통",
+            healthIncrease: "체력증가",
+            healthIncreasePercent: "체력증가%",
+            strength: "힘",
+            agility: "민첩",
+            intelligence: "지력",
+            damageAbsorption: "피해흡수",
+            damageResistancePenetration: "피해저항관통",
+            magicIncrease: "마력증가",
+            magicIncreasePercent: "마력증가%",
+            damageResistance: "피해저항",
+            healthPotionEnhancement: "체력시약향상",
+            healthRecoveryImprovement: "체력회복향상",
+            damageIncrease: "피해증가",
+            magicRecoveryImprovement: "마력회복향상",
+            criticalChance: "치명확률",
+            bossMonsterAdditionalDamage: "보스몬스터추가피해",
+            bossMonsterPenetration: "보스몬스터관통",
+            power: "위력",
+            magicPotionEnhancement: "마력시약향상",
+            pvpDamage: "대인피해",
+            pvpDefense: "대인방어",
+            statusEffectAccuracy: "상태이상적중",
+            statusEffectResistance: "상태이상저항",
+            criticalPowerPercent: "치명위력%",
+            pvpDamagePercent: "대인피해%",
+            pvpDefensePercent: "대인방어%",
+            criticalDamageResistance: "치명피해저항",
+            criticalResistance: "치명저항",
+            movementSpeed: "이동속도",
+            destructionPowerIncrease: "파괴력증가",
+            destructionPowerPercent: "파괴력증가%",
+            armorStrength: "무장도",
+            lootAcquisitionIncrease: "전리품획득증가",
+            experienceGainIncrease: "경험치획득증가",
+        };
+        const reverseDocumentMap = {};
+        for (const [fileName, docId] of Object.entries(documentMap)) {
+            reverseDocumentMap[docId] = fileName;
+        }
+
+        const typeToPath = {
+            "수호": "guardian",
+            "탑승": "ride",
+            "변신": "transform"
+        };
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBWBbe8carOdeIzP6hQsarDOz5H0TuEj9A",
+            authDomain: "baram-yeon.firebaseapp.com",
+            projectId: "baram-yeon",
+            storageBucket: "baram-yeon.firebasestorage.app",
+            messagingSenderId: "924298156656",
+            appId: "1:924298156656:web:845c94e771625fbd24b2b5",
+            measurementId: "G-F2BT2T7HCL",
+        };
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+
+            const connectionStatusDiv = document.getElementById('connectionStatus');
+            connectionStatusDiv.className = 'success';
+            connectionStatusDiv.textContent = "Firebase에 연결되었습니다.";
+
+            refreshDocumentList();
+            loadImageNumbers();
+        } catch (error) {
+            const connectionStatusDiv = document.getElementById('connectionStatus');
+            connectionStatusDiv.className = 'error';
+            connectionStatusDiv.textContent = `Firebase 연결 오류: ${error.message}`;
+            console.error("Firebase 초기화 오류:", error);
+        }
+
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                document.getElementById(this.dataset.tab).classList.add('active');
+
+                if (this.dataset.tab === 'document-browser') {
+                    refreshDocumentList();
+                }
+
+                if (this.dataset.tab === 'new-guardian') {
+                    updateImagePath(); // 새 환수 추가 탭으로 갈 때 이미지 경로 업데이트
+                }
+            });
+        });
+
+        document.querySelectorAll('input[name="uploadMode"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.getElementById('updateFieldsContainer').style.display =
+                    this.value === 'update' ? 'block' : 'none';
+            });
+        });
+
+        document.getElementById('newGuardianDocumentSelect').addEventListener('change', function () {
+            const selectedDoc = this.value;
+            if (selectedDoc) {
+                const type = selectedDoc.split('-')[0];
+                const statType = selectedDoc.includes('bind') ? '장착' : '등록';
+
+                document.getElementById('newGuardianType').value = type === 'guardian' ? '수호' :
+                    type === 'ride' ? '탑승' : '변신';
+
+                updateImagePath();
+            }
+        });
+
+        document.getElementById('newGuardianGrade').addEventListener('change', function () {
+            updateImagePath();
+        });
+
+        async function loadImageNumbers() {
+            try {
+                for (const docFileName in documentMap) {
+                    const docId = documentMap[docFileName];
+                    const docRef = db.collection("jsonData").doc(docId);
+                    const docSnapshot = await docRef.get();
+
+                    if (docSnapshot.exists) {
+                        const data = docSnapshot.data();
+                        if (data.data && Array.isArray(data.data)) {
+                            const type = docFileName.split('-')[0]; // guardian, ride, transform
+
+                            let lastNormal = 0;
+                            let lastImmortal = 0;
+
+                            data.data.forEach(item => {
+                                if (item.image) {
+                                    // 전설 환수 이미지 (예: images/guardian/guardian_70.jpg)
+                                    const normalMatch = item.image.match(new RegExp(`images/${type}/${type}_(\\d+)\\.jpg`));
+                                    if (normalMatch && normalMatch[1]) {
+                                        const num = parseInt(normalMatch[1]);
+                                        if (num > lastNormal) {
+                                            lastNormal = num;
+                                        }
+                                    }
+
+                                    // 불멸 환수 이미지 (예: images/guardian/guardian_i3.jpg)
+                                    const immortalMatch = item.image.match(new RegExp(`images/${type}/${type}_i(\\d+)\\.jpg`));
+                                    if (immortalMatch && immortalMatch[1]) {
+                                        const num = parseInt(immortalMatch[1]);
+                                        if (num > lastImmortal) {
+                                            lastImmortal = num;
+                                        }
+                                    }
+                                }
+                            });
+
+                            if (!lastImageNumbers[docFileName]) {
+                                lastImageNumbers[docFileName] = {};
+                            }
+                            lastImageNumbers[docFileName].normal = lastNormal;
+                            lastImageNumbers[docFileName].immortal = lastImmortal;
+                        }
+                    }
+                }
+                console.log("이미지 번호 로딩 완료:", lastImageNumbers);
+                updateImagePath(); // 이미지 번호 로딩 후 초기 이미지 경로 설정
+            } catch (error) {
+                console.error("이미지 번호 로딩 오류:", error);
+            }
+        }
+
+        function updateImagePath() {
+            const docFileName = document.getElementById('newGuardianDocumentSelect').value;
+            const type = document.getElementById('newGuardianType').value;
+            const grade = document.getElementById('newGuardianGrade').value;
+
+            if (!type) return;
+
+            const typeForPath = typeToPath[type];
+            const isImmortal = grade === '불멸';
+
+            let nextNumber = 1;
+
+            if (docFileName && lastImageNumbers[docFileName]) {
+                if (isImmortal) {
+                    nextNumber = (lastImageNumbers[docFileName].immortal || 0) + 1;
+                } else {
+                    nextNumber = (lastImageNumbers[docFileName].normal || 0) + 1;
+                }
+            }
+
+            let prefix = `images/${typeForPath}/${typeForPath}_`;
+            if (isImmortal) {
+                prefix += 'i';
+            }
+
+            document.getElementById('newGuardianImage').value = `${prefix}${nextNumber}.jpg`;
+        }
+
+        async function refreshDocumentList() {
+            const documentListDiv = document.getElementById('documentList');
+            documentListDiv.innerHTML = '<p>문서를 로딩 중입니다...</p>';
+
+            try {
+                const snapshot = await db.collection("jsonData").get();
+
+                if (snapshot.empty) {
+                    documentListDiv.innerHTML = '<p>문서가 없습니다.</p>';
+                    return;
+                }
+
+                let listHTML = '';
+                snapshot.forEach(doc => {
+                    const docId = doc.id;
+                    const fileName = reverseDocumentMap[docId] || docId;
+                    const isSelected = selectedDocumentId === docId ? 'selected' : '';
+
+                    listHTML += `
+                        <div class="document-item ${isSelected}" onclick="viewDocument('${docId}')">
+                            <span class="document-name">${fileName}</span>
+                            <span class="document-id">${docId}</span>
+                        </div>
+                    `;
+                });
+
+                documentListDiv.innerHTML = listHTML;
+            } catch (error) {
+                documentListDiv.innerHTML = `<p class="error">문서 목록 로드 오류: ${error.message}</p>`;
+                console.error("문서 목록 로드 오류:", error);
+            }
+        }
+
+        async function viewDocument(documentId) {
+            selectedDocumentId = documentId;
+            const selectedDocumentDiv = document.getElementById('selectedDocument');
+            const editBtn = document.getElementById('editSelectedDocBtn');
+            const downloadBtn = document.getElementById('downloadSelectedDocBtn');
+            const copyBtn = document.getElementById('copySelectedDocBtn');
+            const deleteBtn = document.getElementById('deleteSelectedDocBtn');
+
+            document.querySelectorAll('.document-item').forEach(item => {
+                item.classList.remove('selected');
+                if (item.querySelector('.document-id').textContent === documentId) {
+                    item.classList.add('selected');
+                }
+            });
+
+            try {
+                selectedDocumentDiv.innerHTML = '<p>문서를 로딩 중입니다...</p>';
+
+                const docRef = db.collection("jsonData").doc(documentId);
+                const docSnapshot = await docRef.get();
+
+                if (docSnapshot.exists) {
+                    const data = docSnapshot.data();
+                    const fileName = reverseDocumentMap[documentId] || documentId;
+
+                    selectedDocumentDiv.innerHTML = `
+                        <h4>파일명: ${fileName}</h4>
+                        <div>문서 ID: ${documentId}</div>
+                        <hr>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+
+                    editBtn.style.display = 'inline-block';
+                    downloadBtn.style.display = 'inline-block';
+                    copyBtn.style.display = 'inline-block';
+                    deleteBtn.style.display = 'inline-block';
+                } else {
+                    selectedDocumentDiv.innerHTML = '<p>문서가 존재하지 않습니다.</p>';
+                    editBtn.style.display = 'none';
+                    downloadBtn.style.display = 'none';
+                    copyBtn.style.display = 'none';
+                    deleteBtn.style.display = 'none';
+                }
+            } catch (error) {
+                selectedDocumentDiv.innerHTML = `<p class="error">문서 로드 오류: ${error.message}</p>`;
+                console.error("문서 로드 오류:", error);
+                editBtn.style.display = 'none';
+                downloadBtn.style.display = 'none';
+                copyBtn.style.display = 'none';
+                deleteBtn.style.display = 'none';
+            }
+        }
+
+        function prepareEditSelectedDocument() {
+            if (selectedDocumentId) {
+                document.getElementById('documentName').value = selectedDocumentId;
+
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.remove('active');
+                    if (tab.dataset.tab === 'document-manager') {
+                        tab.classList.add('active');
+                    }
+                });
+
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === 'document-manager') {
+                        content.classList.add('active');
+                    }
+                });
+
+                checkDocument();
+            }
+        }
+
+        async function deleteSelectedDocument() {
+            if (!selectedDocumentId) return;
+
+            const fileName = reverseDocumentMap[selectedDocumentId] || selectedDocumentId;
+
+            if (confirm(`문서 "${fileName}" (ID: ${selectedDocumentId})을(를) 삭제하시겠습니까?`)) {
+                try {
+                    await db.collection("jsonData").doc(selectedDocumentId).delete();
+                    alert(`문서 "${fileName}"이(가) 삭제되었습니다.`);
+                    selectedDocumentId = null;
+
+                    refreshDocumentList();
+                    document.getElementById('selectedDocument').innerHTML = '<p>문서를 선택해주세요.</p>';
+                    document.getElementById('editSelectedDocBtn').style.display = 'none';
+                    document.getElementById('downloadSelectedDocBtn').style.display = 'none';
+                    document.getElementById('copySelectedDocBtn').style.display = 'none';
+                    document.getElementById('deleteSelectedDocBtn').style.display = 'none';
+                } catch (error) {
+                    alert(`문서 삭제 오류: ${error.message}`);
+                    console.error("문서 삭제 오류:", error);
+                }
+            }
+        }
+
+        async function checkDocument() {
+            const documentName = document.getElementById('documentName').value;
+            const documentInfo = document.getElementById('documentInfo');
+            const documentPreview = document.getElementById('documentPreview');
+            const statusDiv = document.getElementById('status');
+
+            if (!documentName) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = "문서 이름을 입력해주세요.";
+                documentInfo.style.display = 'none';
+                documentPreview.style.display = 'none';
+                return;
+            }
+
+            statusDiv.className = 'info';
+            statusDiv.textContent = "문서 확인 중...";
+
+            try {
+                const docRef = db.collection("jsonData").doc(documentName);
+                const docSnapshot = await docRef.get();
+
+                if (docSnapshot.exists) {
+                    currentDocument = docSnapshot.data();
+                    const fileName = reverseDocumentMap[documentName] || documentName;
+
+                    documentInfo.style.display = 'block';
+                    documentInfo.textContent = `문서가 존재합니다: ${fileName} (ID: ${documentName})`;
+
+                    documentPreview.style.display = 'block';
+                    documentPreview.innerHTML = '<h4>현재 문서 내용:</h4><pre>' + JSON.stringify(currentDocument, null, 2) + '</pre>';
+
+                    document.querySelector('input[name="uploadMode"][value="merge"]').checked = true;
+
+                    statusDiv.className = 'success';
+                    statusDiv.textContent = "문서를 찾았습니다.";
+                } else {
+                    documentInfo.style.display = 'block';
+                    documentInfo.textContent = `문서가 존재하지 않습니다: ${documentName}`;
+                    documentPreview.style.display = 'none';
+                    currentDocument = null;
+
+                    document.querySelector('input[name="uploadMode"][value="create"]').checked = true;
+
+                    statusDiv.className = 'info';
+                    statusDiv.textContent = "새 문서를 생성할 수 있습니다.";
+                }
+            } catch (error) {
+                documentInfo.style.display = 'none';
+                documentPreview.style.display = 'none';
+                statusDiv.className = 'error';
+                statusDiv.textContent = `오류 발생: ${error.message}`;
+                console.error("문서 확인 오류:", error);
+            }
+
+            const updateMode = document.querySelector('input[name="uploadMode"]:checked').value;
+            document.getElementById('updateFieldsContainer').style.display =
+                updateMode === 'update' ? 'block' : 'none';
+        }
+
+        function uploadJson() {
+            const fileInput = document.getElementById('jsonFileInput');
+            const documentName = document.getElementById('documentName').value;
+            const statusDiv = document.getElementById('status');
+            const uploadMode = document.querySelector('input[name="uploadMode"]:checked').value;
+
+            if (!documentName) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = "문서 이름을 입력해주세요.";
+                return;
+            }
+
+            if (!fileInput.files.length) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = "파일을 선택해주세요.";
+                return;
+            }
+
+            const file = fileInput.files[0];
+            if (file.size > 1000000) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = "파일이 너무 큽니다. Firestore 문서 크기 제한은 1MB입니다.";
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const jsonData = JSON.parse(e.target.result);
+                    statusDiv.className = 'info';
+                    statusDiv.textContent = "업로드 중...";
+
+                    switch (uploadMode) {
+                        case 'create':
+                            createDocument(documentName, jsonData);
+                            break;
+                        case 'overwrite':
+                            overwriteDocument(documentName, jsonData);
+                            break;
+                        case 'merge':
+                            mergeDocument(documentName, jsonData);
+                            break;
+                        case 'update':
+                            updateSpecificFields(documentName, jsonData);
+                            break;
+                    }
+
+                    if (uploadMode === 'create' && !reverseDocumentMap[documentName]) {
+                        reverseDocumentMap[documentName] = file.name;
+                    }
+
+                } catch (error) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = `JSON 파싱 오류: ${error.message}`;
+                }
+            };
+
+            reader.readAsText(file);
+        }
+
+        async function createDocument(documentName, jsonData) {
+            const statusDiv = document.getElementById('status');
+
+            try {
+                const docSnapshot = await db.collection("jsonData").doc(documentName).get();
+
+                if (docSnapshot.exists) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = `문서가 이미 존재합니다. 다른 이름을 사용하거나 다른 업로드 모드를 선택하세요.`;
+                } else {
+                    await db.collection("jsonData").doc(documentName).set(jsonData);
+
+                    const fileName = document.getElementById('jsonFileInput').files[0].name;
+                    reverseDocumentMap[documentName] = fileName;
+
+                    statusDiv.className = 'success';
+                    statusDiv.textContent = `새 문서가 생성되었습니다! 파일명: ${fileName}, 문서 ID: ${documentName}`;
+
+                    checkDocument();
+                    refreshDocumentList();
+                }
+            } catch (error) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = `오류 발생: ${error.message}`;
+                console.error("업로드 오류:", error);
+            }
+        }
+
+        async function overwriteDocument(documentName, jsonData) {
+            const statusDiv = document.getElementById('status');
+
+            try {
+                await db.collection("jsonData").doc(documentName).set(jsonData);
+                const fileName = reverseDocumentMap[documentName] || documentName;
+
+                statusDiv.className = 'success';
+                statusDiv.textContent = `문서가 덮어쓰기 되었습니다! 파일명: ${fileName}, 문서 ID: ${documentName}`;
+
+                checkDocument();
+                refreshDocumentList();
+            } catch (error) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = `오류 발생: ${error.message}`;
+                console.error("덮어쓰기 오류:", error);
+            }
+        }
+
+        async function mergeDocument(documentName, jsonData) {
+            const statusDiv = document.getElementById('status');
+
+            try {
+                await db.collection("jsonData").doc(documentName).set(jsonData, { merge: true });
+                const fileName = reverseDocumentMap[documentName] || documentName;
+
+                statusDiv.className = 'success';
+                statusDiv.textContent = `문서가 병합되었습니다! 파일명: ${fileName}, 문서 ID: ${documentName}`;
+
+                checkDocument();
+                refreshDocumentList();
+            } catch (error) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = `오류 발생: ${error.message}`;
+                console.error("병합 오류:", error);
+            }
+        }
+
+        async function updateSpecificFields(documentName, jsonData) {
+            const statusDiv = document.getElementById('status');
+            const updateFields = document.getElementById('updateFields').value.trim();
+
+            if (!updateFields) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = "업데이트할 필드를 지정해주세요.";
+                return;
+            }
+
+            try {
+                const fields = updateFields.split(',').map(f => f.trim());
+                const updateData = {};
+
+                for (const field of fields) {
+                    const parts = field.split('.');
+                    let value = jsonData;
+                    let valid = true;
+
+                    for (const part of parts) {
+                        if (value && typeof value === 'object' && part in value) {
+                            value = value[part];
+                        } else {
+                            valid = false;
+                            break;
+                        }
+                    }
+
+                    if (valid) {
+                        if (parts.length === 1) {
+                            updateData[field] = value;
+                        } else {
+                            let currentObj = updateData;
+                            for (let i = 0; i < parts.length - 1; i++) {
+                                if (!currentObj[parts[i]]) {
+                                    currentObj[parts[i]] = {};
+                                }
+                                currentObj = currentObj[parts[i]];
+                            }
+                            currentObj[parts[parts.length - 1]] = value;
+                        }
+                    } else {
+                        statusDiv.className = 'error';
+                        statusDiv.textContent = `필드 경로를 찾을 수 없습니다: ${field}`;
+                        return;
+                    }
+                }
+
+                await db.collection("jsonData").doc(documentName).update(updateData);
+                const fileName = reverseDocumentMap[documentName] || documentName;
+
+                statusDiv.className = 'success';
+                statusDiv.textContent = `선택한 필드가 업데이트되었습니다! 파일명: ${fileName}, 문서 ID: ${documentName}, 필드: ${updateFields}`;
+
+                checkDocument();
+                refreshDocumentList();
+            } catch (error) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = `오류 발생: ${error.message}`;
+                console.error("업데이트 오류:", error);
+            }
+        }
+
+        function parseInput(input) {
+            const result = {
+                parseSteps: [],
+                success: false,
+                guardianName: '',
+                level: null,
+                stats: {},
+                errors: [],
+                statMappingDetails: []
+            };
+
+            try {
+                if (!input.trim()) {
+                    result.errors.push("입력이 비어있습니다.");
+                    return result;
+                }
+
+                const lines = input.trim().split(/\n+/).filter(line => line.trim() !== '');
+                result.parseSteps.push({
+                    step: "입력 분리",
+                    value: lines
+                });
+
+                if (lines.length < 1) {
+                    result.errors.push("입력이 비어있습니다.");
+                    return result;
+                }
+
+                result.guardianName = lines[0].trim();
+                result.parseSteps.push({
+                    step: "환수 이름 추출",
+                    value: result.guardianName
+                });
+
+                if (!result.guardianName) {
+                    result.errors.push("환수 이름을 추출할 수 없습니다.");
+                    return result;
+                }
+
+                let levelLine = lines.length > 1 ? lines[1].trim() : '';
+                let statsText = '';
+                let lineIndex = 2;
+
+                const levelMatch = levelLine.match(/(\d+)\s*레벨/);
+                if (levelMatch) {
+                    result.level = parseInt(levelMatch[1]);
+                    result.parseSteps.push({
+                        step: "레벨 추출",
+                        value: result.level
+                    });
+
+                    statsText = levelLine.substring(levelMatch[0].length).trim();
+
+                    if (statsText) {
+                        result.parseSteps.push({
+                            step: "한 줄 스탯 정보 감지",
+                            value: statsText
+                        });
+
+                        parseStatsFromText(statsText, result);
+                    }
+                } else {
+                    const simpleLevelMatch = levelLine.match(/^(\d+)/);
+                    if (simpleLevelMatch) {
+                        result.level = parseInt(simpleLevelMatch[1]);
+                        result.parseSteps.push({
+                            step: "레벨 추출",
+                            value: result.level
+                        });
+
+                        statsText = levelLine.substring(simpleLevelMatch[0].length).trim();
+
+                        if (statsText) {
+                            result.parseSteps.push({
+                                step: "한 줄 스탯 정보 감지",
+                                value: statsText
+                            });
+
+                            parseStatsFromText(statsText, result);
+                        }
+                    } else if (lines.length === 1) {
+                        result.level = 0;
+                        parseStatsFromText(lines[0], result);
+                        lineIndex = 1;
+                    }
+                }
+
+                if (result.level === null) {
+                    result.level = 0;
+                    result.parseSteps.push({
+                        step: "레벨 기본값 설정",
+                        value: result.level
+                    });
+                }
+
+                for (let i = lineIndex; i < lines.length; i++) {
+                    parseStatsFromLine(lines[i], result);
+                }
+
+                result.parseSteps.push({
+                    step: "스탯 추출 완료",
+                    value: result.stats
+                });
+
+                result.success = true;
+                return result;
+            } catch (error) {
+                result.errors.push(`파싱 오류: ${error.message}`);
+                return result;
+            }
+        }
+
+        function parseStatsFromText(text, result) {
+            const korToEng = {};
+            for (const [engKey, korName] of Object.entries(statsMapping)) {
+                korToEng[korName] = engKey;
+                korToEng[korName.replace(/\s+/g, '')] = engKey;
+            }
+
+            const sortedStatNames = Object.keys(korToEng).sort((a, b) => b.length - a.length);
+
+            let remainingText = text;
+            let matchFound = true;
+
+            while (remainingText && matchFound) {
+                matchFound = false;
+
+                for (const korStatName of sortedStatNames) {
+                    const pattern = new RegExp(`${korStatName}\\s*(\\d+(?:,\\d+)?(?:\\.\\d+)?)`, 'i');
+                    const match = remainingText.match(pattern);
+
+                    if (match) {
+                        const statValue = match[1].replace(/,/g, '');
+                        const engKey = korToEng[korStatName] || korToEng[korStatName.replace(/\s+/g, '')];
+
+                        if (engKey) {
+                            result.stats[engKey] = statValue;
+                            result.statMappingDetails.push({
+                                korean: korStatName,
+                                english: engKey,
+                                value: statValue,
+                                method: "텍스트 내 패턴 매칭"
+                            });
+
+                            remainingText = remainingText.replace(match[0], '').trim();
+                            matchFound = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!matchFound && remainingText) {
+                    const generalMatch = remainingText.match(/([가-힣%\s]+)(\d+(?:,\d+)?(?:\.\d+)?)/);
+                    if (generalMatch) {
+                        const korStatName = generalMatch[1].trim();
+                        const statValue = generalMatch[2].replace(/,/g, '');
+
+                        let engKey = korToEng[korStatName];
+                        let matchMethod = "정확한 매칭";
+
+                        if (!engKey) {
+                            const noSpaceName = korStatName.replace(/\s+/g, '');
+                            engKey = korToEng[noSpaceName];
+                            if (engKey) matchMethod = "공백 제거 후 매칭";
+                        }
+
+                        if (!engKey) {
+                            for (const [korName, eng] of Object.entries(korToEng)) {
+                                if (korName.includes(korStatName) || korStatName.includes(korName)) {
+                                    engKey = eng;
+                                    matchMethod = `부분 문자열 매칭: ${korName}`;
+                                    break;
+                                }
+
+                                const noSpaceName = korStatName.replace(/\s+/g, '');
+                                const noSpaceKorName = korName.replace(/\s+/g, '');
+                                if (noSpaceName === noSpaceKorName ||
+                                    noSpaceKorName.includes(noSpaceName) ||
+                                    noSpaceName.includes(noSpaceKorName)) {
+                                    engKey = eng;
+                                    matchMethod = `공백 제거 후 부분 매칭: ${korName}`;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (engKey) {
+                            result.stats[engKey] = statValue;
+                            result.statMappingDetails.push({
+                                korean: korStatName,
+                                english: engKey,
+                                value: statValue,
+                                method: matchMethod
+                            });
+
+                            remainingText = remainingText.replace(generalMatch[0], '').trim();
+                            matchFound = true;
+                        } else {
+                            result.parseSteps.push({
+                                step: "매핑 실패",
+                                value: `스탯 "${korStatName}" 매핑 실패`
+                            });
+                            remainingText = remainingText.replace(generalMatch[0], '').trim();
+                            matchFound = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        function parseStatsFromLine(line, result) {
+            const match = line.match(/^(.*?)(\d+(?:,\d+)?(?:\.\d+)?)$/);
+            if (!match) return;
+
+            const korStatName = match[1].trim();
+            const statValue = match[2].replace(/,/g, '');
+
+            let engKey = null;
+            let matchMethod = null;
+
+            for (const [eng, kor] of Object.entries(statsMapping)) {
+                if (kor === korStatName) {
+                    engKey = eng;
+                    matchMethod = "정확한 매칭";
+                    break;
+                }
+
+                if (kor.replace(/\s+/g, '') === korStatName.replace(/\s+/g, '')) {
+                    engKey = eng;
+                    matchMethod = "공백 제거 후 매칭";
+                    break;
+                }
+
+                if (kor.includes(korStatName) || korStatName.includes(kor)) {
+                    engKey = eng;
+                    matchMethod = `부분 문자열 매칭: ${kor}`;
+                    break;
+                }
+
+                const noSpaceName = korStatName.replace(/\s+/g, '');
+                const noSpaceKor = kor.replace(/\s+/g, '');
+                if (noSpaceName === noSpaceKor ||
+                    noSpaceKor.includes(noSpaceName) ||
+                    noSpaceName.includes(noSpaceKor)) {
+                    engKey = eng;
+                    matchMethod = `공백 제거 후 부분 매칭: ${kor}`;
+                    break;
+                }
+            }
+
+            if (engKey) {
+                result.stats[engKey] = statValue;
+                result.statMappingDetails.push({
+                    korean: korStatName,
+                    english: engKey,
+                    value: statValue,
+                    method: matchMethod
+                });
+            } else {
+                result.parseSteps.push({
+                    step: "매핑 실패",
+                    value: `스탯 "${korStatName}" 매핑 실패`
+                });
+            }
+        }
+
+        function previewParsing() {
+            const input = document.getElementById('statInput').value.trim();
+            const previewDiv = document.getElementById('parsingPreview');
+            const statusDiv = document.getElementById('statUpdateStatus');
+
+            statusDiv.style.display = 'none';
+
+            if (!input) {
+                previewDiv.innerHTML = '<p class="error">입력이 비어있습니다.</p>';
+                previewDiv.style.display = 'block';
+                return;
+            }
+
+            const result = parseInput(input);
+            let html = '<h3>파싱 결과</h3>';
+
+            html += `<div class="parsing-step">
+                <div class="key-value">
+                    <div class="key">환수 이름:</div>
+                    <div class="value">${result.guardianName || '추출 실패'}</div>
+                </div>
+                <div class="key-value">
+                    <div class="key">레벨:</div>
+                    <div class="value">${result.level || '추출 실패'}</div>
+                </div>
+            </div>`;
+
+            html += `<div class="parsing-step" style="background-color: #f0f8ff; border: 1px solid #4285f4;">
+                <h4 style="margin-top: 0; color: #4285f4;">영어로 변환된 스탯 정보</h4>`;
+
+            if (Object.keys(result.stats).length > 0) {
+                html += `<table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+                    <tr style="background-color: #e6f2ff;">
+                        <th style="padding: 8px; border: 1px solid #b8daff; text-align: left; width: 35%;">영어 키</th>
+                        <th style="padding: 8px; border: 1px solid #b8daff; text-align: left; width: 15%;">값</th>
+                        <th style="padding: 8px; border: 1px solid #b8daff; text-align: left; width: 50%;">한글 이름</th>
+                    </tr>`;
+
+                for (const [engKey, value] of Object.entries(result.stats)) {
+                    html += `<tr>
+                        <td style="padding: 8px; border: 1px solid #b8daff; font-family: monospace;">${engKey}</td>
+                        <td style="padding: 8px; border: 1px solid #b8daff; font-weight: bold;">${value}</td>
+                        <td style="padding: 8px; border: 1px solid #b8daff;">${statsMapping[engKey] || '매핑 없음'}</td>
+                    </tr>`;
+                }
+
+                html += `</table>`;
+
+                const jsonStr = JSON.stringify(result.stats).replace(/'/g, "\\'");
+                html += `<div style="margin-top: 15px;">
+                    <h4 style="margin-top: 0; color: #4285f4;">
+                        JSON 형식
+                        <button onclick="copyToClipboard('${jsonStr}');" style="margin-left: 10px; padding: 3px 8px; font-size: 0.8em;">클립보드에 복사</button>
+                    </h4>
+                    <pre style="background-color: #f5f5f5; padding: 10px; border-radius: 4px; overflow-x: auto;">${JSON.stringify(result.stats, null, 2)}</pre>
+                </div>`;
+            } else {
+                html += `<p>스탯 정보를 추출하지 못했습니다.</p>`;
+            }
+            html += `</div>`;
+
+            if (result.statMappingDetails && result.statMappingDetails.length > 0) {
+                html += `<div class="parsing-step">
+                    <h4 style="margin-top: 0;">스탯 매핑 세부 정보</h4>
+                    <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+                        <tr style="background-color: #f2f2f2;">
+                            <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">입력된 한글</th>
+                            <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">영어 키</th>
+                            <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">값</th>
+                            <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">매칭 방법</th>
+                        </tr>`;
+
+                for (const detail of result.statMappingDetails) {
+                    html += `<tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${detail.korean}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-family: monospace;">${detail.english}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${detail.value}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${detail.method}</td>
+                    </tr>`;
+                }
+
+                html += `</table></div>`;
+            }
+
+            html += `<details style="margin-top: 15px;">
+                <summary style="cursor: pointer; padding: 8px; background-color: #f2f2f2; border-radius: 4px;">원본 파싱 단계 보기</summary>
+                <div style="padding: 10px; border: 1px solid #ddd; border-radius: 0 0 4px 4px; margin-top: 5px;">`;
+
+            for (const step of result.parseSteps) {
+                html += `<div class="parsing-step">
+                    <div class="key-value">
+                        <div class="key">단계:</div>
+                        <div class="value">${step.step}</div>
+                    </div>`;
+
+                if (step.step === "입력 분리") {
+                    html += `<div class="key-value">
+                        <div class="key">분리된 줄:</div>
+                        <div class="value">${step.value.map(l => `"${l}"`).join('<br>')}</div>
+                    </div>`;
+                } else {
+                    html += `<div class="key-value">
+                        <div class="key">결과:</div>
+                        <div class="value">${typeof step.value === 'object' ? JSON.stringify(step.value) : step.value}</div>
+                    </div>`;
+                }
+
+                html += `</div>`;
+            }
+
+            html += `</div></details>`;
+
+            if (result.errors.length) {
+                html += `<div class="error" style="margin-top: 15px; padding: 10px;">
+                    <strong>오류:</strong><br>
+                    ${result.errors.map(err => `- ${err}`).join('<br>')}
+                </div>`;
+            } else {
+                html += `<div class="success" style="margin-top: 15px; padding: 10px;">
+                    <strong>파싱 성공!</strong><br>
+                    환수 이름: ${result.guardianName}<br>
+                    레벨: ${result.level}<br>
+                    스탯 수: ${Object.keys(result.stats).length}
+                </div>`;
+            }
+
+            previewDiv.innerHTML = html;
+            previewDiv.style.display = 'block';
+        }
+
+        async function updateStats() {
+            const input = document.getElementById('statInput').value.trim();
+            const docFileName = document.getElementById('documentSelect').value;
+            const statusDiv = document.getElementById('statUpdateStatus');
+            const resultsDiv = document.getElementById('updateResults');
+            const previewDiv = document.getElementById('parsingPreview');
+
+            previewDiv.style.display = 'none';
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'info';
+            statusDiv.textContent = "스탯 정보 처리 중...";
+            resultsDiv.innerHTML = '';
+
+            if (!input) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = "스탯 정보를 입력해주세요.";
+                return;
+            }
+
+            if (!docFileName) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = "대상 문서를 선택해주세요.";
+                return;
+            }
+
+            const docId = documentMap[docFileName];
+            if (!docId) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = "유효하지 않은 문서입니다.";
+                return;
+            }
+
+            try {
+                const parsedResult = parseInput(input);
+
+                if (!parsedResult.success) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = "입력 파싱에 실패했습니다: " + parsedResult.errors.join(", ");
+                    return;
+                }
+
+                const { guardianName, level, stats } = parsedResult;
+
+                const docRef = db.collection("jsonData").doc(docId);
+                const docSnapshot = await docRef.get();
+
+                if (!docSnapshot.exists) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = `문서를 찾을 수 없습니다: ${docFileName}`;
+                    return;
+                }
+
+                const data = docSnapshot.data();
+                if (!data.data || !Array.isArray(data.data)) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = "문서 형식이 올바르지 않습니다.";
+                    return;
+                }
+
+                let foundGuardian = null;
+                let guardianIndex = -1;
+
+                for (let i = 0; i < data.data.length; i++) {
+                    if (data.data[i].name === guardianName) {
+                        foundGuardian = data.data[i];
+                        guardianIndex = i;
+                        break;
+                    }
+                }
+
+                if (guardianIndex === -1) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = `환수 "${guardianName}"를 찾을 수 없습니다.`;
+                    return;
+                }
+
+                if (!foundGuardian.stats || foundGuardian.stats.length <= level) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = `환수 "${guardianName}"의 ${level}레벨 정보가 존재하지 않습니다.`;
+                    return;
+                }
+
+                const statType = docFileName.includes("-bind-") ? "bindStat" : "registrationStat";
+
+                const updatedData = JSON.parse(JSON.stringify(data));
+                updatedData.data[guardianIndex].stats[level][statType] = stats;
+
+                await docRef.update(updatedData);
+
+                statusDiv.className = 'success';
+                statusDiv.textContent = `환수 "${guardianName}"의 ${level}레벨 스탯이 업데이트되었습니다.`;
+
+                resultsDiv.innerHTML = `
+                    <div class="success" style="padding: 10px;">
+                        <h4>업데이트 성공</h4>
+                        <p><strong>문서:</strong> ${docFileName}</p>
+                        <p><strong>환수:</strong> ${guardianName}</p>
+                        <p><strong>레벨:</strong> ${level}</p>
+                        <p><strong>스탯 타입:</strong> ${statType === 'bindStat' ? '장착 스탯' : '등록 스탯'}</p>
+                        <p><strong>업데이트된 스탯:</strong></p>
+                        <div style="margin-top: 5px;">
+                            ${Object.entries(stats).map(([key, value]) =>
+                    `<span class="stat-pair">${statsMapping[key] || key}: ${value}</span>`
+                ).join(' ')}
+                        </div>
+                    </div>
+                `;
+
+            } catch (error) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = `오류 발생: ${error.message}`;
+                console.error("스탯 업데이트 오류:", error);
+            }
+        }
+
+        function clearStatInput() {
+            document.getElementById('statInput').value = '';
+            document.getElementById('parsingPreview').style.display = 'none';
+            document.getElementById('statUpdateStatus').style.display = 'none';
+            document.getElementById('updateResults').innerHTML = '';
+        }
+
+        async function downloadDocument() {
+            if (!selectedDocumentId) {
+                alert("다운로드할 문서를 먼저 선택해주세요.");
+                return;
+            }
+
+            try {
+                const docSnapshot = await db.collection("jsonData").doc(selectedDocumentId).get();
+
+                if (docSnapshot.exists) {
+                    const data = docSnapshot.data();
+                    const fileName = reverseDocumentMap[selectedDocumentId] || `document-${selectedDocumentId}.json`;
+
+                    const dataStr = JSON.stringify(data, null, 2);
+                    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = URL.createObjectURL(dataBlob);
+                    downloadLink.download = fileName;
+
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+
+                    URL.revokeObjectURL(downloadLink.href);
+                } else {
+                    alert("문서를 찾을 수 없습니다.");
+                }
+            } catch (error) {
+                alert(`다운로드 오류: ${error.message}`);
+                console.error("문서 다운로드 오류:", error);
+            }
+        }
+
+        async function copyDocumentToClipboard() {
+            if (!selectedDocumentId) {
+                alert("복사할 문서를 먼저 선택해주세요.");
+                return;
+            }
+
+            try {
+                const docSnapshot = await db.collection("jsonData").doc(selectedDocumentId).get();
+
+                if (docSnapshot.exists) {
+                    const data = docSnapshot.data();
+                    const dataStr = JSON.stringify(data, null, 2);
+                    copyToClipboard(dataStr);
+                } else {
+                    alert("문서를 찾을 수 없습니다.");
+                }
+            } catch (error) {
+                alert(`복사 오류: ${error.message}`);
+                console.error("문서 복사 오류:", error);
+            }
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        const notification = document.createElement('div');
+                        notification.textContent = "클립보드에 복사되었습니다!";
+                        notification.style.cssText = `
+                            position: fixed;
+                            bottom: 20px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            background-color: #4285f4;
+                            color: white;
+                            padding: 10px 20px;
+                            border-radius: 4px;
+                            z-index: 1000;
+                            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                        `;
+                        document.body.appendChild(notification);
+
+                        setTimeout(() => {
+                            document.body.removeChild(notification);
+                        }, 2000);
+                    })
+                    .catch(err => {
+                        console.error("클립보드 API 복사 실패:", err);
+                        fallbackCopyToClipboard(text);
+                    });
+            } else {
+                fallbackCopyToClipboard(text);
+            }
+        }
+
+        function fallbackCopyToClipboard(text) {
+            try {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+
+                textArea.style.position = 'fixed';
+                textArea.style.top = '0';
+                textArea.style.left = '-9999px';
+
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+
+                if (successful) {
+                    alert("클립보드에 복사되었습니다!");
+                } else {
+                    alert("복사에 실패했습니다. 수동으로 복사해주세요.");
+                }
+            } catch (err) {
+                console.error("대체 복사 방법 실패:", err);
+                alert("복사에 실패했습니다. 수동으로 복사해주세요.");
+            }
+        }
+
+        function clearNewGuardianForm() {
+            document.getElementById('newGuardianDocumentSelect').selectedIndex = 0;
+            document.getElementById('newGuardianName').value = '';
+            document.getElementById('newGuardianImage').value = '';
+            document.getElementById('newGuardianInfluence').selectedIndex = 0;
+            document.getElementById('newGuardianType').selectedIndex = 0;
+            document.getElementById('newGuardianGrade').selectedIndex = 0;
+            document.getElementById('newGuardianJsonPreview').style.display = 'none';
+            document.getElementById('newGuardianStatus').style.display = 'none';
+        }
+
+        function previewNewGuardian() {
+            const name = document.getElementById('newGuardianName').value.trim();
+            const image = document.getElementById('newGuardianImage').value.trim();
+            const influence = document.getElementById('newGuardianInfluence').value;
+            const type = document.getElementById('newGuardianType').value;
+            const grade = document.getElementById('newGuardianGrade').value;
+            const docFileName = document.getElementById('newGuardianDocumentSelect').value;
+            const previewDiv = document.getElementById('newGuardianJsonPreview');
+
+            if (!name) {
+                alert("환수 이름을 입력해주세요.");
+                return;
+            }
+
+            if (!docFileName) {
+                alert("대상 문서를 선택해주세요.");
+                return;
+            }
+
+            const statType = docFileName.includes("-bind-") ? "bindStat" : "registrationStat";
+
+            const newGuardian = {
+                name: name,
+                image: image || `images/${typeToPath[type]}/${typeToPath[type]}_default.jpg`,
+                influence: influence,
+                type: type,
+                grade: grade,
+                stats: []
+            };
+
+            for (let i = 0; i <= 25; i++) {
+                const levelStat = {
+                    level: i
+                };
+                levelStat[statType] = {};
+                newGuardian.stats.push(levelStat);
+            }
+
+            previewDiv.style.display = 'block';
+            previewDiv.innerHTML = `<h4>추가될 환수 데이터 미리보기:</h4>
+                <pre>${JSON.stringify(newGuardian, null, 2)}</pre>
+                <div class="success" style="margin-top: 15px; padding: 10px;">
+                    <p><strong>추가 문서:</strong> ${docFileName}</p>
+                    <p><strong>스탯 타입:</strong> ${statType === 'bindStat' ? '장착 스탯' : '등록 스탯'}</p>
+                    <p>스탯 정보는 '스탯 일괄 업데이트' 탭에서 별도로 업데이트할 수 있습니다.</p>
+                </div>`;
+        }
+
+        async function addNewGuardian() {
+            const name = document.getElementById('newGuardianName').value.trim();
+            const image = document.getElementById('newGuardianImage').value.trim();
+            const influence = document.getElementById('newGuardianInfluence').value;
+            const type = document.getElementById('newGuardianType').value;
+            const grade = document.getElementById('newGuardianGrade').value;
+            const docFileName = document.getElementById('newGuardianDocumentSelect').value;
+
+            const statusDiv = document.getElementById('newGuardianStatus');
+            statusDiv.style.display = 'block';
+
+            if (!name) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = "환수 이름을 입력해주세요.";
+                return;
+            }
+
+            if (!docFileName) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = "대상 문서를 선택해주세요.";
+                return;
+            }
+
+            const docId = documentMap[docFileName];
+            if (!docId) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = `문서를 찾을 수 없습니다: ${docFileName}`;
+                return;
+            }
+
+            try {
+                statusDiv.className = 'info';
+                statusDiv.textContent = "환수 추가 중...";
+
+                const docRef = db.collection("jsonData").doc(docId);
+                const docSnapshot = await docRef.get();
+
+                if (!docSnapshot.exists) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = `문서를 찾을 수 없습니다: ${docFileName}`;
+                    return;
+                }
+
+                const data = docSnapshot.data();
+                if (!data.data || !Array.isArray(data.data)) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = "문서 형식이 올바르지 않습니다.";
+                    return;
+                }
+
+                const existingIndex = data.data.findIndex(guardian => guardian.name === name);
+                if (existingIndex !== -1) {
+                    statusDiv.className = 'warning';
+                    statusDiv.textContent = `같은 이름의 환수가 이미 존재합니다: ${name}`;
+                    if (!confirm("같은 이름의 환수가 이미 존재합니다. 계속 진행하시겠습니까?")) {
+                        return;
+                    }
+                }
+
+                const statType = docFileName.includes("-bind-") ? "bindStat" : "registrationStat";
+
+                const newGuardian = {
+                    name: name,
+                    image: image || `images/${typeToPath[type]}/${typeToPath[type]}_default.jpg`,
+                    influence: influence,
+                    type: type,
+                    grade: grade,
+                    stats: []
+                };
+
+                for (let i = 0; i <= 25; i++) {
+                    const levelStat = {
+                        level: i
+                    };
+                    levelStat[statType] = {};
+                    newGuardian.stats.push(levelStat);
+                }
+
+                const updatedData = JSON.parse(JSON.stringify(data));
+
+                if (existingIndex !== -1) {
+                    updatedData.data[existingIndex] = newGuardian;
+                } else {
+                    updatedData.data.push(newGuardian);
+                }
+
+                await docRef.set(updatedData);
+
+                // 이미지 번호 업데이트
+                if (grade === '불멸') {
+                    if (lastImageNumbers[docFileName]) {
+                        lastImageNumbers[docFileName].immortal++;
+                    }
+                } else {
+                    if (lastImageNumbers[docFileName]) {
+                        lastImageNumbers[docFileName].normal++;
+                    }
+                }
+
+                statusDiv.className = 'success';
+                statusDiv.innerHTML = `
+                    <p>환수 "${name}"이(가) 성공적으로 ${existingIndex !== -1 ? '업데이트' : '추가'}되었습니다.</p>
+                    <p><strong>추가된 문서:</strong> ${docFileName}</p>
+                    <p><strong>문서 ID:</strong> ${docId}</p>
+                    <p><strong>환수 타입:</strong> ${type}</p>
+                    <p><strong>스탯 타입:</strong> ${statType === 'bindStat' ? '장착 스탯' : '등록 스탯'}</p>
+                `;
+
+                clearNewGuardianForm();
+
+            } catch (error) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = `오류 발생: ${error.message}`;
+                console.error("환수 추가 오류:", error);
+            }
+        }
+    </script>
+</body>
+
+</html>

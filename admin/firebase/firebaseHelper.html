@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON 업로드 및 수정</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="firebaseHelper.css">
+
+    <script src="/assets/js/firebaseConfig.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<div class="header-container">
+    <div class="header">
+        <h1>Firebase Helper</h1>
+        <div class="user-info">
+            <span id="userDisplayName"></span>
+            <button id="logoutButton" class="logout-button">로그아웃</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 사용자 정보 표시 및 로그아웃 기능
+    document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(function checkFirebase() {
+            if (typeof firebase !== 'undefined' && firebase.auth) {
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user) {
+                        // 사용자 이름 표시
+                        document.getElementById('userDisplayName').textContent = user.displayName || user.email;
+                    }
+                });
+
+                // 로그아웃 버튼 이벤트 리스너
+                document.getElementById('logoutButton').addEventListener('click', function () {
+                    firebase.auth().signOut().then(function () {
+                        // 로그아웃 성공 시 로그인 페이지로 이동
+                        window.location.href = 'login.html';
+                    }).catch(function (error) {
+                        console.error('로그아웃 실패:', error);
+                        alert('로그아웃 중 오류가 발생했습니다.');
+                    });
+                });
+            } else {
+                setTimeout(checkFirebase, 100);
+            }
+        }, 100);
+    });
+</script>
+
+<body>
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h3>Firebase 초기화 중...</h3>
+            <p>페이지 로딩이 완료될 때까지 잠시만 기다려주세요.</p>
+            <div id="loadingStatus" class="loading-status">서버에 연결 중...</div>
+            <div class="progress-bar-container">
+                <div id="loadingProgressBar" class="progress-bar" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+    <div id="connectionStatus"></div>
+
+    <div class="tab-container">
+        <div class="tab active" data-tab="document-manager">문서 관리</div>
+        <div class="tab" data-tab="document-browser">문서 목록 보기</div>
+        <div class="tab" data-tab="stat-updater">스탯 일괄 업데이트</div>
+        <div class="tab" data-tab="new-guardian">새 환수 추가</div>
+    </div>
+
+    <div id="document-manager" class="tab-content active">
+        <div class="container">
+            <h1>JSON 파일 Firestore에 업로드/수정</h1>
+
+            <div class="form-group">
+                <label for="documentName">문서 이름:</label>
+                <input type="text" id="documentName" placeholder="문서 이름">
+                <button onclick="FirestoreManager.checkDocument()" class="button-primary">문서 확인</button>
+            </div>
+
+            <div id="documentInfo" class="info" style="display:none; margin-top: 10px;"></div>
+            <div id="documentPreview" class="document-preview" style="display:none;"></div>
+
+            <div class="radio-group">
+                <label><input type="radio" name="uploadMode" value="create" checked> 새 문서 생성</label>
+                <label><input type="radio" name="uploadMode" value="overwrite"> 문서 덮어쓰기</label>
+                <label><input type="radio" name="uploadMode" value="merge"> 문서 병합</label>
+                <label><input type="radio" name="uploadMode" value="update"> 특정 필드만 업데이트</label>
+            </div>
+
+            <div class="form-group">
+                <label for="jsonFileInput">JSON 파일:</label>
+                <input type="file" id="jsonFileInput" accept=".json">
+            </div>
+
+            <div id="updateFieldsContainer" class="form-group" style="display:none;">
+                <label for="updateFields">업데이트할 필드 (쉼표로 구분):</label>
+                <input type="text" id="updateFields" placeholder="예: field1,field2.subfield,field3">
+            </div>
+
+            <div class="action-buttons">
+                <button onclick="FirestoreManager.uploadJson()" class="button-primary">업로드</button>
+                <button onclick="FirestoreManager.refreshDocumentList()" class="button-secondary">문서 목록 새로고침</button>
+            </div>
+
+            <div id="status"></div>
+        </div>
+    </div>
+
+    <div id="document-browser" class="tab-content">
+        <div class="container">
+            <h1>Firestore 문서 목록</h1>
+
+            <div class="document-browser-controls">
+                <div class="search-container">
+                    <input type="text" id="documentSearchInput" placeholder="문서 검색..." class="search-input">
+                    <select id="documentTypeFilter" class="filter-select">
+                        <option value="">모든 문서 유형</option>
+                        <option value="guardian">수호 환수</option>
+                        <option value="ride">탑승 환수</option>
+                        <option value="transform">변신 환수</option>
+                        <option value="other">기타</option>
+                    </select>
+                </div>
+                <button onclick="FirestoreManager.refreshDocumentList()" class="refresh-button">
+                    <span class="refresh-icon">↻</span> 문서 목록 새로고침
+                </button>
+            </div>
+
+            <div class="grid-container">
+                <div class="document-list-section">
+                    <div class="section-header">
+                        <h3>문서 목록 <span id="documentCount" class="document-count">(0)</span></h3>
+                    </div>
+                    <div id="documentList" class="document-list">
+                        <p class="loading-message">문서를 로딩 중입니다...</p>
+                    </div>
+                    <div class="info document-info-tip">
+                        문서를 클릭하면 오른쪽에 내용이 표시됩니다.
+                    </div>
+                </div>
+                <div class="document-content-section">
+                    <div class="document-header">
+                        <h3>문서 내용</h3>
+                        <div class="document-toolbar" id="documentToolbar" style="display: none;">
+                            <button id="editSelectedDocBtn" onclick="FirestoreManager.prepareEditSelectedDocument()"
+                                title="문서 편집" class="button-icon">
+                                <span class="btn-icon">✏️</span> 편집
+                            </button>
+                            <button id="downloadSelectedDocBtn" onclick="FirestoreManager.downloadDocument()"
+                                title="문서 다운로드" class="button-icon">
+                                <span class="btn-icon">⬇️</span> 다운로드
+                            </button>
+                            <button id="copySelectedDocBtn" onclick="FirestoreManager.copyDocumentToClipboard()"
+                                title="클립보드에 복사" class="button-icon">
+                                <span class="btn-icon">📋</span> 복사
+                            </button>
+                            <button id="deleteSelectedDocBtn" onclick="FirestoreManager.deleteSelectedDocument()"
+                                class="delete-button button-icon" title="문서 삭제">
+                                <span class="btn-icon">🗑️</span> 삭제
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="selectedDocument" class="document-preview">
+                        <p class="select-message">문서를 선택해주세요.</p>
+                    </div>
+
+                    <div id="jsonEditorContainer" class="json-editor-container">
+                        <div class="edit-mode-tabs">
+                            <div class="edit-mode-tab active" onclick="FirestoreManager.switchEditMode('json')">
+                                <span class="tab-icon">{ }</span> JSON 직접 편집
+                            </div>
+                            <div class="edit-mode-tab" onclick="FirestoreManager.switchEditMode('array')">
+                                <span class="tab-icon">≡</span> 배열 순서 변경
+                            </div>
+                            <div class="edit-mode-tab" onclick="FirestoreManager.switchEditMode('data')">
+                                <span class="tab-icon">📊</span> 데이터 편집
+                            </div>
+                        </div>
+
+                        <div id="jsonEditMode" class="edit-mode-content">
+                            <div class="editor-toolbar">
+                                <button onclick="FirestoreManager.formatJson()" title="JSON 포맷팅" class="button-icon">
+                                    <span class="btn-icon">🔧</span> 포맷팅
+                                </button>
+                                <span class="editor-info">단축키: Ctrl+S = 저장, Ctrl+F = 포맷팅</span>
+                            </div>
+                            <textarea id="jsonEditor" spellcheck="false"></textarea>
+                            <div class="editor-buttons">
+                                <button onclick="FirestoreManager.saveJsonChanges()" class="primary save-button">
+                                    <span class="btn-icon">💾</span> 변경 내용 저장
+                                </button>
+                                <button onclick="FirestoreManager.cancelEditing()" class="cancel-button">
+                                    <span class="btn-icon">❌</span> 편집 취소
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="arrayEditMode" class="edit-mode-content" style="display:none;">
+                            <div class="array-editor-header">
+                                <h4>항목 순서 변경</h4>
+                                <p>아래 항목을 드래그하여 순서를 변경하세요.</p>
+                            </div>
+                            <div id="dataItemsContainer" class="data-items-container"></div>
+                            <div class="editor-buttons">
+                                <button onclick="FirestoreManager.saveArrayOrder()" class="primary save-button">
+                                    <span class="btn-icon">💾</span> 순서 변경 저장
+                                </button>
+                                <button onclick="FirestoreManager.cancelEditing()" class="cancel-button">
+                                    <span class="btn-icon">❌</span> 편집 취소
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="dataEditMode" class="edit-mode-content" style="display:none;">
+                            <div class="data-edit-container">
+                                <div class="guardian-list-container">
+                                    <div class="list-toolbar">
+                                        <h4>환수 목록</h4>
+                                        <input type="text" id="guardianSearchInput" placeholder="환수 검색..."
+                                            class="search-input">
+                                    </div>
+                                    <div id="guardiansList" class="guardians-list"></div>
+                                </div>
+                                <div class="guardian-stats-container">
+                                    <div class="stats-header">
+                                        <h4>레벨별 스탯</h4>
+                                        <span id="selectedGuardianName" class="selected-guardian-label"></span>
+                                    </div>
+                                    <div id="levelTabsContainer" class="level-tabs-wrapper" style="display:none;">
+                                        <div class="level-nav">
+                                            <button onclick="FirestoreManager.goToPreviousLevel()" class="nav-button">
+                                                <span class="btn-icon">◀</span> 이전 레벨
+                                            </button>
+                                            <button onclick="FirestoreManager.goToNextLevel()" class="nav-button">
+                                                다음 레벨 <span class="btn-icon">▶</span>
+                                            </button>
+                                            <button onclick="FirestoreManager.copyPreviousLevelStats()"
+                                                class="copy-button">
+                                                <span class="btn-icon">📋</span> 이전 레벨 복사
+                                            </button>
+                                        </div>
+                                        <div class="level-tabs"></div>
+                                        <div class="level-content-container"></div>
+                                        <div class="stat-actions">
+                                            <h4>능력치 추가</h4>
+                                            <div class="stat-add-form">
+                                                <select id="statSearchDropdown" class="stat-dropdown">
+                                                    <option value="">-- 추가할 능력치 선택 --</option>
+                                                </select>
+                                                <button onclick="FirestoreManager.addSelectedStat()" class="add-button">
+                                                    <span class="btn-icon">+</span> 추가
+                                                </button>
+                                            </div>
+                                            <div id="selectedStatsContainer" class="selected-stats-container"></div>
+                                        </div>
+                                    </div>
+                                    <div id="guardianInfoContainer" class="guardian-info-container">
+                                        <p class="select-message">환수를 선택해주세요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="editor-buttons data-editor-buttons">
+                                <button onclick="FirestoreManager.saveDataChanges()" class="primary save-button">
+                                    <span class="btn-icon">💾</span> 스탯 변경 저장
+                                </button>
+                                <button onclick="FirestoreManager.cancelEditing()" class="cancel-button">
+                                    <span class="btn-icon">❌</span> 편집 취소
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stat-updater" class="tab-content">
+        <div class="container">
+            <h1>스탯 정보 일괄 업데이트</h1>
+
+            <div class="form-group">
+                <label for="documentSelect">대상 문서 선택:</label>
+                <select id="documentSelect">
+                    <option value="">문서를 선택하세요</option>
+                    <option value="guardian-bind-stats.json">guardian-bind-stats</option>
+                    <option value="guardian-registration-stats.json">guardian-registration-stats</option>
+                    <option value="ride-bind-stats.json">ride-bind-stats</option>
+                    <option value="ride-registration-stats.json">ride-registration-stats</option>
+                    <option value="transform-bind-stats.json">transform-bind-stats</option>
+                    <option value="transform-registration-stats.json">transform-registration-stats</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="statInput">스탯 정보 입력:</label>
+                <textarea id="statInput" rows="8" placeholder="예시 형식:
+화린 금사
+25 레벨 경험치 획득증가 13 피해저항 64 대인피해% 3 대인방어% 3 체력회복향상 11 마력회복향상 11"></textarea>
+            </div>
+
+            <div class="action-buttons">
+                <button onclick="FirestoreManager.previewParsing()" class="button-secondary">스탯 파싱 미리보기</button>
+                <button onclick="FirestoreManager.updateStats()" class="button-secondary">스탯 업데이트</button>
+                <button onclick="FirestoreManager.previewStatsSeries()" class="button-secondary">레벨별 스탯 미리보기</button>
+                <button onclick="FirestoreManager.updateStatsSeries()" class="button-primary">레벨별 스탯 업데이트</button>
+                <button onclick="FirestoreManager.clearStatInput()" class="button-secondary">입력 지우기</button>
+            </div>
+
+            <div id="parsingPreview" class="parsing-preview" style="display: none;"></div>
+            <div id="statUpdateStatus" class="info" style="margin-top: 15px; display: none;"></div>
+            <div id="updateResults" style="margin-top: 15px; max-height: 300px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <div id="new-guardian" class="tab-content">
+        <div class="container">
+            <h1>새로운 환수 추가</h1>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="newGuardianDocumentSelect">대상 문서 선택:</label>
+                    <select id="newGuardianDocumentSelect">
+                        <option value="">문서를 선택하세요</option>
+                        <option value="guardian-bind-stats.json">guardian-bind-stats</option>
+                        <option value="guardian-registration-stats.json">guardian-registration-stats</option>
+                        <option value="ride-bind-stats.json">ride-bind-stats</option>
+                        <option value="ride-registration-stats.json">ride-registration-stats</option>
+                        <option value="transform-bind-stats.json">transform-bind-stats</option>
+                        <option value="transform-registration-stats.json">transform-registration-stats</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="newGuardianName">환수 이름:</label>
+                    <input type="text" id="newGuardianName" placeholder="예: 화운 금돼지">
+                </div>
+
+                <div class="form-group">
+                    <label for="newGuardianImage">이미지 경로:</label>
+                    <input type="text" id="newGuardianImage">
+                </div>
+
+                <div class="form-group">
+                    <label for="newGuardianInfluence">세력:</label>
+                    <select id="newGuardianInfluence">
+                        <option value="-">-</option>
+                        <option value="결의">결의</option>
+                        <option value="고요">고요</option>
+                        <option value="침착">침착</option>
+                        <option value="의지">의지</option>
+                        <option value="활력">활력</option>
+                        <option value="냉정">냉정</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="newGuardianType">환수 타입:</label>
+                    <select id="newGuardianType">
+                        <option value="수호">수호</option>
+                        <option value="탑승">탑승</option>
+                        <option value="변신">변신</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="newGuardianGrade">환수 등급:</label>
+                    <select id="newGuardianGrade">
+                        <option value="전설">전설</option>
+                        <option value="불멸">불멸</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button onclick="FirestoreManager.previewNewGuardian()" class="button-primary">환수 추가 미리보기</button>
+                <button onclick="FirestoreManager.addNewGuardian()" class="button-secondary">환수 추가하기</button>
+                <button onclick="FirestoreManager.clearNewGuardianForm()" class="button-secondary">양식 초기화</button>
+            </div>
+
+            <div id="newGuardianJsonPreview" class="document-preview" style="display: none;"></div>
+            <div id="newGuardianStatus" class="info" style="margin-top: 15px; display: none;"></div>
+        </div>
+    </div>
+
+    <div id="notificationContainer"></div>
+
+    <script src="/assets/js/common.js"></script>
+    <script src="firebaseHelper.js"></script>
+    <script>
+        // 인증 상태 확인
+        document.addEventListener('DOMContentLoaded', function () {
+            // Firebase가 로드될 때까지 기다립니다
+            setTimeout(function checkFirebase() {
+                if (typeof firebase !== 'undefined' && firebase.auth) {
+                    firebase.auth().onAuthStateChanged(function (user) {
+                        if (!user) {
+                            // 로그인되지 않은 사용자는 로그인 페이지로 리다이렉션
+                            window.location.href = 'login.html';
+                        }
+                    });
+                } else {
+                    // Firebase가 아직 로드되지 않았으면 재시도
+                    setTimeout(checkFirebase, 100);
+                }
+            }, 100);
+        });
+    </script>
+
+</body>
+
+</html>

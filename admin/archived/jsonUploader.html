@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JSON 업로드</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <script>
+
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyBWBbe8carOdeIzP6hQsarDOz5H0TuEj9A",
+            authDomain: "baram-yeon.firebaseapp.com",
+            projectId: "baram-yeon",
+            storageBucket: "baram-yeon.firebasestorage.app",
+            messagingSenderId: "924298156656",
+            appId: "1:924298156656:web:845c94e771625fbd24b2b5",
+            measurementId: "G-F2BT2T7HCL"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #status {
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>JSON 파일 Firestore에 업로드</h1>
+
+        <div>
+            <input type="file" id="jsonFileInput" accept=".json">
+            <input type="text" id="documentName" placeholder="문서 이름 (선택사항)">
+            <button onclick="uploadJson()">업로드</button>
+        </div>
+
+        <div id="status"></div>
+    </div>
+
+    <script>
+        function uploadJson() {
+            const fileInput = document.getElementById('jsonFileInput');
+            const documentName = document.getElementById('documentName').value || 'data-' + Date.now();
+            const statusDiv = document.getElementById('status');
+
+            if (!fileInput.files.length) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = "파일을 선택해주세요.";
+                return;
+            }
+
+            const file = fileInput.files[0];
+            if (file.size > 1000000) {  // 약 1MB
+                statusDiv.className = 'error';
+                statusDiv.textContent = "파일이 너무 큽니다. Firestore 문서 크기 제한은 1MB입니다.";
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const jsonData = JSON.parse(e.target.result);
+
+                    // Firestore에 저장
+                    const db = firebase.firestore();
+                    statusDiv.textContent = "업로드 중...";
+
+                    db.collection("jsonData").doc(documentName).set(jsonData)
+                        .then(() => {
+                            statusDiv.className = 'success';
+                            statusDiv.textContent = `성공적으로 업로드되었습니다! 문서 ID: ${documentName}`;
+                        })
+                        .catch((error) => {
+                            statusDiv.className = 'error';
+                            statusDiv.textContent = `오류 발생: ${error.message}`;
+                            console.error("업로드 오류:", error);
+                        });
+
+                } catch (error) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = `JSON 파싱 오류: ${error.message}`;
+                }
+            };
+
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+
+</html>

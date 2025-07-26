@@ -1,0 +1,36 @@
+{
+  "lastUpdated": "2025-05-15T00:31:12.577Z",
+  "categories": [
+    "수호",
+    "탑승",
+    "변신"
+  ],
+  "bondRankings": {
+    "수호": {
+      "count": 0,
+      "updatedAt": null
+    },
+    "탑승": {
+      "count": 0,
+      "updatedAt": null
+    },
+    "변신": {
+      "count": 0,
+      "updatedAt": null
+    }
+  },
+  "statRankings": {
+    "수호": {
+      "statCount": 0,
+      "updatedAt": null
+    },
+    "탑승": {
+      "statCount": 0,
+      "updatedAt": null
+    },
+    "변신": {
+      "statCount": 0,
+      "updatedAt": null
+    }
+  }
+}

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Helper - 로그인</title>
+    <link rel="stylesheet" href="firebaseHelper.css">
+
+    <script src="/assets/js/firebaseConfig.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .login-title {
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-input {
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .login-button {
+            padding: 12px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-button:hover {
+            background-color: #3367d6;
+        }
+
+        .login-error {
+            color: #d32f2f;
+            margin-top: 15px;
+        }
+
+        .login-methods {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .social-login {
+            margin-top: 15px;
+        }
+
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .social-button:hover {
+            background-color: #f5f5f5;
+        }
+
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        .admin-request {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h2 class="login-title">Firebase Helper 로그인</h2>
+        <div id="loginStatus" class="info" style="display: none;"></div>
+
+        <div class="login-form">
+            <input type="email" id="email" placeholder="이메일" class="login-input" required>
+            <input type="password" id="password" placeholder="비밀번호" class="login-input" required>
+            <button type="button" id="loginButton" class="login-button">로그인</button>
+        </div>
+
+        <div id="loginError" class="login-error" style="display: none;"></div>
+
+        <div class="login-methods">
+            <p>또는 다른 방법으로 로그인</p>
+            <div class="social-login">
+                <button id="googleLogin" class="social-button">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"
+                        class="social-icon">
+                    Google로 로그인
+                </button>
+            </div>
+        </div>
+
+        <div class="admin-request">
+            <p>접근 권한이 필요하시면 관리자에게 문의하세요.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            initFirebase();
+
+            // 이미 로그인한 사용자는 메인 페이지로 리다이렉트
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    // 사용자가 인증되면 자동으로 메인 페이지로 리다이렉트
+                    window.location.href = 'firebaseHelper.html';
+                }
+            });
+
+            document.getElementById('loginButton').addEventListener('click', function () {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                if (!email || !password) {
+                    showError("이메일과 비밀번호를 모두 입력해주세요.");
+                    return;
+                }
+
+                showStatus("로그인 중...");
+
+                firebase.auth().signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        // 로그인 성공
+                        window.location.href = 'firebaseHelper.html';
+                    })
+                    .catch((error) => {
+                        // 로그인 실패
+                        console.error("로그인 오류:", error);
+                        showError(getErrorMessage(error.code));
+                    });
+            });
+
+            document.getElementById('googleLogin').addEventListener('click', function () {
+                const provider = new firebase.auth.GoogleAuthProvider();
+
+                showStatus("Google 로그인 진행 중...");
+
+                firebase.auth().signInWithPopup(provider)
+                    .then((result) => {
+                        // Google 로그인 성공
+                        window.location.href = 'firebaseHelper.html';
+                    })
+                    .catch((error) => {
+                        console.error("Google 로그인 오류:", error);
+                        showError(getErrorMessage(error.code));
+                    });
+            });
+
+            function initFirebase() {
+                if (typeof firebaseConfig !== "undefined") {
+                    firebase.initializeApp(firebaseConfig);
+                } else {
+                    loadFirebaseConfig()
+                        .then(() => {
+                            firebase.initializeApp(firebaseConfig);
+                        })
+                        .catch((error) => {
+                            console.error("Firebase 설정 로드 실패:", error);
+                            showError("Firebase 연결에 실패했습니다. 나중에 다시 시도해주세요.");
+                        });
+                }
+            }
+
+            function loadFirebaseConfig() {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement("script");
+                    script.src = "assets/js/firebaseConfig.js";
+                    script.onload = () => {
+                        if (typeof firebaseConfig !== "undefined") {
+                            resolve();
+                        } else {
+                            reject(new Error("firebaseConfig가 로드된 스크립트에 정의되지 않았습니다."));
+                        }
+                    };
+                    script.onerror = () => reject(new Error("firebaseConfig.js 로드 실패"));
+                    document.head.appendChild(script);
+                });
+            }
+
+            function showStatus(message) {
+                const statusElement = document.getElementById('loginStatus');
+                statusElement.textContent = message;
+                statusElement.style.display = 'block';
+                document.getElementById('loginError').style.display = 'none';
+            }
+
+            function showError(message) {
+                const errorElement = document.getElementById('loginError');
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+                document.getElementById('loginStatus').style.display = 'none';
+            }
+
+            function getErrorMessage(errorCode) {
+                switch (errorCode) {
+                    case 'auth/invalid-email':
+                        return '유효하지 않은 이메일 주소입니다.';
+                    case 'auth/user-disabled':
+                        return '사용자 계정이 비활성화되었습니다.';
+                    case 'auth/user-not-found':
+                        return '사용자를 찾을 수 없습니다.';
+                    case 'auth/wrong-password':
+                        return '잘못된 비밀번호입니다.';
+                    case 'auth/too-many-requests':
+                        return '너무 많은 로그인 시도가 있었습니다. 나중에 다시 시도해주세요.';
+                    default:
+                        return '로그인 중 오류가 발생했습니다: ' + errorCode;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

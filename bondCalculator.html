@@ -1,0 +1,246 @@
+<!-- Files obfuscated: Sat Jul 26 06:02:15 UTC 2025 -->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>바연화연 - 환수 결속</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="바람의나라: 연 환수정보, 환수 결속, 환수혼 계산기 등 게임 관련 도구 모음">
+    <!-- <script src="assets/js/version-checker.obf.1753509710.js"></script> -->
+    <link rel="icon" type="image/png" href="assets/img/BHY.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/BHY.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.min.1753509734.css">
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="bondCalculator.html">
+                <img src="assets/img/BHY.png" alt="바연화연 로고" class="logo">
+            </a>
+        </div>
+        <nav class="tabs">
+            <div class="tab" id="info-tab" onclick="location.href='info.html'">환수정보</div>
+            <div class="tab active" id="bond-tab" onclick="location.href='bondCalculator.html'">환수 결속</div>
+            <div class="tab" id="ranking-tab" onclick="location.assign('rankingManager.html')">환수 랭킹</div>
+            <div class="tab" id="soul-tab" onclick="location.href='soulCalculator.html'">환수혼 계산</div>
+            <div class="tab" id="chak-tab" onclick="location.href='chak.html'">착 계산</div>
+        </nav>
+    </header>
+    <div class="sub-tabs" id="subTabs">
+        <div class="tab active" data-category="수호">수호</div>
+        <div class="tab" data-category="탑승">탑승</div>
+        <div class="tab" data-category="변신">변신</div>
+    </div>
+
+    <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-XTAnZwWzQOT46c36" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+
+        <div class="ad-container-right">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-l6ShIzRdMfSOcB8v" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+    </div>
+
+    <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-UDsuae5QVIAxX2fS" data-ad-width="320"
+            data-ad-height="50"></ins>
+    </div>
+
+    <div class="view-toggle-container">
+        <label class="toggle-switch">
+            <input type="checkbox" id="influenceToggle">
+            <span class="slider round"></span>
+        </label>
+        <span class="toggle-label">세력별 보기</span>
+    </div>
+    <div class="bond-container">
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="mobile-clear-button-container">
+                    <button class="clear-selection-btn mobile-clear-btn"
+                        onclick="BondCalculatorApp.clearAllSelections()">선택해제</button>
+                </div>
+                <div class="spirit-selection">
+                    <div class="image-container" id="imageContainer"></div>
+                </div>
+            </div>
+            <div class="right-panel">
+                <div class="selected-spirits-container">
+                    <div class="selected-spirits-header">
+                        <div class="header-title-area">
+                            <h3>선택된 환수 (<span id="selectedCountPanel">0</span>/40)</h3>
+                            <button class="clear-selection-btn"
+                                onclick="BondCalculatorApp.clearAllSelections()">선택해제</button>
+                        </div>
+                        <div class="header-controls">
+                            <div class="level-batch-control">
+                                <label>일괄 레벨 설정:</label>
+                                <input type="number" id="batchLevel" min="0" max="25" value="0">
+                                <button class="btn btn-primary"
+                                    onclick="BondCalculatorApp.applyBatchLevel('batchLevel')">적용</button>
+                                <button onclick="BondCalculatorApp.setMaxBatchLevel('batchLevel')"
+                                    class="btn btn-warning max-level-btn">Max</button>
+                            </div>
+                            <div class="calculate-btn-small">
+                                <button id="findOptimalBtn" class="btn btn-secondary"
+                                    onclick="BondCalculatorApp.findOptimalCombination()">최적 조합
+                                    찾기</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="selectedSpirits" class="selected-spirits"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-toggle-container" id="panelToggleContainer">
+        <button class="panel-toggle-button" id="panelToggleBtn">
+            선택된 환수 <span id="mobileSelectedCount">0</span>개 <span class="toggle-icon">▲</span>
+        </button>
+        <div class="right-panel collapsed">
+            <div class="selected-spirits-container">
+                <div class="selected-spirits-header">
+                    <h3>선택된 환수</h3>
+                    <div class="header-controls">
+                        <div class="level-batch-control">
+                            <label>일괄 레벨 설정:</label>
+                            <input type="number" id="mobileBatchLevel" min="0" max="25" value="0">
+                            <button onclick="BondCalculatorApp.applyBatchLevel('mobileBatchLevel')"
+                                class="btn btn-primary apply-level-btn">적용</button>
+                            <button onclick="BondCalculatorApp.setMaxBatchLevel('mobileBatchLevel')"
+                                class="btn btn-warning max-level-btn">Max</button>
+                        </div>
+                        <div class="calculate-btn-small">
+                            <button id="findOptimalBtn" class="btn btn-secondary"
+                                onclick="BondCalculatorApp.findOptimalCombination()">찾기</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="selected-spirits"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-3TYDe2ScVF7pn7fU" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+
+        <div class="ad-container-right">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Sxen5zACA7yhBeet" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+    </div>
+
+    <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Xtg9TanJcnXcaIaY" data-ad-width="320"
+            data-ad-height="50"></ins>
+    </div>
+
+    <div class="help-container tip-container">
+        <button class="help-btn tip-btn" id="tipBtn" aria-label="팁">
+            <span class="help-icon">💡</span>
+        </button>
+        <div class="help-tooltip tip-tooltip" id="tipTooltip">
+            <div class="help-content">
+                <div class="help-header">
+                    <h3>환수 결속 팁</h3>
+                    <button class="close-help" id="closeTip">&times;</button>
+                </div>
+                <ul class="help-list">
+                    <li>각인 수치는 장착(결속) 효과에 반영 됩니다.</li>
+                    <li>환수 레벨 9, 14 레벨에서 각인 스탯이 상승합니다.</li>
+                    <li>환수 레벨 25에서 최대 능력치를 얻을 수 있습니다.</li>
+                    <li>동일 등급 환수라도 레벨마다 능력치 상승폭이 다를 수 있습니다.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="help-container">
+        <button class="help-btn" id="helpBtn" aria-label="도움말">
+            <span class="help-icon">?</span>
+        </button>
+        <div class="help-tooltip" id="helpTooltip">
+            <div class="help-content">
+                <div class="help-header">
+                    <h3>환수 표시 및 검색 방법 안내</h3>
+                    <button class="close-help" id="closeHelp">&times;</button>
+                </div>
+                <ul class="help-list">
+                    <li>환수 등록 정보가 0~25 레벨 전부 있는 경우 왼쪽에 표시</li>
+                    <li>환수 장착 정보가 0~25 레벨 전부 있는 경우 오른쪽에 표시</li>
+                    <li>환수 장착 정보에 25레벨이 존재하는 경우 오른쪽 상단에 표시</li>
+                    <li>환수 모든 정보가 있으면 사각형 테두리로 표시</li>
+                    <li>환수 20개 이하 선택시 탐색 방식으로 검색</li>
+                    <li>환수 20개 초과 선택시 사용시 스마트 필터링 방법으로 검색</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="info.html">환수정보</a>
+            <a href="bondCalculator.html">환수 결속</a>
+            <a href="rankingManager.html">환수 랭킹</a>
+            <a href="soulCalculator.html">환수혼 계산</a>
+            <a href="chak.html">착 계산</a>
+            <button class="footer-report-btn" onclick="Report.openReportSheet()">제보하기</button>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2025 바연화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/common.obf.1753509710.js"></script>
+    <script src="assets/js/firebaseConfig.obf.1753509710.js"></script>
+    <script src="assets/js/firebaseHandler.obf.1753509710.js"></script>
+
+    <script src="assets/js/modules/uiHelper.obf.1753509710.js"></script>
+
+    <script src="assets/js/utils.obf.1753509710.js"></script>
+    <script src="assets/js/configManager.obf.1753509710.js"></script>
+    <script src="assets/js/eventBus.obf.1753509710.js"></script>
+
+    <script src="assets/js/dataManager.obf.1753509710.js"></script>
+    <script src="assets/js/uiRenderer.obf.1753509710.js"></script>
+    <script src="assets/js/modalHandler.obf.1753509710.js"></script>
+    <script src="assets/js/imageHandler-compat.obf.1753509710.js"></script>
+
+    <script src="assets/js/spiritUtils.obf.1753509710.js"></script>
+    <script src="assets/js/calculationUtils.obf.1753509710.js"></script>
+    <script src="assets/js/historyManager.obf.1753509710.js"></script>
+    <script src="assets/js/optimalResultModal.obf.1753509710.js"></script>
+    <script src="assets/js/searchManager.obf.1753509710.js"></script>
+    <script src="assets/js/optimalCombinationFinder.obf.1753509710.js"></script>
+    <script src="assets/js/bondCalculatorInit.obf.1753509710.js"></script>
+
+    <script src="assets/js/bondCalculatorApp.obf.1753509710.js"></script>
+    <script src="assets/js/report.obf.1753509710.js"></script>
+
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="assets/js/firebaseVisitCounter.obf.1753509710.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "baramy",
+  "version": "1.0.0",
+  "description": "| 한글 명칭          | 영어 명칭                   | 변수명/키명 사용 예         |\r | ------------------ | --------------------------- | --------------------------- |\r | 치명위력           | CriticalPower               | criticalPower               |\r | 일반몬스터추가피해 | NormalMonsterBonusDamage    | normalMonsterBonusDamage    |\r | 체력증가           | HealthIncrease              | healthIncrease              |\r | 힘                 | Strength                    | strength                    |\r | 민첩               | Agility                     | agility                     |\r | 지력               | Intelligence                | intelligence                |\r | 피해흡수           | DamageAbsorption            | damageAbsorption            |\r | 피해저항관통       | DamageResistancePenetration | damageResistancePenetration |\r | 마력증가           | MagicIncrease               | magicIncrease               |\r | 피해저항           | DamageResistance            | damageResistance            |\r | 체력시약향상       | HealthPotionEnhancement     | healthPotionEnhancement     |\r | 치명확률           | CriticalChance              | criticalChance              |\r | 보스몬스터추가피해 | BossMonsterBonusDamage      | bossMonsterBonusDamage      |\r | 위력               | Power                       | power                       |\r | 마력시약향상       | MagicPotionEnhancement      | magicPotionEnhancement      |\r | 대인피해           | PvPDamage                   | pvpDamage                   |\r | 대인방어           | PvPDefense                  | pvpDefense                  |\r | 상태이상적중       | StatusEffectAccuracy        | statusEffectAccuracy        |\r | 상태이상저항       | StatusEffectResistance      | statusEffectResistance      |\r | 치명위력%          | CriticalPowerPercent        | criticalPowerPercent        |\r | 대인피해%          | PvPDamagePercent            | pvpDamagePercent            |\r | 대인방어%          | PvPDefensePercent           | pvpDefensePercent           |\r | 치명피해저항       | CriticalDamageResistance    | criticalDamageResistance    |\r | 치명저항           | CriticalResistance          | criticalResistance          |\r | 이동속도           | MovementSpeed               | movementSpeed               |\r | 파괴력증가         | DestructionPowerIncrease    | destructionPowerIncrease    |\r | 파괴력증가%        | DestructionPowerPercent     | destructionPowerPercent     |\r | 무장도             | ArmorStrength               | armorStrength               |\r | 전리품획득증가     | LootAcquisitionIncrease     | lootAcquisitionIncrease     |\r | 경험치획득증가     | ExperienceGainIncrease      | experienceGainIncrease      |",
+  "main": "scraping.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "puppeteer": "^24.6.0",
+    "puppeteer-core": "^24.6.0"
+  }
+}

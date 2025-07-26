@@ -1,0 +1,47 @@
+.header-container {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 22px;
+    color: #4285f4;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#userDisplayName {
+    font-weight: 500;
+    color: #333;
+}
+
+.logout-button {
+    padding: 8px 12px;
+    background-color: #f1f3f4;
+    color: #202124;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.logout-button:hover {
+    background-color: #e8eaed;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}

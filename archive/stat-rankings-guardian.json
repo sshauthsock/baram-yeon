@@ -1,0 +1,3637 @@
+{
+  "category": "수호",
+  "updatedAt": "2025-05-15T00:39:00.760Z",
+  "rankings": {
+    "bossMonsterAdditionalDamage": [
+      {
+        "name": "여의주 흑룡",
+        "image": "images/guardian/guardian_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 1087
+      },
+      {
+        "name": "청옥청년 백조",
+        "image": "images/guardian/guardian_40.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 556
+      },
+      {
+        "name": "귀신불꽃 거미",
+        "image": "images/guardian/guardian_48.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 521
+      },
+      {
+        "name": "괄목상대 방랑사자",
+        "image": "images/guardian/guardian_29.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 406
+      },
+      {
+        "name": "청사등롱 미호누이",
+        "image": "images/guardian/guardian_35.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 393
+      },
+      {
+        "name": "해태",
+        "image": "images/guardian/guardian_1.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 356
+      },
+      {
+        "name": "무사 견인",
+        "image": "images/guardian/guardian_3.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 296
+      },
+      {
+        "name": "무사 백견인",
+        "image": "images/guardian/guardian_4.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 296
+      },
+      {
+        "name": "선자 묘인",
+        "image": "images/guardian/guardian_5.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 296
+      },
+      {
+        "name": "대도사마귀",
+        "image": "images/guardian/guardian_14.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 228
+      }
+    ],
+    "experienceGainIncrease": [
+      {
+        "name": "유성 일각수",
+        "image": "images/guardian/guardian_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 278
+      },
+      {
+        "name": "화운 금돼지",
+        "image": "images/guardian/guardian_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 246
+      },
+      {
+        "name": "여의주 흑룡",
+        "image": "images/guardian/guardian_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 246
+      },
+      {
+        "name": "성운 백양",
+        "image": "images/guardian/guardian_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 246
+      },
+      {
+        "name": "화린 금사",
+        "image": "images/guardian/guardian_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 246
+      },
+      {
+        "name": "신령 천운장",
+        "image": "images/guardian/guardian_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 246
+      },
+      {
+        "name": "궁기",
+        "image": "images/guardian/guardian_10.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "강태공 수달",
+        "image": "images/guardian/guardian_17.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "천둥벼락 알파카",
+        "image": "images/guardian/guardian_18.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "복수의 풀깨비",
+        "image": "images/guardian/guardian_27.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "흑자홍염 망령사슴",
+        "image": "images/guardian/guardian_32.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "청염환도 푸른해치",
+        "image": "images/guardian/guardian_34.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "청사등롱 미호누이",
+        "image": "images/guardian/guardian_35.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "홍염귀영 백귀묘",
+        "image": "images/guardian/guardian_36.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "약탈꾼 아기상어",
+        "image": "images/guardian/guardian_38.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "포근포근 눈토끼",
+        "image": "images/guardian/guardian_42.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "야광 미치광이 해파리",
+        "image": "images/guardian/guardian_53.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "정착자 아기펭귄",
+        "image": "images/guardian/guardian_54.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "선인 갓파",
+        "image": "images/guardian/guardian_55.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "협객회색판다",
+        "image": "images/guardian/guardian_56.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "대사부 판다",
+        "image": "images/guardian/guardian_60.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "기와 팽이",
+        "image": "images/guardian/guardian_61.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "왕관 깃털수리",
+        "image": "images/guardian/guardian_62.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "광폭한 맹독박쥐",
+        "image": "images/guardian/guardian_63.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "청풍현 정령록",
+        "image": "images/guardian/guardian_64.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "복수의 불깨비",
+        "image": "images/guardian/guardian_65.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "광속 번쩍 해파리",
+        "image": "images/guardian/guardian_78.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "화려한 흰까마귀",
+        "image": "images/guardian/guardian_37.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 191
+      },
+      {
+        "name": "청옥청년 백조",
+        "image": "images/guardian/guardian_40.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 191
+      },
+      {
+        "name": "성스러운 웅녀",
+        "image": "images/guardian/guardian_41.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 191
+      },
+      {
+        "name": "냉정두목 흑오리",
+        "image": "images/guardian/guardian_49.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 191
+      },
+      {
+        "name": "우아 나비요정",
+        "image": "images/guardian/guardian_50.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 191
+      },
+      {
+        "name": "화염비늘 능리",
+        "image": "images/guardian/guardian_51.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 191
+      },
+      {
+        "name": "생선함께 수달",
+        "image": "images/guardian/guardian_52.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 191
+      },
+      {
+        "name": "개척가 바라미",
+        "image": "images/guardian/guardian_58.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 191
+      },
+      {
+        "name": "쾌도난마 수련앵무",
+        "image": "images/guardian/guardian_59.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 191
+      },
+      {
+        "name": "혼돈의 충신",
+        "image": "images/guardian/guardian_66.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 189
+      },
+      {
+        "name": "만개분엽 섬고래",
+        "image": "images/guardian/guardian_67.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 189
+      },
+      {
+        "name": "녹자청염 망령사슴",
+        "image": "images/guardian/guardian_77.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 189
+      },
+      {
+        "name": "검객 우수생 멍멍이",
+        "image": "images/guardian/guardian_44.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 186
+      },
+      {
+        "name": "협객붉은판다",
+        "image": "images/guardian/guardian_15.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 182
+      },
+      {
+        "name": "성광 부엉이",
+        "image": "images/guardian/guardian_19.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 182
+      },
+      {
+        "name": "눈폭탄 눈깨비",
+        "image": "images/guardian/guardian_22.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 182
+      },
+      {
+        "name": "대노 흑오리",
+        "image": "images/guardian/guardian_24.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 182
+      },
+      {
+        "name": "달팽이 한 채",
+        "image": "images/guardian/guardian_25.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 182
+      },
+      {
+        "name": "광포한 애기박쥐",
+        "image": "images/guardian/guardian_26.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 181
+      },
+      {
+        "name": "주광 부엉이",
+        "image": "images/guardian/guardian_47.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 180
+      },
+      {
+        "name": "귀신불꽃 거미",
+        "image": "images/guardian/guardian_48.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 180
+      },
+      {
+        "name": "폭풍의 바람 공작",
+        "image": "images/guardian/guardian_68.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 179
+      },
+      {
+        "name": "전령사관 천신나방",
+        "image": "images/guardian/guardian_69.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 179
+      },
+      {
+        "name": "만산홍엽 섬고래",
+        "image": "images/guardian/guardian_30.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 174
+      },
+      {
+        "name": "적건자객 홍안토끼",
+        "image": "images/guardian/guardian_33.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 174
+      },
+      {
+        "name": "정령 도롱뇽",
+        "image": "images/guardian/guardian_43.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 174
+      },
+      {
+        "name": "자연인 쿼카",
+        "image": "images/guardian/guardian_45.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 174
+      },
+      {
+        "name": "과일 한바구니 숙녀벌",
+        "image": "images/guardian/guardian_46.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 174
+      },
+      {
+        "name": "황금해태",
+        "image": "images/guardian/guardian_9.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 171
+      },
+      {
+        "name": "백모나티",
+        "image": "images/guardian/guardian_12.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 171
+      },
+      {
+        "name": "장원급제 토끼",
+        "image": "images/guardian/guardian_20.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 171
+      },
+      {
+        "name": "훈장님 진돌이",
+        "image": "images/guardian/guardian_21.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 171
+      },
+      {
+        "name": "낚시달인 아기펭귄",
+        "image": "images/guardian/guardian_23.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 171
+      },
+      {
+        "name": "쾌도난마 연꽃앵무",
+        "image": "images/guardian/guardian_28.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 165
+      },
+      {
+        "name": "해태",
+        "image": "images/guardian/guardian_1.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "나티",
+        "image": "images/guardian/guardian_2.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "무사 견인",
+        "image": "images/guardian/guardian_3.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "무사 백견인",
+        "image": "images/guardian/guardian_4.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "선자 묘인",
+        "image": "images/guardian/guardian_5.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "선자 흑묘인",
+        "image": "images/guardian/guardian_6.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "녹빛이룡",
+        "image": "images/guardian/guardian_7.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "적빛이룡",
+        "image": "images/guardian/guardian_8.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "옥색궁기",
+        "image": "images/guardian/guardian_11.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "강철적깨비불",
+        "image": "images/guardian/guardian_13.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "대도사마귀",
+        "image": "images/guardian/guardian_14.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "개척자 쿼카",
+        "image": "images/guardian/guardian_16.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "괄목상대 방랑사자",
+        "image": "images/guardian/guardian_29.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "전령사관 귀신나방",
+        "image": "images/guardian/guardian_31.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "불꽃 눈깨비",
+        "image": "images/guardian/guardian_57.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "길달의 수호 도깨비",
+        "image": "images/guardian/guardian_39.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 153
+      },
+      {
+        "name": "고요의 수호",
+        "image": "images/guardian/guardian_73.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 96
+      },
+      {
+        "name": "결의의 수호",
+        "image": "images/guardian/guardian_72.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 96
+      },
+      {
+        "name": "활력의 수호",
+        "image": "images/guardian/guardian_74.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 96
+      },
+      {
+        "name": "침착의 수호",
+        "image": "images/guardian/guardian_71.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 96
+      },
+      {
+        "name": "냉정의 수호",
+        "image": "images/guardian/guardian_70.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 96
+      },
+      {
+        "name": "의지의 수호",
+        "image": "images/guardian/guardian_75.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 96
+      }
+    ],
+    "magicRecoveryImprovement": [
+      {
+        "name": "성운 백양",
+        "image": "images/guardian/guardian_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 246
+      },
+      {
+        "name": "광속 번쩍 해파리",
+        "image": "images/guardian/guardian_78.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 236
+      },
+      {
+        "name": "과일 한바구니 숙녀벌",
+        "image": "images/guardian/guardian_46.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 207
+      },
+      {
+        "name": "화운 금돼지",
+        "image": "images/guardian/guardian_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 205
+      },
+      {
+        "name": "여의주 흑룡",
+        "image": "images/guardian/guardian_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 205
+      },
+      {
+        "name": "유성 일각수",
+        "image": "images/guardian/guardian_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 205
+      },
+      {
+        "name": "화린 금사",
+        "image": "images/guardian/guardian_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 205
+      },
+      {
+        "name": "신령 천운장",
+        "image": "images/guardian/guardian_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 205
+      },
+      {
+        "name": "폭풍의 바람 공작",
+        "image": "images/guardian/guardian_68.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 204
+      },
+      {
+        "name": "해태",
+        "image": "images/guardian/guardian_1.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 196
+      },
+      {
+        "name": "옥색궁기",
+        "image": "images/guardian/guardian_11.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 196
+      },
+      {
+        "name": "훈장님 진돌이",
+        "image": "images/guardian/guardian_21.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 196
+      },
+      {
+        "name": "눈폭탄 눈깨비",
+        "image": "images/guardian/guardian_22.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 196
+      },
+      {
+        "name": "복수의 풀깨비",
+        "image": "images/guardian/guardian_27.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 196
+      },
+      {
+        "name": "대사부 판다",
+        "image": "images/guardian/guardian_60.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 196
+      },
+      {
+        "name": "기와 팽이",
+        "image": "images/guardian/guardian_61.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 196
+      },
+      {
+        "name": "달팽이 한 채",
+        "image": "images/guardian/guardian_25.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 186
+      },
+      {
+        "name": "왕관 깃털수리",
+        "image": "images/guardian/guardian_62.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 178
+      },
+      {
+        "name": "만산홍엽 섬고래",
+        "image": "images/guardian/guardian_30.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "화려한 흰까마귀",
+        "image": "images/guardian/guardian_37.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "포근포근 눈토끼",
+        "image": "images/guardian/guardian_42.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "정령 도롱뇽",
+        "image": "images/guardian/guardian_43.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "냉정두목 흑오리",
+        "image": "images/guardian/guardian_49.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "우아 나비요정",
+        "image": "images/guardian/guardian_50.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "화염비늘 능리",
+        "image": "images/guardian/guardian_51.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "생선함께 수달",
+        "image": "images/guardian/guardian_52.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "야광 미치광이 해파리",
+        "image": "images/guardian/guardian_53.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "정착자 아기펭귄",
+        "image": "images/guardian/guardian_54.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "선인 갓파",
+        "image": "images/guardian/guardian_55.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "협객회색판다",
+        "image": "images/guardian/guardian_56.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "개척가 바라미",
+        "image": "images/guardian/guardian_58.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "쾌도난마 수련앵무",
+        "image": "images/guardian/guardian_59.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "복수의 불깨비",
+        "image": "images/guardian/guardian_65.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "황금해태",
+        "image": "images/guardian/guardian_9.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "청염환도 푸른해치",
+        "image": "images/guardian/guardian_34.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "청사등롱 미호누이",
+        "image": "images/guardian/guardian_35.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "홍염귀영 백귀묘",
+        "image": "images/guardian/guardian_36.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "약탈꾼 아기상어",
+        "image": "images/guardian/guardian_38.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "청옥청년 백조",
+        "image": "images/guardian/guardian_40.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "성스러운 웅녀",
+        "image": "images/guardian/guardian_41.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "주광 부엉이",
+        "image": "images/guardian/guardian_47.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "귀신불꽃 거미",
+        "image": "images/guardian/guardian_48.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "불꽃 눈깨비",
+        "image": "images/guardian/guardian_57.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "혼돈의 충신",
+        "image": "images/guardian/guardian_66.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "만개분엽 섬고래",
+        "image": "images/guardian/guardian_67.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "녹자청염 망령사슴",
+        "image": "images/guardian/guardian_77.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 147
+      },
+      {
+        "name": "흑자홍염 망령사슴",
+        "image": "images/guardian/guardian_32.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 146
+      },
+      {
+        "name": "적건자객 홍안토끼",
+        "image": "images/guardian/guardian_33.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 146
+      },
+      {
+        "name": "녹빛이룡",
+        "image": "images/guardian/guardian_7.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 120
+      },
+      {
+        "name": "선자 흑묘인",
+        "image": "images/guardian/guardian_6.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 112
+      },
+      {
+        "name": "길달의 수호 도깨비",
+        "image": "images/guardian/guardian_39.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 88
+      },
+      {
+        "name": "고요의 수호",
+        "image": "images/guardian/guardian_73.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "결의의 수호",
+        "image": "images/guardian/guardian_72.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "활력의 수호",
+        "image": "images/guardian/guardian_74.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "침착의 수호",
+        "image": "images/guardian/guardian_71.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "냉정의 수호",
+        "image": "images/guardian/guardian_70.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "의지의 수호",
+        "image": "images/guardian/guardian_75.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "광폭한 맹독박쥐",
+        "image": "images/guardian/guardian_63.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 11
+      },
+      {
+        "name": "청풍현 정령록",
+        "image": "images/guardian/guardian_64.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 10
+      }
+    ],
+    "power": [
+      {
+        "name": "정령 도롱뇽",
+        "image": "images/guardian/guardian_43.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 966
+      },
+      {
+        "name": "포근포근 눈토끼",
+        "image": "images/guardian/guardian_42.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 589
+      },
+      {
+        "name": "홍염귀영 백귀묘",
+        "image": "images/guardian/guardian_36.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 493
+      },
+      {
+        "name": "불꽃 눈깨비",
+        "image": "images/guardian/guardian_57.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 493
+      },
+      {
+        "name": "청옥청년 백조",
+        "image": "images/guardian/guardian_40.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 469
+      },
+      {
+        "name": "적건자객 홍안토끼",
+        "image": "images/guardian/guardian_33.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 452
+      },
+      {
+        "name": "궁기",
+        "image": "images/guardian/guardian_10.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 451
+      },
+      {
+        "name": "약탈꾼 아기상어",
+        "image": "images/guardian/guardian_38.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 445
+      },
+      {
+        "name": "흑자홍염 망령사슴",
+        "image": "images/guardian/guardian_32.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 440
+      },
+      {
+        "name": "백모나티",
+        "image": "images/guardian/guardian_12.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 434
+      },
+      {
+        "name": "강태공 수달",
+        "image": "images/guardian/guardian_17.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 434
+      },
+      {
+        "name": "화려한 흰까마귀",
+        "image": "images/guardian/guardian_37.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 428
+      },
+      {
+        "name": "녹빛이룡",
+        "image": "images/guardian/guardian_7.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 420
+      },
+      {
+        "name": "적빛이룡",
+        "image": "images/guardian/guardian_8.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 420
+      },
+      {
+        "name": "청염환도 푸른해치",
+        "image": "images/guardian/guardian_34.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 403
+      },
+      {
+        "name": "황금해태",
+        "image": "images/guardian/guardian_9.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 400
+      },
+      {
+        "name": "광포한 애기박쥐",
+        "image": "images/guardian/guardian_26.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 385
+      },
+      {
+        "name": "옥색궁기",
+        "image": "images/guardian/guardian_11.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 379
+      },
+      {
+        "name": "강철적깨비불",
+        "image": "images/guardian/guardian_13.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 379
+      },
+      {
+        "name": "장원급제 토끼",
+        "image": "images/guardian/guardian_20.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 379
+      },
+      {
+        "name": "훈장님 진돌이",
+        "image": "images/guardian/guardian_21.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 379
+      },
+      {
+        "name": "눈폭탄 눈깨비",
+        "image": "images/guardian/guardian_22.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 379
+      },
+      {
+        "name": "낚시달인 아기펭귄",
+        "image": "images/guardian/guardian_23.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 379
+      },
+      {
+        "name": "대노 흑오리",
+        "image": "images/guardian/guardian_24.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 379
+      },
+      {
+        "name": "달팽이 한 채",
+        "image": "images/guardian/guardian_25.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 379
+      },
+      {
+        "name": "괄목상대 방랑사자",
+        "image": "images/guardian/guardian_29.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 379
+      },
+      {
+        "name": "만산홍엽 섬고래",
+        "image": "images/guardian/guardian_30.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 379
+      },
+      {
+        "name": "전령사관 귀신나방",
+        "image": "images/guardian/guardian_31.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 379
+      },
+      {
+        "name": "길달의 수호 도깨비",
+        "image": "images/guardian/guardian_39.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 379
+      },
+      {
+        "name": "쾌도난마 연꽃앵무",
+        "image": "images/guardian/guardian_28.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 361
+      },
+      {
+        "name": "무사 견인",
+        "image": "images/guardian/guardian_3.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 342
+      },
+      {
+        "name": "무사 백견인",
+        "image": "images/guardian/guardian_4.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 342
+      },
+      {
+        "name": "선자 묘인",
+        "image": "images/guardian/guardian_5.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 342
+      },
+      {
+        "name": "선자 흑묘인",
+        "image": "images/guardian/guardian_6.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 342
+      },
+      {
+        "name": "천둥벼락 알파카",
+        "image": "images/guardian/guardian_18.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 342
+      },
+      {
+        "name": "성광 부엉이",
+        "image": "images/guardian/guardian_19.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 342
+      },
+      {
+        "name": "복수의 풀깨비",
+        "image": "images/guardian/guardian_27.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 308
+      },
+      {
+        "name": "해태",
+        "image": "images/guardian/guardian_1.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 260
+      },
+      {
+        "name": "나티",
+        "image": "images/guardian/guardian_2.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 260
+      },
+      {
+        "name": "협객붉은판다",
+        "image": "images/guardian/guardian_15.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 219
+      }
+    ],
+    "damageResistance": [
+      {
+        "name": "성운 백양",
+        "image": "images/guardian/guardian_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 620
+      },
+      {
+        "name": "화린 금사",
+        "image": "images/guardian/guardian_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 433
+      },
+      {
+        "name": "홍염귀영 백귀묘",
+        "image": "images/guardian/guardian_36.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 376
+      },
+      {
+        "name": "강철적깨비불",
+        "image": "images/guardian/guardian_13.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 355
+      },
+      {
+        "name": "왕관 깃털수리",
+        "image": "images/guardian/guardian_62.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 320
+      },
+      {
+        "name": "폭풍의 바람 공작",
+        "image": "images/guardian/guardian_68.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 316
+      },
+      {
+        "name": "복수의 불깨비",
+        "image": "images/guardian/guardian_65.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 313
+      },
+      {
+        "name": "청염환도 푸른해치",
+        "image": "images/guardian/guardian_34.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 311
+      },
+      {
+        "name": "청사등롱 미호누이",
+        "image": "images/guardian/guardian_35.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 307
+      },
+      {
+        "name": "장원급제 토끼",
+        "image": "images/guardian/guardian_20.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 303
+      },
+      {
+        "name": "냉정두목 흑오리",
+        "image": "images/guardian/guardian_49.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 301
+      },
+      {
+        "name": "쾌도난마 연꽃앵무",
+        "image": "images/guardian/guardian_28.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 297
+      },
+      {
+        "name": "여의주 흑룡",
+        "image": "images/guardian/guardian_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 295
+      },
+      {
+        "name": "화운 금돼지",
+        "image": "images/guardian/guardian_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 289
+      },
+      {
+        "name": "개척자 쿼카",
+        "image": "images/guardian/guardian_16.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 283
+      },
+      {
+        "name": "자연인 쿼카",
+        "image": "images/guardian/guardian_45.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 282
+      },
+      {
+        "name": "과일 한바구니 숙녀벌",
+        "image": "images/guardian/guardian_46.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 282
+      },
+      {
+        "name": "광포한 애기박쥐",
+        "image": "images/guardian/guardian_26.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 272
+      },
+      {
+        "name": "전령사관 귀신나방",
+        "image": "images/guardian/guardian_31.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 266
+      },
+      {
+        "name": "강태공 수달",
+        "image": "images/guardian/guardian_17.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 260
+      },
+      {
+        "name": "성광 부엉이",
+        "image": "images/guardian/guardian_19.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 260
+      },
+      {
+        "name": "쾌도난마 수련앵무",
+        "image": "images/guardian/guardian_59.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 257
+      },
+      {
+        "name": "녹자청염 망령사슴",
+        "image": "images/guardian/guardian_77.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 251
+      },
+      {
+        "name": "유성 일각수",
+        "image": "images/guardian/guardian_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 248
+      },
+      {
+        "name": "무사 견인",
+        "image": "images/guardian/guardian_3.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 242
+      },
+      {
+        "name": "무사 백견인",
+        "image": "images/guardian/guardian_4.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 242
+      },
+      {
+        "name": "해태",
+        "image": "images/guardian/guardian_1.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 235
+      },
+      {
+        "name": "황금해태",
+        "image": "images/guardian/guardian_9.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 235
+      },
+      {
+        "name": "궁기",
+        "image": "images/guardian/guardian_10.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 235
+      },
+      {
+        "name": "생선함께 수달",
+        "image": "images/guardian/guardian_52.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 232
+      },
+      {
+        "name": "정착자 아기펭귄",
+        "image": "images/guardian/guardian_54.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 232
+      },
+      {
+        "name": "협객회색판다",
+        "image": "images/guardian/guardian_56.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 232
+      },
+      {
+        "name": "길달의 수호 도깨비",
+        "image": "images/guardian/guardian_39.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 223
+      },
+      {
+        "name": "활력의 수호",
+        "image": "images/guardian/guardian_74.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 212
+      },
+      {
+        "name": "만개분엽 섬고래",
+        "image": "images/guardian/guardian_67.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 201
+      },
+      {
+        "name": "냉정의 수호",
+        "image": "images/guardian/guardian_70.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 187
+      },
+      {
+        "name": "약탈꾼 아기상어",
+        "image": "images/guardian/guardian_38.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 181
+      },
+      {
+        "name": "성스러운 웅녀",
+        "image": "images/guardian/guardian_41.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "침착의 수호",
+        "image": "images/guardian/guardian_71.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 162
+      },
+      {
+        "name": "불꽃 눈깨비",
+        "image": "images/guardian/guardian_57.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 135
+      },
+      {
+        "name": "신령 천운장",
+        "image": "images/guardian/guardian_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 96
+      },
+      {
+        "name": "화염비늘 능리",
+        "image": "images/guardian/guardian_51.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 91
+      },
+      {
+        "name": "야광 미치광이 해파리",
+        "image": "images/guardian/guardian_53.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 91
+      },
+      {
+        "name": "선인 갓파",
+        "image": "images/guardian/guardian_55.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 91
+      },
+      {
+        "name": "의지의 수호",
+        "image": "images/guardian/guardian_75.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 87
+      },
+      {
+        "name": "우아 나비요정",
+        "image": "images/guardian/guardian_50.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 78
+      },
+      {
+        "name": "개척가 바라미",
+        "image": "images/guardian/guardian_58.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 78
+      },
+      {
+        "name": "전령사관 천신나방",
+        "image": "images/guardian/guardian_69.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 73
+      },
+      {
+        "name": "검객 우수생 멍멍이",
+        "image": "images/guardian/guardian_44.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 66
+      },
+      {
+        "name": "고요의 수호",
+        "image": "images/guardian/guardian_73.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 62
+      },
+      {
+        "name": "결의의 수호",
+        "image": "images/guardian/guardian_72.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 37
+      }
+    ],
+    "magicIncrease": [
+      {
+        "name": "황금해태",
+        "image": "images/guardian/guardian_9.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 32057
+      },
+      {
+        "name": "대도사마귀",
+        "image": "images/guardian/guardian_14.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 30372
+      },
+      {
+        "name": "개척자 쿼카",
+        "image": "images/guardian/guardian_16.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 26999
+      },
+      {
+        "name": "해태",
+        "image": "images/guardian/guardian_1.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 23619
+      },
+      {
+        "name": "선자 묘인",
+        "image": "images/guardian/guardian_5.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 20249
+      },
+      {
+        "name": "선자 흑묘인",
+        "image": "images/guardian/guardian_6.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 20249
+      }
+    ],
+    "healthIncrease": [
+      {
+        "name": "백모나티",
+        "image": "images/guardian/guardian_12.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 32057
+      },
+      {
+        "name": "옥색궁기",
+        "image": "images/guardian/guardian_11.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 26999
+      },
+      {
+        "name": "나티",
+        "image": "images/guardian/guardian_2.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 23619
+      },
+      {
+        "name": "무사 견인",
+        "image": "images/guardian/guardian_3.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 20249
+      },
+      {
+        "name": "무사 백견인",
+        "image": "images/guardian/guardian_4.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 20249
+      },
+      {
+        "name": "녹빛이룡",
+        "image": "images/guardian/guardian_7.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 20249
+      },
+      {
+        "name": "적빛이룡",
+        "image": "images/guardian/guardian_8.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 20249
+      }
+    ],
+    "pvpDamage": [
+      {
+        "name": "청염환도 푸른해치",
+        "image": "images/guardian/guardian_34.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 529
+      },
+      {
+        "name": "청사등롱 미호누이",
+        "image": "images/guardian/guardian_35.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 499
+      },
+      {
+        "name": "적건자객 홍안토끼",
+        "image": "images/guardian/guardian_33.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 493
+      },
+      {
+        "name": "나티",
+        "image": "images/guardian/guardian_2.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 469
+      },
+      {
+        "name": "적빛이룡",
+        "image": "images/guardian/guardian_8.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 378
+      }
+    ],
+    "damageResistancePenetration": [
+      {
+        "name": "여의주 흑룡",
+        "image": "images/guardian/guardian_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 620
+      },
+      {
+        "name": "신령 천운장",
+        "image": "images/guardian/guardian_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 471
+      },
+      {
+        "name": "주광 부엉이",
+        "image": "images/guardian/guardian_47.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 351
+      },
+      {
+        "name": "귀신불꽃 거미",
+        "image": "images/guardian/guardian_48.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 351
+      },
+      {
+        "name": "포근포근 눈토끼",
+        "image": "images/guardian/guardian_42.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 348
+      },
+      {
+        "name": "정령 도롱뇽",
+        "image": "images/guardian/guardian_43.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 342
+      },
+      {
+        "name": "청옥청년 백조",
+        "image": "images/guardian/guardian_40.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 323
+      },
+      {
+        "name": "대사부 판다",
+        "image": "images/guardian/guardian_60.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 323
+      },
+      {
+        "name": "기와 팽이",
+        "image": "images/guardian/guardian_61.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 323
+      },
+      {
+        "name": "광폭한 맹독박쥐",
+        "image": "images/guardian/guardian_63.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 320
+      },
+      {
+        "name": "전령사관 천신나방",
+        "image": "images/guardian/guardian_69.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 316
+      },
+      {
+        "name": "청풍현 정령록",
+        "image": "images/guardian/guardian_64.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 313
+      },
+      {
+        "name": "우아 나비요정",
+        "image": "images/guardian/guardian_50.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 301
+      },
+      {
+        "name": "성운 백양",
+        "image": "images/guardian/guardian_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 295
+      },
+      {
+        "name": "화운 금돼지",
+        "image": "images/guardian/guardian_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 289
+      },
+      {
+        "name": "광속 번쩍 해파리",
+        "image": "images/guardian/guardian_78.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 274
+      },
+      {
+        "name": "개척가 바라미",
+        "image": "images/guardian/guardian_58.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 257
+      },
+      {
+        "name": "대도사마귀",
+        "image": "images/guardian/guardian_14.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 253
+      },
+      {
+        "name": "괄목상대 방랑사자",
+        "image": "images/guardian/guardian_29.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 253
+      },
+      {
+        "name": "적건자객 홍안토끼",
+        "image": "images/guardian/guardian_33.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 253
+      },
+      {
+        "name": "유성 일각수",
+        "image": "images/guardian/guardian_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 248
+      },
+      {
+        "name": "화려한 흰까마귀",
+        "image": "images/guardian/guardian_37.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 247
+      },
+      {
+        "name": "검객 우수생 멍멍이",
+        "image": "images/guardian/guardian_44.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 243
+      },
+      {
+        "name": "화염비늘 능리",
+        "image": "images/guardian/guardian_51.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 232
+      },
+      {
+        "name": "야광 미치광이 해파리",
+        "image": "images/guardian/guardian_53.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 232
+      },
+      {
+        "name": "선인 갓파",
+        "image": "images/guardian/guardian_55.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 232
+      },
+      {
+        "name": "만산홍엽 섬고래",
+        "image": "images/guardian/guardian_30.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 216
+      },
+      {
+        "name": "흑자홍염 망령사슴",
+        "image": "images/guardian/guardian_32.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 216
+      },
+      {
+        "name": "결의의 수호",
+        "image": "images/guardian/guardian_72.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 212
+      },
+      {
+        "name": "혼돈의 충신",
+        "image": "images/guardian/guardian_66.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 201
+      },
+      {
+        "name": "고요의 수호",
+        "image": "images/guardian/guardian_73.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 187
+      },
+      {
+        "name": "나티",
+        "image": "images/guardian/guardian_2.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "녹빛이룡",
+        "image": "images/guardian/guardian_7.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "적빛이룡",
+        "image": "images/guardian/guardian_8.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "옥색궁기",
+        "image": "images/guardian/guardian_11.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "백모나티",
+        "image": "images/guardian/guardian_12.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "천둥벼락 알파카",
+        "image": "images/guardian/guardian_18.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "훈장님 진돌이",
+        "image": "images/guardian/guardian_21.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "눈폭탄 눈깨비",
+        "image": "images/guardian/guardian_22.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "낚시달인 아기펭귄",
+        "image": "images/guardian/guardian_23.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "대노 흑오리",
+        "image": "images/guardian/guardian_24.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "달팽이 한 채",
+        "image": "images/guardian/guardian_25.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "복수의 풀깨비",
+        "image": "images/guardian/guardian_27.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "성스러운 웅녀",
+        "image": "images/guardian/guardian_41.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 163
+      },
+      {
+        "name": "의지의 수호",
+        "image": "images/guardian/guardian_75.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 162
+      },
+      {
+        "name": "약탈꾼 아기상어",
+        "image": "images/guardian/guardian_38.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 150
+      },
+      {
+        "name": "협객붉은판다",
+        "image": "images/guardian/guardian_15.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 146
+      },
+      {
+        "name": "선자 묘인",
+        "image": "images/guardian/guardian_5.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 135
+      },
+      {
+        "name": "선자 흑묘인",
+        "image": "images/guardian/guardian_6.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 135
+      },
+      {
+        "name": "불꽃 눈깨비",
+        "image": "images/guardian/guardian_57.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 135
+      },
+      {
+        "name": "화린 금사",
+        "image": "images/guardian/guardian_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 108
+      },
+      {
+        "name": "생선함께 수달",
+        "image": "images/guardian/guardian_52.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 91
+      },
+      {
+        "name": "정착자 아기펭귄",
+        "image": "images/guardian/guardian_54.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 91
+      },
+      {
+        "name": "협객회색판다",
+        "image": "images/guardian/guardian_56.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 91
+      },
+      {
+        "name": "침착의 수호",
+        "image": "images/guardian/guardian_71.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 87
+      },
+      {
+        "name": "냉정두목 흑오리",
+        "image": "images/guardian/guardian_49.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 78
+      },
+      {
+        "name": "쾌도난마 수련앵무",
+        "image": "images/guardian/guardian_59.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 78
+      },
+      {
+        "name": "폭풍의 바람 공작",
+        "image": "images/guardian/guardian_68.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 73
+      },
+      {
+        "name": "자연인 쿼카",
+        "image": "images/guardian/guardian_45.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 66
+      },
+      {
+        "name": "과일 한바구니 숙녀벌",
+        "image": "images/guardian/guardian_46.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 66
+      },
+      {
+        "name": "냉정의 수호",
+        "image": "images/guardian/guardian_70.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 62
+      },
+      {
+        "name": "활력의 수호",
+        "image": "images/guardian/guardian_74.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 37
+      }
+    ],
+    "healthRecoveryImprovement": [
+      {
+        "name": "성운 백양",
+        "image": "images/guardian/guardian_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 246
+      },
+      {
+        "name": "자연인 쿼카",
+        "image": "images/guardian/guardian_45.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 207
+      },
+      {
+        "name": "화운 금돼지",
+        "image": "images/guardian/guardian_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 205
+      },
+      {
+        "name": "여의주 흑룡",
+        "image": "images/guardian/guardian_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 205
+      },
+      {
+        "name": "유성 일각수",
+        "image": "images/guardian/guardian_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 205
+      },
+      {
+        "name": "화린 금사",
+        "image": "images/guardian/guardian_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 205
+      },
+      {
+        "name": "신령 천운장",
+        "image": "images/guardian/guardian_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 205
+      },
+      {
+        "name": "전령사관 천신나방",
+        "image": "images/guardian/guardian_69.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 204
+      },
+      {
+        "name": "대사부 판다",
+        "image": "images/guardian/guardian_60.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 196
+      },
+      {
+        "name": "기와 팽이",
+        "image": "images/guardian/guardian_61.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 196
+      },
+      {
+        "name": "왕관 깃털수리",
+        "image": "images/guardian/guardian_62.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 178
+      },
+      {
+        "name": "궁기",
+        "image": "images/guardian/guardian_10.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "백모나티",
+        "image": "images/guardian/guardian_12.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "개척자 쿼카",
+        "image": "images/guardian/guardian_16.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "강태공 수달",
+        "image": "images/guardian/guardian_17.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "성광 부엉이",
+        "image": "images/guardian/guardian_19.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "장원급제 토끼",
+        "image": "images/guardian/guardian_20.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "낚시달인 아기펭귄",
+        "image": "images/guardian/guardian_23.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "광포한 애기박쥐",
+        "image": "images/guardian/guardian_26.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "쾌도난마 연꽃앵무",
+        "image": "images/guardian/guardian_28.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "괄목상대 방랑사자",
+        "image": "images/guardian/guardian_29.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "포근포근 눈토끼",
+        "image": "images/guardian/guardian_42.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "정령 도롱뇽",
+        "image": "images/guardian/guardian_43.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "냉정두목 흑오리",
+        "image": "images/guardian/guardian_49.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "우아 나비요정",
+        "image": "images/guardian/guardian_50.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "화염비늘 능리",
+        "image": "images/guardian/guardian_51.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "생선함께 수달",
+        "image": "images/guardian/guardian_52.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "야광 미치광이 해파리",
+        "image": "images/guardian/guardian_53.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "정착자 아기펭귄",
+        "image": "images/guardian/guardian_54.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "선인 갓파",
+        "image": "images/guardian/guardian_55.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "협객회색판다",
+        "image": "images/guardian/guardian_56.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "개척가 바라미",
+        "image": "images/guardian/guardian_58.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "쾌도난마 수련앵무",
+        "image": "images/guardian/guardian_59.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 168
+      },
+      {
+        "name": "복수의 불깨비",
+        "image": "images/guardian/guardian_65.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "광속 번쩍 해파리",
+        "image": "images/guardian/guardian_78.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 160
+      },
+      {
+        "name": "대노 흑오리",
+        "image": "images/guardian/guardian_24.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "청염환도 푸른해치",
+        "image": "images/guardian/guardian_34.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "청사등롱 미호누이",
+        "image": "images/guardian/guardian_35.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "홍염귀영 백귀묘",
+        "image": "images/guardian/guardian_36.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "약탈꾼 아기상어",
+        "image": "images/guardian/guardian_38.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "청옥청년 백조",
+        "image": "images/guardian/guardian_40.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "성스러운 웅녀",
+        "image": "images/guardian/guardian_41.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "검객 우수생 멍멍이",
+        "image": "images/guardian/guardian_44.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "주광 부엉이",
+        "image": "images/guardian/guardian_47.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "귀신불꽃 거미",
+        "image": "images/guardian/guardian_48.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "불꽃 눈깨비",
+        "image": "images/guardian/guardian_57.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "혼돈의 충신",
+        "image": "images/guardian/guardian_66.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "만개분엽 섬고래",
+        "image": "images/guardian/guardian_67.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 157
+      },
+      {
+        "name": "녹자청염 망령사슴",
+        "image": "images/guardian/guardian_77.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 147
+      },
+      {
+        "name": "전령사관 귀신나방",
+        "image": "images/guardian/guardian_31.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 146
+      },
+      {
+        "name": "흑자홍염 망령사슴",
+        "image": "images/guardian/guardian_32.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 146
+      },
+      {
+        "name": "적건자객 홍안토끼",
+        "image": "images/guardian/guardian_33.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 146
+      },
+      {
+        "name": "나티",
+        "image": "images/guardian/guardian_2.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 129
+      },
+      {
+        "name": "천둥벼락 알파카",
+        "image": "images/guardian/guardian_18.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 129
+      },
+      {
+        "name": "적빛이룡",
+        "image": "images/guardian/guardian_8.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 115
+      },
+      {
+        "name": "선자 묘인",
+        "image": "images/guardian/guardian_5.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 94
+      },
+      {
+        "name": "길달의 수호 도깨비",
+        "image": "images/guardian/guardian_39.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 88
+      },
+      {
+        "name": "고요의 수호",
+        "image": "images/guardian/guardian_73.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "결의의 수호",
+        "image": "images/guardian/guardian_72.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "활력의 수호",
+        "image": "images/guardian/guardian_74.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "침착의 수호",
+        "image": "images/guardian/guardian_71.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "냉정의 수호",
+        "image": "images/guardian/guardian_70.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "의지의 수호",
+        "image": "images/guardian/guardian_75.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "광폭한 맹독박쥐",
+        "image": "images/guardian/guardian_63.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 11
+      },
+      {
+        "name": "청풍현 정령록",
+        "image": "images/guardian/guardian_64.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 10
+      }
+    ],
+    "criticalChance": [
+      {
+        "name": "옥색궁기",
+        "image": "images/guardian/guardian_11.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 2299
+      },
+      {
+        "name": "강철적깨비불",
+        "image": "images/guardian/guardian_13.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 1662
+      },
+      {
+        "name": "무사 견인",
+        "image": "images/guardian/guardian_3.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 1244
+      }
+    ],
+    "criticalResistance": [
+      {
+        "name": "궁기",
+        "image": "images/guardian/guardian_10.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 2001
+      },
+      {
+        "name": "대도사마귀",
+        "image": "images/guardian/guardian_14.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 1404
+      },
+      {
+        "name": "무사 백견인",
+        "image": "images/guardian/guardian_4.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 1203
+      }
+    ],
+    "normalMonsterAdditionalDamage": [
+      {
+        "name": "여의주 흑룡",
+        "image": "images/guardian/guardian_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 1087
+      },
+      {
+        "name": "포근포근 눈토끼",
+        "image": "images/guardian/guardian_42.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 606
+      },
+      {
+        "name": "혼돈의 충신",
+        "image": "images/guardian/guardian_66.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 577
+      },
+      {
+        "name": "만개분엽 섬고래",
+        "image": "images/guardian/guardian_67.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 577
+      },
+      {
+        "name": "주광 부엉이",
+        "image": "images/guardian/guardian_47.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 521
+      },
+      {
+        "name": "백모나티",
+        "image": "images/guardian/guardian_12.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 470
+      },
+      {
+        "name": "강태공 수달",
+        "image": "images/guardian/guardian_17.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 470
+      },
+      {
+        "name": "성광 부엉이",
+        "image": "images/guardian/guardian_19.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 470
+      },
+      {
+        "name": "흑자홍염 망령사슴",
+        "image": "images/guardian/guardian_32.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 470
+      },
+      {
+        "name": "화려한 흰까마귀",
+        "image": "images/guardian/guardian_37.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 457
+      },
+      {
+        "name": "협객붉은판다",
+        "image": "images/guardian/guardian_15.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 437
+      },
+      {
+        "name": "개척자 쿼카",
+        "image": "images/guardian/guardian_16.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 417
+      },
+      {
+        "name": "녹빛이룡",
+        "image": "images/guardian/guardian_7.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 395
+      },
+      {
+        "name": "천둥벼락 알파카",
+        "image": "images/guardian/guardian_18.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 395
+      },
+      {
+        "name": "달팽이 한 채",
+        "image": "images/guardian/guardian_25.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 368
+      },
+      {
+        "name": "복수의 풀깨비",
+        "image": "images/guardian/guardian_27.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 368
+      },
+      {
+        "name": "황금해태",
+        "image": "images/guardian/guardian_9.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 356
+      },
+      {
+        "name": "훈장님 진돌이",
+        "image": "images/guardian/guardian_21.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 356
+      },
+      {
+        "name": "눈폭탄 눈깨비",
+        "image": "images/guardian/guardian_22.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 356
+      },
+      {
+        "name": "낚시달인 아기펭귄",
+        "image": "images/guardian/guardian_23.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 356
+      },
+      {
+        "name": "선자 흑묘인",
+        "image": "images/guardian/guardian_6.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 308
+      }
+    ],
+    "criticalPower": [
+      {
+        "name": "협객붉은판다",
+        "image": "images/guardian/guardian_15.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 1350
+      },
+      {
+        "name": "강철적깨비불",
+        "image": "images/guardian/guardian_13.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 1129
+      },
+      {
+        "name": "강태공 수달",
+        "image": "images/guardian/guardian_17.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 1129
+      },
+      {
+        "name": "광포한 애기박쥐",
+        "image": "images/guardian/guardian_26.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 1076
+      },
+      {
+        "name": "복수의 풀깨비",
+        "image": "images/guardian/guardian_27.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 1076
+      },
+      {
+        "name": "정령 도롱뇽",
+        "image": "images/guardian/guardian_43.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 1070
+      },
+      {
+        "name": "천둥벼락 알파카",
+        "image": "images/guardian/guardian_18.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 1052
+      },
+      {
+        "name": "성광 부엉이",
+        "image": "images/guardian/guardian_19.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 1052
+      },
+      {
+        "name": "장원급제 토끼",
+        "image": "images/guardian/guardian_20.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 1052
+      },
+      {
+        "name": "훈장님 진돌이",
+        "image": "images/guardian/guardian_21.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 1052
+      },
+      {
+        "name": "눈폭탄 눈깨비",
+        "image": "images/guardian/guardian_22.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 1052
+      },
+      {
+        "name": "낚시달인 아기펭귄",
+        "image": "images/guardian/guardian_23.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 1052
+      },
+      {
+        "name": "대노 흑오리",
+        "image": "images/guardian/guardian_24.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 1052
+      },
+      {
+        "name": "만산홍엽 섬고래",
+        "image": "images/guardian/guardian_30.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 1052
+      },
+      {
+        "name": "화려한 흰까마귀",
+        "image": "images/guardian/guardian_37.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 1052
+      },
+      {
+        "name": "괄목상대 방랑사자",
+        "image": "images/guardian/guardian_29.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 1046
+      },
+      {
+        "name": "쾌도난마 연꽃앵무",
+        "image": "images/guardian/guardian_28.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 1040
+      },
+      {
+        "name": "달팽이 한 채",
+        "image": "images/guardian/guardian_25.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 1028
+      },
+      {
+        "name": "궁기",
+        "image": "images/guardian/guardian_10.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 896
+      }
+    ],
+    "criticalDamageResistance": [
+      {
+        "name": "강철적깨비불",
+        "image": "images/guardian/guardian_13.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 1725
+      },
+      {
+        "name": "홍염귀영 백귀묘",
+        "image": "images/guardian/guardian_36.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 1667
+      },
+      {
+        "name": "쾌도난마 연꽃앵무",
+        "image": "images/guardian/guardian_28.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 1385
+      },
+      {
+        "name": "협객붉은판다",
+        "image": "images/guardian/guardian_15.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 1293
+      },
+      {
+        "name": "장원급제 토끼",
+        "image": "images/guardian/guardian_20.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 1293
+      },
+      {
+        "name": "대노 흑오리",
+        "image": "images/guardian/guardian_24.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 1236
+      },
+      {
+        "name": "광포한 애기박쥐",
+        "image": "images/guardian/guardian_26.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 1236
+      },
+      {
+        "name": "만산홍엽 섬고래",
+        "image": "images/guardian/guardian_30.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 1236
+      },
+      {
+        "name": "전령사관 귀신나방",
+        "image": "images/guardian/guardian_31.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 1236
+      },
+      {
+        "name": "길달의 수호 도깨비",
+        "image": "images/guardian/guardian_39.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 801
+      }
+    ],
+    "pvpDefense": [
+      {
+        "name": "청풍현 정령록",
+        "image": "images/guardian/guardian_64.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 9146
+      },
+      {
+        "name": "복수의 불깨비",
+        "image": "images/guardian/guardian_65.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 9146
+      },
+      {
+        "name": "냉정두목 흑오리",
+        "image": "images/guardian/guardian_49.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 8220
+      },
+      {
+        "name": "우아 나비요정",
+        "image": "images/guardian/guardian_50.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 8220
+      },
+      {
+        "name": "개척자 쿼카",
+        "image": "images/guardian/guardian_16.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 3519
+      }
+    ],
+    "pvpDamagePercent": [
+      {
+        "name": "신령 천운장",
+        "image": "images/guardian/guardian_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 81
+      },
+      {
+        "name": "화운 금돼지",
+        "image": "images/guardian/guardian_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 37
+      },
+      {
+        "name": "복수의 불깨비",
+        "image": "images/guardian/guardian_65.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 33
+      },
+      {
+        "name": "성스러운 웅녀",
+        "image": "images/guardian/guardian_41.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 25
+      },
+      {
+        "name": "검객 우수생 멍멍이",
+        "image": "images/guardian/guardian_44.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 25
+      },
+      {
+        "name": "왕관 깃털수리",
+        "image": "images/guardian/guardian_62.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 16
+      },
+      {
+        "name": "광폭한 맹독박쥐",
+        "image": "images/guardian/guardian_63.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 16
+      }
+    ],
+    "healthPotionEnhancement": [
+      {
+        "name": "전령사관 천신나방",
+        "image": "images/guardian/guardian_69.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 2240
+      },
+      {
+        "name": "자연인 쿼카",
+        "image": "images/guardian/guardian_45.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 1828
+      },
+      {
+        "name": "광폭한 맹독박쥐",
+        "image": "images/guardian/guardian_63.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "청풍현 정령록",
+        "image": "images/guardian/guardian_64.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 157
+      }
+    ],
+    "statusEffectResistance": [
+      {
+        "name": "화린 금사",
+        "image": "images/guardian/guardian_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 295
+      },
+      {
+        "name": "화운 금돼지",
+        "image": "images/guardian/guardian_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 270
+      },
+      {
+        "name": "성운 백양",
+        "image": "images/guardian/guardian_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 270
+      },
+      {
+        "name": "신령 천운장",
+        "image": "images/guardian/guardian_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 270
+      },
+      {
+        "name": "자연인 쿼카",
+        "image": "images/guardian/guardian_45.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "과일 한바구니 숙녀벌",
+        "image": "images/guardian/guardian_46.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 202
+      },
+      {
+        "name": "폭풍의 바람 공작",
+        "image": "images/guardian/guardian_68.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 177
+      },
+      {
+        "name": "전령사관 천신나방",
+        "image": "images/guardian/guardian_69.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 177
+      }
+    ],
+    "magicPotionEnhancement": [
+      {
+        "name": "폭풍의 바람 공작",
+        "image": "images/guardian/guardian_68.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 2240
+      },
+      {
+        "name": "과일 한바구니 숙녀벌",
+        "image": "images/guardian/guardian_46.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 1828
+      },
+      {
+        "name": "광폭한 맹독박쥐",
+        "image": "images/guardian/guardian_63.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "청풍현 정령록",
+        "image": "images/guardian/guardian_64.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 157
+      }
+    ],
+    "criticalPowerPercent": [
+      {
+        "name": "여의주 흑룡",
+        "image": "images/guardian/guardian_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 62
+      },
+      {
+        "name": "주광 부엉이",
+        "image": "images/guardian/guardian_47.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 50
+      },
+      {
+        "name": "귀신불꽃 거미",
+        "image": "images/guardian/guardian_48.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 50
+      },
+      {
+        "name": "녹자청염 망령사슴",
+        "image": "images/guardian/guardian_77.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 40
+      }
+    ],
+    "pvpDefensePercent": [
+      {
+        "name": "화린 금사",
+        "image": "images/guardian/guardian_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 81
+      },
+      {
+        "name": "화운 금돼지",
+        "image": "images/guardian/guardian_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 37
+      },
+      {
+        "name": "청풍현 정령록",
+        "image": "images/guardian/guardian_64.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 33
+      },
+      {
+        "name": "화염비늘 능리",
+        "image": "images/guardian/guardian_51.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 25
+      },
+      {
+        "name": "생선함께 수달",
+        "image": "images/guardian/guardian_52.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 25
+      },
+      {
+        "name": "개척가 바라미",
+        "image": "images/guardian/guardian_58.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 25
+      },
+      {
+        "name": "쾌도난마 수련앵무",
+        "image": "images/guardian/guardian_59.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 25
+      },
+      {
+        "name": "왕관 깃털수리",
+        "image": "images/guardian/guardian_62.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 16
+      },
+      {
+        "name": "광폭한 맹독박쥐",
+        "image": "images/guardian/guardian_63.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 16
+      }
+    ],
+    "normalMonsterPenetration": [
+      {
+        "name": "기와 팽이",
+        "image": "images/guardian/guardian_61.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 688
+      },
+      {
+        "name": "유성 일각수",
+        "image": "images/guardian/guardian_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 587
+      },
+      {
+        "name": "혼돈의 충신",
+        "image": "images/guardian/guardian_66.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 505
+      },
+      {
+        "name": "만개분엽 섬고래",
+        "image": "images/guardian/guardian_67.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 505
+      },
+      {
+        "name": "야광 미치광이 해파리",
+        "image": "images/guardian/guardian_53.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 397
+      },
+      {
+        "name": "정착자 아기펭귄",
+        "image": "images/guardian/guardian_54.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 397
+      },
+      {
+        "name": "대사부 판다",
+        "image": "images/guardian/guardian_60.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 215
+      },
+      {
+        "name": "광속 번쩍 해파리",
+        "image": "images/guardian/guardian_78.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 206
+      },
+      {
+        "name": "고요의 수호",
+        "image": "images/guardian/guardian_73.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 125
+      },
+      {
+        "name": "결의의 수호",
+        "image": "images/guardian/guardian_72.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 125
+      },
+      {
+        "name": "활력의 수호",
+        "image": "images/guardian/guardian_74.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 125
+      },
+      {
+        "name": "침착의 수호",
+        "image": "images/guardian/guardian_71.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 125
+      },
+      {
+        "name": "냉정의 수호",
+        "image": "images/guardian/guardian_70.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 125
+      },
+      {
+        "name": "의지의 수호",
+        "image": "images/guardian/guardian_75.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 125
+      }
+    ],
+    "bossMonsterPenetration": [
+      {
+        "name": "대사부 판다",
+        "image": "images/guardian/guardian_60.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 688
+      },
+      {
+        "name": "유성 일각수",
+        "image": "images/guardian/guardian_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 587
+      },
+      {
+        "name": "선인 갓파",
+        "image": "images/guardian/guardian_55.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 397
+      },
+      {
+        "name": "협객회색판다",
+        "image": "images/guardian/guardian_56.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 397
+      },
+      {
+        "name": "녹자청염 망령사슴",
+        "image": "images/guardian/guardian_77.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 333
+      },
+      {
+        "name": "기와 팽이",
+        "image": "images/guardian/guardian_61.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 215
+      }
+    ],
+    "normalMonsterResistance": [
+      {
+        "name": "광속 번쩍 해파리",
+        "image": "images/guardian/guardian_78.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 249
+      }
+    ],
+    "movementSpeed": [
+      {
+        "name": "유성 일각수",
+        "image": "images/guardian/guardian_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 22
+      },
+      {
+        "name": "성운 백양",
+        "image": "images/guardian/guardian_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 13
+      }
+    ],
+    "statusEffectAccuracy": [
+      {
+        "name": "화린 금사",
+        "image": "images/guardian/guardian_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 295
+      },
+      {
+        "name": "성운 백양",
+        "image": "images/guardian/guardian_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 270
+      },
+      {
+        "name": "신령 천운장",
+        "image": "images/guardian/guardian_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 270
+      }
+    ]
+  }
+}

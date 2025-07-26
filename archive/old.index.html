@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>바연화연 - 환수 결속</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="바람의나라: 연 환수정보, 환수 결속, 환수혼 계산기 등 게임 관련 도구 모음">
+
+    <link rel="icon" type="image/png" href="assets/img/BHY.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/BHY.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="assets/css/global.css" rel="stylesheet">
+    <link href="assets/css/bondCalculator.css" rel="stylesheet">
+    <link href="assets/css/components/ads.css" rel="stylesheet">
+    <link href="assets/css/components/footer.css" rel="stylesheet">
+    <link href="assets/css/components/header.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="info.html">
+                <img src="assets/img/BHY.png" alt="바연화연 로고" class="logo">
+            </a>
+        </div>
+        <nav class="tabs">
+            <div class="tab" onclick="location.assign('info.html')">환수정보</div>
+            <div class="tab active" onclick="location.assign('bondCalculator.html')">환수 결속</div>
+            <div class="tab" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
+            <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
+        </nav>
+    </header>
+
+    <div class="sub-tabs" id="subTabs">
+        <div class="tab active" onclick="BondCalculatorApp.showCategory('수호', true)">수호</div>
+        <div class="tab" onclick="BondCalculatorApp.showCategory('탑승', true)">탑승</div>
+        <div class="tab" onclick="BondCalculatorApp.showCategory('변신', true)">변신</div>
+    </div>
+
+    <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-XTAnZwWzQOT46c36" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+
+        <div class="ad-container-right">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-l6ShIzRdMfSOcB8v" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+    </div>
+
+    <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-UDsuae5QVIAxX2fS" data-ad-width="320"
+            data-ad-height="50"></ins>
+    </div>
+
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+
+    <div class="bond-container">
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="search-container mobile-search-container">
+                    <div class="search-controls">
+                        <div class="search-input-wrapper">
+                            <input type="text" id="mobile-search-input" placeholder="능력치 검색 또는 선택..."
+                                autocomplete="off">
+                            <button id="mobile-search-button"
+                                onclick="BondCalculatorApp.searchSpirits(true)">검색</button>
+                        </div>
+                        <div id="mobile-stat-options" class="stat-options-dropdown"></div>
+                        <div id="mobile-selected-stats" class="selected-stats"></div>
+                    </div>
+                </div>
+
+                <div class="spirit-selection">
+                    <div class="spirit-selection-header">
+                        <h3>환수 선택 (<span id="selectedCount">0</span>/40)</h3>
+                        <button class="clear-selection-btn"
+                            onclick="BondCalculatorApp.clearAllSelections()">선택해제</button>
+                    </div>
+                    <div class="image-container" id="imageContainer"></div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="selected-spirits-container">
+                    <div class="search-container desktop-search-container">
+                        <div class="search-controls">
+                            <div class="search-input-wrapper">
+                                <input type="text" id="search-input" placeholder="능력치 검색 또는 선택..." autocomplete="off">
+                                <button id="search-button" onclick="BondCalculatorApp.searchSpirits()">검색</button>
+                            </div>
+                            <div id="stat-options" class="stat-options-dropdown"></div>
+                            <div id="selected-stats" class="selected-stats"></div>
+                        </div>
+                    </div>
+
+                    <div class="selected-spirits-header">
+                        <h3>선택된 환수 (<span id="selectedCountPanel">0</span>/40)</h3>
+                        <div class="header-controls">
+                            <div class="level-batch-control">
+                                <label>일괄 레벨 설정:</label>
+                                <input type="number" id="batchLevel" min="0" max="25" value="0">
+                                <button onclick="BondCalculatorApp.applyBatchLevel('batchLevel')">적용</button>
+                                <button onclick="setMaxBatchLevel('batchLevel')" class="max-level-btn">Max</button>
+                            </div>
+                            <div class="calculate-btn-small">
+                                <button id="findOptimalBtn" onclick="BondCalculatorApp.findOptimalCombination()">최적 조합
+                                    찾기</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="selectedSpirits" class="selected-spirits"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-toggle-container" id="panelToggleContainer">
+        <button class="panel-toggle-button" id="panelToggleBtn">
+            선택된 환수 <span id="mobileSelectedCount">0</span>개 <span class="toggle-icon">▼</span>
+        </button>
+        <div class="right-panel collapsed">
+            <div class="selected-spirits-container">
+                <div class="selected-spirits-header">
+                    <h3>선택된 환수</h3>
+                    <div class="header-controls">
+                        <div class="level-batch-control">
+                            <label>일괄 레벨 설정:</label>
+                            <input type="number" id="mobileBatchLevel" min="0" max="25" value="0">
+                            <button onclick="BondCalculatorApp.applyBatchLevel('mobileBatchLevel')"
+                                class="apply-level-btn">적용</button>
+                            <button onclick="setMaxBatchLevel('mobileBatchLevel')" class="max-level-btn">Max</button>
+                        </div>
+                        <div class="calculate-btn-small">
+                            <button id="findOptimalBtn" onclick="BondCalculatorApp.findOptimalCombination()">찾기</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="selected-spirits"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="resultModal">
+        <div class="modal">
+            <button class="modal-close" onclick="BondCalculatorApp.closeResultModal()">✕</button>
+            <h3 class="modal-title">결속 효과 계산 결과</h3>
+            <div id="selectedSpiritsInfo" class="selected-spirits-info">
+                <h4>선택된 환수 정보</h4>
+                <div id="spiritsInfoList" class="spirits-info-list"></div>
+            </div>
+
+            <div class="results-container">
+                <div class="results-section">
+                    <h4>등급 결속 효과</h4>
+                    <div id="gradeEffects" class="effects-list"></div>
+                </div>
+                <div class="results-section">
+                    <h4>세력 결속 효과</h4>
+                    <div id="factionEffects" class="effects-list"></div>
+                </div>
+                <div class="results-section">
+                    <h4>총 결속 효과</h4>
+                    <div id="totalEffects" class="effects-list"></div>
+                </div>
+            </div>
+
+            <div class="weighted-score">
+                <h4>환산합산: <span id="weightedScore">0</span></h4>
+                <small>(피해저항관통 + 피해저항 + 대인피해% *10 + 대인방어% *10)</small>
+            </div>
+
+            <div id="missingDataWarning" class="warning-message"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="optimalModal">
+        <div class="modal">
+            <button class="modal-close" onclick="BondCalculatorApp.closeOptimalModal()">✕</button>
+            <div id="optimalModalContent">
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-3TYDe2ScVF7pn7fU" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+
+        <div class="ad-container-right">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Sxen5zACA7yhBeet" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+    </div>
+
+    <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Xtg9TanJcnXcaIaY" data-ad-width="320"
+            data-ad-height="50"></ins>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-desktop">
+            <div class="footer-links">
+                <a href="info.html">환수정보</a>
+                <a href="bondCalculator.html">환수 결속</a>
+                <a href="soulCalculator.html">환수혼 계산</a>
+                <a href="chak.html">착 계산</a>
+                <button class="footer-report-btn" onclick="openReportSheet()">제보하기</button>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2025 바연 화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/firebaseConfig.js"></script>
+    <script src="assets/js/constants.js"></script>
+    <script src="assets/js/data-service.js"></script>
+    <script src="assets/js/calculator.js"></script>
+    <script src="assets/js/ui-controller.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>

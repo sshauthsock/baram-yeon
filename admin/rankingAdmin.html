@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>바연화연 - 환수 랭킹 관리자</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/assets/img/BHY.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="/assets/css/main.css" rel="stylesheet">
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: var(--text-primary);
+            line-height: 1.6;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            background-color: #1a2a3a;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 60px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+            transition: transform 0.3s ease;
+            display: block;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .tabs {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            height: 100%;
+        }
+
+        .tab {
+            padding: 14px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            color: rgba(255, 255, 255, 0.95);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .tab.active {
+            color: #ffffff;
+            font-weight: 500;
+            background-color: transparent;
+            position: relative;
+        }
+
+        .tab.active::before {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: #3498db;
+            opacity: 1;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            opacity: 0.85;
+        }
+
+        .tab.active {
+            background-image: linear-gradient(to bottom,
+                    rgba(52, 152, 219, 0.1),
+                    rgba(52, 152, 219, 0.05) 60%,
+                    transparent);
+            backdrop-filter: blur(4px);
+        }
+
+        .sub-tabs {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin: 0;
+            padding: 4px 0;
+            gap: 5px;
+            background-color: #f0f2f5;
+            position: -webkit-sticky;
+            position: sticky;
+            top: 55px;
+            z-index: 99;
+            width: 100%;
+        }
+
+        .sub-tabs .tab {
+            position: relative;
+            padding: 6px 12px;
+            min-width: 60px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 500;
+            color: #2c3e50;
+            background-color: #f8f9fa;
+            border: none;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.08), 0px 1px 2px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 4px;
+        }
+
+        .sub-tabs .tab:hover {
+            color: #1565c0;
+            background-color: #e3f2fd;
+            box-shadow: 0 -2px 6px rgba(21, 101, 192, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .sub-tabs .tab.active {
+            color: white;
+            background-color: #1976d2;
+            box-shadow: 0 -2px 8px rgba(25, 118, 210, 0.3), 0 1px 3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+            font-weight: 600;
+        }
+
+        .sub-tabs .tab:after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #1976d2;
+            display: none;
+        }
+
+        .sub-tabs .tab.active:after {
+            display: block;
+        }
+
+        .admin-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .admin-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .section-title {
+            margin-top: 0;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .admin-button {
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .admin-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-button.danger {
+            background-color: #e74c3c;
+        }
+
+        .admin-button.danger:hover {
+            background-color: #c0392b;
+        }
+
+        .progress-container {
+            margin: 15px 0;
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            height: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #4CAF50;
+            transition: width 0.3s;
+            width: 0;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .status-display {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 3px solid #6c757d;
+        }
+
+        .log-container {
+            height: 200px;
+            overflow-y: auto;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .log-entry {
+            margin: 0;
+            padding: 2px 0;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .log-entry.error {
+            color: #e74c3c;
+        }
+
+        .log-entry.success {
+            color: #2ecc71;
+        }
+
+        .log-entry.warning {
+            color: #f39c12;
+        }
+
+        .meta-info {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e3f2fd;
+            border-radius: 5px;
+            border-left: 3px solid #2196F3;
+        }
+
+        .download-section {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+            border-left: 3px solid #4caf50;
+        }
+
+        .download-all-btn {
+            background-color: #4caf50;
+            margin-top: 10px;
+        }
+
+        .download-all-btn:hover {
+            background-color: #388e3c;
+        }
+
+        .file-info {
+            margin-top: 15px;
+        }
+
+        .file-info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .file-info-item:last-child {
+            border-bottom: none;
+        }
+
+        .notice {
+            padding: 10px 15px;
+            background-color: #fff3cd;
+            color: #856404;
+            border-left: 3px solid #ffc107;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- Add Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="info.html">
+                <img src="/assets/img/BHY.png" alt="바연화연 로고" class="logo">
+            </a>
+        </div>
+        <nav class="tabs">
+            <div class="tab" onclick="location.assign('info.html')">환수정보</div>
+            <div class="tab" onclick="location.assign('bondCalculator.html')">환수 결속</div>
+            <div class="tab" onclick="location.assign('mobRanking.html')">환수 랭킹</div>
+            <div class="tab" onclick="location.assign('soulCalculator.html')">환수혼 계산</div>
+            <div class="tab" onclick="location.assign('chak.html')">착 계산</div>
+        </nav>
+    </header>
+
+    <div class="admin-container">
+        <h1 class="admin-title">환수 랭킹 관리 페이지</h1>
+
+        <div class="notice">
+            <strong>주의:</strong> 랭킹 데이터는 Firebase에 자동으로 저장됩니다.
+            또한, 백업 목적으로 JSON 파일도 다운로드됩니다. 다운로드된 파일이 필요하지 않으면 무시하셔도 됩니다.
+        </div>
+
+        <div id="adminContent">
+            <div class="admin-section">
+                <h2 class="section-title">결속 랭킹 관리</h2>
+                <p>환수 결속 랭킹을 계산하고 JSON 파일로 다운로드합니다.</p>
+
+                <h3>모든 환수(전설+불멸) 조합</h3>
+                <div class="button-group">
+                    <button class="admin-button" onclick="calculateBondRanking('수호')">수호 랭킹 계산</button>
+                    <button class="admin-button" onclick="calculateBondRanking('탑승')">탑승 랭킹 계산</button>
+                    <button class="admin-button" onclick="calculateBondRanking('변신')">변신 랭킹 계산</button>
+                </div>
+
+                <h3 style="margin-top: 15px;">전설환수만 조합</h3>
+                <div class="button-group">
+                    <button class="admin-button" style="background-color: #e67e22;"
+                        onclick="calculateLegendaryBondRanking('수호')">수호 전설환수 랭킹</button>
+                    <button class="admin-button" style="background-color: #e67e22;"
+                        onclick="calculateLegendaryBondRanking('탑승')">탑승 전설환수 랭킹</button>
+                    <button class="admin-button" style="background-color: #e67e22;"
+                        onclick="calculateLegendaryBondRanking('변신')">변신 전설환수 랭킹</button>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar" id="bondProgressBar">0%</div>
+                </div>
+
+                <div class="status-display" id="bondStatus">
+                    준비 완료
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h2 class="section-title">능력치 랭킹 관리</h2>
+                <p>환수 개별 능력치 랭킹을 계산하고 JSON 파일로 다운로드합니다.</p>
+
+                <div class="button-group">
+                    <button class="admin-button" onclick="calculateStatRanking('수호')">수호 능력치 계산</button>
+                    <button class="admin-button" onclick="calculateStatRanking('탑승')">탑승 능력치 계산</button>
+                    <button class="admin-button" onclick="calculateStatRanking('변신')">변신 능력치 계산</button>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar" id="statProgressBar">0%</div>
+                </div>
+
+                <div class="status-display" id="statStatus">
+                    준비 완료
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h2 class="section-title">전체 랭킹 일괄 계산</h2>
+                <p>모든 카테고리의 모든 랭킹을 한 번에 계산합니다. (시간이 오래 걸릴 수 있습니다)</p>
+
+                <div class="button-group">
+                    <button class="admin-button" onclick="calculateAllRankings()">전체 랭킹 계산</button>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar" id="allProgressBar">0%</div>
+                </div>
+
+                <div class="status-display" id="allStatus">
+                    준비 완료
+                </div>
+            </div>
+
+            <div class="admin-section download-section">
+                <h2 class="section-title">랭킹 데이터 다운로드</h2>
+                <p>모든 계산된 랭킹 데이터를 ZIP 파일로 다운로드합니다.</p>
+
+                <div class="button-group">
+                    <button class="admin-button download-all-btn" onclick="downloadAllRankingsZip()">전체 데이터 ZIP으로
+                        다운로드</button>
+                </div>
+
+                <p><strong>알림:</strong> 랭킹 데이터는 자동으로 Firebase에 저장되며, ZIP 파일은 백업 용도입니다.</p>
+                <div id="metaInfo" class="meta-info">
+                    메타데이터 로드 중...
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h2 class="section-title">로그</h2>
+                <div class="log-container" id="logContainer"></div>
+                <div class="button-group">
+                    <button class="admin-button" onclick="clearLog()">로그 지우기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/js/common.js"></script>
+    <script src="/assets/js/firebaseConfig.js"></script>
+    <script src="/assets/js/firebaseHandler.js"></script>
+    <script src="/assets/js/dataManager.js"></script>
+    <script src="/assets/js/rankingCalculator.js"></script>
+    <script src="/assets/js/rankingManager.js"></script>
+
+    <script>
+        // 랭킹 관리 JavaScript
+        let isCalculating = false;
+
+        // Make addLogEntry accessible globally for rankingCalculator.js
+        window.addLogEntry = function (message, type = 'info') {
+            const logContainer = document.getElementById('logContainer');
+            const entry = document.createElement('p');
+            entry.className = `log-entry ${type}`;
+
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            entry.textContent = `[${timeString}] ${message}`;
+
+            logContainer.appendChild(entry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        // Initialize Firebase on page load and ensure collection exists
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                if (typeof FirebaseHandler !== 'undefined') {
+                    FirebaseHandler.initFirebase();
+
+                    // Ensure the collection exists by checking/creating a metadata document
+                    setTimeout(async function () {
+                        try {
+                            if (typeof firebase !== 'undefined' && firebase.apps.length) {
+                                const db = firebase.firestore();
+                                const metaRef = db.collection("mobRankingData").doc("rankings-meta");
+                                const metaDoc = await metaRef.get();
+
+                                if (!metaDoc.exists) {
+                                    // Create default metadata document
+                                    const defaultMeta = {
+                                        lastUpdated: new Date().toISOString(),
+                                        categories: ["수호", "탑승", "변신"],
+                                        bondRankings: {
+                                            수호: { count: 0, updatedAt: null },
+                                            탑승: { count: 0, updatedAt: null },
+                                            변신: { count: 0, updatedAt: null },
+                                        },
+                                        statRankings: {
+                                            수호: { statCount: 0, updatedAt: null },
+                                            탑승: { statCount: 0, updatedAt: null },
+                                            변신: { statCount: 0, updatedAt: null },
+                                        }
+                                    };
+
+                                    await metaRef.set(defaultMeta);
+                                    addLogEntry('mobRankingData 컬렉션 및 기본 메타데이터 생성 완료', 'success');
+                                } else {
+                                    addLogEntry('mobRankingData 컬렉션 연결 완료', 'success');
+                                }
+                            }
+                        } catch (collectionError) {
+                            addLogEntry('mobRankingData 컬렉션 확인 중 오류: ' + collectionError.message, 'error');
+                        }
+                    }, 500); // 잠시 대기 후 실행
+
+                    addLogEntry('Firebase initialized', 'info');
+                } else {
+                    addLogEntry('FirebaseHandler not available', 'warning');
+                }
+            } catch (e) {
+                addLogEntry('Error initializing Firebase: ' + e.message, 'error');
+            }
+
+            // 데이터 로드 및 메타 정보 표시
+            loadDataAsync();
+        });
+
+        // 환수 데이터 비동기 로드
+        async function loadDataAsync() {
+            addLogEntry('환수 데이터 로드 중...', 'info');
+
+            try {
+                const result = await RankingCalculator.loadAllData();
+                if (result) {
+                    addLogEntry('환수 데이터 로드 완료!', 'success');
+                    loadMetaInfo();
+                } else {
+                    addLogEntry('환수 데이터 로드 실패', 'error');
+                }
+            } catch (error) {
+                addLogEntry('환수 데이터 로드 오류: ' + error.message, 'error');
+            }
+        }
+
+        // 메타 정보 로드
+        async function loadMetaInfo() {
+            try {
+                const meta = await RankingManager.loadMetadata();
+                const metaInfoContainer = document.getElementById('metaInfo');
+
+                if (meta && meta.lastUpdated) {
+                    const lastUpdated = new Date(meta.lastUpdated).toLocaleString();
+                    metaInfoContainer.innerHTML = `
+                        <p><strong>마지막 랭킹 업데이트:</strong> ${lastUpdated}</p>
+                        <p><strong>포함된 카테고리:</strong> ${meta.categories ? meta.categories.join(', ') : '정보 없음'}</p>
+                    `;
+
+                    // 카테고리별 정보 추가
+                    if (meta.bondRankings) {
+                        metaInfoContainer.innerHTML += `<h4>결속 랭킹 정보:</h4>`;
+                        for (const [category, info] of Object.entries(meta.bondRankings)) {
+                            const categoryUpdated = info.updatedAt ? new Date(info.updatedAt).toLocaleString() : '정보 없음';
+                            metaInfoContainer.innerHTML += `<p>${category}: ${info.count || 0}개 조합, 업데이트: ${categoryUpdated}</p>`;
+                        }
+                    }
+
+                    if (meta.statRankings) {
+                        metaInfoContainer.innerHTML += `<h4>능력치 랭킹 정보:</h4>`;
+                        for (const [category, info] of Object.entries(meta.statRankings)) {
+                            const categoryUpdated = info.updatedAt ? new Date(info.updatedAt).toLocaleString() : '정보 없음';
+                            metaInfoContainer.innerHTML += `<p>${category}: ${info.statCount || 0}개 능력치, 업데이트: ${categoryUpdated}</p>`;
+                        }
+                    }
+                } else {
+                    metaInfoContainer.innerHTML = '<p>저장된 랭킹 메타 정보가 없습니다.</p>';
+                }
+            } catch (error) {
+                document.getElementById('metaInfo').innerHTML =
+                    `<p class="error">메타 정보 로드 오류: ${error.message}</p>`;
+            }
+        }
+
+        // 결속 랭킹 계산
+        async function calculateBondRanking(category) {
+            if (isCalculating) {
+                alert('이미 계산이 진행 중입니다.');
+                return;
+            }
+
+            isCalculating = true;
+
+            try {
+                const progressBar = document.getElementById('bondProgressBar');
+                const statusDisplay = document.getElementById('bondStatus');
+
+                addLogEntry(`${category} 결속 랭킹 계산 시작...`, 'info');
+                statusDisplay.textContent = '계산 시작...';
+                progressBar.style.width = '0%';
+                progressBar.textContent = '0%';
+
+                const result = await RankingCalculator.calculateAndStoreBondRankings(
+                    category,
+                    (percent, message) => {
+                        progressBar.style.width = `${percent}%`;
+                        progressBar.textContent = `${Math.round(percent)}%`;
+                        statusDisplay.textContent = message;
+
+                        if (percent % 10 === 0) {
+                            addLogEntry(`${category}: ${message} (${Math.round(percent)}%)`, 'info');
+                        }
+                    }
+                );
+
+                if (result.success) {
+                    addLogEntry(
+                        `${category} 결속 랭킹 계산 완료! ${result.count}개 결과 저장됨, 파일명: ${result.fileName}.json`,
+                        'success'
+                    );
+                    statusDisplay.textContent = `완료: ${result.count}개 결과 저장됨`;
+                } else {
+                    addLogEntry(
+                        `${category} 결속 랭킹 계산 실패: ${result.error}`,
+                        'error'
+                    );
+                    statusDisplay.textContent = `오류: ${result.error}`;
+                }
+
+                // 메타 정보 갱신
+                setTimeout(loadMetaInfo, 500);
+
+            } catch (error) {
+                addLogEntry(`${category} 결속 랭킹 계산 중 오류: ${error.message}`, 'error');
+                document.getElementById('bondStatus').textContent = `오류: ${error.message}`;
+            } finally {
+                isCalculating = false;
+            }
+        }
+
+        // 능력치 랭킹 계산
+        async function calculateStatRanking(category) {
+            if (isCalculating) {
+                alert('이미 계산이 진행 중입니다.');
+                return;
+            }
+
+            isCalculating = true;
+
+            try {
+                const progressBar = document.getElementById('statProgressBar');
+                const statusDisplay = document.getElementById('statStatus');
+
+                addLogEntry(`${category} 능력치 랭킹 계산 시작...`, 'info');
+                statusDisplay.textContent = '계산 시작...';
+                progressBar.style.width = '0%';
+                progressBar.textContent = '0%';
+
+                const result = await RankingCalculator.calculateAndStoreStatRankings(
+                    category,
+                    (percent, message) => {
+                        progressBar.style.width = `${percent}%`;
+                        progressBar.textContent = `${Math.round(percent)}%`;
+                        statusDisplay.textContent = message;
+
+                        if (percent % 10 === 0) {
+                            addLogEntry(`${category}: ${message} (${Math.round(percent)}%)`, 'info');
+                        }
+                    }
+                );
+
+                if (result.success) {
+                    addLogEntry(
+                        `${category} 능력치 랭킹 계산 완료! ${result.stats}개 능력치에 대한 결과 저장됨, 파일명: ${result.fileName}.json`,
+                        'success'
+                    );
+                    statusDisplay.textContent = `완료: ${result.stats}개 능력치에 대한 결과 저장됨`;
+                } else {
+                    addLogEntry(
+                        `${category} 능력치 랭킹 계산 실패: ${result.error}`,
+                        'error'
+                    );
+                    statusDisplay.textContent = `오류: ${result.error}`;
+                }
+
+                // 메타 정보 갱신
+                setTimeout(loadMetaInfo, 500);
+
+            } catch (error) {
+                addLogEntry(`${category} 능력치 랭킹 계산 중 오류: ${error.message}`, 'error');
+                document.getElementById('statStatus').textContent = `오류: ${error.message}`;
+            } finally {
+                isCalculating = false;
+            }
+        }
+
+        // 전설환수만 결속 랭킹 계산
+        async function calculateLegendaryBondRanking(category) {
+            if (isCalculating) {
+                alert('이미 계산이 진행 중입니다.');
+                return;
+            }
+
+            isCalculating = true;
+
+            try {
+                const progressBar = document.getElementById('bondProgressBar');
+                const statusDisplay = document.getElementById('bondStatus');
+
+                addLogEntry(`${category} 전설환수 결속 랭킹 계산 시작...`, 'info');
+                statusDisplay.textContent = '전설환수만 계산 시작...';
+                progressBar.style.width = '0%';
+                progressBar.textContent = '0%';
+
+                const result = await RankingCalculator.calculateAndStoreLegendaryBondRankings(
+                    category,
+                    (percent, message) => {
+                        progressBar.style.width = `${percent}%`;
+                        progressBar.textContent = `${Math.round(percent)}%`;
+                        statusDisplay.textContent = message;
+
+                        if (percent % 10 === 0) {
+                            addLogEntry(`${category}: ${message} (${Math.round(percent)}%)`, 'info');
+                        }
+                    }
+                );
+
+                if (result.success) {
+                    addLogEntry(
+                        `${category} 전설환수 결속 랭킹 계산 완료! ${result.count}개 결과 저장됨, 파일명: ${result.fileName}.json`,
+                        'success'
+                    );
+                    statusDisplay.textContent = `완료: ${result.count}개 전설환수 결과 저장됨`;
+                } else {
+                    addLogEntry(
+                        `${category} 전설환수 결속 랭킹 계산 실패: ${result.error}`,
+                        'error'
+                    );
+                    statusDisplay.textContent = `오류: ${result.error}`;
+                }
+
+            } catch (error) {
+                addLogEntry(`${category} 전설환수 결속 랭킹 계산 중 오류: ${error.message}`, 'error');
+                document.getElementById('bondStatus').textContent = `오류: ${error.message}`;
+            } finally {
+                isCalculating = false;
+            }
+        }
+
+        // 모든 랭킹 계산
+        async function calculateAllRankings() {
+            if (isCalculating) {
+                alert('이미 계산이 진행 중입니다.');
+                return;
+            }
+
+            if (!confirm('모든 카테고리의 모든 랭킹을 계산합니다. 시간이 오래 걸릴 수 있습니다. 계속하시겠습니까?')) {
+                return;
+            }
+
+            isCalculating = true;
+
+            try {
+                const progressBar = document.getElementById('allProgressBar');
+                const statusDisplay = document.getElementById('allStatus');
+
+                addLogEntry(`모든 랭킹 계산 시작...`, 'info');
+                statusDisplay.textContent = '계산 준비 중...';
+                progressBar.style.width = '0%';
+                progressBar.textContent = '0%';
+
+                let currentCategory = '';
+                let currentProgress = 0;
+
+                const results = await RankingCalculator.calculateAllRankings(
+                    (percent, message) => {
+                        // 메시지에서 카테고리 추출
+                        const match = message.match(/^(수호|탑승|변신)\s+([^:]+):/);
+                        if (match) {
+                            const category = match[1];
+                            const type = match[2];
+
+                            if (category !== currentCategory) {
+                                currentCategory = category;
+                                currentProgress = 0;
+                            }
+
+                            // 진행율 업데이트
+                            const weightedPercent = currentProgress + (percent / 600); // 각 작업이 1/6씩 차지
+                            progressBar.style.width = `${weightedPercent}%`;
+                            progressBar.textContent = `${Math.round(weightedPercent)}%`;
+
+                            // 메시지는 그대로 표시
+                            statusDisplay.textContent = message;
+
+                            if (percent === 100) {
+                                currentProgress += 16.67; // 1/6 완료
+                                addLogEntry(`${category} ${type} 계산 완료!`, 'success');
+                            } else if (percent % 25 === 0) {
+                                addLogEntry(`${message} (${Math.round(percent)}%)`, 'info');
+                            }
+                        } else {
+                            statusDisplay.textContent = message;
+                        }
+                    }
+                );
+
+                addLogEntry('모든 랭킹 계산 완료! ZIP 파일로 다운로드할 수 있습니다.', 'success');
+                statusDisplay.textContent = '모든 랭킹 계산 완료!';
+                progressBar.style.width = '100%';
+                progressBar.textContent = '100%';
+
+                // 메타 정보 갱신
+                setTimeout(loadMetaInfo, 500);
+
+            } catch (error) {
+                addLogEntry(`랭킹 계산 중 오류: ${error.message}`, 'error');
+                document.getElementById('allStatus').textContent = `오류: ${error.message}`;
+            } finally {
+                isCalculating = false;
+            }
+        }
+
+        // 모든 랭킹 ZIP으로 다운로드
+        async function downloadAllRankingsZip() {
+            addLogEntry("모든 랭킹 데이터 ZIP 파일로 내보내는 중...", "info");
+
+            try {
+                const result = await RankingCalculator.downloadAllRankingsAsZip();
+
+                if (result) {
+                    addLogEntry("랭킹 데이터 ZIP 파일 다운로드 성공!", "success");
+                } else {
+                    addLogEntry("랭킹 데이터 ZIP 파일 생성 실패.", "error");
+                }
+            } catch (error) {
+                addLogEntry(`ZIP 파일 생성 중 오류: ${error.message}`, "error");
+            }
+        }
+
+        // 로그 지우기
+        function clearLog() {
+            document.getElementById('logContainer').innerHTML = '';
+            addLogEntry('로그가 지워졌습니다.', 'info');
+        }
+    </script>
+</body>
+
+</html>

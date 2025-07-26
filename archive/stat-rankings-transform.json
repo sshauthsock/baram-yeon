@@ -1,0 +1,3380 @@
+{
+  "category": "변신",
+  "updatedAt": "2025-05-15T00:39:15.536Z",
+  "rankings": {
+    "damageResistancePenetration": [
+      {
+        "name": "멸 제천대성",
+        "image": "images/transform/transform_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 1158
+      },
+      {
+        "name": "멸 마룡명신",
+        "image": "images/transform/transform_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 1106
+      },
+      {
+        "name": "극진 혈독청편",
+        "image": "images/transform/transform_60.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 1050
+      },
+      {
+        "name": "극진 진산지웅",
+        "image": "images/transform/transform_73.jpg",
+        "influence": "-",
+        "grade": "전설",
+        "value": 1050
+      },
+      {
+        "name": "극진 청령사록",
+        "image": "images/transform/transform_61.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 987
+      },
+      {
+        "name": "극진 황천갑충",
+        "image": "images/transform/transform_66.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 953
+      },
+      {
+        "name": "극진 청포접아",
+        "image": "images/transform/transform_47.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 860
+      },
+      {
+        "name": "극진 청월낭인",
+        "image": "images/transform/transform_41.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 807
+      },
+      {
+        "name": "극진 야행적홍",
+        "image": "images/transform/transform_44.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 788
+      },
+      {
+        "name": "결의의 변신",
+        "image": "images/transform/transform_68.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 750
+      },
+      {
+        "name": "극진 지승운사",
+        "image": "images/transform/transform_55.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 745
+      },
+      {
+        "name": "극진 적운웅묘",
+        "image": "images/transform/transform_57.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 745
+      },
+      {
+        "name": "극진 청귀백갈",
+        "image": "images/transform/transform_58.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 745
+      },
+      {
+        "name": "극진 사풍도갑",
+        "image": "images/transform/transform_48.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 720
+      },
+      {
+        "name": "극진 지승우사",
+        "image": "images/transform/transform_52.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 688
+      },
+      {
+        "name": "극진 미토서화",
+        "image": "images/transform/transform_39.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 683
+      },
+      {
+        "name": "멸 화저폭군",
+        "image": "images/transform/transform_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 682
+      },
+      {
+        "name": "광속 유희수모",
+        "image": "images/transform/transform_75.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 665
+      },
+      {
+        "name": "고요의 변신",
+        "image": "images/transform/transform_67.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 650
+      },
+      {
+        "name": "멸 풍신지마",
+        "image": "images/transform/transform_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 620
+      },
+      {
+        "name": "극진 유희수모",
+        "image": "images/transform/transform_50.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 613
+      },
+      {
+        "name": "극진 사흉:혼돈",
+        "image": "images/transform/transform_63.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 600
+      },
+      {
+        "name": "의지의 변신",
+        "image": "images/transform/transform_72.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 562
+      },
+      {
+        "name": "극진 야행휴류",
+        "image": "images/transform/transform_12.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 557
+      },
+      {
+        "name": "극진 적면귀홍",
+        "image": "images/transform/transform_14.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 557
+      },
+      {
+        "name": "극진 뢰고력양",
+        "image": "images/transform/transform_15.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 557
+      },
+      {
+        "name": "극진 두각지축",
+        "image": "images/transform/transform_20.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 557
+      },
+      {
+        "name": "극진 혈귀감갈",
+        "image": "images/transform/transform_22.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 557
+      },
+      {
+        "name": "극진 칠흑곰인",
+        "image": "images/transform/transform_38.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 533
+      },
+      {
+        "name": "멸 신양현성",
+        "image": "images/transform/transform_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 532
+      },
+      {
+        "name": "극진 자안염사",
+        "image": "images/transform/transform_40.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 515
+      },
+      {
+        "name": "극진 무희천아",
+        "image": "images/transform/transform_37.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 511
+      },
+      {
+        "name": "극진 대익풍백",
+        "image": "images/transform/transform_34.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 457
+      },
+      {
+        "name": "극진 묵시흑편",
+        "image": "images/transform/transform_24.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 437
+      },
+      {
+        "name": "극진 적안백묘",
+        "image": "images/transform/transform_9.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 436
+      },
+      {
+        "name": "극진 무혈흑사",
+        "image": "images/transform/transform_26.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 431
+      },
+      {
+        "name": "극진 칠흑오요",
+        "image": "images/transform/transform_29.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 431
+      },
+      {
+        "name": "극진 적안흑랑",
+        "image": "images/transform/transform_53.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 392
+      },
+      {
+        "name": "극진 자색백묘",
+        "image": "images/transform/transform_49.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 386
+      },
+      {
+        "name": "극진 12지신:소",
+        "image": "images/transform/transform_2.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 382
+      },
+      {
+        "name": "극진 12지신:토끼",
+        "image": "images/transform/transform_4.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 382
+      },
+      {
+        "name": "극진 12지신:개",
+        "image": "images/transform/transform_6.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 382
+      },
+      {
+        "name": "극진 12지신:용",
+        "image": "images/transform/transform_8.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 382
+      },
+      {
+        "name": "극진 극독자갈",
+        "image": "images/transform/transform_56.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 361
+      },
+      {
+        "name": "극진 해도영우",
+        "image": "images/transform/transform_35.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 356
+      },
+      {
+        "name": "극진 적안백랑",
+        "image": "images/transform/transform_10.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 346
+      },
+      {
+        "name": "극진 견각무소",
+        "image": "images/transform/transform_19.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 346
+      },
+      {
+        "name": "극진 암독감갈",
+        "image": "images/transform/transform_21.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 346
+      },
+      {
+        "name": "극진 요화범경",
+        "image": "images/transform/transform_27.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 346
+      },
+      {
+        "name": "극진 태극해치",
+        "image": "images/transform/transform_31.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 346
+      },
+      {
+        "name": "극진 풍운오계",
+        "image": "images/transform/transform_46.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 345
+      },
+      {
+        "name": "극진 금희산달",
+        "image": "images/transform/transform_18.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 337
+      },
+      {
+        "name": "극진 적투갑충",
+        "image": "images/transform/transform_28.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 333
+      },
+      {
+        "name": "극진 수인흑묘",
+        "image": "images/transform/transform_30.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 333
+      },
+      {
+        "name": "극진 명강율서",
+        "image": "images/transform/transform_51.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 331
+      },
+      {
+        "name": "침착의 변신",
+        "image": "images/transform/transform_70.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 312
+      },
+      {
+        "name": "극진 녹림각록",
+        "image": "images/transform/transform_11.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 281
+      },
+      {
+        "name": "극진 공적초어",
+        "image": "images/transform/transform_13.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 281
+      },
+      {
+        "name": "극진 제흑오계",
+        "image": "images/transform/transform_16.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 281
+      },
+      {
+        "name": "극진 금희율서",
+        "image": "images/transform/transform_17.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 281
+      },
+      {
+        "name": "극진 혈화적편",
+        "image": "images/transform/transform_23.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 281
+      },
+      {
+        "name": "극진 염제표호",
+        "image": "images/transform/transform_25.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 281
+      },
+      {
+        "name": "극진 홍염미호",
+        "image": "images/transform/transform_32.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 281
+      },
+      {
+        "name": "극진 백발귀호",
+        "image": "images/transform/transform_33.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 277
+      },
+      {
+        "name": "극진 적환주현",
+        "image": "images/transform/transform_45.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 275
+      },
+      {
+        "name": "극진 자희산달",
+        "image": "images/transform/transform_54.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 266
+      },
+      {
+        "name": "냉정의 변신",
+        "image": "images/transform/transform_71.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 225
+      },
+      {
+        "name": "길달",
+        "image": "images/transform/transform_36.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 215
+      },
+      {
+        "name": "극진 금작천우",
+        "image": "images/transform/transform_65.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 211
+      },
+      {
+        "name": "멸 설화백영",
+        "image": "images/transform/transform_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 206
+      },
+      {
+        "name": "극진 12지신:원숭이",
+        "image": "images/transform/transform_1.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 176
+      },
+      {
+        "name": "극진 12지신:닭",
+        "image": "images/transform/transform_3.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 176
+      },
+      {
+        "name": "극진 12지신:쥐",
+        "image": "images/transform/transform_5.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 176
+      },
+      {
+        "name": "극진 12지신:호랑이",
+        "image": "images/transform/transform_7.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 176
+      },
+      {
+        "name": "극진 녹림사심",
+        "image": "images/transform/transform_42.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "극진 세아봉왕",
+        "image": "images/transform/transform_43.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 167
+      },
+      {
+        "name": "활력의 변신",
+        "image": "images/transform/transform_69.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 125
+      }
+    ],
+    "healthIncreasePercent": [
+      {
+        "name": "멸 신양현성",
+        "image": "images/transform/transform_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 69
+      },
+      {
+        "name": "멸 설화백영",
+        "image": "images/transform/transform_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 65
+      },
+      {
+        "name": "멸 화저폭군",
+        "image": "images/transform/transform_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 63
+      },
+      {
+        "name": "멸 마룡명신",
+        "image": "images/transform/transform_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 63
+      },
+      {
+        "name": "멸 풍신지마",
+        "image": "images/transform/transform_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 63
+      },
+      {
+        "name": "멸 제천대성",
+        "image": "images/transform/transform_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 63
+      },
+      {
+        "name": "극진 황천갑충",
+        "image": "images/transform/transform_66.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 55
+      },
+      {
+        "name": "극진 녹림사심",
+        "image": "images/transform/transform_42.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "극진 세아봉왕",
+        "image": "images/transform/transform_43.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "극진 금작천우",
+        "image": "images/transform/transform_65.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "극진 흑시응사",
+        "image": "images/transform/transform_59.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 52
+      },
+      {
+        "name": "극진 혈독청편",
+        "image": "images/transform/transform_60.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 52
+      },
+      {
+        "name": "극진 풍운오계",
+        "image": "images/transform/transform_46.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 50
+      },
+      {
+        "name": "극진 청포접아",
+        "image": "images/transform/transform_47.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 50
+      },
+      {
+        "name": "극진 녹림각록",
+        "image": "images/transform/transform_11.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 49
+      },
+      {
+        "name": "극진 청령사록",
+        "image": "images/transform/transform_61.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 49
+      },
+      {
+        "name": "극진 묵시홍편",
+        "image": "images/transform/transform_62.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 49
+      },
+      {
+        "name": "극진 지승운사",
+        "image": "images/transform/transform_55.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 47
+      },
+      {
+        "name": "극진 극독자갈",
+        "image": "images/transform/transform_56.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 47
+      },
+      {
+        "name": "극진 사흉:혼돈",
+        "image": "images/transform/transform_63.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 47
+      },
+      {
+        "name": "극진 청순범경",
+        "image": "images/transform/transform_64.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 47
+      },
+      {
+        "name": "극진 진산지웅",
+        "image": "images/transform/transform_73.jpg",
+        "influence": "-",
+        "grade": "전설",
+        "value": 47
+      },
+      {
+        "name": "극진 칠흑곰인",
+        "image": "images/transform/transform_38.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 46
+      },
+      {
+        "name": "극진 청월낭인",
+        "image": "images/transform/transform_41.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 46
+      },
+      {
+        "name": "극진 사풍도갑",
+        "image": "images/transform/transform_48.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 45
+      },
+      {
+        "name": "극진 자색백묘",
+        "image": "images/transform/transform_49.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 45
+      },
+      {
+        "name": "극진 청흑오요",
+        "image": "images/transform/transform_74.jpg",
+        "influence": "-",
+        "grade": "전설",
+        "value": 45
+      },
+      {
+        "name": "극진 야행휴류",
+        "image": "images/transform/transform_12.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 적면귀홍",
+        "image": "images/transform/transform_14.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 뢰고력양",
+        "image": "images/transform/transform_15.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 무희천아",
+        "image": "images/transform/transform_37.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 미토서화",
+        "image": "images/transform/transform_39.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 야행적홍",
+        "image": "images/transform/transform_44.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 적환주현",
+        "image": "images/transform/transform_45.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 유희수모",
+        "image": "images/transform/transform_50.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 명강율서",
+        "image": "images/transform/transform_51.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 지승우사",
+        "image": "images/transform/transform_52.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 적안흑랑",
+        "image": "images/transform/transform_53.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 혈귀감갈",
+        "image": "images/transform/transform_22.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 43
+      },
+      {
+        "name": "극진 대익풍백",
+        "image": "images/transform/transform_34.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 43
+      },
+      {
+        "name": "극진 자안염사",
+        "image": "images/transform/transform_40.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 43
+      },
+      {
+        "name": "극진 적운웅묘",
+        "image": "images/transform/transform_57.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 43
+      },
+      {
+        "name": "극진 청귀백갈",
+        "image": "images/transform/transform_58.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 43
+      },
+      {
+        "name": "광속 유희수모",
+        "image": "images/transform/transform_75.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 40
+      },
+      {
+        "name": "극진 백발귀호",
+        "image": "images/transform/transform_33.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 38
+      },
+      {
+        "name": "극진 혈화적편",
+        "image": "images/transform/transform_23.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 37
+      },
+      {
+        "name": "극진 염제표호",
+        "image": "images/transform/transform_25.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 37
+      },
+      {
+        "name": "극진 칠흑오요",
+        "image": "images/transform/transform_29.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 37
+      },
+      {
+        "name": "극진 수인흑묘",
+        "image": "images/transform/transform_30.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 37
+      },
+      {
+        "name": "극진 홍염미호",
+        "image": "images/transform/transform_32.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 37
+      },
+      {
+        "name": "극진 묵시흑편",
+        "image": "images/transform/transform_24.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 36
+      },
+      {
+        "name": "극진 무혈흑사",
+        "image": "images/transform/transform_26.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 36
+      },
+      {
+        "name": "극진 태극해치",
+        "image": "images/transform/transform_31.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 36
+      },
+      {
+        "name": "극진 공적초어",
+        "image": "images/transform/transform_13.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 제흑오계",
+        "image": "images/transform/transform_16.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 금희율서",
+        "image": "images/transform/transform_17.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 금희산달",
+        "image": "images/transform/transform_18.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 견각무소",
+        "image": "images/transform/transform_19.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 두각지축",
+        "image": "images/transform/transform_20.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 암독감갈",
+        "image": "images/transform/transform_21.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 요화범경",
+        "image": "images/transform/transform_27.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 해도영우",
+        "image": "images/transform/transform_35.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 적안백랑",
+        "image": "images/transform/transform_10.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 34
+      },
+      {
+        "name": "극진 적투갑충",
+        "image": "images/transform/transform_28.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 33
+      },
+      {
+        "name": "극진 자희산달",
+        "image": "images/transform/transform_54.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 33
+      },
+      {
+        "name": "고요의 변신",
+        "image": "images/transform/transform_67.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 31
+      },
+      {
+        "name": "결의의 변신",
+        "image": "images/transform/transform_68.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 31
+      },
+      {
+        "name": "활력의 변신",
+        "image": "images/transform/transform_69.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 31
+      },
+      {
+        "name": "침착의 변신",
+        "image": "images/transform/transform_70.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 31
+      },
+      {
+        "name": "냉정의 변신",
+        "image": "images/transform/transform_71.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 31
+      },
+      {
+        "name": "의지의 변신",
+        "image": "images/transform/transform_72.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 31
+      },
+      {
+        "name": "길달",
+        "image": "images/transform/transform_36.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 30
+      },
+      {
+        "name": "극진 12지신:원숭이",
+        "image": "images/transform/transform_1.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:소",
+        "image": "images/transform/transform_2.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:닭",
+        "image": "images/transform/transform_3.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:토끼",
+        "image": "images/transform/transform_4.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:쥐",
+        "image": "images/transform/transform_5.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:개",
+        "image": "images/transform/transform_6.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:호랑이",
+        "image": "images/transform/transform_7.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:용",
+        "image": "images/transform/transform_8.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 적안백묘",
+        "image": "images/transform/transform_9.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 27
+      }
+    ],
+    "magicIncreasePercent": [
+      {
+        "name": "멸 신양현성",
+        "image": "images/transform/transform_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 69
+      },
+      {
+        "name": "멸 설화백영",
+        "image": "images/transform/transform_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 65
+      },
+      {
+        "name": "멸 화저폭군",
+        "image": "images/transform/transform_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 63
+      },
+      {
+        "name": "멸 마룡명신",
+        "image": "images/transform/transform_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 63
+      },
+      {
+        "name": "멸 풍신지마",
+        "image": "images/transform/transform_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 63
+      },
+      {
+        "name": "멸 제천대성",
+        "image": "images/transform/transform_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 63
+      },
+      {
+        "name": "극진 황천갑충",
+        "image": "images/transform/transform_66.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 55
+      },
+      {
+        "name": "극진 녹림사심",
+        "image": "images/transform/transform_42.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "극진 세아봉왕",
+        "image": "images/transform/transform_43.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "극진 금작천우",
+        "image": "images/transform/transform_65.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 53
+      },
+      {
+        "name": "극진 흑시응사",
+        "image": "images/transform/transform_59.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 52
+      },
+      {
+        "name": "극진 혈독청편",
+        "image": "images/transform/transform_60.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 52
+      },
+      {
+        "name": "극진 풍운오계",
+        "image": "images/transform/transform_46.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 50
+      },
+      {
+        "name": "극진 청포접아",
+        "image": "images/transform/transform_47.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 50
+      },
+      {
+        "name": "극진 녹림각록",
+        "image": "images/transform/transform_11.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 49
+      },
+      {
+        "name": "극진 청령사록",
+        "image": "images/transform/transform_61.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 49
+      },
+      {
+        "name": "극진 묵시홍편",
+        "image": "images/transform/transform_62.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 49
+      },
+      {
+        "name": "극진 지승운사",
+        "image": "images/transform/transform_55.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 47
+      },
+      {
+        "name": "극진 극독자갈",
+        "image": "images/transform/transform_56.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 47
+      },
+      {
+        "name": "극진 사흉:혼돈",
+        "image": "images/transform/transform_63.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 47
+      },
+      {
+        "name": "극진 청순범경",
+        "image": "images/transform/transform_64.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 47
+      },
+      {
+        "name": "극진 진산지웅",
+        "image": "images/transform/transform_73.jpg",
+        "influence": "-",
+        "grade": "전설",
+        "value": 47
+      },
+      {
+        "name": "극진 칠흑곰인",
+        "image": "images/transform/transform_38.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 46
+      },
+      {
+        "name": "극진 청월낭인",
+        "image": "images/transform/transform_41.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 46
+      },
+      {
+        "name": "극진 사풍도갑",
+        "image": "images/transform/transform_48.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 45
+      },
+      {
+        "name": "극진 자색백묘",
+        "image": "images/transform/transform_49.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 45
+      },
+      {
+        "name": "극진 청흑오요",
+        "image": "images/transform/transform_74.jpg",
+        "influence": "-",
+        "grade": "전설",
+        "value": 45
+      },
+      {
+        "name": "극진 야행휴류",
+        "image": "images/transform/transform_12.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 적면귀홍",
+        "image": "images/transform/transform_14.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 뢰고력양",
+        "image": "images/transform/transform_15.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 무희천아",
+        "image": "images/transform/transform_37.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 미토서화",
+        "image": "images/transform/transform_39.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 야행적홍",
+        "image": "images/transform/transform_44.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 적환주현",
+        "image": "images/transform/transform_45.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 유희수모",
+        "image": "images/transform/transform_50.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 명강율서",
+        "image": "images/transform/transform_51.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 지승우사",
+        "image": "images/transform/transform_52.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 적안흑랑",
+        "image": "images/transform/transform_53.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 44
+      },
+      {
+        "name": "극진 혈귀감갈",
+        "image": "images/transform/transform_22.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 43
+      },
+      {
+        "name": "극진 대익풍백",
+        "image": "images/transform/transform_34.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 43
+      },
+      {
+        "name": "극진 자안염사",
+        "image": "images/transform/transform_40.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 43
+      },
+      {
+        "name": "극진 적운웅묘",
+        "image": "images/transform/transform_57.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 43
+      },
+      {
+        "name": "극진 청귀백갈",
+        "image": "images/transform/transform_58.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 43
+      },
+      {
+        "name": "광속 유희수모",
+        "image": "images/transform/transform_75.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 40
+      },
+      {
+        "name": "극진 백발귀호",
+        "image": "images/transform/transform_33.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 38
+      },
+      {
+        "name": "극진 혈화적편",
+        "image": "images/transform/transform_23.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 37
+      },
+      {
+        "name": "극진 염제표호",
+        "image": "images/transform/transform_25.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 37
+      },
+      {
+        "name": "극진 칠흑오요",
+        "image": "images/transform/transform_29.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 37
+      },
+      {
+        "name": "극진 수인흑묘",
+        "image": "images/transform/transform_30.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 37
+      },
+      {
+        "name": "극진 홍염미호",
+        "image": "images/transform/transform_32.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 37
+      },
+      {
+        "name": "극진 묵시흑편",
+        "image": "images/transform/transform_24.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 36
+      },
+      {
+        "name": "극진 무혈흑사",
+        "image": "images/transform/transform_26.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 36
+      },
+      {
+        "name": "극진 태극해치",
+        "image": "images/transform/transform_31.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 36
+      },
+      {
+        "name": "극진 공적초어",
+        "image": "images/transform/transform_13.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 제흑오계",
+        "image": "images/transform/transform_16.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 금희율서",
+        "image": "images/transform/transform_17.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 금희산달",
+        "image": "images/transform/transform_18.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 견각무소",
+        "image": "images/transform/transform_19.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 두각지축",
+        "image": "images/transform/transform_20.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 암독감갈",
+        "image": "images/transform/transform_21.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 요화범경",
+        "image": "images/transform/transform_27.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 해도영우",
+        "image": "images/transform/transform_35.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 35
+      },
+      {
+        "name": "극진 적안백랑",
+        "image": "images/transform/transform_10.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 34
+      },
+      {
+        "name": "극진 적투갑충",
+        "image": "images/transform/transform_28.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 33
+      },
+      {
+        "name": "극진 자희산달",
+        "image": "images/transform/transform_54.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 33
+      },
+      {
+        "name": "길달",
+        "image": "images/transform/transform_36.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 30
+      },
+      {
+        "name": "극진 12지신:원숭이",
+        "image": "images/transform/transform_1.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:소",
+        "image": "images/transform/transform_2.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:닭",
+        "image": "images/transform/transform_3.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:토끼",
+        "image": "images/transform/transform_4.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:쥐",
+        "image": "images/transform/transform_5.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:개",
+        "image": "images/transform/transform_6.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:호랑이",
+        "image": "images/transform/transform_7.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 12지신:용",
+        "image": "images/transform/transform_8.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "극진 적안백묘",
+        "image": "images/transform/transform_9.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 27
+      },
+      {
+        "name": "고요의 변신",
+        "image": "images/transform/transform_67.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 21
+      },
+      {
+        "name": "결의의 변신",
+        "image": "images/transform/transform_68.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 21
+      },
+      {
+        "name": "활력의 변신",
+        "image": "images/transform/transform_69.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 21
+      },
+      {
+        "name": "침착의 변신",
+        "image": "images/transform/transform_70.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 21
+      },
+      {
+        "name": "냉정의 변신",
+        "image": "images/transform/transform_71.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 21
+      },
+      {
+        "name": "의지의 변신",
+        "image": "images/transform/transform_72.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 21
+      }
+    ],
+    "damageResistance": [
+      {
+        "name": "멸 설화백영",
+        "image": "images/transform/transform_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 1133
+      },
+      {
+        "name": "멸 신양현성",
+        "image": "images/transform/transform_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 1106
+      },
+      {
+        "name": "극진 흑시응사",
+        "image": "images/transform/transform_59.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 1050
+      },
+      {
+        "name": "극진 묵시홍편",
+        "image": "images/transform/transform_62.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 987
+      },
+      {
+        "name": "극진 녹림사심",
+        "image": "images/transform/transform_42.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 922
+      },
+      {
+        "name": "극진 세아봉왕",
+        "image": "images/transform/transform_43.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 922
+      },
+      {
+        "name": "극진 풍운오계",
+        "image": "images/transform/transform_46.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 860
+      },
+      {
+        "name": "극진 청흑오요",
+        "image": "images/transform/transform_74.jpg",
+        "influence": "-",
+        "grade": "전설",
+        "value": 840
+      },
+      {
+        "name": "극진 적환주현",
+        "image": "images/transform/transform_45.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 788
+      },
+      {
+        "name": "극진 녹림각록",
+        "image": "images/transform/transform_11.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 785
+      },
+      {
+        "name": "극진 금작천우",
+        "image": "images/transform/transform_65.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 763
+      },
+      {
+        "name": "활력의 변신",
+        "image": "images/transform/transform_69.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 750
+      },
+      {
+        "name": "극진 극독자갈",
+        "image": "images/transform/transform_56.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 745
+      },
+      {
+        "name": "극진 자색백묘",
+        "image": "images/transform/transform_49.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 720
+      },
+      {
+        "name": "극진 적안흑랑",
+        "image": "images/transform/transform_53.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 688
+      },
+      {
+        "name": "멸 화저폭군",
+        "image": "images/transform/transform_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 682
+      },
+      {
+        "name": "극진 염제표호",
+        "image": "images/transform/transform_25.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 660
+      },
+      {
+        "name": "극진 대익풍백",
+        "image": "images/transform/transform_34.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 657
+      },
+      {
+        "name": "극진 홍염미호",
+        "image": "images/transform/transform_32.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 651
+      },
+      {
+        "name": "냉정의 변신",
+        "image": "images/transform/transform_71.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 650
+      },
+      {
+        "name": "극진 백발귀호",
+        "image": "images/transform/transform_33.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 645
+      },
+      {
+        "name": "극진 혈화적편",
+        "image": "images/transform/transform_23.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 641
+      },
+      {
+        "name": "멸 풍신지마",
+        "image": "images/transform/transform_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 620
+      },
+      {
+        "name": "극진 공적초어",
+        "image": "images/transform/transform_13.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 613
+      },
+      {
+        "name": "극진 명강율서",
+        "image": "images/transform/transform_51.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 613
+      },
+      {
+        "name": "극진 청순범경",
+        "image": "images/transform/transform_64.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 600
+      },
+      {
+        "name": "극진 칠흑곰인",
+        "image": "images/transform/transform_38.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 572
+      },
+      {
+        "name": "극진 무희천아",
+        "image": "images/transform/transform_37.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 568
+      },
+      {
+        "name": "침착의 변신",
+        "image": "images/transform/transform_70.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 562
+      },
+      {
+        "name": "극진 제흑오계",
+        "image": "images/transform/transform_16.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 555
+      },
+      {
+        "name": "극진 금희율서",
+        "image": "images/transform/transform_17.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 555
+      },
+      {
+        "name": "극진 자안염사",
+        "image": "images/transform/transform_40.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 552
+      },
+      {
+        "name": "멸 마룡명신",
+        "image": "images/transform/transform_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 532
+      },
+      {
+        "name": "극진 묵시흑편",
+        "image": "images/transform/transform_24.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 486
+      },
+      {
+        "name": "극진 적안백랑",
+        "image": "images/transform/transform_10.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 473
+      },
+      {
+        "name": "극진 무혈흑사",
+        "image": "images/transform/transform_26.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 473
+      },
+      {
+        "name": "극진 수인흑묘",
+        "image": "images/transform/transform_30.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 473
+      },
+      {
+        "name": "극진 태극해치",
+        "image": "images/transform/transform_31.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 473
+      },
+      {
+        "name": "극진 해도영우",
+        "image": "images/transform/transform_35.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 473
+      },
+      {
+        "name": "극진 암독감갈",
+        "image": "images/transform/transform_21.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 448
+      },
+      {
+        "name": "극진 요화범경",
+        "image": "images/transform/transform_27.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 423
+      },
+      {
+        "name": "극진 칠흑오요",
+        "image": "images/transform/transform_29.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 423
+      },
+      {
+        "name": "극진 금희산달",
+        "image": "images/transform/transform_18.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 418
+      },
+      {
+        "name": "극진 지승우사",
+        "image": "images/transform/transform_52.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 392
+      },
+      {
+        "name": "극진 사풍도갑",
+        "image": "images/transform/transform_48.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 386
+      },
+      {
+        "name": "극진 12지신:원숭이",
+        "image": "images/transform/transform_1.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 365
+      },
+      {
+        "name": "극진 견각무소",
+        "image": "images/transform/transform_19.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 363
+      },
+      {
+        "name": "극진 지승운사",
+        "image": "images/transform/transform_55.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 361
+      },
+      {
+        "name": "극진 청포접아",
+        "image": "images/transform/transform_47.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 345
+      },
+      {
+        "name": "극진 적투갑충",
+        "image": "images/transform/transform_28.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 337
+      },
+      {
+        "name": "극진 미토서화",
+        "image": "images/transform/transform_39.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 336
+      },
+      {
+        "name": "극진 12지신:닭",
+        "image": "images/transform/transform_3.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 335
+      },
+      {
+        "name": "극진 12지신:호랑이",
+        "image": "images/transform/transform_7.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 335
+      },
+      {
+        "name": "길달",
+        "image": "images/transform/transform_36.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 331
+      },
+      {
+        "name": "극진 유희수모",
+        "image": "images/transform/transform_50.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 331
+      },
+      {
+        "name": "극진 12지신:쥐",
+        "image": "images/transform/transform_5.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 318
+      },
+      {
+        "name": "의지의 변신",
+        "image": "images/transform/transform_72.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 312
+      },
+      {
+        "name": "극진 청월낭인",
+        "image": "images/transform/transform_41.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 298
+      },
+      {
+        "name": "극진 야행적홍",
+        "image": "images/transform/transform_44.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 275
+      },
+      {
+        "name": "극진 자희산달",
+        "image": "images/transform/transform_54.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 266
+      },
+      {
+        "name": "극진 황천갑충",
+        "image": "images/transform/transform_66.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 263
+      },
+      {
+        "name": "고요의 변신",
+        "image": "images/transform/transform_67.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 225
+      },
+      {
+        "name": "멸 제천대성",
+        "image": "images/transform/transform_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 206
+      },
+      {
+        "name": "결의의 변신",
+        "image": "images/transform/transform_68.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 125
+      }
+    ],
+    "pvpDamage": [
+      {
+        "name": "극진 대익풍백",
+        "image": "images/transform/transform_34.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 945
+      },
+      {
+        "name": "극진 두각지축",
+        "image": "images/transform/transform_20.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 919
+      },
+      {
+        "name": "극진 혈화적편",
+        "image": "images/transform/transform_23.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 675
+      },
+      {
+        "name": "극진 염제표호",
+        "image": "images/transform/transform_25.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 664
+      },
+      {
+        "name": "극진 홍염미호",
+        "image": "images/transform/transform_32.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 639
+      },
+      {
+        "name": "극진 적면귀홍",
+        "image": "images/transform/transform_14.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 615
+      },
+      {
+        "name": "극진 금희율서",
+        "image": "images/transform/transform_17.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 615
+      },
+      {
+        "name": "극진 적안백묘",
+        "image": "images/transform/transform_9.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 553
+      },
+      {
+        "name": "극진 12지신:호랑이",
+        "image": "images/transform/transform_7.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 469
+      },
+      {
+        "name": "극진 12지신:닭",
+        "image": "images/transform/transform_3.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 411
+      },
+      {
+        "name": "극진 12지신:원숭이",
+        "image": "images/transform/transform_1.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 364
+      }
+    ],
+    "movementSpeed": [
+      {
+        "name": "멸 풍신지마",
+        "image": "images/transform/transform_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 38
+      },
+      {
+        "name": "멸 신양현성",
+        "image": "images/transform/transform_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 31
+      },
+      {
+        "name": "멸 화저폭군",
+        "image": "images/transform/transform_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 24
+      },
+      {
+        "name": "멸 마룡명신",
+        "image": "images/transform/transform_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 24
+      },
+      {
+        "name": "멸 설화백영",
+        "image": "images/transform/transform_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 24
+      },
+      {
+        "name": "멸 제천대성",
+        "image": "images/transform/transform_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 24
+      },
+      {
+        "name": "극진 야행적홍",
+        "image": "images/transform/transform_44.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 17
+      },
+      {
+        "name": "극진 적환주현",
+        "image": "images/transform/transform_45.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 17
+      },
+      {
+        "name": "극진 풍운오계",
+        "image": "images/transform/transform_46.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 17
+      },
+      {
+        "name": "극진 청포접아",
+        "image": "images/transform/transform_47.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 17
+      },
+      {
+        "name": "극진 사풍도갑",
+        "image": "images/transform/transform_48.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 17
+      },
+      {
+        "name": "극진 자색백묘",
+        "image": "images/transform/transform_49.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 17
+      },
+      {
+        "name": "극진 유희수모",
+        "image": "images/transform/transform_50.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 17
+      },
+      {
+        "name": "극진 명강율서",
+        "image": "images/transform/transform_51.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 17
+      },
+      {
+        "name": "극진 적안흑랑",
+        "image": "images/transform/transform_53.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 17
+      },
+      {
+        "name": "극진 사흉:혼돈",
+        "image": "images/transform/transform_63.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 15
+      },
+      {
+        "name": "극진 지승우사",
+        "image": "images/transform/transform_52.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 14
+      },
+      {
+        "name": "극진 지승운사",
+        "image": "images/transform/transform_55.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 14
+      },
+      {
+        "name": "극진 극독자갈",
+        "image": "images/transform/transform_56.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 14
+      },
+      {
+        "name": "극진 적운웅묘",
+        "image": "images/transform/transform_57.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 14
+      },
+      {
+        "name": "극진 청귀백갈",
+        "image": "images/transform/transform_58.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 14
+      },
+      {
+        "name": "극진 청령사록",
+        "image": "images/transform/transform_61.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 14
+      },
+      {
+        "name": "극진 묵시홍편",
+        "image": "images/transform/transform_62.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 14
+      },
+      {
+        "name": "극진 황천갑충",
+        "image": "images/transform/transform_66.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 14
+      },
+      {
+        "name": "광속 유희수모",
+        "image": "images/transform/transform_75.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 14
+      },
+      {
+        "name": "극진 진산지웅",
+        "image": "images/transform/transform_73.jpg",
+        "influence": "-",
+        "grade": "전설",
+        "value": 14
+      },
+      {
+        "name": "극진 공적초어",
+        "image": "images/transform/transform_13.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 적면귀홍",
+        "image": "images/transform/transform_14.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 뢰고력양",
+        "image": "images/transform/transform_15.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 제흑오계",
+        "image": "images/transform/transform_16.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 금희율서",
+        "image": "images/transform/transform_17.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 염제표호",
+        "image": "images/transform/transform_25.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 수인흑묘",
+        "image": "images/transform/transform_30.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 태극해치",
+        "image": "images/transform/transform_31.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 홍염미호",
+        "image": "images/transform/transform_32.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 백발귀호",
+        "image": "images/transform/transform_33.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 대익풍백",
+        "image": "images/transform/transform_34.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 해도영우",
+        "image": "images/transform/transform_35.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 무희천아",
+        "image": "images/transform/transform_37.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 칠흑곰인",
+        "image": "images/transform/transform_38.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 미토서화",
+        "image": "images/transform/transform_39.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 자안염사",
+        "image": "images/transform/transform_40.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 청월낭인",
+        "image": "images/transform/transform_41.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 녹림사심",
+        "image": "images/transform/transform_42.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 세아봉왕",
+        "image": "images/transform/transform_43.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 흑시응사",
+        "image": "images/transform/transform_59.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 혈독청편",
+        "image": "images/transform/transform_60.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 청순범경",
+        "image": "images/transform/transform_64.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 금작천우",
+        "image": "images/transform/transform_65.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 청흑오요",
+        "image": "images/transform/transform_74.jpg",
+        "influence": "-",
+        "grade": "전설",
+        "value": 13
+      },
+      {
+        "name": "극진 12지신:원숭이",
+        "image": "images/transform/transform_1.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 12지신:소",
+        "image": "images/transform/transform_2.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 12지신:닭",
+        "image": "images/transform/transform_3.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 12지신:토끼",
+        "image": "images/transform/transform_4.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 12지신:쥐",
+        "image": "images/transform/transform_5.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 12지신:개",
+        "image": "images/transform/transform_6.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 12지신:호랑이",
+        "image": "images/transform/transform_7.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 12지신:용",
+        "image": "images/transform/transform_8.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 적안백묘",
+        "image": "images/transform/transform_9.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 적안백랑",
+        "image": "images/transform/transform_10.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 녹림각록",
+        "image": "images/transform/transform_11.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 야행휴류",
+        "image": "images/transform/transform_12.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 금희산달",
+        "image": "images/transform/transform_18.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 견각무소",
+        "image": "images/transform/transform_19.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 두각지축",
+        "image": "images/transform/transform_20.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 암독감갈",
+        "image": "images/transform/transform_21.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 혈귀감갈",
+        "image": "images/transform/transform_22.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 혈화적편",
+        "image": "images/transform/transform_23.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 묵시흑편",
+        "image": "images/transform/transform_24.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 무혈흑사",
+        "image": "images/transform/transform_26.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 요화범경",
+        "image": "images/transform/transform_27.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 적투갑충",
+        "image": "images/transform/transform_28.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 칠흑오요",
+        "image": "images/transform/transform_29.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "길달",
+        "image": "images/transform/transform_36.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "극진 자희산달",
+        "image": "images/transform/transform_54.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 12
+      },
+      {
+        "name": "고요의 변신",
+        "image": "images/transform/transform_67.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 9
+      },
+      {
+        "name": "결의의 변신",
+        "image": "images/transform/transform_68.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 9
+      },
+      {
+        "name": "활력의 변신",
+        "image": "images/transform/transform_69.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 9
+      },
+      {
+        "name": "침착의 변신",
+        "image": "images/transform/transform_70.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 9
+      },
+      {
+        "name": "냉정의 변신",
+        "image": "images/transform/transform_71.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 9
+      },
+      {
+        "name": "의지의 변신",
+        "image": "images/transform/transform_72.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 9
+      }
+    ],
+    "normalMonsterAdditionalDamage": [
+      {
+        "name": "멸 마룡명신",
+        "image": "images/transform/transform_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 1493
+      },
+      {
+        "name": "극진 미토서화",
+        "image": "images/transform/transform_39.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 1206
+      },
+      {
+        "name": "극진 뢰고력양",
+        "image": "images/transform/transform_15.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 916
+      },
+      {
+        "name": "극진 제흑오계",
+        "image": "images/transform/transform_16.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 916
+      },
+      {
+        "name": "극진 12지신:용",
+        "image": "images/transform/transform_8.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 617
+      },
+      {
+        "name": "극진 사흉:혼돈",
+        "image": "images/transform/transform_63.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 597
+      },
+      {
+        "name": "극진 청순범경",
+        "image": "images/transform/transform_64.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 597
+      },
+      {
+        "name": "극진 12지신:개",
+        "image": "images/transform/transform_6.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 578
+      },
+      {
+        "name": "극진 12지신:소",
+        "image": "images/transform/transform_2.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 535
+      }
+    ],
+    "power": [
+      {
+        "name": "극진 백발귀호",
+        "image": "images/transform/transform_33.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 579
+      },
+      {
+        "name": "극진 12지신:토끼",
+        "image": "images/transform/transform_4.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 555
+      },
+      {
+        "name": "극진 12지신:쥐",
+        "image": "images/transform/transform_5.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 555
+      },
+      {
+        "name": "극진 해도영우",
+        "image": "images/transform/transform_35.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 555
+      },
+      {
+        "name": "극진 자희산달",
+        "image": "images/transform/transform_54.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 493
+      },
+      {
+        "name": "극진 녹림각록",
+        "image": "images/transform/transform_11.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 451
+      }
+    ],
+    "pvpDefense": [
+      {
+        "name": "극진 풍운오계",
+        "image": "images/transform/transform_46.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 17773
+      },
+      {
+        "name": "극진 청포접아",
+        "image": "images/transform/transform_47.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 17773
+      },
+      {
+        "name": "극진 공적초어",
+        "image": "images/transform/transform_13.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 17173
+      },
+      {
+        "name": "극진 적안백묘",
+        "image": "images/transform/transform_9.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 13740
+      },
+      {
+        "name": "극진 청령사록",
+        "image": "images/transform/transform_61.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 10346
+      },
+      {
+        "name": "극진 묵시홍편",
+        "image": "images/transform/transform_62.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 10346
+      }
+    ],
+    "bossMonsterAdditionalDamage": [
+      {
+        "name": "멸 마룡명신",
+        "image": "images/transform/transform_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 1493
+      },
+      {
+        "name": "극진 무희천아",
+        "image": "images/transform/transform_37.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 1272
+      },
+      {
+        "name": "극진 혈귀감갈",
+        "image": "images/transform/transform_22.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 993
+      },
+      {
+        "name": "극진 야행휴류",
+        "image": "images/transform/transform_12.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 968
+      }
+    ],
+    "pvpDamagePercent": [
+      {
+        "name": "멸 제천대성",
+        "image": "images/transform/transform_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 81
+      },
+      {
+        "name": "멸 화저폭군",
+        "image": "images/transform/transform_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 37
+      },
+      {
+        "name": "극진 묵시홍편",
+        "image": "images/transform/transform_62.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 33
+      },
+      {
+        "name": "극진 칠흑곰인",
+        "image": "images/transform/transform_38.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 25
+      },
+      {
+        "name": "극진 청월낭인",
+        "image": "images/transform/transform_41.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 25
+      },
+      {
+        "name": "극진 흑시응사",
+        "image": "images/transform/transform_59.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 16
+      },
+      {
+        "name": "극진 혈독청편",
+        "image": "images/transform/transform_60.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 16
+      }
+    ],
+    "healthRecoveryImprovement": [
+      {
+        "name": "멸 신양현성",
+        "image": "images/transform/transform_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 96
+      },
+      {
+        "name": "극진 황천갑충",
+        "image": "images/transform/transform_66.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 82
+      },
+      {
+        "name": "극진 녹림사심",
+        "image": "images/transform/transform_42.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 74
+      }
+    ],
+    "magicRecoveryImprovement": [
+      {
+        "name": "멸 신양현성",
+        "image": "images/transform/transform_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 96
+      },
+      {
+        "name": "극진 금작천우",
+        "image": "images/transform/transform_65.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 77
+      },
+      {
+        "name": "극진 세아봉왕",
+        "image": "images/transform/transform_43.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 74
+      }
+    ],
+    "criticalPowerPercent": [
+      {
+        "name": "멸 마룡명신",
+        "image": "images/transform/transform_i2.jpg",
+        "influence": "고요",
+        "grade": "불멸",
+        "value": 62
+      },
+      {
+        "name": "극진 야행적홍",
+        "image": "images/transform/transform_44.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 50
+      },
+      {
+        "name": "극진 적환주현",
+        "image": "images/transform/transform_45.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 50
+      },
+      {
+        "name": "극진 진산지웅",
+        "image": "images/transform/transform_73.jpg",
+        "influence": "-",
+        "grade": "전설",
+        "value": 50
+      },
+      {
+        "name": "극진 청흑오요",
+        "image": "images/transform/transform_74.jpg",
+        "influence": "-",
+        "grade": "전설",
+        "value": 40
+      }
+    ],
+    "pvpDefensePercent": [
+      {
+        "name": "멸 설화백영",
+        "image": "images/transform/transform_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 81
+      },
+      {
+        "name": "멸 화저폭군",
+        "image": "images/transform/transform_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 37
+      },
+      {
+        "name": "극진 청령사록",
+        "image": "images/transform/transform_61.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 33
+      },
+      {
+        "name": "극진 사풍도갑",
+        "image": "images/transform/transform_48.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 25
+      },
+      {
+        "name": "극진 자색백묘",
+        "image": "images/transform/transform_49.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 25
+      },
+      {
+        "name": "극진 지승운사",
+        "image": "images/transform/transform_55.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 25
+      },
+      {
+        "name": "극진 극독자갈",
+        "image": "images/transform/transform_56.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 25
+      },
+      {
+        "name": "극진 흑시응사",
+        "image": "images/transform/transform_59.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 16
+      },
+      {
+        "name": "극진 혈독청편",
+        "image": "images/transform/transform_60.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 16
+      }
+    ],
+    "normalMonsterPenetration": [
+      {
+        "name": "극진 청귀백갈",
+        "image": "images/transform/transform_58.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 688
+      },
+      {
+        "name": "멸 풍신지마",
+        "image": "images/transform/transform_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 587
+      },
+      {
+        "name": "극진 사흉:혼돈",
+        "image": "images/transform/transform_63.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 535
+      },
+      {
+        "name": "극진 청순범경",
+        "image": "images/transform/transform_64.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 535
+      },
+      {
+        "name": "극진 유희수모",
+        "image": "images/transform/transform_50.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 521
+      },
+      {
+        "name": "극진 명강율서",
+        "image": "images/transform/transform_51.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 521
+      },
+      {
+        "name": "광속 유희수모",
+        "image": "images/transform/transform_75.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 332
+      },
+      {
+        "name": "극진 적운웅묘",
+        "image": "images/transform/transform_57.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 215
+      },
+      {
+        "name": "고요의 변신",
+        "image": "images/transform/transform_67.jpg",
+        "influence": "고요",
+        "grade": "전설",
+        "value": 125
+      },
+      {
+        "name": "결의의 변신",
+        "image": "images/transform/transform_68.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 125
+      },
+      {
+        "name": "활력의 변신",
+        "image": "images/transform/transform_69.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 125
+      },
+      {
+        "name": "침착의 변신",
+        "image": "images/transform/transform_70.jpg",
+        "influence": "침착",
+        "grade": "전설",
+        "value": 125
+      },
+      {
+        "name": "냉정의 변신",
+        "image": "images/transform/transform_71.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 125
+      },
+      {
+        "name": "의지의 변신",
+        "image": "images/transform/transform_72.jpg",
+        "influence": "의지",
+        "grade": "전설",
+        "value": 125
+      }
+    ],
+    "bossMonsterPenetration": [
+      {
+        "name": "극진 적운웅묘",
+        "image": "images/transform/transform_57.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 688
+      },
+      {
+        "name": "멸 풍신지마",
+        "image": "images/transform/transform_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 587
+      },
+      {
+        "name": "극진 진산지웅",
+        "image": "images/transform/transform_73.jpg",
+        "influence": "-",
+        "grade": "전설",
+        "value": 416
+      },
+      {
+        "name": "극진 지승우사",
+        "image": "images/transform/transform_52.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 397
+      },
+      {
+        "name": "극진 적안흑랑",
+        "image": "images/transform/transform_53.jpg",
+        "influence": "결의",
+        "grade": "전설",
+        "value": 397
+      },
+      {
+        "name": "극진 청흑오요",
+        "image": "images/transform/transform_74.jpg",
+        "influence": "-",
+        "grade": "전설",
+        "value": 333
+      },
+      {
+        "name": "극진 청귀백갈",
+        "image": "images/transform/transform_58.jpg",
+        "influence": "활력",
+        "grade": "전설",
+        "value": 215
+      }
+    ],
+    "normalMonsterResistance": [
+      {
+        "name": "광속 유희수모",
+        "image": "images/transform/transform_75.jpg",
+        "influence": "냉정",
+        "grade": "전설",
+        "value": 332
+      }
+    ],
+    "statusEffectAccuracy": [
+      {
+        "name": "멸 설화백영",
+        "image": "images/transform/transform_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 372
+      },
+      {
+        "name": "멸 화저폭군",
+        "image": "images/transform/transform_i1.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 347
+      },
+      {
+        "name": "멸 제천대성",
+        "image": "images/transform/transform_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 347
+      }
+    ],
+    "statusEffectResistance": [
+      {
+        "name": "멸 설화백영",
+        "image": "images/transform/transform_i5.jpg",
+        "influence": "의지",
+        "grade": "불멸",
+        "value": 372
+      },
+      {
+        "name": "멸 신양현성",
+        "image": "images/transform/transform_i3.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 347
+      },
+      {
+        "name": "멸 제천대성",
+        "image": "images/transform/transform_i6.jpg",
+        "influence": "결의",
+        "grade": "불멸",
+        "value": 347
+      }
+    ],
+    "experienceGainIncrease": [
+      {
+        "name": "멸 풍신지마",
+        "image": "images/transform/transform_i4.jpg",
+        "influence": "침착",
+        "grade": "불멸",
+        "value": 42
+      }
+    ]
+  }
+}

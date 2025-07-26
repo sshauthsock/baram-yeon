@@ -1,0 +1,204 @@
+<!-- Files obfuscated: Sat Jul 26 06:02:15 UTC 2025 -->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바연화연 - 환수혼 계산</title>
+    <meta name="description" content="바람의나라: 연 환수정보, 환수 결속, 환수혼 계산기 등 게임 관련 도구 모음">
+    <!-- <script src="assets/js/version-checker.obf.1753509710.js"></script> -->
+    <link rel="icon" type="image/png" href="assets/img/BHY.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/BHY.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/BHY.png">
+
+    <link rel="stylesheet" href="assets/css/main.min.1753509734.css">
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="soulCalculator.html">
+                <img src="assets/img/BHY.png" alt="바연화연 로고" class="logo">
+            </a>
+        </div>
+        <nav class="tabs">
+            <div class="tab" id="info-tab" onclick="location.href='info.html'">환수정보</div>
+            <div class="tab" id="bond-tab" onclick="location.href='bondCalculator.html'">환수 결속</div>
+            <div class="tab" id="ranking-tab" onclick="location.assign('rankingManager.html')">환수 랭킹</div>
+            <div class="tab active" id="soul-tab" onclick="location.href='soulCalculator.html'">환수혼 계산</div>
+            <div class="tab" id="chak-tab" onclick="location.href='chak.html'">착 계산</div>
+        </nav>
+    </header>
+
+    <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-XTAnZwWzQOT46c36" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+
+        <div class="ad-container-right">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-l6ShIzRdMfSOcB8v" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+    </div>
+
+    <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-UDsuae5QVIAxX2fS" data-ad-width="320"
+            data-ad-height="50"></ins>
+    </div>
+
+    <div class="container">
+        <div class="left card">
+            <h3>환수 성장 경험치 테이블</h3>
+            <div class="exp-type-tabs">
+                <div class="exp-tab active" data-type="legend">전설</div>
+                <div class="exp-tab" data-type="immortal">불멸</div>
+            </div>
+
+            <div class="tables-container">
+                <div class="table-half">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Lv</th>
+                                <th>경험치</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expTableLeft"></tbody>
+                    </table>
+                </div>
+                <div class="table-half">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Lv</th>
+                                <th>경험치</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expTableRight"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="right card">
+            <h2>환수혼 계산기</h2>
+
+            <div class="calculator-form">
+                <div class="input-row">
+                    <div class="input-group type-select">
+                        <label>종류:</label>
+                        <select id="expType" class="form-control">
+                            <option value="legend">전설</option>
+                            <option value="immortal">불멸</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>현재:</label>
+                        <input type="number" id="currentLevel" min="0" max="24" value="0" class="form-control">
+                    </div>
+
+                    <div class="input-group">
+                        <label>목표:</label>
+                        <input type="number" id="targetLevel" min="1" max="25" value="1" class="form-control">
+                    </div>
+                </div>
+
+                <div class="soul-panel">
+                    <div class="soul-item">
+                        <img src="assets/img/high-soul.jpg" alt="최상급">
+                        <label>최상급 (1000)</label>
+                        <input type="number" id="highSoul" min="0" value="0" class="form-control">
+                    </div>
+                    <div class="soul-item">
+                        <img src="assets/img/mid-soul.jpg" alt="상급">
+                        <label>상급 (100)</label>
+                        <input type="number" id="midSoul" min="0" value="0" class="form-control">
+                    </div>
+                    <div class="soul-item">
+                        <img src="assets/img/low-soul.jpg" alt="하급">
+                        <label>하급 (10)</label>
+                        <input type="number" id="lowSoul" min="0" value="0" class="form-control">
+                    </div>
+                </div>
+                <div class="calc-btn">
+                    <button id="calculateBtn" class="btn btn-primary">계산</button>
+                </div>
+            </div>
+
+            <div class="results-panel hidden" id="resultsPanel">
+                <div class="result-column">
+                    <div id="required" class="result-box"></div>
+                </div>
+                <div class="result-column">
+                    <div id="maxLevel" class="result-box"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-row">
+        <div class="ad-container-left">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-3TYDe2ScVF7pn7fU" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+
+        <div class="ad-container-right">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Sxen5zACA7yhBeet" data-ad-width="728"
+                data-ad-height="90"></ins>
+        </div>
+    </div>
+
+    <div class="ad-container mobile-ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Xtg9TanJcnXcaIaY" data-ad-width="320"
+            data-ad-height="50"></ins>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="info.html">환수정보</a>
+            <a href="bondCalculator.html">환수 결속</a>
+            <a href="rankingManager.html">환수 랭킹</a>
+            <a href="soulCalculator.html">환수혼 계산</a>
+            <a href="chak.html">착 계산</a>
+            <button class="footer-report-btn" onclick="Report.openReportSheet()">제보하기</button>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2025 바연화연 | <a href="https://baramy.nexon.com/" target="_blank">바람의나라:연</a>과 공식 관련 없음</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/common.obf.1753509710.js"></script>
+    <script src="assets/js/firebaseConfig.obf.1753509710.js"></script>
+    <script src="assets/js/firebaseHandler.obf.1753509710.js"></script>
+
+    <script src="assets/js/modules/firebaseHandlerWrapper.obf.1753509710.js"></script>
+    <script src="assets/js/modules/uiHelper.obf.1753509710.js"></script>
+
+    <script src="assets/js/soulCalculator.obf.1753509710.js"></script>
+    <script src="assets/js/report.obf.1753509710.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                if (typeof SoulCalculator !== 'undefined' && SoulCalculator.initialize) {
+                    SoulCalculator.initialize();
+                }
+            }, 100);
+        });
+    </script>
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="assets/js/firebaseVisitCounter.obf.1753509710.js"></script>
+</body>
+
+</html>
