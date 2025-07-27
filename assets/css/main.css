@@ -1592,7 +1592,7 @@ p {
     }
 }
 
-.ad-container {
+/* .ad-container {
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
@@ -1619,6 +1619,87 @@ p {
     min-height: 90px;
     width: 49%;
     overflow: hidden;
+} */
+
+.ad-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 10px auto;
+    /* 상하 마진 추가 */
+    padding: 0 15px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    /* 광고를 중앙 정렬 */
+    align-items: center;
+}
+
+/* 광고 로드 공간 확보를 위한 최소 높이 설정 */
+.desktop-ad {
+    min-height: 90px;
+}
+
+.mobile-ad {
+    min-height: 50px;
+}
+
+/* 모달 내 광고 스타일 */
+.modal .ad-container {
+    width: 100%;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.modal .kakao_ad_area {
+    min-height: 50px;
+}
+
+/* 카카오 광고 영역 기본 스타일 */
+.kakao_ad_area {
+    min-height: 30px;
+}
+
+/* 광고 로드 전 플레이스홀더 */
+.kakao_ad_area:empty::before {
+    content: '광고 로드 중...';
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    padding: 10px 0;
+}
+
+/* 반응형 광고 표시/숨김 처리 */
+/* 데스크탑 화면 (769px 이상) */
+@media screen and (min-width: 769px) {
+    .mobile-ad {
+        display: none !important;
+        /* 모바일 광고 숨김 */
+    }
+
+    .desktop-ad {
+        display: flex !important;
+        /* 데스크탑 광고 표시 */
+    }
+}
+
+/* 모바일/태블릿 화면 (768px 이하) */
+@media screen and (max-width: 768px) {
+    .desktop-ad {
+        display: none !important;
+        /* 데스크탑 광고 숨김 */
+    }
+
+    .mobile-ad {
+        display: flex !important;
+        /* 모바일 광고 표시 */
+    }
+}
+
+@media (max-width: 480px) {
+    .ad-container {
+        padding: 0 8px;
+    }
 }
 
 .mobile-ad {
