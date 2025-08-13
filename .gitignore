@@ -9,8 +9,9 @@ jsonUploader*
 firebaseHelper*.html
 output/*.json
 archive/*
+archived/*
 login.html
 admin/*
 test*
-index.html
 old.index.html
+/backend/serviceAccountKey.json
