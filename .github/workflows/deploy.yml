@@ -1,0 +1,197 @@
+name: Deploy Frontend & Backend
+
+on:
+  push:
+    branches:
+      - main # main 브랜치에 푸시될 때 워크플로우 실행
+
+jobs:
+  deploy-frontend-and-backend:
+    runs-on: ubuntu-latest # GitHub Actions는 Ubuntu 가상 환경에서 실행
+
+    # 환경 변수 설정 (GCP 프로젝트 ID 및 Artifact Registry 리전)
+    env:
+      GCP_PROJECT_ID: igneous-access-468910-h3
+      AR_LOCATION: asia-northeast3
+      AR_REPO_NAME: go-backend-repo
+      CR_SERVICE_NAME: wind-app-backend
+      CR_SERVICE_ACCOUNT: your-cloud-run-service-account@igneous-access-468910-h3.iam.gserviceaccount.com
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js (for JS/CSS processing)
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16" # 여러분의 Node.js 버전에 맞게 조정
+
+      - name: Install JavaScript/CSS tools
+        run: |
+          npm install -g javascript-obfuscator
+          npm install -g clean-css-cli
+
+      # -------------------------------------------------------------
+      # 1. Frontend Processing (Obfuscation, Minification, Cache Busting)
+      # -------------------------------------------------------------
+      - name: Create dist directory and copy files
+        run: |
+          rm -rf dist
+          mkdir -p dist
+          cp -r ./* dist/ || true # 모든 파일을 dist로 복사
+          # .git/ 관련 파일들 제거 (숨김 파일 포함)
+          find dist -type d -name ".git*" -exec rm -rf {} + 2>/dev/null || true
+          find dist -type f -name ".*" ! -name ".nojekyll" -delete || true # 숨김 파일 중 .nojekyll 제외하고 삭제
+
+      - name: Process JS files (Obfuscate and rename)
+        run: |
+          timestamp=$(date +%s)
+          echo "# JS file mapping" > js_mapping.txt
+
+          find dist/js -type f -name "*.js" | while read file; do # Note: Assumes JS files are in dist/js/
+            echo "Processing JS: $file"
+            dir_path=$(dirname "$file")
+            base_name=$(basename "$file" .js)
+            new_file="${dir_path}/${base_name}.obf.${timestamp}.js"
+            
+            javascript-obfuscator "$file" --output "$new_file" \
+              --compact true \
+              --control-flow-flattening true \
+              --dead-code-injection true \
+              --string-array true \
+              --self-defending true
+            
+            if [ -f "$new_file" ]; then
+              orig_size=$(wc -c < "$file")
+              new_size=$(wc -c < "$new_file")
+              echo "  ✅ ${file}: ${orig_size} → ${new_size} bytes"
+              
+              orig_relative=${file#dist/}
+              new_relative=${new_file#dist/}
+              echo "$orig_relative,$new_relative" >> js_mapping.txt
+              rm "$file" # 원본 JS 파일 삭제
+            else
+              echo "  ❌ Failed to obfuscate: $file"
+              exit 1 # 난독화 실패 시 빌드 중단
+            fi
+          done
+          echo "=== JS FILE MAPPING ==="
+          cat js_mapping.txt || true # 파일이 비어있을 경우 에러 방지
+          echo "======================="
+
+      - name: Process CSS files (Minify and rename)
+        run: |
+          timestamp=$(date +%s)
+          echo "# CSS file mapping" > css_mapping.txt
+
+          find dist/assets/css -type f -name "*.css" | while read file; do # Note: Assumes CSS files are in dist/assets/css/
+            echo "Processing CSS: $file"
+            dir_path=$(dirname "$file")
+            base_name=$(basename "$file" .css)
+            new_file="${dir_path}/${base_name}.min.${timestamp}.css"
+            
+            cleancss -o "$new_file" "$file"
+            
+            if [ -f "$new_file" ]; then
+              orig_size=$(wc -c < "$file")
+              new_size=$(wc -c < "$new_file")
+              echo "  ✅ ${file}: ${orig_size} → ${new_size} bytes"
+              
+              orig_relative=${file#dist/}
+              new_relative=${new_file#dist/}
+              echo "$orig_relative,$new_relative" >> css_mapping.txt
+              rm "$file" # 원본 CSS 파일 삭제
+            else
+              echo "  ❌ Failed to minify: $file"
+              exit 1 # 압축 실패 시 빌드 중단
+            fi
+          done
+          echo "=== CSS FILE MAPPING ==="
+          cat css_mapping.txt || true
+          echo "======================="
+
+      - name: Update HTML files to use processed JS and CSS
+        run: |
+          find dist -type f -name "*.html" | while read html_file; do
+            echo "Updating references in: $html_file"
+            
+            # JS 파일 참조 업데이트
+            if [ -f js_mapping.txt ]; then
+              tail -n +2 js_mapping.txt 2>/dev/null | while IFS=, read -r old_path new_path; do
+                # sed 명령어가 올바른 슬래시를 사용하도록 경로 조정
+                sed -i "s|src=[\"']\\{0,1\\}${old_path}[\"']\\{0,1\\}|src=\"${new_path}\"|g" "$html_file"
+              done
+            fi
+            
+            # CSS 파일 참조 업데이트
+            if [ -f css_mapping.txt ]; then
+              tail -n +2 css_mapping.txt 2>/dev/null | while IFS=, read -r old_path new_path; do
+                sed -i "s|href=[\"']\\{0,1\\}${old_path}[\"']\\{0,1\\}|href=\"${new_path}\"|g" "$html_file"
+              done
+            fi
+            
+            # Add comment at the top for verification
+            sed -i "1s|^|<!-- Files processed: $(date) -->\n|" "$html_file"
+            echo "Updated references in $html_file"
+          done
+
+      - name: Prepare index.html for GitHub Pages (if needed)
+        run: |
+          # GitHub Pages는 기본적으로 index.html을 찾습니다.
+          # 만약 SPA의 시작점이 index.html이라면 이 단계는 필요 없습니다.
+          # 현재 프로젝트의 진입점이 index.html이라고 가정합니다.
+          echo "Ensuring index.html is the entry point."
+
+      # -------------------------------------------------------------
+      # 2. Deploy Frontend to GitHub Pages
+      # -------------------------------------------------------------
+      - name: Deploy Frontend to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # 배포할 브랜치 (gh-pages 브랜치가 없으면 자동으로 생성됨)
+          folder: dist # 배포할 소스 코드 폴더
+          clean: true # gh-pages 브랜치의 이전 내용을 정리하고 배포
+          token: ${{ secrets.GITHUB_TOKEN }} # GitHub Pages 배포 권한을 가진 토큰 (자동으로 제공됨)
+
+      # -------------------------------------------------------------
+      # 3. Deploy Backend to Google Cloud Run
+      # -------------------------------------------------------------
+      - name: Setup Go (for backend build)
+        uses: actions/setup-go@v5 # Go 1.23 버전을 사용
+        with:
+          go-version: "1.23" # 여러분의 Go 프로젝트가 요구하는 버전에 맞춰 조정
+
+      - name: Authenticate to Google Cloud (using Workload Identity Federation)
+        id: "auth"
+        uses: "google-github-actions/auth@v2"
+        with:
+          project_id: ${{ env.GCP_PROJECT_ID }}
+          # service_account: # <<-- 이 부분을 직접 채워야 합니다!
+          #   아래의 1단계 "GCP 서비스 계정 키 생성 및 GitHub Actions에 Secrets 등록" 참조
+          #   이 예시에서는 JSON 키를 직접 Secrets에 저장하는 방식을 사용합니다.
+          #   Secrets.GCP_SA_KEY: GitHub 저장소 Settings -> Secrets and variables -> Actions
+          credentials_json: ${{ secrets.GCP_SA_KEY }} # <<-- GitHub Secrets에 등록한 서비스 계정 키 (JSON)
+
+      - name: Set up Cloud SDK (gcloud CLI)
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build and Push Docker image to Artifact Registry
+        run: |
+          gcloud auth configure-docker ${AR_LOCATION}-docker.pkg.dev --project=${GCP_PROJECT_ID}
+          docker build -t ${AR_LOCATION}-docker.pkg.dev/${GCP_PROJECT_ID}/${AR_REPO_NAME}/${CR_SERVICE_NAME}:latest ./backend # ./backend/ 디렉토리에서 Dockerfile을 찾도록 명시
+          docker push ${AR_LOCATION}-docker.pkg.dev/${GCP_PROJECT_ID}/${AR_REPO_NAME}/${CR_SERVICE_NAME}:latest
+        working-directory: . # Dockerfile이 프로젝트 루트에 있으므로 working-directory는 루트
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${CR_SERVICE_NAME} \
+            --image ${AR_LOCATION}-docker.pkg.dev/${GCP_PROJECT_ID}/${AR_REPO_NAME}/${CR_SERVICE_NAME}:latest \
+            --platform managed \
+            --region ${AR_LOCATION} \
+            --allow-unauthenticated \
+            --service-account=${CR_SERVICE_ACCOUNT} \
+            --memory 512Mi \
+            --cpu 1 \
+            --min-instances 0 \
+            --max-instances 2 \
+            --project=${GCP_PROJECT_ID}

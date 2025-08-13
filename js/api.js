@@ -1,4 +1,5 @@
-const BASE_URL = "http://localhost:8080";
+const BASE_URL =
+  "https://wind-app-backend-462093198351.asia-northeast3.run.app";
 
 // Module-scoped memory cache for larger datasets like rankings
 const memoryCache = {};

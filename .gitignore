@@ -1,6 +1,7 @@
 node_modules/*
 package*.json
 .env
+backend/.env
 *.old.json
 output/encrypted/*
 output/*
@@ -15,3 +16,4 @@ admin/*
 test*
 old.index.html
 /backend/serviceAccountKey.json
+serviceAccountKey.json

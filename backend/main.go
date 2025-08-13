@@ -2,11 +2,12 @@ package main
 
 import (
 	"context"
-	"encoding/json" // JSON 마샬링 디버깅용 추가
+	"encoding/json"
 	"fmt"
 	"log"
 	"math/rand"
 	"net/http"
+	"os" // os 패키지 임포트 (PORT 환경 변수 및 godotenv 로드 위함)
 	"sort"
 	"strconv"
 	"strings"
@@ -14,11 +15,11 @@ import (
 	"time"
 	"unicode"
 
-	// JSON 디버깅용 추가
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go/v4"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv" // godotenv 라이브러리 임포트
 	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
 )
@@ -172,8 +173,17 @@ type App struct {
 
 // NewApp initializes and returns a new App instance.
 func NewApp(ctx context.Context) (*App, error) {
-	sa := option.WithCredentialsFile("serviceAccountKey.json")
-	app, err := firebase.NewApp(ctx, nil, sa)
+	var appOpts []option.ClientOption
+
+	// [수정 시작] Firestore 인증 로직 (가장 간결한 ADC 기본 방식)
+	// 이 방식은 'GOOGLE_APPLICATION_CREDENTIALS' 환경 변수를 직접 사용하지 않습니다.
+	// 1. gcloud auth application-default login 으로 로컬에서 인증된 경우
+	// 2. Cloud Run, Compute Engine 등 GCP 환경에서 실행되어 서비스 계정이 자동으로 제공되는 경우
+	log.Println("DEBUG: Using Application Default Credentials (ADC) for Firestore authentication.")
+	// appOpts는 비워두어 Firebase SDK가 기본 ADC 탐색 로직을 따르도록 합니다.
+	// [수정 끝]
+
+	app, err := firebase.NewApp(ctx, nil, appOpts...)
 	if err != nil {
 		return nil, fmt.Errorf("error initializing firebase app: %w", err)
 	}
@@ -192,7 +202,7 @@ func NewApp(ctx context.Context) (*App, error) {
 			"upgradeOther2": 500,
 		},
 		dataLoadMutex: sync.RWMutex{},
-		isDataLoaded:  true, // Default to true, set to false if any load fails
+		isDataLoaded:  true,
 	}, nil
 }
 
@@ -347,6 +357,15 @@ func (a *App) loadChakDataFromFirestore(ctx context.Context) error {
 
 // ================== Main 함수 ==================
 func main() {
+	// [수정 시작] .env 파일 로드
+	// 로컬 환경에서만 .env 파일을 로드하도록 설정 (프로덕션 환경에서는 환경 변수가 직접 주입됨)
+	// godotenv.Load()는 현재 작업 디렉토리에서 .env 파일을 찾습니다.
+	err := godotenv.Load()
+	if err != nil {
+		log.Printf("Warning: .env file not loaded: %v (This is normal in production environments)", err)
+	}
+	// [수정 끝]
+
 	rand.Seed(time.Now().UnixNano()) // Initialize random seed once at app start
 
 	ctx := context.Background()
@@ -412,7 +431,7 @@ func main() {
 	}
 
 	log.Println("Server is running on port 8080")
-	router.Run(":8080")
+	router.Run(":" + os.Getenv("PORT")) // PORT 환경 변수 사용
 }
 
 // ================== API 핸들러 함수 (App 메서드로 변경) ==================
