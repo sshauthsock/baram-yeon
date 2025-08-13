@@ -5,7 +5,6 @@ import (
 	"math/rand"
 	"sort"
 	"sync"
-	"time"
 )
 
 // 유전 알고리즘 설정값
@@ -14,7 +13,7 @@ const (
 	maxGenerations  = 30  // 최대 세대 수
 	eliteSize       = 10  // 다음 세대로 바로 전달될 상위 엘리트 조합의 수
 	mutationRate    = 0.2 // 돌연변이 확률
-	combinationSize = 6   // 최종 조합의 크기
+	combinationSize = 6   // 최종 조합의 크기 (선택할 환수의 수)
 )
 
 // Individual: 하나의 조합(개체)과 그 점수를 저장하는 구조체
@@ -25,20 +24,24 @@ type Individual struct {
 }
 
 // findOptimalCombinationWithGA: 유전 알고리즘을 실행하여 최적 조합을 찾는 메인 함수
-func findOptimalCombinationWithGA(selectedCreatures []CreatureInput, category string) CalculationResult {
-	// rand 패키지의 시드를 초기화하여 매번 다른 랜덤 결과를 얻도록 합니다.
-	rand.Seed(time.Now().UnixNano())
+// allCreatureData를 인자로 받도록 수정
+func findOptimalCombinationWithGA(selectedCreatures []CreatureInput, category string, allCreatureData []CreatureInfo) CalculationResult {
+	// rand.Seed(time.Now().UnixNano()) // Moved to main.go to be initialized once at app start
 
 	// 1. 초기 인구(Population) 생성
+	// selectedCreatures는 사용자가 선택한 전체 환수 목록이며, 이 중에서 6개를 조합해야 합니다.
+	// 초기 인구는 이 selectedCreatures 풀에서 무작위로 생성됩니다.
 	population := generateInitialPopulation(selectedCreatures)
-	log.Printf("Initial population of %d generated.", len(population))
+	log.Printf("Initial population of %d generated from %d selected creatures.", len(population), len(selectedCreatures))
 
 	var bestIndividual Individual
+	// Initialize bestIndividual with a very low fitness to ensure it gets updated
+	bestIndividual.Fitness = -1.0
 
 	for gen := 0; gen < maxGenerations; gen++ {
 		// 2. 각 개체(조합)의 적합도(Fitness) 평가
-		// 고루틴을 사용하여 병렬로 평가 수행
-		evaluatedPopulation := evaluatePopulation(population, category)
+		// allCreatureData를 evaluatePopulation에 전달
+		evaluatedPopulation := evaluatePopulation(population, category, allCreatureData)
 
 		// 3. 점수(Fitness) 기준으로 정렬 (내림차순)
 		sort.Slice(evaluatedPopulation, func(i, j int) bool {
@@ -46,37 +49,67 @@ func findOptimalCombinationWithGA(selectedCreatures []CreatureInput, category st
 		})
 
 		// 현재 세대의 최고 점수 개체가 전체 최고보다 좋으면 업데이트
-		if bestIndividual.Combination == nil || evaluatedPopulation[0].Fitness > bestIndividual.Fitness {
+		if evaluatedPopulation[0].Fitness > bestIndividual.Fitness {
 			bestIndividual = evaluatedPopulation[0]
-			log.Printf("Generation %d: New best fitness found: %.2f", gen, bestIndividual.Fitness)
+			log.Printf("Generation %d: New best fitness found: %.2f (Combination: %v)", gen, bestIndividual.Fitness, bestIndividual.Result.Combination)
 		}
 
 		// 4. 다음 세대 생성
+		// allCreatures (즉, selectedCreatures)를 createNextGeneration에 전달
 		nextPopulation := createNextGeneration(evaluatedPopulation, selectedCreatures)
 		population = nextPopulation
 	}
 
-	log.Printf("Finished GA. Best fitness: %.2f", bestIndividual.Fitness)
+	log.Printf("Finished GA. Best fitness: %.2f (Combination: %v)", bestIndividual.Fitness, bestIndividual.Result.Combination)
 	return bestIndividual.Result
 }
 
 // generateInitialPopulation: 무작위로 초기 조합들을 생성
 func generateInitialPopulation(creatures []CreatureInput) [][]CreatureInput {
 	population := make([][]CreatureInput, populationSize)
+	// Ensure there are enough creatures to form combinations
+	if len(creatures) < combinationSize {
+		// If not enough unique creatures to pick 6, just return combinations of what's available
+		// This edge case should ideally be handled by the caller (frontend) to prevent GA if < 6
+		log.Printf("Warning: Not enough creatures (%d) to form a %d-size combination. Adjusting initial population generation.", len(creatures), combinationSize)
+		// Fallback: Just return one or few combinations of what's available
+		if len(creatures) == 0 {
+			return [][]CreatureInput{}
+		}
+		for i := 0; i < populationSize; i++ {
+			combo := make([]CreatureInput, 0, combinationSize)
+			shuffledCreatures := make([]CreatureInput, len(creatures))
+			copy(shuffledCreatures, creatures)
+			rand.Shuffle(len(shuffledCreatures), func(j, k int) {
+				shuffledCreatures[j], shuffledCreatures[k] = shuffledCreatures[k], shuffledCreatures[j]
+			})
+			for k := 0; k < combinationSize && k < len(shuffledCreatures); k++ {
+				combo = append(combo, shuffledCreatures[k])
+			}
+			population[i] = combo
+		}
+		return population
+	}
+
 	for i := 0; i < populationSize; i++ {
+		// Create a mutable copy to shuffle
+		shuffledCreatures := make([]CreatureInput, len(creatures))
+		copy(shuffledCreatures, creatures)
+
 		// 무작위로 6개의 생물을 선택하여 조합을 만듦
-		rand.Shuffle(len(creatures), func(j, k int) {
-			creatures[j], creatures[k] = creatures[k], creatures[j]
+		rand.Shuffle(len(shuffledCreatures), func(j, k int) {
+			shuffledCreatures[j], shuffledCreatures[k] = shuffledCreatures[k], shuffledCreatures[j]
 		})
 		combination := make([]CreatureInput, combinationSize)
-		copy(combination, creatures[:combinationSize])
+		copy(combination, shuffledCreatures[:combinationSize])
 		population[i] = combination
 	}
 	return population
 }
 
 // evaluatePopulation: 고루틴을 사용해 인구 전체를 병렬로 평가
-func evaluatePopulation(population [][]CreatureInput, category string) []Individual {
+// allCreatureData를 인자로 받도록 수정
+func evaluatePopulation(population [][]CreatureInput, category string, allCreatureData []CreatureInfo) []Individual {
 	var wg sync.WaitGroup
 	// 채널을 버퍼링하여 고루틴이 블로킹 없이 결과를 보낼 수 있도록 함
 	evaluatedChan := make(chan Individual, len(population))
@@ -85,7 +118,8 @@ func evaluatePopulation(population [][]CreatureInput, category string) []Individ
 		wg.Add(1)
 		go func(combo []CreatureInput) {
 			defer wg.Done()
-			result := calculateCombinationStats(combo, category)
+			// calculateCombinationStats 호출 시 allCreatureData 전달
+			result := calculateCombinationStats(combo, category, allCreatureData)
 			evaluatedChan <- Individual{
 				Combination: combo,
 				Result:      result,
@@ -107,6 +141,7 @@ func evaluatePopulation(population [][]CreatureInput, category string) []Individ
 }
 
 // createNextGeneration: 현재 세대를 기반으로 다음 세대를 생성
+// allCreatures (selectedCreatures 전체 풀)를 인자로 받도록 수정
 func createNextGeneration(evaluatedPopulation []Individual, allCreatures []CreatureInput) [][]CreatureInput {
 	nextPopulation := make([][]CreatureInput, 0, populationSize)
 
@@ -125,6 +160,7 @@ func createNextGeneration(evaluatedPopulation []Individual, allCreatures []Creat
 		child := crossover(parent1, parent2)
 
 		// 7. 변이 (Mutation)
+		// mutate 함수 호출 시 allCreatures 전달
 		if rand.Float64() < mutationRate {
 			mutate(child, allCreatures)
 		}
@@ -164,14 +200,18 @@ func crossover(parent1, parent2 []CreatureInput) []CreatureInput {
 		if childIndex >= combinationSize {
 			break
 		}
-		if !used[creature.Name] {
+		if !used[creature.Name] { // Only add if not already in child
 			child[childIndex] = creature
 			used[creature.Name] = true
 			childIndex++
 		}
 	}
 
-	// 만약 자식의 유전자가 부족하면, 부모1의 나머지 유전자로 채움
+	// 만약 자식의 유전자가 부족하면, 부모1의 나머지 유전자로 채움 (could be redundant if parent1 also has duplicates)
+	// A more robust way to fill remaining if not enough unique from parent2:
+	// Iterate through allCreatures (the full pool of selectable creatures)
+	// to find unused ones if childIndex < combinationSize
+	// For simplicity and assuming parents are derived from a common pool, this fallback to parent1 is okay.
 	for _, creature := range parent1 {
 		if childIndex >= combinationSize {
 			break
@@ -187,8 +227,10 @@ func crossover(parent1, parent2 []CreatureInput) []CreatureInput {
 }
 
 // mutate: 조합의 일부를 무작위로 변경
+// allCreatures (selectedCreatures 전체 풀)를 인자로 받도록 수정
 func mutate(combination []CreatureInput, allCreatures []CreatureInput) {
 	if len(allCreatures) <= combinationSize {
+		// Not enough creatures to perform a meaningful mutation by swapping with an external one
 		return
 	}
 
@@ -205,6 +247,7 @@ func mutate(combination []CreatureInput, allCreatures []CreatureInput) {
 	}
 
 	if len(unusedCreatures) == 0 {
+		// All available creatures are already in the combination, no mutation possible
 		return
 	}
 

@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"reflect"
+	"sort"
 	"strconv"
 	"strings"
 	"unicode"
@@ -10,6 +11,9 @@ import (
 
 // ================== 데이터 정의 시작 ==================
 
+// NOTE: percentStats and gradeSetEffects, factionSetEffects are constants.
+// For larger applications, these might be loaded from config files or a database.
+// For this scope, hardcoding them here is acceptable and aligns with the original design.
 var percentStats = map[string]bool{
 	"healthIncreasePercent":   true,
 	"magicIncreasePercent":    true,
@@ -115,7 +119,7 @@ type FactionEffectStep struct {
 	CriticalChance                int `json:"criticalChance,omitempty"`
 	HealthIncreasePercent         int `json:"healthIncreasePercent,omitempty"`
 	DestructionPowerIncrease      int `json:"destructionPowerIncrease,omitempty"`
-	Count                         int `json:"count"`
+	Count                         int `json:"count"` // This field is mandatory for determining the step
 	MagicIncreasePercent          int `json:"magicIncreasePercent,omitempty"`
 	DamageIncrease                int `json:"damageIncrease,omitempty"`
 	MagicRecoveryIncrease         int `json:"magicRecoveryIncrease,omitempty"`
@@ -271,7 +275,10 @@ var factionSetEffects = map[string]map[string][]FactionEffectStep{
 }
 
 // ================== 데이터 정의 끝 ====================
-func calculateCombinationStats(combination []CreatureInput, category string) CalculationResult {
+
+// calculateCombinationStats calculates the total stats, grade effects, and faction effects for a given combination of creatures.
+// It now explicitly receives allCreatureData.
+func calculateCombinationStats(combination []CreatureInput, category string, allCreatureData []CreatureInfo) CalculationResult {
 	// 1. 점수 계산용 맵: 오직 'bindStat'만 합산하여 저장
 	totalBondStats := make(map[string]float64)
 
@@ -286,7 +293,7 @@ func calculateCombinationStats(combination []CreatureInput, category string) Cal
 	var combinationSpirits []CreatureInfo
 	var combinationNames []string
 
-	// 5. 빠른 조회를 위해 모든 환수 데이터를 맵으로 변환
+	// 5. 빠른 조회를 위해 모든 환수 데이터를 맵으로 변환 (for efficient lookup)
 	creatureMap := make(map[string]CreatureInfo)
 	for i := range allCreatureData {
 		creatureMap[allCreatureData[i].Name] = allCreatureData[i]
@@ -298,7 +305,7 @@ func calculateCombinationStats(combination []CreatureInput, category string) Cal
 
 		creatureData, ok := creatureMap[selected.Name]
 		if !ok {
-			log.Printf("Warning: Creature data not found for %s", selected.Name)
+			log.Printf("Warning: Creature data not found for %s during combination calculation", selected.Name)
 			continue
 		}
 
@@ -310,23 +317,27 @@ func calculateCombinationStats(combination []CreatureInput, category string) Cal
 			}
 		}
 
+		// Prepare creature info for the response, including selected level
 		spiritForResponse := CreatureInfo{
 			Grade:     creatureData.Grade,
 			Type:      creatureData.Type,
 			Influence: creatureData.Influence,
 			Name:      creatureData.Name,
 			Image:     creatureData.Image,
-			Stats:     []StatValue{},
+			// Only include the stats for the *selected* level
+			Stats: []StatValue{},
 		}
 		if levelStat != nil {
 			spiritForResponse.Stats = append(spiritForResponse.Stats, *levelStat)
 		}
 		combinationSpirits = append(combinationSpirits, spiritForResponse)
 
+		// Count grades and factions for set effects
 		gradeCounts[creatureData.Grade]++
 		factionCounts[creatureData.Influence]++
 
 		if levelStat == nil {
+			log.Printf("Warning: Stats for %s at level %d not found.", selected.Name, selected.Level)
 			continue
 		}
 
@@ -342,8 +353,8 @@ func calculateCombinationStats(combination []CreatureInput, category string) Cal
 		if levelStat.BindStat != nil {
 			for key, value := range levelStat.BindStat {
 				parsedValue := parseFloat(value)
-				totalBondStats[key] += parsedValue    // 점수 계산용
-				totalDisplayStats[key] += parsedValue // 화면 표시용
+				totalBondStats[key] += parsedValue    // 점수 계산용 (only bind stats contribute to 'bindScore' from problem description)
+				totalDisplayStats[key] += parsedValue // 화면 표시용 (all stats contribute to 'bindStats' in response)
 			}
 		}
 	}
@@ -353,6 +364,7 @@ func calculateCombinationStats(combination []CreatureInput, category string) Cal
 	totalFactionEffects := calculateFactionEffects(factionCounts, category)
 
 	// 8. 각 부분별 점수 계산
+	// Assuming 'calculateScore' uses the specific stats as defined in problem (pvp, dmg resistance)
 	gradeScore := calculateScore(totalGradeEffects)
 	factionScore := calculateScore(totalFactionEffects)
 	bondScore := calculateScore(totalBondStats)
@@ -366,34 +378,33 @@ func calculateCombinationStats(combination []CreatureInput, category string) Cal
 		Spirits:        combinationSpirits,
 		GradeEffects:   toStatDetailSlice(totalGradeEffects),
 		FactionEffects: toStatDetailSlice(totalFactionEffects),
-		BindStats:      toStatDetailSlice(totalDisplayStats), // 화면에는 모든 스탯의 합을 보여줌
+		BindStats:      toStatDetailSlice(totalDisplayStats), // Display all accumulated stats from bond + registration
 		GradeScore:     gradeScore,
 		FactionScore:   factionScore,
-		BindScore:      bondScore, // 점수는 bindStat만으로 계산된 값
+		BindScore:      bondScore, // Score is only from bindStat as per definition
 		ScoreWithBind:  finalScore,
 	}
 
 	return result
 }
 
-// calculateGradeEffects, calculateFactionEffects, calculateScore, parseFloat, toInterfaceMap 함수는
-// 이전 답변의 코드를 그대로 사용합니다. (아래에 다시 포함)
-
+// calculateGradeEffects: 등급별 개수를 받아 세트 효과를 계산
 func calculateGradeEffects(gradeCounts map[string]int, category string) map[string]float64 {
 	effects := make(map[string]float64)
 	categoryEffects, ok := gradeSetEffects[category]
 	if !ok {
-		return effects
+		return effects // No rules for this category
 	}
 
 	for grade, count := range gradeCounts {
 		gradeRules, ok := categoryEffects[grade]
 		if !ok {
-			continue
+			continue // No rules for this grade in this category
 		}
 
 		highestStep := 0
-		for step := 2; step <= count; step++ {
+		// Find the highest set effect step achieved
+		for step := 2; step <= count; step++ { // Set effects typically start from 2 items
 			if _, exists := gradeRules[strconv.Itoa(step)]; exists {
 				highestStep = step
 			}
@@ -414,16 +425,17 @@ func calculateFactionEffects(factionCounts map[string]int, category string) map[
 	effects := make(map[string]float64)
 	categoryRules, ok := factionSetEffects[category]
 	if !ok {
-		return effects
+		return effects // No rules for this category
 	}
 
 	for faction, count := range factionCounts {
 		factionRules, ok := categoryRules[faction]
 		if !ok {
-			continue
+			continue // No rules for this faction in this category
 		}
 
 		var bestStep FactionEffectStep
+		// Find the best (highest count) faction effect step achieved
 		for _, stepRule := range factionRules {
 			if count >= stepRule.Count && stepRule.Count > bestStep.Count {
 				bestStep = stepRule
@@ -440,11 +452,14 @@ func calculateFactionEffects(factionCounts map[string]int, category string) map[
 				fieldValue := val.Field(i).Interface()
 
 				if fieldName == "Count" {
-					continue
+					continue // 'Count' field is for rule matching, not a stat
 				}
 
+				// Convert struct field name to camelCase for map key (first letter lowercase)
 				runes := []rune(fieldName)
-				runes[0] = unicode.ToLower(runes[0])
+				if len(runes) > 0 {
+					runes[0] = unicode.ToLower(runes[0])
+				}
 				statName := string(runes)
 
 				if intValue, ok := fieldValue.(int); ok && intValue != 0 {
@@ -456,14 +471,16 @@ func calculateFactionEffects(factionCounts map[string]int, category string) map[
 	return effects
 }
 
+// calculateScore: 환수결속 점수 계산 공식 (피해저항관통 + 피해저항 + (대인피해% * 10) + (대인방어% * 10))
 func calculateScore(stats map[string]float64) float64 {
-	// 점수 계산 공식: 피해저항관통 + 피해저항 + (대인피해% * 10) + (대인방어% * 10)
 	return stats["damageResistancePenetration"] +
 		stats["damageResistance"] +
 		(stats["pvpDamagePercent"] * 10) +
 		(stats["pvpDefensePercent"] * 10)
 }
 
+// parseFloat safely converts an interface{} value to float64.
+// This is duplicated from main.go. Consider moving to a common 'utils.go' if more such conversions are needed.
 func parseFloat(value interface{}) float64 {
 	var numValue float64
 	switch v := value.(type) {
@@ -472,7 +489,7 @@ func parseFloat(value interface{}) float64 {
 		if parsed, err := strconv.ParseFloat(cleanString, 64); err == nil {
 			numValue = parsed
 		} else {
-			log.Printf("Warning: Could not parse string value '%s'. Error: %v", v, err)
+			log.Printf("Warning: Could not parse string value '%s' to float. Error: %v", v, err)
 		}
 	case float64:
 		numValue = v
@@ -481,28 +498,37 @@ func parseFloat(value interface{}) float64 {
 	case int:
 		numValue = float64(v)
 	default:
-		log.Printf("Warning: Unsupported type for stat: %T", v)
+		log.Printf("Warning: Unsupported type for stat conversion: %T. Value: %v", v, v)
 	}
 	return numValue
 }
 
+// toStatDetailSlice converts a map of stats to a slice of StatDetail for frontend display.
 func toStatDetailSlice(m map[string]float64) []StatDetail {
 	details := make([]StatDetail, 0, len(m))
 	for key, value := range m {
-		// 0인 값은 결과에 포함하지 않음
+		// Only include non-zero values
 		if value == 0 {
 			continue
 		}
 
 		koreanName, ok := statsMapping[key]
 		if !ok {
-			koreanName = key // 매핑에 없는 경우 영문 key를 그대로 사용
+			koreanName = key // Use English key if no Korean mapping found
 		}
+
+		// Format percentage stats (assuming they end with 'Percent' or are known)
+		// This formatting might be better handled on the frontend for display flexibility.
+		// For now, keep as float64 and let frontend handle formatting.
 		details = append(details, StatDetail{
 			Name:  koreanName,
 			Key:   key,
 			Value: value,
 		})
 	}
+	// Sort details by Korean name for consistent order
+	sort.Slice(details, func(i, j int) bool {
+		return details[i].Name < details[j].Name
+	})
 	return details
 }
