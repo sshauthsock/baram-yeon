@@ -17,3 +17,4 @@ test*
 old.index.html
 /backend/serviceAccountKey.json
 serviceAccountKey.json
+backend/myapp.exe
