@@ -6417,19 +6417,7 @@ tr.max-level {
     margin-top: var(--space-sm);
 }
 
-.stat-card {
-    padding: var(--space-sm) 5px;
-    border: 1px solid #e0e0e0;
-    border-radius: var(--radius-sm);
-    text-align: center;
-    position: relative;
-    background: var(--bg-white);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-    height: 80%;
-    min-height: 130px;
-    cursor: pointer;
-}
+
 
 .spirit-image {
     max-width: 80%;

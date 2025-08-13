@@ -63,8 +63,12 @@ export const INFLUENCE_ROWS = [
   ["침착", "냉정", "활력"],
 ];
 
+// 퍼센트 스탯 목록 (modalHandler.js에서 사용)
 export const PERCENT_STATS = [
   "pvpDamagePercent",
   "pvpDefensePercent",
   "criticalPowerPercent",
+  "healthIncreasePercent", // chakCalculator에서 사용
+  "magicIncreasePercent", // chakCalculator에서 사용
+  "destructionPowerPercent", // chakCalculator에서 사용
 ];
